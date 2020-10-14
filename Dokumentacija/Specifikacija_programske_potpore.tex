@@ -2,20 +2,17 @@
 		
 	\section{Funkcionalni zahtjevi}
 			
-			\textbf{\textit{dio 1. revizije}}\\
-			
-			\textit{Navesti \textbf{dionike} koji imaju \textbf{interes u ovom sustavu} ili  \textbf{su nositelji odgovornosti}. To su prije svega korisnici, ali i administratori sustava, naručitelji, razvojni tim.}\\
-				
-			\textit{Navesti \textbf{aktore} koji izravno \textbf{koriste} ili \textbf{komuniciraju sa sustavom}. Oni mogu imati inicijatorsku ulogu, tj. započinju određene procese u sustavu ili samo sudioničku ulogu, tj. obavljaju određeni posao. Za svakog aktora navesti funkcionalne zahtjeve koji se na njega odnose.}\\
-			
+			\textbf{\textit{dio 1. revizije}}\\	
 			
 			\noindent \textbf{Dionici:}
 			
 			\begin{packed_enum}
 				
-				\item Dionik 1
-				\item Dionik 2				
-				\item ...
+				\item Naručitelj (FER)
+				\item Razvojni tim
+				\item Administrator				
+				\item Planinari (korisnici aplikacije)
+				\item Zaposlenici planinarskih domova
 				
 			\end{packed_enum}
 			
@@ -23,30 +20,115 @@
 			
 			
 			\begin{packed_enum}
-				\item  \underbar{Aktor 1 (inicijator) može:}
+				\item  \underbar{Neregistrirani/neprijavljeni korisnik (inicijator) može:}
 				
 				\begin{packed_enum}
 					
-					\item funkcionalnost 1
-					\item funkcionalnost 2
+					\item pregledati popis planinarskih izleta
+					\item pretraživati planinarske izlete
 					\begin{packed_enum}
 						
-						\item  podfunkcionalnost 1 
-						\item  podfunkcionalnost 2
+						\item  prema zemljopisnom položaju 
+						\item  prema trajanju planinarskog izleta
+						\item  prema zahtjevnosti planinarskog izleta
 				
 					\end{packed_enum}
-					\item  funkcionalnost 3
-					
+					\item pregledati popis planinarskih domova
+					\item pretraživati planinarske domove
+					\begin{packed_enum}
+						\item prema dostupnoj infrastrukturi (voda, prenoćište, struja, hrana)
+					\end{packed_enum}
+					\item se registrirati u sustav kao planinar tako što popuni formu za registraciju
 				\end{packed_enum}
 			
-				\item  \underbar{Aktor 2 (sudionik) može:}
+				\item  \underbar{Planinar (inicijator) može:}
+				
+				\begin{packed_enum}
+					\item prijaviti se u sustav kao planinar
+					\item upravljati vlastitim korisničkim računom
+						\begin{packed_enum}
+							
+							\item  pregledati osobne podatke 
+							\item  uređivati osobne podatke
+							\item  ukloniti korisnički račun
+							
+						\end{packed_enum}
+					\item ? pretraživati korisnike prema imenu i prezimenu
+					\item ? pregledati profil drugog planinara (je li dovoljno samo da ga doda na popis prijatelja)
+					\item poslati zahtjev za prijateljstvom (zahtjev za dodavanjem drugog planinara na popis vlastite planinarske zajednice)
+					\item prihvatiti zahtjev za prijateljstvom
+					\item ? pregledati prihvaćene, odbijene i poslane zahtjeve ili obavijesti?
+					\item pregledati popis planinara u vlastitoj planinarskoj zajednici
+					\item pregledati popis željenih planinarskih izleta i planinarskih domova
+					\item dodati planinarski izlet ili planinarski dom na popis željenih
+					\item stvoriti vlastiti planinarski izlet prema unaprijed određenom predlošku
+					\item ocjenjivati stvorene izlete drugih planinara
+					\item prijaviti netočne i neprecizne informacije vezane uz planinarski izlet
+					\item pregledati izlete koje je stvorio
+					\item ?kreirati događaj vidljiv na naslovnici na koji može
+						\begin{packed_enum}
+							
+							\item  ?pozvati korisnike aplikacije s popisa vlastite planinarske zajednice 
+							\item  ?vidjeti popis prihvačenih i odbijenih pozivnica na vlastitom zidu obavijesti
+							
+						\end{packed_enum}
+					\item na naslovnici vidjeti nove objave korisnika s popisa vlastite planinarske zajednice
+						\begin{packed_enum}
+							
+							\item  kreirani planinarski izleti 
+							\item  kreirani događaji
+							\item  objavljene fotografije
+							\item  ?ostvareni bedževi
+							
+						\end{packed_enum}
+					\item dodati ranije odrađene planinarske izlete u arhivu
+					\item dodati ranije posjećene planinarske domove u arhivu
+				\end{packed_enum}
+			
+				\item  \underbar{Dežurni planinar (inicijator) može:}
 				
 				\begin{packed_enum}
 					
-					\item funkcionalnost 1
-					\item funkcionalnost 2
+					\item zatražiti ulogu dežurnog planinara u određenom planinarskom domu pri čemu mora priložiti odgovarajući dokaz 
+					\item upravljati zaprimljenim zahtjevima za potvrdom posjeta u planinarskim domovima za koje je odgovoran
+					\begin{packed_enum}
+						
+						\item pregledati zahtjeve
+						\item potvrditi ili odbiti zahtjev
+						
+					\end{packed_enum}
+					\item? pregledati domove za koje je dežuran
+				\end{packed_enum}
+			
+				\item  \underbar{Administrator (inicijator) može:}
+				
+				\begin{packed_enum}
+					
+					\item obrisati korisničke račune
+					\item upravljati zaprimljenim zahtjevima za dežurnog planinara
+					\begin{packed_enum}
+						
+						\item pregled zahtjeva
+						\item prihvaćanje i odbijanje zahtjeva
+					
+					\end{packed_enum}
+					\item upravljati planinarskim izletima
+						\begin{packed_enum}
+							\item pregled prijavljenih netočnih i nepreciznih informacija vezanih uz objavljene izlete
+							\item uređivanje izleta
+							\item brisanje izleta
+						\end{packed_enum}	
 					
 				\end{packed_enum}
+	
+				\item  \underbar{Baza podataka (sudionik):}
+				
+					\begin{packed_enum}
+						
+						\item komunicira s cjelokupnim sustavom
+						\item pohranjuje sve podatke nužne za uspješno funkcioniranje sustava
+						
+					\end{packed_enum}
 			\end{packed_enum}
 			
 			\eject 
