@@ -151,44 +151,213 @@
 				\textbf{\textit{dio 1. revizije}}
 				
 				\subsubsection{Opis obrazaca uporabe}
-					\textit{Funkcionalne zahtjeve razraditi u obliku obrazaca uporabe. Svaki obrazac je potrebno razraditi prema donjem predlošku. Ukoliko u nekom koraku može doći do odstupanja, potrebno je to odstupanje opisati i po mogućnosti ponuditi rješenje kojim bi se tijek obrasca vratio na osnovni tijek.}\\
+				
 					
 
-					\noindent \underbar{\textbf{UC$<$broj obrasca$>$ -$<$ime obrasca$>$}}
-					\begin{packed_item}
-	
-						\item \textbf{Glavni sudionik: }$<$sudionik$>$
-						\item  \textbf{Cilj:} $<$cilj$>$
-						\item  \textbf{Sudionici:} $<$sudionici$>$
-						\item  \textbf{Preduvjet:} $<$preduvjet$>$
-						\item  \textbf{Opis osnovnog tijeka:}
-						
-						\item[] \begin{packed_enum}
-	
-							\item $<$opis korak jedan$>$
-							\item $<$opis korak dva$>$
-							\item $<$opis korak tri$>$
-							\item $<$opis korak četiri$>$
-							\item $<$opis korak pet$>$
-						\end{packed_enum}
-						
-						\item  \textbf{Opis mogućih odstupanja:}
-						
-						\item[] \begin{packed_item}
-	
-							\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
-							\item[] \begin{packed_enum}
-								
-								\item $<$opis rješenja mogućeg scenarija korak 1$>$
-								\item $<$opis rješenja mogućeg scenarija korak 2$>$
-								
-							\end{packed_enum}
-							\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
-							\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
-							
-						\end{packed_item}
-					\end{packed_item}
 				
+				\noindent \underbar{\textbf{UC$ $1$ $ -$ $Registracija$ $}}
+			\begin{packed_item}
+				
+				\item \textbf{Glavni sudionik: }$ $Korisnik aplikacije$ $
+				\item  \textbf{Cilj:} $ $korištenje aplikacije preko korisničkog računa$ $
+				\item  \textbf{Sudionici:} $ $Baza podataka$ $
+				\item  \textbf{Preduvjet:} $ $/$ $
+				\item  \textbf{Opis osnovnog tijeka:}
+				
+				\item[] \begin{packed_enum}
+					
+					\item $ $korisnik pokrene aplikaciju$ $
+					\item $ $odabere opciju za registraciju$ $
+					\item $ $unosi tražene podatke$ $
+					\item $ $Korisnik potvrdi unesene podatke$ $
+					\item $ $korisnik dobiva korisnički račun i obavijest o uspješnoj registraciji$ $
+				\end{packed_enum}
+				
+				\item  \textbf{Opis mogućih odstupanja:}
+				
+				\item[] \begin{packed_item}
+					
+					\item[3.a] $ $Unos već postojećeg korisničkog imena i/ili e-maila, unos krivog tipa podataka, unos neispravne lozinke$ $
+					\item[] \begin{packed_enum}
+						
+						\item $ $Sustav obavještava korisnika o neispravnim poljima i vraća ga natrag na stranicu za registraciju$ $
+						\item $ $korisnik ispravi neispravne podatke te završava unos ili odustaje od registracije$ $
+						
+					\end{packed_enum}
+				\end{packed_item}
+			\end{packed_item}
+		
+			\noindent \underbar{\textbf{UC$ $2$ $ -$ $Prijava$ $}}
+		\begin{packed_item}
+			
+			\item \textbf{Glavni sudionik: }$ $Planinar$ $
+			\item  \textbf{Cilj:} $ $Pristup korisničkom računu i svim funkcionalnostima aplikacije$ $
+			\item  \textbf{Sudionici:} $ $Baza podataka$ $
+			\item  \textbf{Preduvjet:} $ $Korisik posjeduje korisnički račun$ $
+			\item  \textbf{Opis osnovnog tijeka:}
+			
+			\item[] \begin{packed_enum}
+				
+				\item $ $korisnik pokrene aplikaciju$ $
+				\item $ $odabere opciju za prijavu$ $
+				\item $ $unosi ispravno korisničko ime i lozinku$ $
+				\item $ $Prijava u sustav i otvarnje naslovnice$ $
+				
+			\end{packed_enum}
+			
+			\item  \textbf{Opis mogućih odstupanja:}
+			
+			\item[] \begin{packed_item}
+				
+				\item[3.a] $ $Neispravno korisničko ime i/ili lozinka $ $
+				\item[] \begin{packed_enum}
+					
+					\item $ $Sustav javlja pogrešku i vraća korisnika natrag na stranicu za prijavu$ $
+				\end{packed_enum}
+			\end{packed_item}
+		\end{packed_item}
+		
+			\noindent \underbar{\textbf{UC$ $3$ $ -$ $Pretraživanje planinarske staze$ $}}
+		\begin{packed_item}
+			
+			\item \textbf{Glavni sudionik: }$ $Korisnik$ $
+			\item  \textbf{Cilj:} $ $Pretražiti postojeće planinarske staze po određenim kategorijama $ $
+			\item  \textbf{Sudionici:} $ $Baza podataka$ $
+			\item  \textbf{Preduvjet:} $ $/$ $
+			\item  \textbf{Opis osnovnog tijeka:}
+			
+			\item[] \begin{packed_enum}
+				
+				\item $ $Korisnik odabire opciju "pretraga planinarske staze"$ $
+				\item $ $otvara se stranica za pretragu s ponuđenim filterima$ $
+				\item $ $Korisnik odabire kategoriju pretrage i/ili unosi naziv staze $ $
+				\item $ $Prikazuju se postojeće staze koje ispunjavaju zahtjeve pretrage$ $
+				
+			\end{packed_enum}
+		\end{packed_item}
+		
+			\noindent \underbar{\textbf{UC$ $4$ $ -$ $Pretraživanje planinarskih domova$ $}}
+		\begin{packed_item}
+			
+			\item \textbf{Glavni sudionik: }$ $Korisnik$ $
+			\item  \textbf{Cilj:} $ $Pretražiti postojeće planinarske domove po određenim kategorijama $ $
+			\item  \textbf{Sudionici:} $ $Baza podataka$ $
+			\item  \textbf{Preduvjet:} $ $/$ $
+			\item  \textbf{Opis osnovnog tijeka:}
+			
+			\item[] \begin{packed_enum}
+				
+				\item $ $Korisnik odabire opciju "pretraga planinarskih domova"$ $
+				\item $ $otvara se stranica za pretragu planinarskih domova s ponuđenim filterima$ $
+				\item $ $Korisnik odabire kategoriju pretrage i/ili unosi naziv doma $ $
+				\item $ $Prikazuju se postojeće planinarske domove koji ispunjavaju zahtjeve pretrage$ $
+				
+			\end{packed_enum}
+		\end{packed_item}
+	
+			\noindent \underbar{\textbf{UC$ $5$ $ -$ $Upravljanje korisničkim računom$ $}}
+		\begin{packed_item}
+			
+			\item \textbf{Glavni sudionik: }$ $Planinar$ $
+			\item  \textbf{Cilj:} $ $Omogućiti planinaru pregled i izmjenu vlastitih korisničkih podataka $ $
+			\item  \textbf{Sudionici:} $ $Baza podataka$ $
+			\item  \textbf{Preduvjet:} $ $Korisnik prijavljen u sustav kao planinar$ $
+			\item  \textbf{Opis osnovnog tijeka:}
+			
+			\item[] \begin{packed_enum}
+				
+				\item $ $Korisnik odabire opciju "Moj profil"$ $
+				\item $ $Prikazuju se korisnički podatci planinara$ $
+				\item $ $odabire opciju za izmjenu korisničkih podataka $ $
+				\item $ $Mijenja željene podatke$ $
+				\item $ $Planinar potvrđuje provedene promjene$ $
+				
+			\end{packed_enum}
+		
+		\item  \textbf{Opis mogućih odstupanja:}
+		
+		\item[] \begin{packed_item}
+			
+			\item[5.a] $ $Planinar ne potvrdi promjenu $ $
+			\item[] \begin{packed_enum}
+				
+				\item $ $Korisnik dobiva obavijest da izmjena korisničkih podataka nije provedena jer podatci nisu potvrđeni$ $
+				\item $ $Korisnika se pita da li želi potvrditi izmjene$ $
+			\end{packed_enum}
+		\end{packed_item}
+		\end{packed_item}
+		
+			\noindent \underbar{\textbf{UC$ $6$ $ -$ $Uklanjanje korisničkog računa$ $}}
+		\begin{packed_item}
+			
+			\item \textbf{Glavni sudionik: }$ $Planinar$ $
+			\item  \textbf{Cilj:} $ $Izbrisati vlastiti korisnički račun $ $
+			\item  \textbf{Sudionici:} $ $Baza podataka$ $
+			\item  \textbf{Preduvjet:} $ $Korisnik prijavljen u sustav kao planinar$ $
+			\item  \textbf{Opis osnovnog tijeka:}
+			
+			\item[] \begin{packed_enum}
+				
+				\item $ $Korisnik odabire opciju "Moj profil"$ $
+				\item $ $Prikazuju se korisnički podatci planinara$ $
+				\item $ $odabire opciju "ukloni račun" $ $
+				\item $ $Korisnički račun se briše iz baze podataka$ $
+				\item $ $Korisnika se premjesti na stranicu za registraciju$ $
+				
+			\end{packed_enum}
+		\end{packed_item}
+	
+			\noindent \underbar{\textbf{UC$ $7$ $ -$ $Slanje zahtjeva za prijateljstvo drugom korisniku$ $}}
+		\begin{packed_item}
+			
+			\item \textbf{Glavni sudionik: }$ $Planinar$ $
+			\item  \textbf{Cilj:} $ $Poslati zahtjev za prijateljstvo drugom planinaru $ $
+			\item  \textbf{Sudionici:} $ $Baza podataka, Planinar$ $
+			\item  \textbf{Preduvjet:} $ $Oba Korisnika prijavljena u sustav kao planinari$ $
+			\item  \textbf{Opis osnovnog tijeka:}
+			
+			\item[] \begin{packed_enum}
+				
+				\item $ $Korisnik pronađe željenog planinara$ $
+				\item $ $Odlazak na profil tog planinara$ $
+				\item $ $odabire opciju "pošalji zahtjev za prijateljstvo" $ $	
+			\end{packed_enum}
+		\end{packed_item}
+	
+			\noindent \underbar{\textbf{UC$ $8$ $ -$ $Pregledavnje profila drugog planinara$ $}}
+		\begin{packed_item}
+			
+			\item \textbf{Glavni sudionik: }$ $Planinar$ $
+			\item  \textbf{Cilj:} $ $Pregledati profil drugog planinara $ $
+			\item  \textbf{Sudionici:} $ $Baza podataka$ $
+			\item  \textbf{Preduvjet:} $ $Korisnik prijavljen u sustav kao planinar$ $
+			\item  \textbf{Opis osnovnog tijeka:}
+			
+			\item[] \begin{packed_enum}
+				
+				\item $ $Korisnik pronađe željenog planinara i klikne na njegov profil$ $
+				\item $ $Aplikacija mu prikaže njegov profil s korisničkim pdatcima i profilnom slikom$ $	
+			\end{packed_enum}
+		\end{packed_item}
+		
+			\noindent \underbar{\textbf{UC$ $9$ $ -$ $Pretraživanje korisnika po imenu i prezimenu $ $}}
+		\begin{packed_item}
+			
+			\item \textbf{Glavni sudionik: }$ $Planinar$ $
+			\item  \textbf{Cilj:} $ $Provjeriti da li određena osoba posjeduje vlastiti korisnički račun, odnosno da li je prijavljen u sustav$ $
+			\item  \textbf{Sudionici:} $ $Baza podataka$ $
+			\item  \textbf{Preduvjet:} $ $Korisnik prijavljen u sustav kao planinar$ $
+			\item  \textbf{Opis osnovnog tijeka:}
+			
+			\item[] \begin{packed_enum}
+				
+				\item $ $Korisnik odabire opciju za pretragu drugih korisnika$ $
+				\item $ $Aplikacija omogućuje upis podataka za pretragu $ $
+				\item $ $Korisnik upisuje ime i/ili prezime željenog planinara $ $	
+				\item $ $Aplikacija prikazuje rezultate pretrage$ $
+			\end{packed_enum}
+		\end{packed_item}
+		
 					
 				\subsubsection{Dijagrami obrazaca uporabe}
 					
