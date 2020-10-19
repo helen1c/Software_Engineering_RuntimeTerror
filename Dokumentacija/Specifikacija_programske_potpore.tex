@@ -158,30 +158,33 @@
 				\noindent \underbar{\textbf{UC$ $1$ $ -$ $Registracija$ $}}
 			\begin{packed_item}
 				
-				\item \textbf{Glavni sudionik: }$ $Korisnik aplikacije$ $
-				\item  \textbf{Cilj:} $ $korištenje aplikacije preko korisničkog računa$ $
+				\item \textbf{Glavni sudionik: }$ $Neregistriani korisnik aplikacije (posjetitelj)$ $
+				\item  \textbf{Cilj:} $ $Stvaranje novog korisničkog računa s ulogom "planinar"$ $
 				\item  \textbf{Sudionici:} $ $Baza podataka$ $
 				\item  \textbf{Preduvjet:} $ $/$ $
 				\item  \textbf{Opis osnovnog tijeka:}
 				
 				\item[] \begin{packed_enum}
 					
-					\item $ $korisnik pokrene aplikaciju$ $
-					\item $ $odabere opciju za registraciju$ $
-					\item $ $unosi tražene podatke$ $
-					\item $ $Korisnik potvrdi unesene podatke$ $
-					\item $ $korisnik dobiva korisnički račun i obavijest o uspješnoj registraciji$ $
+					\item $ $Neregistrirani korisnik pokrene aplikaciju$ $
+					\item $ $Neregistrirani korisnik odabere opciju za registraciju te unosi osobne podatke$ $
+					\item $ $Sustav validira podatke te ih sprema u bazu podataka u slučaju ispravnosti$ $
+					\item $ $Korisnik prima obavijest o uspješnoj registraciji$ $
 				\end{packed_enum}
 				
 				\item  \textbf{Opis mogućih odstupanja:}
 				
 				\item[] \begin{packed_item}
 					
-					\item[3.a] $ $Unos već postojećeg korisničkog imena i/ili e-maila, unos krivog tipa podataka, unos neispravne lozinke$ $
+					\item[3.a] $ $Unos e-maila koji se već koristi$ $
+					\item[3.b] $ $Unos e-maila koji ne zadovoljava propisani format e-maila$ $
+					\item[3.c] $ $Neispunjavanje svih potrebnih polja forme za registraciju$ $
+					\item[3.d] $ $Lozinka i ponovljena lozinka se ne podudaraju ili lozinka ne zadovoljava minimalne zahtjeve prihvatljivosti$ $
+					
 					\item[] \begin{packed_enum}
 						
-						\item $ $Sustav obavještava korisnika o neispravnim poljima i vraća ga natrag na stranicu za registraciju$ $
-						\item $ $korisnik ispravi neispravne podatke te završava unos ili odustaje od registracije$ $
+						\item $ $Sustav obavještava korisnika o neispravnim poljima te ostaje na istoj stranici registracije, sva polja forme za registraciju ostaju popunjena unešenim podacima, osim lozinke koju je nužno ponovno unijeti$ $
+						\item $ $Korisnik ispravi neispravne podatke te završava unos ili odustaje od registracije$ $
 						
 					\end{packed_enum}
 				\end{packed_item}
@@ -191,17 +194,16 @@
 		\begin{packed_item}
 			
 			\item \textbf{Glavni sudionik: }$ $Planinar$ $
-			\item  \textbf{Cilj:} $ $Pristup korisničkom računu i svim funkcionalnostima aplikacije$ $
+			\item  \textbf{Cilj:} $ $Pristup korisničkom računu i svim funkcionalnostima aplikacije namijenjenih ulozi "Planinar"$ $
 			\item  \textbf{Sudionici:} $ $Baza podataka$ $
-			\item  \textbf{Preduvjet:} $ $Korisik posjeduje korisnički račun$ $
+			\item  \textbf{Preduvjet:} $ $Korisik je registriran u sustav kao planinar$ $
 			\item  \textbf{Opis osnovnog tijeka:}
 			
 			\item[] \begin{packed_enum}
 				
-				\item $ $korisnik pokrene aplikaciju$ $
-				\item $ $odabere opciju za prijavu$ $
-				\item $ $unosi ispravno korisničko ime i lozinku$ $
-				\item $ $Prijava u sustav i otvarnje naslovnice$ $
+				\item $ $Korisnik odabere opciju za prijavu$ $
+				\item $ $Korisnik unosi ispravan e-mail i lozinku$ $
+				\item $ $Prijava je uspješno obavljena i otvara se naslovna stranica$ $
 				
 			\end{packed_enum}
 			
@@ -212,25 +214,30 @@
 				\item[3.a] $ $Neispravno korisničko ime i/ili lozinka $ $
 				\item[] \begin{packed_enum}
 					
-					\item $ $Sustav javlja pogrešku i vraća korisnika natrag na stranicu za prijavu$ $
+					\item $ $Sustav javlja pogrešku, ostaje na istoj stranici za prijavu te očisti sva polja forme za prijavu$ $
 				\end{packed_enum}
 			\end{packed_item}
 		\end{packed_item}
 		
-			\noindent \underbar{\textbf{UC$ $3$ $ -$ $Pretraživanje planinarske staze$ $}}
+			\noindent \underbar{\textbf{UC$ $3$ $ -$ $Pretraživanje planinarskih staza$ $}}
 		\begin{packed_item}
 			
 			\item \textbf{Glavni sudionik: }$ $Korisnik$ $
-			\item  \textbf{Cilj:} $ $Pretražiti postojeće planinarske staze po određenim kategorijama $ $
+			\item  \textbf{Cilj:} $ $Pretražiti postojeće planinarske staze prema unaprijed određenim kriterijima $ $
 			\item  \textbf{Sudionici:} $ $Baza podataka$ $
 			\item  \textbf{Preduvjet:} $ $/$ $
 			\item  \textbf{Opis osnovnog tijeka:}
 			
 			\item[] \begin{packed_enum}
 				
-				\item $ $Korisnik odabire opciju "pretraga planinarske staze"$ $
-				\item $ $otvara se stranica za pretragu s ponuđenim filterima$ $
-				\item $ $Korisnik odabire kategoriju pretrage i/ili unosi naziv staze $ $
+				\item $ $Korisnik odabire opciju "Pretražite planinarske staze" koja će se nalazi na naslovnoj stranici, ali će biti ponuđena i u podnožju aplikacije$ $
+				\item $ $Otvara se stranica za pretragu planinarskih staza s više načina pretraživanja$ $
+					\begin{packed_enum}
+						\item Prema nazivu staze
+						\item Prema zemljopisnom položaju
+						\item Prema prosječnom trajanju i/ili zahtjevnosti
+					\end{packed_enum}
+				\item $ $Korisnik odabire način pretraživanja te odabire gumb za pretragu$ $
 				\item $ $Prikazuju se postojeće staze koje ispunjavaju zahtjeve pretrage$ $
 				
 			\end{packed_enum}
