@@ -231,7 +231,7 @@
 			\end{packed_enum}
 		\end{packed_item}
 		
-			\noindent \underbar{\textbf{UC$ $3$ $ -$ $Pretraživanje planinarskih staza$ $}}
+			\noindent \underbar{\textbf{UC$ $4$ $ -$ $Pretraživanje planinarskih staza$ $}}
 		\begin{packed_item}
 			
 			\item \textbf{Glavni sudionik: }$ $Korisnik$ $
@@ -257,7 +257,7 @@
 		\end{packed_item}
 		
 		
-			\noindent \underbar{\textbf{UC$ $4$ $ -$ $Pretraživanje planinarskih domova$ $}}
+			\noindent \underbar{\textbf{UC$ $5$ $ -$ $Pretraživanje planinarskih domova$ $}}
 		\begin{packed_item}
 			
 			\item \textbf{Glavni sudionik: }$ $Korisnik$ $
@@ -281,7 +281,7 @@
 			\end{packed_enum}
 		\end{packed_item}
 	
-			\noindent \underbar{\textbf{UC$ $5$ $ -$ $Pregled korisničkog računa$ $}}
+			\noindent \underbar{\textbf{UC$ $6$ $ -$ $Pregled korisničkog računa$ $}}
 		\begin{packed_item}
 			
 			\item \textbf{Glavni sudionik: }$ $Korisnik$ $
@@ -299,7 +299,7 @@
 		\end{packed_item}
 		
 		
-		\noindent \underbar{\textbf{UC$ $5.1$ $ -$ $Izmjena korisničkog računa$ $}}
+		\noindent \underbar{\textbf{UC$ $6.1$ $ -$ $Izmjena korisničkog računa$ $}}
 		\begin{packed_item}
 			
 			\item \textbf{Glavni sudionik: }$ $Registrirani korisnik$ $
@@ -321,7 +321,7 @@
 		\end{packed_item}
 		
 		
-			\noindent \underbar{\textbf{UC$ $5.2$ $ -$ $Uklanjanje korisničkog računa$ $}}
+			\noindent \underbar{\textbf{UC$ $6.2$ $ -$ $Uklanjanje korisničkog računa$ $}}
 		\begin{packed_item}
 			
 			\item \textbf{Glavni sudionik: }$ $Planinar$ $
@@ -341,7 +341,7 @@
 			\end{packed_enum}
 		\end{packed_item}
 	
-		\noindent \underbar{\textbf{UC$ $6$ $ -$ $Pretraživanje korisnika po imenu i prezimenu $ $}}
+		\noindent \underbar{\textbf{UC$ $7$ $ -$ $Pretraživanje korisnika po imenu i prezimenu $ $}}
 		\begin{packed_item}
 			
 			\item \textbf{Glavni sudionik: }$ $Planinar$ $
@@ -360,7 +360,7 @@
 			\end{packed_enum}
 		\end{packed_item}
 	
-				\noindent \underbar{\textbf{UC$ $7$ $ -$ $Pregledavanje profila drugog planinara$ $}}
+				\noindent \underbar{\textbf{UC$ $8$ $ -$ $Pregledavanje profila drugog planinara$ $}}
 			\begin{packed_item}
 				
 				\item \textbf{Glavni sudionik: }$ $Planinar$ $
@@ -379,7 +379,7 @@
 			\end{packed_item}
 			
 	
-			\noindent \underbar{\textbf{UC$ $8$ $ -$ $Slanje zahtjeva za prijateljstvom$ $}}
+			\noindent \underbar{\textbf{UC$ $9$ $ -$ $Slanje zahtjeva za prijateljstvom$ $}}
 		\begin{packed_item}
 			
 			\item \textbf{Glavni sudionik: }$ $Planinar$ $
@@ -397,155 +397,223 @@
 			\end{packed_enum}
 		\end{packed_item}
 	
-		\noindent \underbar{\textbf{UC$ $10$ $ -$ $Pregled obavijesti o prihvaćenim zahtjevima  $ $}}
-	\begin{packed_item}
-		
-		\item \textbf{Glavni sudionik: }$ $Planinar$ $
-		\item  \textbf{Cilj:} $ $Prikazati obavijest o prihvaćenim zahtjevima$ $
-		\item  \textbf{Sudionici:} $ $Baza podataka$ $
-		\item  \textbf{Preduvjet:} $ $Korisnik prijavljen u sustav kao planinar$ $
-		\item  \textbf{Opis osnovnog tijeka:}
-		
-		\item[] \begin{packed_enum}
-			
-			\item $ $Korisnik odabire opciju "Moj profil"$ $
-			\item $ $Aplikacija prikazuje u listi obavijesti tko je planinaru prihvatio zahtjev $ $
-			\item $ $Nakon što korisnik pregleda zahtjev on nestaje iz liste obavijesti $ $	
-			
-		\end{packed_enum}
-	\end{packed_item}
-
-			\noindent \underbar{\textbf{UC$ $11$ $ -$ $Stvoriti vlastitu planinarsku stazu$ $}}
+		\noindent \underbar{\textbf{UC$ $10$ $ -$ $Pregledavanje pristiglih zahtjeva za prijateljstvo$ $}}
 		\begin{packed_item}
 			
 			\item \textbf{Glavni sudionik: }$ $Planinar$ $
-			\item  \textbf{Cilj:} $ $Stvoriti novu stazu prema unaprijed određenom predlošku i njeno dodavanje u bazu podataka$ $
-			\item  \textbf{Sudionici:} $ $Baza podataka$ $
-			\item  \textbf{Preduvjet:} $ $Korisnik prijavljen u sustav kao planinar$ $
+			\item  \textbf{Cilj:} $ $Planinar može vidjeti sve trenutno aktivne zahtjeve za prijateljstvo $ $
+			\item  \textbf{Sudionici:} $ $Baza podataka $ $
+			\item  \textbf{Preduvjet:} $ $Korisnik je prijavljen u sustav$ $
 			\item  \textbf{Opis osnovnog tijeka:}
 			
 			\item[] \begin{packed_enum}
 				
-				\item $ $Planinar odabire opciju "dodaj novu stazu"$ $
-				\item $ $Aplikacija otvara stranicu za dodavanje nove staze $ $
-				\item $ $Planinar ispuni formu za dodavanje staze$ $	
-				\item $ $Aplikacija doda stazu u bazu podataka$ $
+				\item $ $Planinaru stiže obavijest da je primio novi zahtjev za prijateljstvom ili želi pregledati pristigle zahtjeve za prijateljstvom $ $
+				\item $ $Planinar odabire opciju pregleda pristiglih zahtjeva za prijateljstvom koja se nalazi na zaglavlju stranice$ $
+				\item $ $Otvara se popis pristiglih zahtjeva za prijateljstvom čiji je status još uvijek aktivan$ $
+				
+			\end{packed_enum}
+		\end{packed_item}
+	
+		\noindent \underbar{\textbf{UC$ $10.1$ $ -$ $Prihvatiti zahtjev za prijateljstvom$ $}}
+		\begin{packed_item}
+			
+			\item \textbf{Glavni sudionik: }$ $Planinar$ $
+			\item  \textbf{Cilj:} $ $Prihvatiti zahtjev za pridruživanjem planinarskoj zajednici drugog planinara$ $
+			\item  \textbf{Sudionici:} $ $Baza podataka, planinar$ $
+			\item  \textbf{Preduvjet:} $ $Oba korisnika imaju korisnički račun, jedan korisnik je drugom poslao zahtjev za pridruživanjem vlastitoj planinarskoj zajednici$ $
+			\item  \textbf{Opis osnovnog tijeka:}
+			
+			\item[] \begin{packed_enum}
+				
+				\item $ $Planinaru stiže obavijest da je primio novi zahtjev za prijateljstvom koja se pokazuje na zaglavlju stranice pod opcijom "Pristgli zahtjevi"$ $
+				\item $ $Planinar potvrđuje zahtjev za prijateljstvo te se on uklanja s popisa$ $
+				\item $ $Na popis planinarske zajednice obojice planinara dodan je novi član ("prijatelj")$ $
+				
+			\end{packed_enum}
+			
+			\item  \textbf{Opis mogućih odstupanja:}
+			
+			\item[] \begin{packed_item}
+				
+				\item[2.a] $ $Planinar može odbiti zahtjev za prijateljstvom $ $
+				\item[] \begin{packed_enum}
+					
+					\item $ $Zahtjev za prijateljstvom se uklanja s popisa pristiglih zahtjeva $ $
+					\item $ $Odbijeni planinar ima mogućnost ponovnog slanja zahtjeva za prijateljstvo planinaru koji ga je odbio $ $
+					
+				\end{packed_enum}
+			\end{packed_item}
+		\end{packed_item}
+	
+		\noindent \underbar{\textbf{UC$ $11$ $ -$ $Pregled prihvaćenih zahtjeva$ $}}
+		\begin{packed_item}
+			
+			\item \textbf{Glavni sudionik: }$ $Planinar$ $
+			\item  \textbf{Cilj:} $ $Planinar može vidjeti sve zahtjeve za prijateljstvom koje su mu prihvatili drugi planinari $ $
+			\item  \textbf{Sudionici:} $ $Baza podataka $ $
+			\item  \textbf{Preduvjet:} $ $Korisnik je prijavljen u sustav$ $
+			\item  \textbf{Opis osnovnog tijeka:}
+			
+			\item[] \begin{packed_enum}
+				
+				\item $ $Planinaru stiže obavijest da je netko prihvatio njegov zahtjev za prijateljstvom ili planinar želi vidjeti sve prihvaćene zahtjeve za prijateljstvom$ $
+				\item $ $Planinar odabire opciju pregleda pristiglih zahtjeva za prijateljstvom koja se nalazi na zaglavlju stranice$ $
+				\item $ $Otvara se popis zahtjeva koje su trenutnom planinaru prihvatili ostali planinari$ $
+				
+			\end{packed_enum}
+		\end{packed_item}
+
+			\noindent \underbar{\textbf{UC$ $12$ $ -$ $Stvoriti planinarsku stazu$ $}}
+		\begin{packed_item}
+			
+			\item \textbf{Glavni sudionik: }$ $Planinar$ $
+			\item  \textbf{Cilj:} $ $Stvoriti novu stazu prema unaprijed određenom predlošku i dodati je na popis postojećih planinarskih staza$ $
+			\item  \textbf{Sudionici:} $ $Baza podataka$ $
+			\item  \textbf{Preduvjet:} $ $Korisnik prijavljen u sustav$ $
+			\item  \textbf{Opis osnovnog tijeka:}
+			
+			\item[] \begin{packed_enum}
+				
+				\item $ $Planinar odabire opciju "Stvori novu stazu"$ $
+				\item $ $Sustav prikazuje stranicu s odgovarajućom predloškom za unos staze$ $
+				\item $ $Planinar ispunjava formu za dodavanje planinarske staze$ $
+					\begin{packed_enum}
+						\item Unosi naziv staze
+						\item Unosi početnu i završnu točku te duljinu staze
+						\item Unosi razliku nadmorskih visina početne i završne točke
+						\item Unosi zemljopisno područje staze (npr. planina na kojoj se staza nalazi)
+						\item Podrazumijevani scenarij je da planinar stazu želi objaviti kao javnu
+					\end{packed_enum}	
+				\item $ $Sustav dodaje stazu na popis postojećih planinarskih staza$ $
 			\end{packed_enum}
 		\item  \textbf{Opis mogućih odstupanja:}
 		
 		\item[] \begin{packed_item}
 			
-			\item[3.a] $ $Planinar unese neispravne podatke$ $
+			\item[3.a] $ $Planinar unese neispravne/nepotpune podatke$ $
 			\item[] \begin{packed_enum}
 				
 				\item $ $Dobiva obavijest o neispravnim poljima$ $
-				\item $ $Planinar ispravi neispravna polja i završi unos ili odustane od dodavanja nove staze$ $
+				\item $ $Planinar ispravi neispravna polja i završi unos ili odustane od dodavanja nove planinarske staze$ $
 			\end{packed_enum}
-			\item[4.a] $ $Staza je već postojeća$ $
+			\item[4.a] $ $Postoji staza s istim imenom i istom polaznom i završnom točkom ? @TODO Martinović - pitaj Katarinu je li ovo obavezno$ $
 			\item[] \begin{packed_enum}
-				\item $ $Planinar dobiva obavijest da je staza već postojeća i preusmjerava se na unos nove staze$ $
+				\item $ $Planinar dobiva obavijest da je staza već postojeća te ostaje na istoj formi za unos staze s mogućnošću izmjene unešenih podataka$ $
 		\end{packed_enum}
+			\item[5.a] $ $Planinar označava stazu kao privatnu$ $
+			\item[] \begin{packed_enum}
+				\item $ $ Staza ostaje vidljiva samo planinaru koji ju je stvorio $ $
+			\end{packed_enum}
 		\end{packed_item}
 		\end{packed_item}
 		
-			\noindent \underbar{\textbf{UC$ $12$ $ -$ $Pregled stvorenih staza$ $}}
+			\noindent \underbar{\textbf{UC$ $13$ $ -$ $Pregled vlastitih planinarskih staza$ $}}
 		\begin{packed_item}
 			
 			\item \textbf{Glavni sudionik: }$ $Planinar$ $
-			\item  \textbf{Cilj:} $ $Pregled svih staza koje je planinar stvorio$ $
+			\item  \textbf{Cilj:} $ $Omogućiti pregled svih staza koje je planinar stvorio$ $
 			\item  \textbf{Sudionici:} $ $Baza podataka$ $
-			\item  \textbf{Preduvjet:} $ $Korisnik prijavljen u sustav kao planinar i stvorio je barem jednu stazu$ $
+			\item  \textbf{Preduvjet:} $ $Korisnik prijavljen u sustav$ $
 			\item  \textbf{Opis osnovnog tijeka:}
 			
 			\item[] \begin{packed_enum}
-				
-				\item $ $Planinar odabire opciju "Moji izleti"$ $
-				\item $ $Aplikacija prikaže sve do tada stvorene izlete tog korisnika$ $
+				\item $ $Planinar odlazi na svoj profil odabirom opcije "Moj profil" na zaglavlju ili podnožju stranice$ $
+				\item $ $Planinar na svom profilu odabire opciju "Moje staze"$ $
+				\item $ $Sustav dohvaća sve staze iz baze podataka koje je stvorio planinar te ih prikazuje u odgovarajućem obliku$ $
 			\end{packed_enum}
+		\item  \textbf{Opis mogućih odstupanja:}
+			\item[] \begin{packed_item}
+				
+				\item[3.a] $ $Planinar nema nijednu stvorenu stazu$ $
+				\item[] \begin{packed_enum}
+					\item $ $Prikazuje se odgovarajuća poruka te se nudi opcija za stvaranje vlastite staze$ $
+				\end{packed_enum}
+			\end{packed_item}
 		\end{packed_item}
 	
-			\noindent \underbar{\textbf{UC$ $13$ $ -$ $Stvoriti događaj$ $}}
+			\noindent \underbar{\textbf{UC$ $14$ $ -$ $Stvoriti događaj$ $}}
 		\begin{packed_item}
 			
 			\item \textbf{Glavni sudionik: }$ $Planinar$ $
 			\item  \textbf{Cilj:} $ $Stvoriti novi događaj koji će biti vidljiv svim korisnicima s popisa planinarske zajednice kreatora događaja$ $
-			\item  \textbf{Sudionici:} $ $Baza podataka, pozvani Planinari$ $
-			\item  \textbf{Preduvjet:} $ $Korisnik prijavljen u sustav kao planinar$ $
+			\item  \textbf{Sudionici:} $ $Baza podataka, članovi planinarske zajednice kreatora događaja (pozvani planinari)$ $
+			\item  \textbf{Preduvjet:} $ $Korisnik prijavljen u sustav$ $
 			\item  \textbf{Opis osnovnog tijeka:}
 			
 			\item[] \begin{packed_enum}
 				
-				\item $ $Planinar odabire opciju "Organiziraj događaj"$ $
-				\item $ $Aplikacija otvara stranicu za kreiranje novog događaja$ $
-				\item $ $Planinar ispuni formu za novi događaj$ $	
-				\item $ $Aplikacija stvori novi događaj i obavijesti sve pozvane planinare$ $
+				\item $ $Planinar odabire opciju "Organiziraj događaj" koja će biti ponuđena na zidu planinarske zajednice$ $
+				\item $ $Sustav preusmjerava korisnika na stranicu s unaprijed pripremljenim predloškom za stvaranje događaja$ $
+				\item $ $Planinar ispunjava popunjava predložak za stvaranje događaja$ $	
+				\item $ $Sustav stvara novi događaj i sprema ga u bazu podataka$ $
+				\item $ $Stvoreni događaj vidljiv je svim članovima planinarske zajednice organizatora$ $ 
 			\end{packed_enum}
 			\item  \textbf{Opis mogućih odstupanja:}
 			
 			\item[] \begin{packed_item}
 				
-				\item[3.a] $ $Planinar unese neispravne podatke$ $
+				\item[3.a] $ $Planinar unosi nepotpune podatke$ $
 				\item[] \begin{packed_enum}
-					
-					\item $ $Dobiva obavijest o neispravnim poljima$ $
+					\item $ $Na predlošku se ispisuju poruke pogreške$ $
 					\item $ $Planinar ispravi neispravna polja i završi unos ili odustane od stvaranja novog događaja$ $
 				\end{packed_enum}
 			\end{packed_item}
 		\end{packed_item}
 	
 	
-			\noindent \underbar{\textbf{UC$ $14$ $ -$ $Dodavanje posjećenih planinarskih domova u arhivu$ $}}
+			\noindent \underbar{\textbf{UC$ $15$ $ -$ $Dodavanje posjećenih domova u arhivu$ $}}
 		\begin{packed_item}
 			
 			\item \textbf{Glavni sudionik: }$ $Planinar$ $
-			\item  \textbf{Cilj:} $ $Omogućiti planinaru arhiviranje liste posjećenih domova$ $
+			\item  \textbf{Cilj:} $ $Omogućiti planinaru arhiviranje posjećenih domova$ $
 			\item  \textbf{Sudionici:} $ $Baza podataka, dežurni planinar$ $
 			\item  \textbf{Preduvjet:} $ $Korisnik prijavljen u sustav kao planinar$ $
 			\item  \textbf{Opis osnovnog tijeka:}
 			
 			\item[] \begin{packed_enum}
 				
-				\item $ $Planinar odabire opciju za dodavanje novog doma u arhivu i upisuje dom koji je posjetio$ $
-				\item $ $Aplikacija šalje zahtjev za odobrenje dežurnom planinaru u odbranom domu$ $
-				\item $ $Dežurni planinar odobrava ili odbija zahtjev$ $	
-				\item $ $Aplikacija dodaje dom u arhivu, ako je dežurni planinar to odobrio$ $
+				\item $ $Korisnik pretražuje posjećeni dom i odabire opciju "Dodaj u arhivu" $ $
+				\item $ $Sustav šalje svim \underbar{dežurnim planinarima} zaduženima za odabrani dom korisnikov zahtjev za dodavanjem doma u listu posjećenih$ $
+				\item $ $Dežurni planinar odobrava zahtjev za posjetom$ $	
+				\item $ $Sustav na popis posjećenih domova u arhivi dodaje i odabrani dom$ $
 			\end{packed_enum}
 			\item  \textbf{Opis mogućih odstupanja:}
 			
 			\item[] \begin{packed_item}
 				
-				\item[1.a] $ $Unos nepostojećeg doma$ $
+				\item[1.a] $ $Dežurni planinar odbija zahtjev za potvrdu posjete$ $
 				\item[] \begin{packed_enum}
-					
-					\item $ $Planinar dobiva obavijest o neispravnom unosu i preusmjerava se na ponovni unos doma$ $
+					\item $ $Planinar ima priliku ponovno poslati zahtjev za dodavanjem planinarskog doma u arhivu$ $
 				\end{packed_enum}
 			\end{packed_item}
 		\end{packed_item}
 	
-		\noindent \underbar{\textbf{UC$ $15$ $ -$ $Dobivanje bedža$ $}}
+		\noindent \underbar{\textbf{UC$ $16$ $ -$ $Zaslužiti priznanje (bedž)$ $}}
 	\begin{packed_item}
 		
 		\item \textbf{Glavni sudionik: }$ $Planinar$ $
-		\item  \textbf{Cilj:} $ $S obzirom na aktivnost planinara njemu se dodjeljuju bedževi a ostvarena postignuća$ $
+		\item  \textbf{Cilj:} $ $S obzirom na aktivnost planinara dodjeljuju mu se priznanja za ostvarena postignuća u obliku bedževa$ $
 		\item  \textbf{Sudionici:} $ $Baza podataka$ $
-		\item  \textbf{Preduvjet:} $ $Korisnik prijavljen u sustav kao planinar i ostvario je zadane ciljeve za određeni bedž$ $
+		\item  \textbf{Preduvjet:} $ $Korisnik je prijavljen u sustav kao planinar te je ostvario aktivnosti potrebne za dobivanje bedža (npr. 10 posjećenih planinarskih domova, prepješačenih 30km i sl.)$ $
 		\item  \textbf{Opis osnovnog tijeka:}
 		
 		\item[] \begin{packed_enum}
 			
-			\item $ $Planinar posjećuje domove i staze$ $
-			\item $ $Aplikacija prati njegovu aktivnost i kada postigne zadane ciljeve dodjeli mu bedž$ $
-			\item $ $Nakon dobivanja bedža on postaje vidljiv na korisničkom profilu$ $
+			\item $ $Planinar posjećuje domove i staze te ih dodaje u arhivu posjećenih domova / staza$ $
+			\item $ $Sustav prati njegovu aktivnost te u slučaju zadovoljavanja određenih kriterija dodjeljuje mu bedž$ $
+			\item $ $Na "zidu planinarske zajednice" svim članovima planinarske zajednice planinara koji je dobio bedž prikazuje se obavijest o zaprimanju bedža$ $
+			\item $ $ Bedž postaje vidljiv na korisničkom profilu planinara$ $
 		\end{packed_enum}
 	\end{packed_item}
 					
-		\noindent \underbar{\textbf{UC$ $16$ $ -$ $Uloga dežurnog planinara$ $}}
+		\noindent \underbar{\textbf{UC$ $16$ $ -$ $Dodjeljivanje uloge "dežurni planinar"$ $}}
 		\begin{packed_item}
 			
-			\item \textbf{Glavni sudionik: }$ $Planinar$ $
-			\item  \textbf{Cilj:} $ $Dodjela uloge dežurnog planinara za određeni planinarski dom pojedinom planinaru$ $
-			\item  \textbf{Sudionici:} $ $Administrator$ $
-			\item  \textbf{Preduvjet:} $ $Korisnik prijavljen u sustav kao planinar $ $
+			\item \textbf{Glavni sudionik: }$ $Administrator$ $
+			\item  \textbf{Cilj:} $ $Dodjela uloga "dežurnog planinara" planinaru koji je tu ulogu zatražio$ $
+			\item  \textbf{Sudionici:} $ $baza podataka, dežurni planinar$ $
+			\item  \textbf{Preduvjet:} $ $Korisnik prijavljen u sustav kao administrator $ $
 			\item  \textbf{Opis osnovnog tijeka:}
 			
 			\item[] \begin{packed_enum}
@@ -655,71 +723,6 @@
 				\item $ $Korisnik odabire opiju “Ukloni račun”$ $
 				\item $ $Korisnički račun se briše iz baze podataka$ $
 				\item $ $Aplikacija preusmjerava korisnika na naslovnu stranicu$ $
-			\end{packed_enum}
-		\end{packed_item}
-	
-		\noindent \underbar{\textbf{UC$ $22$ $ -$ $Slanje zahtjeva za prijateljstvo drugom planinaru$ $}}
-		\begin{packed_item}
-			
-			\item \textbf{Glavni sudionik: }$ $Planinar$ $
-			\item  \textbf{Cilj:} $ $Poslati zahtjev za prijateljstvo drugom planinaru $ $
-			\item  \textbf{Sudionici:} $ $Baza podataka, planinar$ $
-			\item  \textbf{Preduvjet:} $ $Oba planinara imaju korisnički račun i prijavljeni su u sustav $ $
-			\item  \textbf{Opis osnovnog tijeka:}
-			
-			\item[] \begin{packed_enum}
-				
-				\item $ $Pretražiti planinara po imenu i prezimenu$ $
-				\item $ $Odlazak na profil drugog planinara$ $
-				\item $ $Odabir opcije za slanje zahtjeva za prijateljstvo $ $
-				
-			\end{packed_enum}
-		\end{packed_item}
-	
-		\noindent \underbar{\textbf{UC$ $23$ $ -$ $Prihvaćanje zahtjeva za prijateljstvo$ $}}
-		\begin{packed_item}
-			
-			\item \textbf{Glavni sudionik: }$ $Planinar$ $
-			\item  \textbf{Cilj:} $ $Postati prijatelj s drugim planinarom$ $
-			\item  \textbf{Sudionici:} $ $Baza podataka, planinar$ $
-			\item  \textbf{Preduvjet:} $ $Oba korisnika imaju korisnički račun, jedan korisnik je drugom poslao zahtjev za prijateljstvo$ $
-			\item  \textbf{Opis osnovnog tijeka:}
-			
-			\item[] \begin{packed_enum}
-				
-				\item $ $Planinaru stigne zahtjev za prijateljstvo od drugog planinara$ $
-				\item $ $Planinar potvrdi dobiveni zahtjev$ $
-				\item $ $Planinari postaju prijatelji$ $
-				
-			\end{packed_enum}
-			
-			\item  \textbf{Opis mogućih odstupanja:}
-			
-			\item[] \begin{packed_item}
-				
-				\item[2.a] $ $Planinar odbije zahtjev za prijateljstvo $ $
-				\item[] \begin{packed_enum}
-					
-					\item $ $Odbijeni planinar ima mogućnost ponovnog slanja zahtjeva za prijateljstvo planinaru koji ga je odbio $ $
-					
-				\end{packed_enum}
-			\end{packed_item}
-		\end{packed_item}
-	
-		\noindent \underbar{\textbf{UC$ $24$ $ -$ $Pregledavanje pristiglih zahtjeva za prijateljstvo$ $}}
-		\begin{packed_item}
-			
-			\item \textbf{Glavni sudionik: }$ $Planinar$ $
-			\item  \textbf{Cilj:} $ $Planinar vidi tko mu je sve posalo zahtjev za prijateljstvo $ $
-			\item  \textbf{Sudionici:} $ $Baza podataka $ $
-			\item  \textbf{Preduvjet:} $ $Korisnik je prijavljen u sustav $ $
-			\item  \textbf{Opis osnovnog tijeka:}
-			
-			\item[] \begin{packed_enum}
-				
-				\item $ $Prikaz obavijesti tko je planinaru poslao zahtjev$ $
-				\item $ $Mogućnost pregleda svih zahtjeva koji su pristigli, a još nisu ni odbijeni ni prihvaćeni$ $
-				
 			\end{packed_enum}
 		\end{packed_item}
 	
