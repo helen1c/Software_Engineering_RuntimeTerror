@@ -561,22 +561,157 @@
 			\end{packed_item}
 		\end{packed_item}
 	
-	
-			\noindent \underbar{\textbf{UC$ $15$ $ -$ $Dodavanje posjećenih domova u arhivu$ $}}
+		\noindent \underbar{\textbf{UC$ $15$ $ -$ $Sudjelovati u događajima planinarske zajednice$ $}}
 		\begin{packed_item}
 			
 			\item \textbf{Glavni sudionik: }$ $Planinar$ $
-			\item  \textbf{Cilj:} $ $Omogućiti planinaru arhiviranje posjećenih domova$ $
-			\item  \textbf{Sudionici:} $ $Baza podataka, dežurni planinar$ $
-			\item  \textbf{Preduvjet:} $ $Korisnik prijavljen u sustav kao planinar$ $
+			\item  \textbf{Cilj:} $ $Događaje stvorene u vlastitoj planinarskoj zajednici označiti s "Dolazim"$ $
+			\item  \textbf{Sudionici:} $ $Baza podataka$ $
+			\item  \textbf{Preduvjet:} $ $Korisnik prijavljen u sustav s ulogom \underbar{planinar}$ $
 			\item  \textbf{Opis osnovnog tijeka:}
 			
 			\item[] \begin{packed_enum}
 				
-				\item $ $Korisnik pretražuje posjećeni dom i odabire opciju "Dodaj u arhivu" $ $
-				\item $ $Sustav šalje svim \underbar{dežurnim planinarima} zaduženima za odabrani dom korisnikov zahtjev za dodavanjem doma u listu posjećenih$ $
-				\item $ $Dežurni planinar odobrava zahtjev za posjetom$ $	
-				\item $ $Sustav na popis posjećenih domova u arhivi dodaje i odabrani dom$ $
+				\item $ $Planinar odlazi na zid objava vlastite planinarske zajednice$ $
+				\item $ $Planinar pregledava stvorene događaje te određeni događaj označi sa "Dolazim"$ $
+				\item $ $Sustav pohranjuje njegovu odluku u bazu podataka$ $	
+				\item $ $Planinar je dodan na popis ljudi koji dolaze na odabrani događaj$ $ 
+			\end{packed_enum}
+			\item  \textbf{Opis mogućih odstupanja:}
+				
+			\item[] \begin{packed_item}
+				
+				\item[3.a] $ $Planinar je shvatio da ipak ne može doći na odabrani događaj$ $
+				\item[] \begin{packed_enum}
+					\item $ $Na konkretnom događaju odabire opciju "Otkaži dolazak"$ $
+					\item $ $Sustav uklanja planinara s popisa ljudi koji dolaze na događaj$ $
+				\end{packed_enum}
+			\end{packed_item}
+		\end{packed_item}
+	
+		\noindent \underbar{\textbf{UC$ $16$ $ -$ $Zahtjev za dodjeljivanje uloge "dežurni planinar"$ $}}
+		\begin{packed_item}
+			
+			\item \textbf{Glavni sudionik: }$ $Planinar$ $
+			\item  \textbf{Cilj:} $ $Dodjela uloga "dežurnog planinara" planinaru koji je tu ulogu zatražio$ $
+			\item  \textbf{Sudionici:} $ $Baza podataka, Administrator$ $
+			\item  \textbf{Preduvjet:} $ $Korisnik prijavljen u sustav s ulogom \underbar{planinar}$ $ 
+			\item  \textbf{Opis osnovnog tijeka:}
+			
+			\item[] \begin{packed_enum}
+				
+				\item $ $Planinar pretražuje planinarski dom za koji želi biti dežurni te se prijavi za dežurnog planinara odabirom opcije "Dežurni planinar"$ $
+				\item $ $Planinar u novootvorenu formu unosi kratak tekst te opcionalno dokaz kojim bi opravdao svoj zahtjev za dežurnog planinara $ $ ? JE LI POTREBNO?
+				\item $ $Sustav proslijedi zahtjev \underbar{Administratoru}$ $
+				\item $ $Administrator dodjeljuje ulogu \underbar{dežurnog planinara} planinaru koji je poslao zahtjev prema obrascu \textbf{UC18}$ $
+				\item $ $Nakon prihvaćanja zahtjeva dežurni planinar vidi sve zahtjeve za posjetom za zatraženi dom$ $
+			\end{packed_enum}
+		\item  \textbf{Opis mogućih odstupanja:}
+		
+		\item[] \begin{packed_item}
+			
+			\item[3.a] $ $Administrator odbija dodijeliti ulogu dežurnog planinara$ $
+			\item[] \begin{packed_enum}
+				\item $ $Sustav uklanja zahtjev s popisa zahtjeva za dežurnog planinara na profilu administratora$ $
+				\item $ $Planinaru se omogućuje ponovna prijava za "dežurnog planinara" za konkretni planinarski dom $ $
+			\end{packed_enum}
+		\end{packed_item}
+		\end{packed_item}
+	
+			\noindent \underbar{\textbf{UC$ $17$ $ -$ $Pregled zahtjeva za dežurnog planinara$ $}}
+		\begin{packed_item}
+			
+			\item \textbf{Glavni sudionik: }$ $Administrator$ $
+			\item  \textbf{Cilj:} $ $Pregledati pristigle zahtjeve za dežurnog planinara$ $
+			\item  \textbf{Sudionici:} $ $Baza podataka$ $
+			\item  \textbf{Preduvjet:} $ $Korisnik prijavljen u sustav s ulogom \underbar{administrator} $ $
+			\item  \textbf{Opis osnovnog tijeka:}
+			
+			\item[] \begin{packed_enum}
+				
+				\item $ $Administrator na vlastitom profilu odabire opciju "Zahtjevi za dežurnog planinara"$ $
+				\item $ $Sustav dohvaća iz baze podataka sve zahtjeve za dežurnog planinara te ih prikazuje u odgovarajućem obliku$ $
+			\end{packed_enum}
+		\end{packed_item}
+		
+		\noindent \underbar{\textbf{UC$ $18$ $ -$ $Prihvatiti/odbiti zahtjev za dežurnog planinara$ $}}
+		\begin{packed_item}
+			
+			\item \textbf{Glavni sudionik: }$ $Administrator$ $
+			\item  \textbf{Sudionici:} $ $Baza podataka, Planinar (koji je zatražio zahtjev)$ $
+			\item  \textbf{Preduvjet:} $ $Korisnik prijavljen u sustav s ulogom \underbar{administrator}$ $
+			\item  \textbf{Opis osnovnog tijeka:}
+			
+			\item[] \begin{packed_enum}
+				
+				\item $ $Administrator pregledava zahtjeve za dežurnog planinara prema obrascu \textbf{UC17} $ $
+				\item $ $Administrator prihvaća zahtjev za dežurnog planinara$ $
+				\item $ $Sustav sprema novonastalu vezu između planinara i planinarskog doma u bazu podataka$ $
+				\item $ $Planinaru kojem je zahtjev potvrđen se na popis domova dodaje traženi dom$ $
+				
+				
+			\end{packed_enum}
+			\item  \textbf{Opis mogućih odstupanja:}
+			
+			\item[] \begin{packed_item}
+				
+				\item[1.a] $ $Administrator odbija zahtjev za dežurnog planinara$ $
+				\item[] \begin{packed_enum}
+					\item $ $Planinar ima priliku ponovno poslati zahtjev za dežurnog planinara uz konkretniji dokaz $ $
+					\item @TODO Ivan -- pitati Katarinu trebamo li ove dokaze, samo kompliciraju
+				\end{packed_enum}
+			\end{packed_item}
+		\end{packed_item} 
+		
+			
+	
+		@TODOIvan pitati -- Katarina je li ovo uopće potrebno?
+		
+		\noindent \underbar{\textbf{UC$ $19$ $ -$ $Pregled domova za koje je zadužen$ $}}
+		\begin{packed_item}
+			
+			\item \textbf{Glavni sudionik: }$ $Dežurni planinar$ $
+			\item  \textbf{Cilj:} $ $Pružiti popis planinarskih domova za koje je konkretni dežurni planinar zadžuen$ $
+			\item  \textbf{Sudionici:} $ $Baza podataka$ $
+			\item  \textbf{Preduvjet:} $ $Korisnik prijavljen u sustav s ulogom \underbar{dežurni planinar} $ $
+			\item  \textbf{Opis osnovnog tijeka:}
+			
+			\item[] \begin{packed_enum}
+				
+				\item $ $Dežurni planinar odlazi na svoj profil te odabire karticu "Moja dežurstva"$ $
+				\item $ $Sustav dohvaća iz baze podataka sve domove za koje je konkretni planinar zadužen te ih prikazuje u odgovarajućem obliku$ $
+			\end{packed_enum}
+		\end{packed_item}
+	
+		\noindent \underbar{\textbf{UC$ $20$ $ -$ $Pregled zahtjeva za posjetom$ $}}
+		\begin{packed_item}
+			
+			\item \textbf{Glavni sudionik: }$ $Dežurni planinar$ $
+			\item  \textbf{Cilj:} $ $Pregledati zahtjeve za posjetom određenom planinarskom domu$ $
+			\item  \textbf{Sudionici:} $ $Baza podataka$ $
+			\item  \textbf{Preduvjet:} $ $Korisnik prijavljen u sustav s ulogom \underbar{dežurni planinar} $ $
+			\item  \textbf{Opis osnovnog tijeka:}
+			
+			\item[] \begin{packed_enum}
+				
+				\item $ $Dežurni planinar na vlastitom profilu odabire opciju "Zahtjevi za posjetom"$ $
+				\item $ $Sustav dohvaća sve zahtjeve za posjetom domovima za koje je zadužen konkretni dežurni planinar te ih prikazuje$ $
+			\end{packed_enum}
+		\end{packed_item}
+	
+		\noindent \underbar{\textbf{UC$ $21$ $ -$ $Prihvatiti/odbiti zahtjev za posjetom planinarskom domu$ $}}
+		\begin{packed_item}
+			
+			\item \textbf{Glavni sudionik: }$ $Dežurni planinar$ $
+			\item  \textbf{Sudionici:} $ $Baza podataka, Planinar$ $
+			\item  \textbf{Preduvjet:} $ $Korisnik prijavljen u sustav s ulogom \underbar{dežurni planinar}$ $
+			\item  \textbf{Opis osnovnog tijeka:}
+			
+			\item[] \begin{packed_enum}
+				
+				\item $ $Dežurni planinar pregledava zahtjeve za posjetom prema obrascu \textbf{UC20} $ $
+				\item $ $Dežurni planinar prihvaća zahtjev za posjetom te se dom dodaje u arhivu posjećenih domova planinaru koji je poslao zahtjev$ $
+
 			\end{packed_enum}
 			\item  \textbf{Opis mogućih odstupanja:}
 			
@@ -587,15 +722,37 @@
 					\item $ $Planinar ima priliku ponovno poslati zahtjev za dodavanjem planinarskog doma u arhivu$ $
 				\end{packed_enum}
 			\end{packed_item}
+		\end{packed_item} 
+	
+		
+		
+	
+	
+			\noindent \underbar{\textbf{UC$ $22$ $ -$ $Dodavanje posjećenih domova u arhivu$ $}}
+		\begin{packed_item}
+			
+			\item \textbf{Glavni sudionik: }$ $Planinar$ $
+			\item \textbf{Cilj:} $ $Omogućiti planinaru arhiviranje posjećenih domova$ $
+			\item  \textbf{Sudionici:} $ $Baza podataka, dežurni planinar$ $
+			\item  \textbf{Preduvjet:} $ $Korisnik prijavljen u sustav kao planinar$ $
+			\item  \textbf{Opis osnovnog tijeka:}
+			
+			\item[] \begin{packed_enum}
+				
+				\item $ $Korisnik pretražuje posjećeni dom i odabire opciju "Dodaj u arhivu" $ $
+				\item $ $Sustav šalje svim \underbar{dežurnim planinarima} zaduženima za odabrani dom korisnikov zahtjev za dodavanjem doma u listu posjećenih$ $
+				\item $ $Dežurni planinar upravlja zahtjevom za posjetom prema obrascu \textbf{UC19}$ $	
+			\end{packed_enum}
+	
 		\end{packed_item}
 	
-		\noindent \underbar{\textbf{UC$ $16$ $ -$ $Zaslužiti priznanje (bedž)$ $}}
+		\noindent \underbar{\textbf{UC$ $23$ $ -$ $Zaslužiti priznanje (bedž)$ $}}
 	\begin{packed_item}
 		
 		\item \textbf{Glavni sudionik: }$ $Planinar$ $
 		\item  \textbf{Cilj:} $ $S obzirom na aktivnost planinara dodjeljuju mu se priznanja za ostvarena postignuća u obliku bedževa$ $
 		\item  \textbf{Sudionici:} $ $Baza podataka$ $
-		\item  \textbf{Preduvjet:} $ $Korisnik je prijavljen u sustav kao planinar te je ostvario aktivnosti potrebne za dobivanje bedža (npr. 10 posjećenih planinarskih domova, prepješačenih 30km i sl.)$ $
+		\item  \textbf{Preduvjet:} $ $Korisnik je prijavljen u sustav s ulogom \underbar{planinar} te je ostvario aktivnosti potrebne za dobivanje bedža (npr. 10 posjećenih planinarskih domova, prepješačenih 30km i sl.)$ $
 		\item  \textbf{Opis osnovnog tijeka:}
 		
 		\item[] \begin{packed_enum}
@@ -605,90 +762,9 @@
 			\item $ $Na "zidu planinarske zajednice" svim članovima planinarske zajednice planinara koji je dobio bedž prikazuje se obavijest o zaprimanju bedža$ $
 			\item $ $ Bedž postaje vidljiv na korisničkom profilu planinara$ $
 		\end{packed_enum}
-	\end{packed_item}
-					
-		\noindent \underbar{\textbf{UC$ $16$ $ -$ $Dodjeljivanje uloge "dežurni planinar"$ $}}
-		\begin{packed_item}
-			
-			\item \textbf{Glavni sudionik: }$ $Administrator$ $
-			\item  \textbf{Cilj:} $ $Dodjela uloga "dežurnog planinara" planinaru koji je tu ulogu zatražio$ $
-			\item  \textbf{Sudionici:} $ $baza podataka, dežurni planinar$ $
-			\item  \textbf{Preduvjet:} $ $Korisnik prijavljen u sustav kao administrator $ $
-			\item  \textbf{Opis osnovnog tijeka:}
-			
-			\item[] \begin{packed_enum}
-				
-				\item $ $Planinar odabere planinarski dom za koji želi biti dežurni te se prijavi za dežurnog planinara$ $
-				\item $ $Aplikacija proslijedi zahtjev Administratoru$ $
-				\item $ $Administrator na temelju podataka o planinaru odluči da li će prihvatiti ili odbiti zahtjev$ $
-				\item $ $Planinar dobiva ovlasti dežurnog planinara u slučaju da je Administrator odobrio zahtjev$ $
-			\end{packed_enum}
-		\end{packed_item}		
+	\end{packed_item}	
 	
-		\noindent \underbar{\textbf{UC$ $17$ $ -$ $Upravljanje zahtjevima za posjet$ $}}
-		\begin{packed_item}
-			
-			\item \textbf{Glavni sudionik: }$ $Dežurni planinar$ $
-			\item  \textbf{Cilj:} $ $Provjera da li je planinar posjetio dom, dežurni planinar treba mu potvrditi posjetu$ $
-			\item  \textbf{Sudionici:} $ $Baza podataka, planinar$ $
-			\item  \textbf{Preduvjet:} $ $Korisnik prijavljen u sustav kao dežurni planinar $ $
-			\item  \textbf{Opis osnovnog tijeka:}
-			
-			\item[] \begin{packed_enum}
-				
-				\item $ $Planinar koji je posjetio dom šalje zahtjev za potvrdu dežurnom planinaru$ $
-				\item $ $Aplikacija proslijedi zahtjev dežurnom planinaru$ $
-				\item $ $Dežurni planinar potvrdi ili odbije zahtjev, shodno tome da li je planinar posjetio dom ili ne$ $
-				\item $ $Aplikacija u slučaju potvrđenog zahtjeva doda navedeni planinarski dom u planinarevu arhivu posjećenih domova$ $
-			\end{packed_enum}
-		\end{packed_item}
-				
-				
-			\noindent \underbar{\textbf{UC$ $18$ $ -$ $Pregled zaduženih domova$ $}}
-				\begin{packed_item}
-					
-					\item \textbf{Glavni sudionik: }$ $Dežurni planinar$ $
-					\item  \textbf{Cilj:} $ $Pružanje pregleda liste domova za koje je zadužen dežurni planinar$ $
-					\item  \textbf{Sudionici:} $ $Baza podataka$ $
-					\item  \textbf{Preduvjet:} $ $Korisnik prijavljen u sustav kao dežurni planinar $ $
-					\item  \textbf{Opis osnovnog tijeka:}
-					
-					\item[] \begin{packed_enum}
-						
-						\item $ $Planinar odabere opciju "dežurstva"$ $
-						\item $ $Aplikacija pruža planinaru pregled domova za koje je zadužen$ $
-				\end{packed_enum}
-			\end{packed_item}
-		
-		\noindent \underbar{\textbf{UC$ $19$ $ -$ $Upravljanje zahtjevima za dežurnog planinara$ $}}
-		\begin{packed_item}
-			
-			\item \textbf{Glavni sudionik: }$ $Administrator$ $
-			\item  \textbf{Cilj:} $ $Pregledanje i odobravanje/odbijanje zahtjeva za dežurnog planinara$ $
-			\item  \textbf{Sudionici:} $ $Baza podataka$ $
-			\item  \textbf{Preduvjet:} $ $Korisnik prijavljen u sustav kao administrator $ $
-			\item  \textbf{Opis osnovnog tijeka:}
-			
-			\item[] \begin{packed_enum}
-				
-				\item $ $Aplikacija proslijedi sve zahtjeve za dežurnog planinara administratoru$ $
-		
-				\item $ $Administrator u listi obavijesti vidi sve zahtjeve za dežurnog planinara, te ih prihvati ili odbije$ $
-				\item $ $Aplikacija proslijedi odgovor planinarima$ $
-			\end{packed_enum}
-		\item  \textbf{Opis mogućih odstupanja:}
-		
-		\item[] \begin{packed_item}
-			
-			\item[2.a] $ $Administrator nije zaprimio nijedan zahtjev$ $
-			\item[] \begin{packed_enum}
-				
-				\item $ $Administrator sam odabere dežurne planinare$ $
-			\end{packed_enum}
-		\end{packed_item}
-		\end{packed_item}
-	
-			\noindent \underbar{\textbf{UC$ $20$ $ -$ $Pregled poruka korisnika$ $}}
+			\noindent \underbar{\textbf{UC$ $24$ $ -$ $Pregled poruka korisnika$ $}}
 		\begin{packed_item}
 			
 			\item \textbf{Glavni sudionik: }$ $Administrator$ $
@@ -703,26 +779,6 @@
 				\item $ $Aplikacija proslijedi poslane poruke Administratoru$ $
 				\item $ $Administrator odabire opciju "sandučić"$ $
 				\item $ $Prikaže se lista sa porukama korisnika$ $
-			\end{packed_enum}
-		\end{packed_item}
-	
-		
-		\noindent \underbar{\textbf{UC$ $21$ $ -$ $Uklanjanje korisničkog računa$ $}}
-		\begin{packed_item}
-			
-			\item \textbf{Glavni sudionik: }$ $Planinar$ $
-			\item  \textbf{Cilj:} $ $Izbrisati vlastiti korisnički račun $ $
-			\item  \textbf{Sudionici:} $ $Baza podataka$ $
-			\item  \textbf{Preduvjet:} $ $Korisnik prijavljen u sustav kao planinar $ $
-			\item  \textbf{Opis osnovnog tijeka:}
-			
-			\item[] \begin{packed_enum}
-				
-				\item $ $Odlazak na “Moj profil”$ $
-				\item $ $Prikazuju se korisnički podatci planinara$ $
-				\item $ $Korisnik odabire opiju “Ukloni račun”$ $
-				\item $ $Korisnički račun se briše iz baze podataka$ $
-				\item $ $Aplikacija preusmjerava korisnika na naslovnu stranicu$ $
 			\end{packed_enum}
 		\end{packed_item}
 	
@@ -878,7 +934,7 @@
 			\end{packed_item}
 		\end{packed_item}
 	
-		\noindent \underbar{\textbf{UC$ $32$ $ -$ $Kontaktirati administratora u slučaju potrebe za stvaranjem novog planinarskog doma ili promjene infrastrukture već postojećeg $ $}}
+		\noindent \underbar{\textbf{UC$ $32$ $ -$ $Kontaktirati administratora$ $}}
 		\begin{packed_item}
 			
 			\item \textbf{Glavni sudionik: }$ $Planinar$ $
@@ -915,7 +971,7 @@
 			\end{packed_enum}
 		\end{packed_item}
 	
-		\noindent \underbar{\textbf{UC$ $33$ $ -$ $Administrator upravlja planinarskim stazama $ $}}
+		\noindent \underbar{\textbf{UC$ $34$ $ -$ $Administrator upravlja planinarskim stazama $ $}}
 		\begin{packed_item}
 			
 			\item \textbf{Glavni sudionik: }$ $Administrator$ $
@@ -934,7 +990,7 @@
 			\end{packed_enum}
 		\end{packed_item}
 	
-		\noindent \underbar{\textbf{UC$ $33$ $ -$ $Administrator briše korisnički račun $ $}}
+		\noindent \underbar{\textbf{UC$ $35$ $ -$ $Administrator briše korisnički račun $ $}}
 		\begin{packed_item}
 			
 			\item \textbf{Glavni sudionik: }$ $Administrator$ $
