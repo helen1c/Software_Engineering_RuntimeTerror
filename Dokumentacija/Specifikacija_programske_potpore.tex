@@ -1175,7 +1175,29 @@
 			\subsection{Sekvencijski dijagrami}
 				
 				\textbf{\textit{dio 1. revizije}}\\
+
+				\subsubsection{Obrazac uporabe UC9 - Obrisati vlastitu planinarsku stazu}
+
+				Prijavljeni korisnik (planinar) na vlastitom profilu ima mogućnost pregleda popisa svih staza koje je stvorio. Odabirom opcije ''Moje staze'' planinar šalje zahtjev poslužitelju za prikaz tih staza. Poslužitelj dohvaća sve njegove staze iz baze podataka i prikazuje ih planinaru na njegovom profilu. Planinar zatim može odabrati stazu koju želi ukloniti tako što odabere opciju ''Ukloni stazu''. Poslužitelj u bazi podataka provjerava vidljivost odabrane staze, odnosno je li ona javna ili privatna.  Ako u bazi podataka za odabranu stazu vrijedi da je javna, onda će korisnik od poslužitelja primiti poruku da je stazu nemoguće ukloniti. Inače, ako je staza privatna, poslužitelj će korisniku postaviti pitanje: ''Jeste li sigurni da želite ukloniti stazu?'' na što planinar može odgovoriti potvrdno ili odustati od brisanja. U slučaju potvrdnog odgovora, kojeg planinar šalje poslužitelju, poslužitelj će narediti bazi podataka da ukloni odabranu stazu s popisa staza i vratit će se odgovor prema planinaru da je staza uspješno uklonjena. Ako planinar odustane od brisanja, sustav će ga vratiti na popis vlastitih staza. 
+
+				\begin{figure}[H]
+					\includegraphics[scale=0.52]{dijagrami/seq-UC9.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+					\centering
+					\caption{Sekvencijski dijagram za UC9}
+					\label{fig:sekvencijski dijagrami}
+				\end{figure}
 				
+				\subsubsection{Obrasci uporabe UC10-UC11-UC11.1}
+
+				Prijavljeni korisnik (planinar) može drugom korisniku poslati zahtjev za pridruživanjem vlastitoj planinarskoj zajednici, odnosno zahtjev za prijateljstvom. Uvjet je da pošiljatelj i primatelj (planinari) imaju korisnički račun, drugim riječima da su se uspješno registrirali u aplikaciju. Planinar ima mogućnost pretraživanja drugih planinara po imenu i prezimenu. Poslužitelj će tu pretragu proslijediti bazi podataka koja će pronaći sve korisnike koji zadovoljavaju pretragu. Baza podataka vraća odgovarajuće korisnike poslužitelju koji ih onda prikazuje planinaru. Zatim planinar pošiljatelj odabire planinara iz prikazanih mu korisnika i odluči mu poslati zahtjev za prijateljstvom. Bilo koji planinar prijavljen u aplikaciju može vidjeti sve trenutno aktivne zahtjeve za prijateljstvo. U našem slučaju planinar primatelj može ili dobiti obavijest da je primio zahtjev ili može zatražiti pregled pristiglih zahtjeva. Kada planinar prima novi zahtjev poslužitelj prolongira zahtjev do planinara primatelja i vraća se povratna informacija do planinara pošiljatelja da je zahtjev uspješno poslan. Za to vrijeme u bazu podataka će se dodati taj zahtjev među aktivne zahtjeve za prijateljstvom. Ako planinar sam zatraži pregled svih zahtjeva to će napraviti tako da kontaktira poslužitelja koji će naredbu proslijediti bazi podataka. Baza podataka će tada dohvatiti aktivne zahtjeve za prijateljstvo i poslati ih poslužitelju koji će ih konačno prikazati planinaru. Planinar primatelj kod obrađivanja primljenog zahtjeva za prijateljstvo ima dvije mogućnosti: potvrditi ili odbiti zahtjev. U slučaju povrđivanja zahtjeva planinar primatelj će poslati potvrdu poslužitelju  koji će javiti planinaru primatelju da je prihvaćen njegov zahtjev za prijateljstvo. Istovremeno baza podataka će ukloniti zahtjev s popisa aktivnih zahtjeva. Ukoliko planinar primatelj odluči odbiti zahtjev, onda se taj zahtjev također uklanja s popisa aktivnih zahtjeva u bazi podataka i planinar pošiljatelj može ponovno poslati zahtjev tom istom planinaru koji ga je već odbio.
+
+				\begin{figure}[H]
+					\includegraphics[scale=0.5]{dijagrami/seq-UC10 - UC11 - UC11.1.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+					\centering
+					\caption{Sekvencijski dijagram za UC10 - UC11 - UC11.1}
+					\label{fig:sekvencijski dijagrami}
+				\end{figure}
+
 				\textit{Nacrtati sekvencijske dijagrame koji modeliraju najvažnije dijelove sustava (max. 4 dijagrama). Ukoliko postoji nedoumica oko odabira, razjasniti s asistentom. Uz svaki dijagram napisati detaljni opis dijagrama.}
 				\eject
 	
