@@ -46,6 +46,7 @@
 				
 				\begin{packed_enum}
 					\item prijaviti se u sustav kao planinar
+					\item odjaviti se iz sustava
 					\item upravljati vlastitim korisničkim računom
 						\begin{packed_enum}
 							
@@ -55,18 +56,26 @@
 							
 						\end{packed_enum}
 					\item pretraživati korisnike prema imenu i prezimenu
-					\item ? pregledati profil drugog planinara (je li dovoljno samo da ga doda na popis prijatelja)
-					\item poslati zahtjev za prijateljstvom (zahtjev za dodavanjem drugog planinara na popis vlastite planinarske zajednice)
-					\item prihvatiti zahtjev za prijateljstvom
-					\item pregledati pristigle zahtjeve za prijateljstvom
-					\item vidjeti obavijest ako je drugi planinar prihvatio njegov zahtjev
+					\item upravljati zahtjevima za prijateljstvo
+					
+						\begin{packed_enum}
+							\item poslati zahtjev za prijateljstvom (zahtjev za dodavanjem drugog planinara na popis vlastite planinarske zajednice)
+							\item prihvatiti zahtjev za prijateljstvom
+							\item pregledati pristigle zahtjeve za prijateljstvom
+							\item vidjeti obavijest ako je drugi planinar prihvatio njegov zahtjev
+						\end{packed_enum}
+					
 					\item pregledati popis planinara u vlastitoj planinarskoj zajednici
+					\item upravljati vlastitim planinarskim stazama
+					\begin{packed_enum}
+						\item stvoriti vlastitu planinarsku stazu prema unaprijed određenom predlošku
+						\item pregledati staze koje je stvorio
+						\item obrisati vlastitu planinarsku stazu ukoliko je ona javna
+					\end{packed_enum}
 					\item pregledati popis željenih planinarskih staza (favoriti)
-					\item dodati planinarski izlet na popis željenih
-					\item stvoriti vlastitu planinarsku stazu prema unaprijed određenom predlošku
+					\item dodati planinarsku stazu na popis željenih
 					\item ocjenjivati stvorene planinarske staze drugih planinara
 					\item prijaviti netočne i neprecizne informacije vezane uz planinarske staze
-					\item pregledati staze koje je stvorio
 					\item stvoriti događaj vidljiv na naslovnici na koji može
 						\begin{packed_enum}
 							
@@ -82,17 +91,16 @@
 							
 						\end{packed_enum}
 					\item dodati ranije odrađene planinarske staze u arhivu
-					\item dodati ranije posjećene planinarske domove u arhivu
-					\item zatražiti potvrdu od dežurnog planinara da je bio u domu
+					\item dodati ranije posjećene planinarske domove u arhivu (zatražiti potvrdu od dežurnog planinara da je bio u domu)
 					\item obzirom na svoju aktivnost zaraditi određeni bedž koji se prikazuje na njegovom profilu
-					\item kontaktirati admina u slučaju potrebe za stvaranjem novog planinarskog doma ili promjene infrastrukture već postojećeg
+					\item kontaktirati administratora u slučaju potrebe za stvaranjem novog planinarskog doma ili promjene infrastrukture već postojećeg
 				\end{packed_enum}
-			
+				
 				\item  \underbar{Dežurni planinar (inicijator) može:}
 				
 				\begin{packed_enum}
 					
-					\item zatražiti ulogu dežurnog planinara u određenom planinarskom domu pri čemu mora priložiti odgovarajući dokaz 
+					\item zatražiti ulogu dežurnog planinara u određenom planinarskom domu  
 					\item upravljati zaprimljenim zahtjevima za potvrdom posjeta u planinarskim domovima za koje je odgovoran
 					\begin{packed_enum}
 						
@@ -100,7 +108,6 @@
 						\item potvrditi ili odbiti zahtjev
 						
 					\end{packed_enum}
-					\item? pregledati domove za koje je dežuran
 				\end{packed_enum}
 			
 				\item  \underbar{Administrator (inicijator) može:}
