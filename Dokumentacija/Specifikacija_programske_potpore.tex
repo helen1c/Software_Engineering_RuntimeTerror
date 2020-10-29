@@ -1176,6 +1176,19 @@
 			\newpage	
 				
 			\subsection{Sekvencijski dijagrami}
+			
+			\subsubsection{Obrazac uporabe UC5 - Pretraživanje planinarskih domova}
+			
+			Korisnik odabire funkciju pregleda svih planinarskih domova. Web aplikacija, na traženi zahtjev, dohvaća planinarske domove iz baze podataka. Baza podataka zatim šalje odgovor Web aplikaciji. Odgovor baze podataka web aplikacija prikazuje korisniku. Nadalje, ako korisnik želi užu pretragu               planinarskih domova, odabire jedan od filtera koje aplikacija nudi. Web aplikacija dohvaća iz baze podataka planinarske domove koji zadovoljavaju filtere korisnika. Baza podataka šalje listu odgovarajućih domova aplikaciji. U slučaju da je lista prazna, web aplikacija korisniku šalje povratnu informaciju o nepostojećem domu. Ako su odgovarajući domovi pronađeni u bazi podataka web aplikacija prikazuje listu planinarskih domova korisniku. 
+				
+				\begin{figure}[H]
+					\includegraphics[scale=0.5]{dijagrami/seq-planinarski-domovi.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+					\centering
+					\caption{Ponašajni prikaz pretraživanja planinarskih domova}
+					\label{fig:UC dijagrami}
+				\end{figure}
+				
+			
 
 				\subsubsection{Obrazac uporabe UC9 - Obrisati vlastitu planinarsku stazu}
 
@@ -1191,7 +1204,7 @@
 				\subsubsection{Obrasci uporabe UC10-UC11-UC11.1 - Zahtjevi za prijateljstvom}
 
 				Prijavljeni korisnik (planinar) može drugom korisniku poslati zahtjev za pridruživanjem vlastitoj planinarskoj zajednici, odnosno zahtjev za prijateljstvom. Uvjet je da pošiljatelj i primatelj (planinari) imaju korisnički račun, drugim riječima da su se uspješno registrirali u aplikaciju. Planinar ima mogućnost pretraživanja drugih planinara po imenu i prezimenu. Poslužitelj će tu pretragu proslijediti bazi podataka koja će pronaći sve korisnike koji zadovoljavaju pretragu. Baza podataka vraća odgovarajuće korisnike poslužitelju koji ih onda prikazuje planinaru. Zatim planinar pošiljatelj odabire planinara iz prikazanih mu korisnika i odluči mu poslati zahtjev za prijateljstvom. Bilo koji planinar prijavljen u aplikaciju može vidjeti sve trenutno aktivne zahtjeve za prijateljstvo. U našem slučaju planinar primatelj može ili dobiti obavijest da je primio zahtjev ili može zatražiti pregled pristiglih zahtjeva. Kada planinar prima novi zahtjev poslužitelj prolongira zahtjev do planinara primatelja i vraća se povratna informacija do planinara pošiljatelja da je zahtjev uspješno poslan. Za to vrijeme u bazu podataka će se dodati taj zahtjev među aktivne zahtjeve za prijateljstvom. Ako planinar sam zatraži pregled svih zahtjeva to će napraviti tako da kontaktira poslužitelja koji će naredbu proslijediti bazi podataka. Baza podataka će tada dohvatiti aktivne zahtjeve za prijateljstvo i poslati ih poslužitelju koji će ih konačno prikazati planinaru. Planinar primatelj kod obrađivanja primljenog zahtjeva za prijateljstvo ima dvije mogućnosti: potvrditi ili odbiti zahtjev. U slučaju povrđivanja zahtjeva planinar primatelj će poslati potvrdu poslužitelju  koji će javiti planinaru primatelju da je prihvaćen njegov zahtjev za prijateljstvo. Istovremeno baza podataka će ukloniti zahtjev s popisa aktivnih zahtjeva. Ukoliko planinar primatelj odluči odbiti zahtjev, onda se taj zahtjev također uklanja s popisa aktivnih zahtjeva u bazi podataka i planinar pošiljatelj može ponovno poslati zahtjev tom istom planinaru koji ga je već odbio.
-
+				
 				\begin{figure}[H]
 					\includegraphics[scale=1.5, height=220mm, width=165mm]{dijagrami/seq-UC10 - UC11 - UC11.1.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
 					\centering
@@ -1199,9 +1212,7 @@
 					\label{fig:sekvencijski dijagrami}
 				\end{figure}
 
-				\textit{Nacrtati sekvencijske dijagrame koji modeliraju najvažnije dijelove sustava (max. 4 dijagrama). Ukoliko postoji nedoumica oko odabira, razjasniti s asistentom. Uz svaki dijagram napisati detaljni opis dijagrama.}
 				\eject
-	
 		\section{Ostali zahtjevi}
 		
 			\textbf{\textit{dio 1. revizije}}\\
