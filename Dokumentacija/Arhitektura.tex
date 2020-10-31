@@ -73,7 +73,7 @@ Naša baza podataka sastoji se od sljedećih tablica:
 			\subsection{Opis tablica}
 			
 %Tablice
-			\textit{\textbf{user}  Ovaj entitet sadrži sve važne informacije o korisniku aplikacije. Sadrži atribute: name, email, password, image, role-id.  Ova tablica je u Many-to-One vezi s tablicom role preko atributa korisnika role-id.}
+			\textbf{user}  Ovaj entitet sadrži sve važne informacije o korisniku aplikacije. Sadrži atribute: name, email, password, image, role-id.  Ova tablica je u Many-to-One vezi s tablicom role preko atributa korisnika role-id.
 			
 			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 				
@@ -90,14 +90,15 @@ Naša baza podataka sastoji se od sljedećih tablica:
 				name	& VARCHAR &  ime i prezime korisnika 	\\ \hline 
 				email & VARCHAR &  email korisnika \\ \hline 
 				password & VARCHAR	&  	lozinka korisnika	\\ \hline 
-				image & byea	&  	slika korisnika	\\ \hline 
+				image & bytea	&  	slika korisnika	\\ \hline 
 				role-id & FOREIGN-KEY(role-id)	&  	strani ključ uloge korisnika	\\ \hline 
 				%\cellcolor{LightBlue} primjer	& VARCHAR &   	\\ \hline 
 				
 				
 			\end{longtabu}
-		
-			\textit{\textbf{friends} Ovaj entitet sadrži informaciju o Many-To-Many prijateljskoj vezi između dva korisnika. Sadrži atribute: user-1, user-2, koji su oba strani ključevi iz tablice user}
+			\vspace{10mm}
+			
+			\textbf{friends} Ovaj entitet sadrži informaciju o Many-To-Many prijateljskoj vezi između dva korisnika. Sadrži atribute: user-1, user-2, koji su oba strani ključevi iz tablice user
 			
 			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 				
@@ -116,8 +117,9 @@ Naša baza podataka sastoji se od sljedećih tablica:
 				
 				
 			\end{longtabu}
+			\vspace{10mm}
 
-			\textit{\textbf{friendship-req} Ovaj entitet sadrži informaciju o Many-To-Many poslanom zahtjevu za prijateljstvo između 2 korisnika. Sadrži atribute: friendship-send, friendship-recieve, koji su oba strani ključevi iz tablice user}
+			\textbf{friendship-req} Ovaj entitet sadrži informaciju o Many-To-Many poslanom zahtjevu za prijateljstvo između 2 korisnika. Sadrži atribute: friendship-send, friendship-recieve, koji su oba strani ključevi iz tablice user
 			
 			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 				
@@ -136,8 +138,9 @@ Naša baza podataka sastoji se od sljedećih tablica:
 				
 				
 			\end{longtabu}
+			\vspace{10mm}
 		
-			\textit{\textbf{role} Ovaj entitet sadrži informaciju o ulozi koju ima određeni korisnik. Određuje razinu dozvole korisnika}
+			\textbf{role} Ovaj entitet sadrži informaciju o ulozi koju ima određeni korisnik. Određuje razinu dozvole korisnika
 			
 			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 				
@@ -155,8 +158,9 @@ Naša baza podataka sastoji se od sljedećih tablica:
 				%\cellcolor{LightBlue} primjer	& VARCHAR &   	\\ \hline 
 
 			\end{longtabu}
+			\vspace{10mm}
 
-			\textit{\textbf{event} Ovaj entitet sadrži informaciju o događaju. Sadrži atribute: name, description, start-date, end-date, date-created i u One-To-Many je vezi s tablicom user preko atributa author-id.}
+			\textbf{event} Ovaj entitet sadrži informaciju o događaju. Sadrži atribute: name, description, start-date, end-date, date-created i u One-To-Many je vezi s tablicom user preko atributa author-id.
 			
 			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 				
@@ -180,9 +184,9 @@ Naša baza podataka sastoji se od sljedećih tablica:
 				
 				
 			\end{longtabu}
+			\vspace{10mm}
 
-
-			\textit{\textbf{event-attendance} Ovaj entitet sadrži informaciju o Many-To-Many učestvovanju na nekom događaju nekog korisnika. Sadrži atribute: user-id, event-id koji su oba strani ključevi.}
+			\textbf{event-attendance} Ovaj entitet sadrži informaciju o Many-To-Many učestvovanju na nekom događaju nekog korisnika. Sadrži atribute: user-id, event-id koji su oba strani ključevi.
 			
 			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 				
@@ -201,9 +205,9 @@ Naša baza podataka sastoji se od sljedećih tablica:
 				
 				
 			\end{longtabu}
-		
+			\vspace{10mm}		
 			
-			\textit{\textbf{event-path} Ovaj entitet sadrži informaciju o Many-To-Many vezi između staze i nekog događaja. Sadrži atribute: path-id, event-id koji su oba strani ključevi.}
+			\textbf{event-path} Ovaj entitet sadrži informaciju o Many-To-Many vezi između staze i nekog događaja. Sadrži atribute: path-id, event-id koji su oba strani ključevi.
 			
 			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 				
@@ -222,9 +226,9 @@ Naša baza podataka sastoji se od sljedećih tablica:
 				
 				
 			\end{longtabu}
+			\vspace{10mm}
 
-
-			\textit{\textbf{path} Ovaj entitet sadrži informacije o pojedinoj stazi. Sadrži atribute: name, start, end, avg-walk-time, length, sea-level-diff, date-created, is-private, author-id, hill-id}
+			\textbf{path} Ovaj entitet sadrži informacije o pojedinoj stazi. Sadrži atribute: name, start, end, avg-walk-time, length, sea-level-diff, date-created, is-private, author-id, hill-id
 			
 			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 				
@@ -252,8 +256,9 @@ Naša baza podataka sastoji se od sljedećih tablica:
 				
 				
 			\end{longtabu}
+			\vspace{10mm}
 
-			\textit{\textbf{badge} Ovaj entitet sadrži informaciju o bedževima koje korisnici mogu osvojiti za neka dostignuća. Sadrže atribute id, name i image}
+			\textbf{badge} Ovaj entitet sadrži informaciju o bedževima koje korisnici mogu osvojiti za neka dostignuća. Sadrže atribute id, name i image
 
 			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 				
@@ -273,9 +278,9 @@ Naša baza podataka sastoji se od sljedećih tablica:
 				
 				
 			\end{longtabu}
+			\vspace{10mm}
 		
-		
-			\textit{\textbf{friendship-req} Ovaj entitet sadrži informaciju o Many-To-Many odnosu između bedževa i korisnika. Sadrži atribute: user-id, badge-id i date-recieved}
+			\textbf{friendship-req} Ovaj entitet sadrži informaciju o Many-To-Many odnosu između bedževa i korisnika. Sadrži atribute: user-id, badge-id i date-recieved
 		
 			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 				
@@ -295,8 +300,9 @@ Naša baza podataka sastoji se od sljedećih tablica:
 				
 				
 			\end{longtabu}
+			\vspace{10mm}
 		
-			\textit{\textbf{notification} Ovaj entitet sadrži informaciju o Many-To-Many odnosu između bedževa i korisnika, ali samo u smislu notificiranja korisnika. Kada korisnik potvrdi da je primio notifikaciju, pojedini unos se briše iz ovog entiteta . Sadrži atribute: user-id, badge-id}
+			\textbf{notification} Ovaj entitet sadrži informaciju o Many-To-Many odnosu između bedževa i korisnika, ali samo u smislu notificiranja korisnika. Kada korisnik potvrdi da je primio notifikaciju, pojedini unos se briše iz ovog entiteta . Sadrži atribute: user-id, badge-id
 			
 			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 				
@@ -315,9 +321,9 @@ Naša baza podataka sastoji se od sljedećih tablica:
 				
 				
 			\end{longtabu}
+			\vspace{10mm}		
 		
-		
-			\textit{\textbf{hill} Ovaj entitet sadrži informaciju o pojedinom visočju. Sadrži atribute: id i name}
+			\textbf{hill} Ovaj entitet sadrži informaciju o pojedinom visočju. Sadrži atribute: id i name
 			
 			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 				
@@ -336,9 +342,9 @@ Naša baza podataka sastoji se od sljedećih tablica:
 				
 				
 			\end{longtabu}
+			\vspace{10mm}		
 		
-		
-			\textit{\textbf{mountain-lodge} Ovaj entitet sadrži informaciju o planinarskom domu. Sadrži atribute: id, name, image i One-To-Many vezu između visočja hill-id.}
+			\textbf{mountain-lodge} Ovaj entitet sadrži informaciju o planinarskom domu. Sadrži atribute: id, name, image i One-To-Many vezu između visočja hill-id.
 			
 			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 				
@@ -359,10 +365,10 @@ Naša baza podataka sastoji se od sljedećih tablica:
 				
 				
 			\end{longtabu}
+			\vspace{10mm}		
 		
 		
-		
-			\textit{\textbf{utility} Ovaj entitet sadrži informaciju o komunalijama}
+			\textbf{utility} Ovaj entitet sadrži informaciju o komunalijama
 
 			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 				
@@ -380,9 +386,9 @@ Naša baza podataka sastoji se od sljedećih tablica:
 				%\cellcolor{LightBlue} primjer	& VARCHAR &   	\\ \hline 
 				
 			\end{longtabu}
+			\vspace{10mm}		
 		
-		
-			\textit{\textbf{lodge-utility} Ovaj entitet sadrži informaciju o Many-To-Many odnosu između komunalija i planinarskih domova. Sadrži atribute: lodge-id, utility-id}
+			\textbf{lodge-utility} Ovaj entitet sadrži informaciju o Many-To-Many odnosu između komunalija i planinarskih domova. Sadrži atribute: lodge-id, utility-id
 			
 			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 				
@@ -401,8 +407,9 @@ Naša baza podataka sastoji se od sljedećih tablica:
 				
 				
 			\end{longtabu}
+			\vspace{10mm}
 			
-			\textit{\textbf{path-user-grade} Ovaj entitet sadrži informaciju o Many-To-Many odnosu između pojedinog korisnika i staze. Korisnik pripisuje ocjenu pojedinoj stazi.}
+			\textbf{path-user-grade} Ovaj entitet sadrži informaciju o Many-To-Many odnosu između pojedinog korisnika i staze. Korisnik pripisuje ocjenu pojedinoj stazi.
 			
 			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 				
@@ -422,9 +429,9 @@ Naša baza podataka sastoji se od sljedećih tablica:
 				
 				
 			\end{longtabu}
+			\vspace{10mm}		
 		
-		
-			\textit{\textbf{path-wishlist} Ovaj entitet sadrži informaciju o Many-To-Many odnosu između pojedinog korisnika i staze. Korisnik označuje koju stazu želi proći.}
+			\textbf{path-wishlist} Ovaj entitet sadrži informaciju o Many-To-Many odnosu između pojedinog korisnika i staze. Korisnik označuje koju stazu želi proći.
 		
 			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 				
@@ -443,9 +450,9 @@ Naša baza podataka sastoji se od sljedećih tablica:
 				
 				
 			\end{longtabu}
+			\vspace{10mm}			
 			
-			
-			\textit{\textbf{completed-paths} Ovaj entitet sadrži informaciju o Many-To-Many odnosu između pojedinog korisnika i staza koje je već prešao.}
+			\textbf{completed-paths} Ovaj entitet sadrži informaciju o Many-To-Many odnosu između pojedinog korisnika i staza koje je već prešao.
 			
 			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 				
@@ -465,8 +472,9 @@ Naša baza podataka sastoji se od sljedećih tablica:
 				
 				
 			\end{longtabu}
+			\vspace{10mm}
 		
-			\textit{\textbf{report-path} Ovaj entitet sadrži informaciju o Many-To-Many odnosu između pojedinog korisnika i staze koju želi prijaviti za netočne informacije. Sadrži atribute: user-id, path-id i description.}
+			\textbf{report-path} Ovaj entitet sadrži informaciju o Many-To-Many odnosu između pojedinog korisnika i staze koju želi prijaviti za netočne informacije. Sadrži atribute: user-id, path-id i description.
 			
 			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 				
@@ -486,10 +494,11 @@ Naša baza podataka sastoji se od sljedećih tablica:
 				
 				
 			\end{longtabu}
+			\vspace{10mm}
 		
 		
 		
-			\textit{\textbf{visit-confirmation-request} Ovaj entitet sadrži informaciju o Many-To-Many poslanom zahtjevu za potvrdu dolaska u planinarski dom. Ovo je Many-To-Many tablica koja povezuje planinarski dom s pojedinim korisnikom. Sadrži atribute: user-id, lodge-id, time-requested, status, date-visited}
+			\textbf{visit-confirmation-request} Ovaj entitet sadrži informaciju o Many-To-Many poslanom zahtjevu za potvrdu dolaska u planinarski dom. Ovo je Many-To-Many tablica koja povezuje planinarski dom s pojedinim korisnikom. Sadrži atribute: user-id, lodge-id, time-requested, status, date-visited
 			
 			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 				
@@ -511,8 +520,9 @@ Naša baza podataka sastoji se od sljedećih tablica:
 				
 				
 			\end{longtabu}
+			\vspace{10mm}
 		
-			\textit{\textbf{mountaneer-on-duty} Ovaj entitet sadrži informaciju o Many-To-Many odnosu između pojedinog planinarskog doma i dežurnog planinara. Sadrži atribute user-id i lodge-id.}
+			\textbf{mountaneer-on-duty} Ovaj entitet sadrži informaciju o Many-To-Many odnosu između pojedinog planinarskog doma i dežurnog planinara. Sadrži atribute user-id i lodge-id.
 			
 			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 				
@@ -531,9 +541,10 @@ Naša baza podataka sastoji se od sljedećih tablica:
 				
 				
 			\end{longtabu}
+			\vspace{10mm}
 			
 %Predložak
-				\textit{\textbf{predložak} 	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam}
+				\textbf{predložak} 	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
 				
 				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 					
@@ -554,6 +565,7 @@ Naša baza podataka sastoji se od sljedećih tablica:
 					
 					
 				\end{longtabu}
+			\vspace{10mm}
 
 %End predložak
 			\subsection{Dijagram baze podataka}
