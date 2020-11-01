@@ -5,6 +5,17 @@
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
     <changeSet id="11012020-01" author="imartinovic">
+    
+        <createTable tableName="MOUNTAIN_LODGE">
+            <column name="LODGE_ID" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="NAME" type="VARCHAR(128)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="IMAGE" type="BYTEA"/>
 
+        </createTable>
+        
     </changeSet>
 </databaseChangeLog>
