@@ -1,0 +1,21 @@
+.footer {
+    background-color: #d8f9ff;
+    text-align: center;
+}
+
+.header{
+    background-color: #131e32;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.header-menu{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.header-link{
+    text-decoration: none;
+}
