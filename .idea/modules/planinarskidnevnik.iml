@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="4">
+  <component name="ExternalSystem" externalSystem="GRADLE" externalSystemModuleGroup="hr.fer.pi" externalSystemModuleVersion="0.0.1-SNAPSHOT" linkedProjectId="planinarskidnevnik" linkedProjectPath="$MODULE_DIR$/../../IzvorniKod/backend" rootProjectPath="$MODULE_DIR$/../../IzvorniKod/backend" />
+</module>
