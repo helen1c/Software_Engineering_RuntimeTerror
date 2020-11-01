@@ -1,7 +1,5 @@
 package hr.fer.pi.planinarskidnevnik.models;
 
-import com.sun.istack.Nullable;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -16,7 +14,6 @@ public class MountainLodge {
 
     private String name;
 
-    @Nullable
     private byte[] image;
 
     @ManyToOne
@@ -47,5 +44,27 @@ public class MountainLodge {
         return hill;
     }
 
+    public List<MountainLodgeUtility> getUtilities() {
+        return utilities;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public void setHill(Hill hill) {
+        this.hill = hill;
+    }
+
+    public void setUtilities(List<MountainLodgeUtility> utilities) {
+        this.utilities = utilities;
+    }
 }
