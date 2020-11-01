@@ -5,7 +5,23 @@
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
     <changeSet id="11012020-01" author="imartinovic">
-    
+        <createTable tableName="HILL">
+            <column name="ID" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="NAME" type="VARCHAR(128)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="UTILITY">
+            <column name="UTILITY_ID" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="NAME" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
         <createTable tableName="MOUNTAIN_LODGE">
             <column name="LODGE_ID" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true"/>
@@ -14,7 +30,17 @@
                 <constraints nullable="false"/>
             </column>
             <column name="IMAGE" type="BYTEA"/>
-
+            <column name="HILL_ID" type="BIGINT">
+                <constraints foreignKeyName="HILL_ID" references="HILL(ID)"/>
+            </column>
+        </createTable>
+        <createTable tableName="MOUNTAIN_LODGE_UTILITY">
+            <column name="LODGE_ID" type="BIGINT">
+                <constraints foreignKeyName="LODGE_ID" references="MOUNTAIN_LODGE(LODGE_ID)"/>
+            </column>
+            <column name="UTILITY_ID" type="BIGINT">
+                <constraints foreignKeyName="UTILITY_ID" references="UTILITY(UTILITY_ID)"/>
+            </column>
         </createTable>
         
     </changeSet>

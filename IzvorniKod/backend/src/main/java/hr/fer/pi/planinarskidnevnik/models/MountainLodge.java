@@ -9,7 +9,7 @@ public class MountainLodge {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "mountain_lodge_id_gen")
     @SequenceGenerator(name = "mountain_lodge_id_gen", sequenceName = "mountain_lodge_id_seq", allocationSize = 1)
-    @Column(name = "lodge_id")
+    @Column(name = "LODGE_ID")
     private Long id;
 
     private String name;
@@ -23,10 +23,10 @@ public class MountainLodge {
     @ManyToMany
     @JoinTable(
             name = "utility",
-            joinColumns = @JoinColumn(name = "lodge_id"),
-            inverseJoinColumns = @JoinColumn(name = "utility_id")
+            joinColumns = @JoinColumn(name = "LODGE_ID"),
+            inverseJoinColumns = @JoinColumn(name = "UTILITY_ID")
     )
-    private List<MountainLodgeUtility> utilities;
+    private List<Utility> utilities;
 
     public String getName() {
         return name;
@@ -44,7 +44,7 @@ public class MountainLodge {
         return hill;
     }
 
-    public List<MountainLodgeUtility> getUtilities() {
+    public List<Utility> getUtilities() {
         return utilities;
     }
 
@@ -64,7 +64,7 @@ public class MountainLodge {
         this.hill = hill;
     }
 
-    public void setUtilities(List<MountainLodgeUtility> utilities) {
+    public void setUtilities(List<Utility> utilities) {
         this.utilities = utilities;
     }
 }

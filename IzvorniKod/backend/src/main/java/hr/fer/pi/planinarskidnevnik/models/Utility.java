@@ -3,11 +3,12 @@ package hr.fer.pi.planinarskidnevnik.models;
 import javax.persistence.*;
 
 @Entity
-public class MountainLodgeUtility {
+public class Utility {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "utility_id_gen")
     @SequenceGenerator(name = "utility_id_gen", sequenceName = "utility_id_seq", allocationSize = 1)
+    @Column(name = "utility_id")
     private Long id;
 
     private String name;
