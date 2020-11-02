@@ -1,0 +1,204 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="02-11-2020-01" author="imartinovic">
+        <insert tableName="utility">
+            <column name="utility_id">1</column>
+            <column name="name">Voda</column>
+        </insert>
+        <insert tableName="utility">
+            <column name="utility_id">2</column>
+            <column name="name">Prenoćište</column>
+        </insert>
+        <insert tableName="utility">
+            <column name="utility_id">3</column>
+            <column name="name">Wireless</column>
+        </insert>
+        <insert tableName="utility">
+            <column name="utility_id">4</column>
+            <column name="name">Hrana</column>
+        </insert>
+        <insert tableName="HILL">
+            <column name="id">1</column>
+            <column name="name">Medvednica</column>
+        </insert>
+        <insert tableName="HILL">
+            <column name="id">2</column>
+            <column name="name">Sjeverni Velebit</column>
+        </insert>
+        <insert tableName="HILL">
+            <column name="id">3</column>
+            <column name="name">Srednji Velebit</column>
+        </insert>
+        <insert tableName="HILL">
+            <column name="id">4</column>
+            <column name="name">Moslavačka gora i Bilogora</column>
+        </insert>
+        <insert tableName="HILL">
+            <column name="id">5</column>
+            <column name="name">Samoborsko gorje</column>
+        </insert>
+        <insert tableName="HILL">
+            <column name="id">6</column>
+            <column name="name">Hrvatsko Zagorje</column>
+        </insert>
+
+        <insert tableName="mountain_lodge">
+            <column name="lodge_id">1</column>
+            <column name="name">Planinarski dom Glavica</column>
+            <column name="hill_id">1</column>
+            <column name="elevation">420</column>
+        </insert>
+        <insert tableName="mountain_lodge">
+            <column name="lodge_id">2</column>
+            <column name="name">Planinarski dom Risnjak</column>
+            <column name="hill_id">1</column>
+            <column name="elevation">724</column>
+        </insert>
+        <insert tableName="mountain_lodge">
+            <column name="lodge_id">3</column>
+            <column name="name">Planinarski dom Grafičar</column>
+            <column name="hill_id">1</column>
+            <column name="elevation">864</column>
+        </insert>
+        <insert tableName="mountain_lodge">
+            <column name="lodge_id">4</column>
+            <column name="name">Planinarska kuća Vidikovac</column>
+            <column name="hill_id">1</column>
+            <column name="elevation">180</column>
+        </insert>
+        <insert tableName="mountain_lodge">
+            <column name="lodge_id">5</column>
+            <column name="name">Planinarska kuća Izvor</column>
+            <column name="hill_id">1</column>
+            <column name="elevation">175</column>
+        </insert>
+        <insert tableName="mountain_lodge">
+            <column name="lodge_id">6</column>
+            <column name="name">Planinarski dom Zavižan</column>
+            <column name="hill_id">2</column>
+            <column name="elevation">1594</column>
+        </insert>
+        <insert tableName="mountain_lodge">
+            <column name="lodge_id">7</column>
+            <column name="name">Planinarska kuća Alan</column>
+            <column name="hill_id">2</column>
+            <column name="elevation">1340</column>
+        </insert>
+        <insert tableName="mountain_lodge">
+            <column name="lodge_id">8</column>
+            <column name="name">Planinarska kuća Anin vrh</column>
+            <column name="hill_id">4</column>
+            <column name="elevation">303</column>
+        </insert>
+        <insert tableName="mountain_lodge">
+            <column name="lodge_id">9</column>
+            <column name="name">Planinarski dom Kamenitovac</column>
+            <column name="hill_id">4</column>
+            <column name="elevation">242</column>
+        </insert>
+        <insert tableName="mountain_lodge">
+            <column name="lodge_id">10</column>
+            <column name="name">Planinarski dom Pasarićeva kuća</column>
+            <column name="hill_id">6</column>
+            <column name="elevation">1054</column>
+        </insert>
+        <insert tableName="mountain_lodge">
+            <column name="lodge_id">11</column>
+            <column name="name">Planinarska kuća Pusti duh</column>
+            <column name="hill_id">6</column>
+            <column name="elevation">672</column>
+        </insert>
+        <insert tableName="mountain_lodge">
+            <column name="lodge_id">12</column>
+            <column name="name">Planinarski dom Filićev dom</column>
+            <column name="hill_id">6</column>
+            <column name="elevation">660</column>
+        </insert>
+        <insert tableName="mountain_lodge_utility">
+            <column name="lodge_id">1</column>
+            <column name="utility_id">1</column>
+        </insert>
+        <insert tableName="mountain_lodge_utility">
+            <column name="lodge_id">1</column>
+            <column name="utility_id">2</column>
+        </insert>
+        <insert tableName="mountain_lodge_utility">
+            <column name="lodge_id">1</column>
+            <column name="utility_id">3</column>
+        </insert>
+        <insert tableName="mountain_lodge_utility">
+            <column name="lodge_id">1</column>
+            <column name="utility_id">4</column>
+        </insert>
+        <insert tableName="mountain_lodge_utility">
+            <column name="lodge_id">2</column>
+            <column name="utility_id">1</column>
+        </insert>
+        <insert tableName="mountain_lodge_utility">
+            <column name="lodge_id">2</column>
+            <column name="utility_id">2</column>
+        </insert>
+        <insert tableName="mountain_lodge_utility">
+            <column name="lodge_id">2</column>
+            <column name="utility_id">4</column>
+        </insert>
+        <insert tableName="mountain_lodge_utility">
+            <column name="lodge_id">3</column>
+            <column name="utility_id">1</column>
+        </insert>
+        <insert tableName="mountain_lodge_utility">
+            <column name="lodge_id">4</column>
+            <column name="utility_id">1</column>
+        </insert>
+        <insert tableName="mountain_lodge_utility">
+            <column name="lodge_id">4</column>
+            <column name="utility_id">4</column>
+        </insert>
+        <insert tableName="mountain_lodge_utility">
+            <column name="lodge_id">5</column>
+            <column name="utility_id">1</column>
+        </insert>
+        <insert tableName="mountain_lodge_utility">
+            <column name="lodge_id">5</column>
+            <column name="utility_id">4</column>
+        </insert>
+        <insert tableName="mountain_lodge_utility">
+            <column name="lodge_id">6</column>
+            <column name="utility_id">1</column>
+        </insert>
+        <insert tableName="mountain_lodge_utility">
+            <column name="lodge_id">7</column>
+            <column name="utility_id">1</column>
+        </insert>
+        <insert tableName="mountain_lodge_utility">
+            <column name="lodge_id">8</column>
+            <column name="utility_id">1</column>
+        </insert>
+        <insert tableName="mountain_lodge_utility">
+            <column name="lodge_id">9</column>
+            <column name="utility_id">1</column>
+        </insert>
+        <insert tableName="mountain_lodge_utility">
+            <column name="lodge_id">10</column>
+            <column name="utility_id">1</column>
+        </insert>
+        <insert tableName="mountain_lodge_utility">
+            <column name="lodge_id">11</column>
+            <column name="utility_id">1</column>
+        </insert>
+        <insert tableName="mountain_lodge_utility">
+            <column name="lodge_id">12</column>
+            <column name="utility_id">1</column>
+        </insert>
+        <insert tableName="mountain_lodge_utility">
+            <column name="lodge_id">12</column>
+            <column name="utility_id">2</column>
+        </insert>
+
+
+    </changeSet>
+</databaseChangeLog>
