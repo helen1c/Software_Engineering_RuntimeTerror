@@ -7,7 +7,7 @@ import org.springframework.data.domain.Sort;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-public class PageGetRequest {
+public class PageSearchRequest {
 
     private static final int DEFAULT_PAGE_SIZE = 10;
     private static final int DEFAULT_PAGE_NUMBER = 0;
