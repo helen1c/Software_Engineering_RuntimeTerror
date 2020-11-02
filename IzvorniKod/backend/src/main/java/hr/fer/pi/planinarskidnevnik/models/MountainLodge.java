@@ -28,6 +28,16 @@ public class MountainLodge {
     )
     private List<Utility> utilities;
 
+    private Long elevation;
+
+    public Long getElevation() {
+        return elevation;
+    }
+
+    public void setElevation(Long elevation) {
+        this.elevation = elevation;
+    }
+
     public String getName() {
         return name;
     }
