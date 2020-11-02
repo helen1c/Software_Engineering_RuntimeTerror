@@ -45,6 +45,8 @@
                 <constraints foreignKeyName="UTILITY_ID" references="UTILITY(UTILITY_ID)"/>
             </column>
         </createTable>
-        
+        <createSequence sequenceName="mountain_lodge_id_seq" incrementBy="1" cycle="false" startValue="1" />
+        <createSequence sequenceName="utility_id_seq" incrementBy="1" cycle="false" startValue="1" />
+        <createSequence sequenceName="hill_id_seq" incrementBy="1" cycle="false" startValue="1" />
     </changeSet>
 </databaseChangeLog>
