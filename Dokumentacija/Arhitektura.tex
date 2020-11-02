@@ -17,66 +17,74 @@ $  $\chapter{Arhitektura i dizajn sustava}
 				
 		\section{Baza podataka}
 			
-			\textbf{\textit{dio 1. revizije}}\\
-			
-		\textit Za naš projekt odabrali smo relacijsku bazu podataka zbog njezine pogodnosti da prikaže mali dio stvarnog svijeta bez redundancije unutar same baze. dohvaćanje podataka je jako brzo i jako lagano se može paralelizirati. \\
-Naša baza podataka sastoji se od sljedećih tablica:
-\begin{itemize}
-
-\item
-	user
-\item
-	friends
-\item
-	friendship-req
-\item
-	role
-\item
-	event
-\item
-	event-attendance
-\item
-	event-path
-\item
-	path
-\item
-	badge
-\item
-	user-badge
-\item
-	notification
-\item
-	hill
-\item
-	mountain-lodge
-\item
-	utility
-\item
-	lodge-utility
-\item
-	path-user-grade
-\item
-	path-wishlist
-\item
-	completed-paths
-\item
-	report-path
-\item
-	visit-confirmation-request
-\item
-	mountaneer-on-duty
-	
+		Za naš projekt odabrali smo \textbf{relacijsku bazu podataka} zbog njezine pogodnosti da prikaže mali dio stvarnog svijeta bez redundancije unutar same baze. Dohvaćanje podataka je jako brzo i jako lagano se može paralelizirati. Specifičnu implementaciju relacijske baze podataka koju smo odabrali je \textbf{PostgreSQL}. To je open source baza podataka s preko 30 godina aktivnog razvoja zbog kojega je zaslužila svoju čvrstu reputaciju za pouzdanost, bogatstvo opcijama i visokim performansama. Zbog načina na koji je SQL standard napisan, vrlo je slična ostalim SQL bazama podataka.\\ 
+		
+		Tijekom razvoja koristimo \textbf{H2 bazu}. To je privremena baza podataka koja služi za testiranje koda. Svi zapisi u njoj se nalaze u privremenoj memoriji i nisu perzistentni. Zbog toga je odlična za testiranje. Ona je open source, napisana u Javi i ima čvrste sigurnosne postavke. Na nju se isto može povezati s više konekcija i baza podataka je enkriptirana SHA-256 enkripcijom. Ima vrlo malu potrošnju memorije i jako malo mjesta zauzima na disku (oko 2MB). \\ 
+		
+		Također koristimo \textbf{JPA (Java Persistence API)} koje samo sadrži sučelja za stvaranje Persistence layouta. Dopušta nam da mapiramo entitete tablica i veze između tablica na objekte u Javi. Ovo sučelje definira svoj vlastiti query jezik (JPQA). JPQA prevoditelj interpretira kod i piše SQL queryje. JPA ne možemo samostalno koristiti, već nam treba konkretna implementacija toga sučelja. Implementaciju koju ćemo mi koristiti se zove Hibernate. \\ 
+		
+		Na bazu podataka se iz Jave spajamo preko \textbf{JdbcTemplatea}. To je snažni mehanizam za spajanje i izvođenje SQL queryja. On nam smanjuje količinu koda koju moramo napisati kako bismo izvršavali queryje, kao što je spajanje na bazu, kreiranje izraza i zatvaranje spoja. \\
+		
+	Naša baza podataka sastoji se od sljedećih tablica:
+		\begin{itemize}[noitemsep]
+		\item
+			user
+		\item
+			friends
+		\item
+			friendship-req
+		\item
+			role
+		\item
+			event
+		\item
+			event-attendance
+		\item
+			event-path
+		\item
+			path
+		\item
+			badge
+		\item
+			user-badge
+		\item
+			notification
+		\item
+			hill
+		\item
+			mountain-lodge
+		\item
+			utility
+		\item
+			lodge-utility
+		\item
+			path-user-grade
+		\item
+			path-wishlist
+		\item
+			completed-paths
+		\item
+			report-path
+		\item
+			visit-confirmation-request
+		\item
+			mountaneer-on-duty
+		\item
+			place-of-residence	
 
 
 \end{itemize}
 		
+		\definecolor{LightBlue}{rgb}{0.67, 0.9, 0.93}
+		\definecolor{LightGreen}{rgb}{0.4, 1.0, 0.0}
+		
 			\subsection{Opis tablica}
+			Primarni ključevi su označeni žutom, a strani ključevi plavom bojom.\\
 			
 %Tablice
 			\textbf{user}  Ovaj entitet sadrži sve važne informacije o korisniku aplikacije. Sadrži atribute: name, email, password, image, role-id.  Ova tablica je u Many-to-One vezi s tablicom role preko atributa korisnika role-id.
 			
 			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
-				
 				\hline \multicolumn{3}{|c|}{\textbf{user - ime tablice}}	 \\[3pt] \hline
 				\endfirsthead
 				
@@ -86,19 +94,42 @@ Naša baza podataka sastoji se od sljedećih tablica:
 				\hline 
 				\endlastfoot
 				
-				\cellcolor{LightGreen}id & INT	&  	jedinstveni identifikator korisnika	\\ \hline
+				\cellcolor{LightBlue} id & INT	&  	jedinstveni identifikator korisnika	\\ \hline
 				name	& VARCHAR &  ime i prezime korisnika 	\\ \hline 
 				email & VARCHAR &  email korisnika \\ \hline 
 				password & VARCHAR	&  	lozinka korisnika	\\ \hline 
 				image & bytea	&  	slika korisnika	\\ \hline 
 				role-id & FOREIGN-KEY(role-id)	&  	strani ključ uloge korisnika	\\ \hline 
+				address & int	&  	adresa stanovanja korisnika	\\ \hline 
+				place-id & FOREIGN-KEY(place-of-residence) & strani ključ mjesta stanovanja korisnika \\ \hline
+				date-of-birth & date & datum rođenja korisnika \\ \hline
+				
+				
+			\end{longtabu}
+			\vspace{10mm}
+			
+			\textbf{place-of-residence}  Ovaj entitet sadrži informaciju o različitim mjestima stanovanja. Povezuje se s tablicom korisnika.
+			
+			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+				
+				\hline \multicolumn{3}{|c|}{\textbf{place-of-residence - ime tablice}}	 \\[3pt] \hline
+				\endfirsthead
+				
+				\hline \multicolumn{3}{|c|}{\textbf{place-of-residence - ime tablice}}	 \\[3pt] \hline
+				\endhead
+				
+				\hline 
+				\endlastfoot
+				
+				\cellcolor{LightGreen}id & INT	&  	jedinstveni identifikator mjesta stanovanja	\\ \hline
+				name	& VARCHAR &  ime mjesta stanovanja 	\\ \hline 
 				%\cellcolor{LightBlue} primjer	& VARCHAR &   	\\ \hline 
 				
 				
 			\end{longtabu}
 			\vspace{10mm}
 			
-			\textbf{friends} Ovaj entitet sadrži informaciju o Many-To-Many prijateljskoj vezi između dva korisnika. Sadrži atribute: user-1, user-2, koji su oba strani ključevi iz tablice user
+			\textbf{friends} Ovaj entitet sadrži informaciju o Many-To-Many prijateljskoj vezi između dva korisnika. Sadrži atribute: userId1, userId2, koji su oba strani ključevi iz tablice user
 			
 			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 				
@@ -111,15 +142,16 @@ Naša baza podataka sastoji se od sljedećih tablica:
 				\hline 
 				\endlastfoot
 				
-				\cellcolor{LightGreen}user-1 & FOREIGN-KEY(user)	&  strani ključ 1. korisnika	\\ \hline
-				user-2	& FOREIGN-KEY(user) &   strani ključ 2. korisnika	\\ \hline 
+				\cellcolor{LightGreen}userId1 & FOREIGN-KEY(user)	&  strani ključ 1. korisnika	\\ \hline
+				userId2	& FOREIGN-KEY(user) &   strani ključ 2. korisnika	\\ \hline 
+				created-on	& date &   datum stvaranja prijateljstva	\\ \hline 
 				%\cellcolor{LightBlue} primjer	& VARCHAR &   	\\ \hline 
 				
 				
 			\end{longtabu}
 			\vspace{10mm}
 
-			\textbf{friendship-req} Ovaj entitet sadrži informaciju o Many-To-Many poslanom zahtjevu za prijateljstvo između 2 korisnika. Sadrži atribute: friendship-send, friendship-recieve, koji su oba strani ključevi iz tablice user
+			\textbf{friendship-req} Ovaj entitet sadrži informaciju o poslanom zahtjevu za prijateljstvo između 2 korisnika. Sadrži atribute: friendship-send, friendship-recieve, koji su oba strani ključevi iz tablice user
 			
 			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 				
@@ -199,8 +231,8 @@ Naša baza podataka sastoji se od sljedećih tablica:
 				\hline 
 				\endlastfoot
 				
-				\cellcolor{LightGreen}user-id & FOREIGN-KEY(user)	&  	strani ključ korisnika 	\\ \hline
-				event-id	& FOREIGN-KEY(user) &  strani ključ događaja 	\\ \hline 
+				\cellcolor{LightGreen}user-id & FOREIGN-KEY(user)	&  	strani ključ korisnika koji će prisustvovati događaju 	\\ \hline
+				event-id	& FOREIGN-KEY(user) &  strani ključ događaja kojemu određena osoba pristupa	\\ \hline 
 				%\cellcolor{LightBlue} primjer	& VARCHAR &   	\\ \hline 
 				
 				
@@ -220,8 +252,8 @@ Naša baza podataka sastoji se od sljedećih tablica:
 				\hline 
 				\endlastfoot
 				
-				\cellcolor{LightGreen}path-id & FOREIGN-KEY(path)	&  	strani ključ staze 	\\ \hline
-				event-id	& FOREIGN-KEY(user) &  strani ključ događaja 	\\ \hline 
+				\cellcolor{LightGreen}path-id & FOREIGN-KEY(path)	&  	strani ključ staze koja je dio nekog događaja	\\ \hline
+				event-id	& FOREIGN-KEY(user) &  strani ključ događaja u kojemu se pojedina staza koristi	\\ \hline 
 				%\cellcolor{LightBlue} primjer	& VARCHAR &   	\\ \hline 
 				
 				
@@ -245,11 +277,11 @@ Naša baza podataka sastoji se od sljedećih tablica:
 				name	& VARCHAR &   ime staze	\\ \hline 
 				start & VARCHAR & ime početne staze  \\ \hline 
 				end & VARCHAR &  ime završne staze \\ \hline 
-				avg-walk-time & time &  prosječno vrijeme potrebno za prolazak staze \\ \hline 
+				avg-walk-time & time &  prosječno vrijeme potrebno za prolazak staze u satima\\ \hline 
 				length & int &  dužina staze u km \\ \hline 
-				sea-level-dfiff & int & visinska razlika između početka i kraja staze  \\ \hline 
-				date-created & date &  datum stvaranja staze \\ \hline 
-				is-private & boolean	&  je li staza dostupna javnosti		\\ \hline 
+				sea-level-dfiff & int & visinska razlika između početka i kraja staze mjerena po udaljenosti pojedine točke od razine mora u km\\ \hline 
+				date-created & date &  datum stvaranja staze u bazi\\ \hline 
+				is-private & boolean	&  je li staza dostupna javnosti  \\ \hline 
 				author-id & FOREIGN-KEY(user)	&  	strani ključ korisnika koji je kreirao stazu	\\ \hline 
 				hill-id & FOREIGN-KEY(hill)	&  strani ključ visočja na kojemu se staza nalazi		\\ \hline 
 				%\cellcolor{LightBlue} primjer	& VARCHAR &   	\\ \hline 
@@ -280,7 +312,7 @@ Naša baza podataka sastoji se od sljedećih tablica:
 			\end{longtabu}
 			\vspace{10mm}
 		
-			\textbf{friendship-req} Ovaj entitet sadrži informaciju o Many-To-Many odnosu između bedževa i korisnika. Sadrži atribute: user-id, badge-id i date-recieved
+			\textbf{user-badge} Ovaj entitet sadrži informaciju o Many-To-Many odnosu između bedževa i korisnika. Sadrži atribute: user-id, badge-id i date-recieved
 		
 			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 				
@@ -337,7 +369,7 @@ Naša baza podataka sastoji se od sljedećih tablica:
 				\endlastfoot
 				
 				\cellcolor{LightGreen}id & int	&  jedinstveni ID visočja 	\\ \hline
-				name	& VARCHAR &  ime visočja 	\\ \hline 
+				name	& VARCHAR &  ime visočja	\\ \hline 
 				%\cellcolor{LightBlue} primjer	& VARCHAR &   	\\ \hline 
 				
 				
@@ -368,7 +400,7 @@ Naša baza podataka sastoji se od sljedećih tablica:
 			\vspace{10mm}		
 		
 		
-			\textbf{utility} Ovaj entitet sadrži informaciju o komunalijama
+			\textbf{utility} Ovaj entitet sadrži informaciju o komunalijama, odnosno raznim značajkama kao što su Wi-fi, grijanje i slično.
 
 			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 				
@@ -444,7 +476,7 @@ Naša baza podataka sastoji se od sljedećih tablica:
 				\hline 
 				\endlastfoot
 				
-				\cellcolor{LightGreen}user-id & FOREIGN-KEY(user)	& strani ključ korisnika   	\\ \hline
+				\cellcolor{LightGreen}user-id & FOREIGN-KEY(user)	& strani ključ korisnika  koji želi proći neku stazu	\\ \hline
 				path-id	& FOREIGN-KEY(path) &   strani ključ staze koju želi proći	\\ \hline 
 				%\cellcolor{LightBlue} primjer	& VARCHAR &   	\\ \hline 
 				
@@ -465,7 +497,7 @@ Naša baza podataka sastoji se od sljedećih tablica:
 				\hline 
 				\endlastfoot
 				
-				\cellcolor{LightGreen}user-id & FOREIGN-KEY(user)	& strani ključ korisnika  	\\ \hline
+				\cellcolor{LightGreen}user-id & FOREIGN-KEY(user)	& strani ključ korisnika  koji je prešao pojedinu stazu	\\ \hline
 				path-id	& FOREIGN-KEY(path) &   strani ključ staze koju je prešao	\\ \hline 
 				date-completed & date & datum prolaza staze  \\ \hline 
 				%\cellcolor{LightBlue} primjer	& VARCHAR &   	\\ \hline 
@@ -487,7 +519,7 @@ Naša baza podataka sastoji se od sljedećih tablica:
 				\hline 
 				\endlastfoot
 				
-				\cellcolor{LightGreen}user-id & FOREIGN-KEY(user)	& strani ključ korisnika  	\\ \hline
+				\cellcolor{LightGreen}user-id & FOREIGN-KEY(user)	& strani ključ korisnika  koji prijavljuje stazu	\\ \hline
 				path-id	& FOREIGN-KEY(path) &   strani ključ staze koju prijavljuje	\\ \hline 
 				description & VARCHAR & opis staze  \\ \hline 
 				%\cellcolor{LightBlue} primjer	& VARCHAR &   	\\ \hline 
@@ -514,7 +546,7 @@ Naša baza podataka sastoji se od sljedećih tablica:
 				\cellcolor{LightGreen}user-id & FOREIGN-KEY(USER)	&  strani ključ korisnika koji traži potvrdu posjeta \\ \hline
 				lodge-id	& FOREIGN-KEY(mountain-lodge) & strani ključ planinarskog doma kojeg posjećuje  	\\ \hline 
 				time-requested & timestamp &  vrijeme zatraživanja potvrde posjeta \\ \hline 
-				status & VARCHAR	&  status potvrde		\\ \hline 
+				status & VARCHAR	&  status potvrde	(odbijena, primljena...)	\\ \hline 
 				date-visited & date &  vrijeme posjete \\ \hline 
 				%\cellcolor{LightBlue} primjer	& VARCHAR &   	\\ \hline 
 				
@@ -535,42 +567,19 @@ Naša baza podataka sastoji se od sljedećih tablica:
 				\hline 
 				\endlastfoot
 				
-				\cellcolor{LightGreen }user-id & FOREIGN-KEY(user)	& strani ključ korisnika  	\\ \hline
-				lodge-id	& FOREIGN-KEY(mountain-lodge) &   strani ključ planinarskog doma	\\ \hline 
+				\cellcolor{LightGreen }user-id & FOREIGN-KEY(user)	& strani ključ korisnika koji je dežurni planinar 	\\ \hline
+				lodge-id	& FOREIGN-KEY(mountain-lodge) &   strani ključ planinarskog doma u kojemu je dežuran	\\ \hline 
 				%\cellcolor{LightBlue} primjer	& VARCHAR &   	\\ \hline 
 				
 				
 			\end{longtabu}
 			\vspace{10mm}
-			
-%Predložak
-				\textbf{predložak} 	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
-				
-				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
-					
-					\hline \multicolumn{3}{|c|}{\textbf{predložak - ime tablice}}	 \\[3pt] \hline
-					\endfirsthead
-					
-					\hline \multicolumn{3}{|c|}{\textbf{predložak - ime tablice}}	 \\[3pt] \hline
-					\endhead
-					
-					\hline 
-					\endlastfoot
-					
-					\cellcolor{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam 	\\ \hline
-					korisnickoIme	& VARCHAR &   	\\ \hline 
-					email & VARCHAR &   \\ \hline 
-					ime & VARCHAR	&  		\\ \hline 
-					\cellcolor{LightBlue} primjer	& VARCHAR &   	\\ \hline 
-					
-					
-				\end{longtabu}
-			\vspace{10mm}
 
-%End predložak
+
+
 			\subsection{Dijagram baze podataka}
 				
-				\includegraphics[width=\linewidth]{slike/database.png}
+				\includegraphics{slike/database.png}
 			
 			\eject
 			
