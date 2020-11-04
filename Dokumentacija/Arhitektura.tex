@@ -35,6 +35,60 @@
 
 		Najčešći model koji se koristi kod aplikacija je model klijent-poslužitelj pa tako koristimo i mi u našem projektu. Korisnik šalje upite, a poslužitelj odgovara na upite, dok i jedna i druga strana mogu imati korisničku i poslužiteljsku aplikaciju.
 
+	\vspace{10mm} %10mm vertical space
+
+		\textbf{\underline{Web preglednik:} }\\
+
+			Klijentski program, zvan preglednik, služi kao korisničko sučelje za pregledavanje sadržaja na webu. On je taj koji šalje zahtjev web poslužitelju i prikazuje primljene podatke u obliku web stranica korisniku. Dakle, preglednik će primljene podatke u obliku koda interpretirati u nešto korisniku razumljivo, odnosno prikazat će našu aplikaciju ''Planinarski dnevnik''. Konačan prikaz aplikacije može uključivati više dohvata resursa i često može sadržavati dodatke te pomoćne aplikacije za prikaz formata koje izvorno ne podržava.
+
+		\vspace{5mm} %5mm vertical space
+		\textbf{\underline{Web poslužitelj:} }\\
+
+		Poslužiteljski program poslužuje resurse smještene na poslužiteljskom računalu ili na drugim izvorima i odgovara na zahtjeve korisnika. Komunikacija se odvija preko HTTP/HTTPS (\textit{HyperText Transfer Protocol/Secure}) standardnog internetskog aplikacijskog protokola koji ima mogućnost prijenosa raznih vrsta podataka i proširiv je prema novim formatima podataka. Poslužitelj je zaslužan za pokretanje web aplikacije.
+
+		\vspace{5mm} %5mm vertical space
+		
+		\textbf{\underline{Web aplikacija:} }\\
+
+		Za realizaciju frontend-a, odnosno korisničkog sučelja upotrijebit ćemo React kao bazu unutar kojega ćemo koristiti jezike HTML, TypeScript i CSS. TypeScript nam omogućava izradu dinamičkih web stranica u kombinaciji s HTML-om i CSS-om i njime možemo mijenjati sadržaj na stranici ovisno o načinu interakcije korisnika sa stranicom. Uz ove navedene tehnologije moguće je napraviti moderno korisničko sučelje jedne web i mobilne aplikacije. Nakon što web preglednik korisniku prikaže aplikaciju ''Planinarski dnevnik'', korisnik može izvršiti određenu naredbu odabirom neke od funkcionalnosti aplikacije. Hoće li pristupiti bazi podataka ovisi o samoj akciji. Za komunikaciju s bazom podataka koristi se JDBC koji predstavlja sučelje aplikacijskog programiranja za jezik Java i definira kako klijent može pristupiti bazi podataka. Pruža metode za upit i ažuriranje u bazi podataka te je orijentiran prema relacijskim bazama podataka. Što se tiče backend-a koristimo Spring Boot i MVC arhitekturu. 
+
+
+		\vspace{5mm} %5mm vertical space
+
+		\textbf{Spring Boot} pruža fleksibilan način konfiguriranja Java Beans, XML konfiguracija i transakcija baze podataka te bitno olakšava upravljanje ovisnostima. Svaka pokrenuta usluga ima svoj postupak, a time se postiže jednostavan model za podršku aplikacijama.  
+
+
+		\vspace{5mm} %5mm vertical space
+
+		\textbf{Model – View – Controller} je obrazac koji razdvaja aplikaciju u tri glavne logičke komponente: Model, View i Controller. Svaka od nabrojenih komponenti ima zadatak rukovati s određenim razvojnim aspektima aplikacije. Također, one su nezavisne jedna od druge i kao rezultat toga je jednostavno dodavanje i preoblikovanje svojstava.
+
+
+		\vspace{5mm} %5mm vertical space
+
+		\begin{itemize}
+		\item \textbf{Model}	
+		
+		Poznat je kao najniža razina što znači da je odgovoran za održavanje podataka s kojima korisnik radi.Glavni zadatak je dohvat, manipulacija podatcima i uglavnom on surađuje s bazom podataka. Reagira na zahtjeve Controller-a jer on nikada sam ne razgovara s bazom podataka i nakono komunikacije prosljeđuje potrebne podatke Controllor-u. Jedna od bitnijih stvari za napomenuti je da Model nikada izravno ne komunicira s View.
+
+		\item \textbf{View}
+		
+		Služi za prikazivanje podataka na način da zapravo generira korisničko sučelje za korisnika. Ti podaci su rezultat rada Model-a, ali se oni ne preuzimaju izravno već putem Controller-a tako da View surađuje samo s Controller-om. 
+
+		\item \textbf{Controller}
+
+		Djeluje u službi posrednika između komponenti Model i View. Ne mora brinuti o rukovanju logikom podataka, već samo govori Model-u što treba učiniti. Nakon primanja podataka od Model-a, on ih obrađuje i konačno rezultat prosljeđuje do View-a gdje objašnjava kako ih prikazati korisniku. Ako je došlo do promjena, Controller je zadužen za ažuriranje View-a.
+
+
+		\end{itemize}
+
+
+		\begin{figure}[H]
+					\includegraphics[scale=0.8]{arhitektura/mvc.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+					\centering
+					\caption{Model - View - Controller}
+					\label{fig:arhitektura}
+		\end{figure}
+
 		\section{Baza podataka}
 			
 			\textbf{\textit{dio 1. revizije}}\\
