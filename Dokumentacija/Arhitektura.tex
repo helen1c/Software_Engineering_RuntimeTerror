@@ -2,19 +2,39 @@
 		
 		\textbf{\textit{dio 1. revizije}}\\
 
-		\textit{ Potrebno je opisati stil arhitekture te identificirati: podsustave, preslikavanje na radnu platformu, spremišta podataka, mrežne protokole, globalni upravljački tok i sklopovsko-programske zahtjeve. Po točkama razraditi i popratiti odgovarajućim skicama:}
+		Arhitektura programske potpore predstavlja strukturu sustava ili više njih koje sadrži elemente, njihova obilježja i odnose među njima. Temeljni razlozi definiranja arhitekture:		
+
 	\begin{itemize}
-		\item 	\textit{izbor arhitekture temeljem principa oblikovanja pokazanih na predavanjima (objasniti zašto ste baš odabrali takvu arhitekturu)}
-		\item 	\textit{organizaciju sustava s najviše razine apstrakcije (npr. klijent-poslužitelj, baza podataka, datotečni sustav, grafičko sučelje)}
-		\item 	\textit{organizaciju aplikacije (npr. slojevi frontend i backend, MVC arhitektura) }		
+		\item 	{poboljšava razumljivost i komunikaciju sudionika}
+		\item 	{pomaže u donošenju temeljnih odluka pri izradi projekta}
+		\item 	{omogućava rano uočavanje pogrešaka u oblikovanju}		
+		\item         {moguće ponovno korištenje rješenja (engl. reuse)}
 	\end{itemize}
 
-	
-		
+	U konačnici, efikasno strukturiranje arhitekture programske potpore dovest će do poboljšanja kvalitete finalnog produkta projekta.
 
-		
+	\vspace{10mm} %10mm vertical space
 
-				
+	Arhitekturu našeg projekta možemo klasificirati na četiri ključna dijela koji osiguravaju izvršavanje naredbi korisnika: 
+		
+	\begin{packed_enum}
+		\item 	{Web preglednik}
+		\item 	{Web poslužitelj}
+		\item 	{Web aplikacija}
+		\item 	{Baza podataka}
+	\end{packed_enum}			
+
+		\begin{figure}[H]
+					\includegraphics[scale=0.8]{arhitektura/arhitektura_sustava.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+					\centering
+					\caption{Arhitektura sustava}
+					\label{fig:arhitektura}
+		\end{figure}
+
+	\vspace{5mm} %5mm vertical space
+
+		Najčešći model koji se koristi kod aplikacija je model klijent-poslužitelj pa tako koristimo i mi u našem projektu. Korisnik šalje upite, a poslužitelj odgovara na upite, dok i jedna i druga strana mogu imati korisničku i poslužiteljsku aplikaciju.
+
 		\section{Baza podataka}
 			
 			\textbf{\textit{dio 1. revizije}}\\
