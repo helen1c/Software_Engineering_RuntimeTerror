@@ -79,7 +79,7 @@ $  $\chapter{Arhitektura i dizajn sustava}
 		\definecolor{LightGreen}{rgb}{0.4, 1.0, 0.0}
 		
 			\subsection{Opis tablica}
-			Primarni ključevi su označeni Podebljanjem, a strani ključevi su podcrtani. \\
+			Primarni ključevi su označeni \textbf{podebljanjem}, a strani ključevi su \underline{podcrtani}. \\
 			
 %Tablice
 			\textbf{user}  Ovaj entitet sadrži sve važne informacije o korisniku aplikacije. Sadrži atribute: name, email, password, image, role-id.  Ova tablica je u Many-to-One vezi s tablicom role preko atributa korisnika role-id.
@@ -164,8 +164,8 @@ $  $\chapter{Arhitektura i dizajn sustava}
 				\hline 
 				\endlastfoot
 				
-				\underline{friendship\_send} & BIGINT	&  strani ključ korisnika koji šalje zahtjev za prijateljstvom iz tablice user 	\\ \hline
-				friendship\_recieve	& BIGINT &   strani ključ korisnika koji prima zahtjev za prijateljstvom	iz tablice user\\ \hline 
+				\underline{friendship\_} \underline{send} & BIGINT	&  strani ključ korisnika koji šalje zahtjev za prijateljstvom iz tablice user 	\\ \hline
+				\underline{friendship\_} \underline{recieve}	& BIGINT &   strani ključ korisnika koji prima zahtjev za prijateljstvom	iz tablice user\\ \hline 
 				%\cellcolor{LightBlue} primjer	& VARCHAR &   	\\ \hline 
 				
 				
@@ -383,7 +383,7 @@ $  $\chapter{Arhitektura i dizajn sustava}
 				\textbf{id} & BIGINT	&  	jedinstveni ID planinarskog doma 	\\ \hline
 				name	& VARCHAR &   ime planinarskog doma	\\ \hline 
 				image & bytea &  slika planinarskog doma \\ \hline 
-				height & int & visina na kojoj se nalazi planinarski dom u km \\ \hline 
+				elevation & int & visina na kojoj se nalazi planinarski dom u km \\ \hline 
 				\underline{hill\_id} & BIGINT	&  strani ključ visočja na kojemu je planinarski dom iz tablice hill	\\ \hline 
 				
 				
