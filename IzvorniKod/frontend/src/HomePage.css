@@ -1,6 +1,7 @@
 .footer {
     background-color: #d8f9ff;
     text-align: center;
+    padding: 15px;
 }
 
 .header{
@@ -18,4 +19,48 @@
 
 .header-link{
     text-decoration: none;
+}
+
+.main{
+    background-image: url("images/Iqbc14.jpg");
+
+
+}
+.main-images{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.staze{
+    background-image: url("images/750_x_375.jpg");
+    margin: 100px;
+    text-align: center;
+    width: 420px;
+    height: 450px;
+    background-position: center;
+    background-size: cover;
+
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.domovi{
+    background-image: url("images/1509616682.jpg");
+    margin: 100px;
+    border-image-width: auto;
+    text-align: center;
+    background-position: center;
+    background-size: cover;
+
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+
+    width: 420px;
+    height: 450px;
+
+
+}
+.pretraga{
+    text-decoration: none;
+    color: white;
+
 }
