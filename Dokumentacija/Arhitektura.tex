@@ -15,7 +15,7 @@
 
 	\vspace{10mm} %10mm vertical space
 
-	Arhitekturu našeg projekta možemo klasificirati na četiri ključna dijela koji osiguravaju izvršavanje naredbi korisnika: 
+	Koristimo objektno usmjerenu arhitekturu koja najbolje odgovara razvoju složene web aplikacije namijenjene za što više korisnika u stvarnom vremenu. Možemo ju klasificirati na četiri ključna dijela koji osiguravaju izvršavanje naredbi korisnika: 
 		
 	\begin{packed_enum}
 		\item 	{Web preglednik}
@@ -33,13 +33,13 @@
 
 	\vspace{5mm} %5mm vertical space
 
-		Najčešći model koji se koristi kod aplikacija je model klijent-poslužitelj pa tako koristimo i mi u našem projektu. Korisnik šalje upite, a poslužitelj odgovara na upite, dok i jedna i druga strana mogu imati korisničku i poslužiteljsku aplikaciju.
+		Web aplikacija će se temeljiti na modelu klijent-poslužitelj, što je danas i najčešće korišteni model. Korisnik šalje zahtjeve na koje odgovara poslužitelj, dok i jedna i druga strana mogu imati korisničku i poslužiteljsku aplikaciju.
 
 	\vspace{10mm} %10mm vertical space
 
 		\textbf{\underline{Web preglednik:} }\\
 
-			Klijentski program, zvan preglednik, služi kao korisničko sučelje za pregledavanje sadržaja na webu. On je taj koji šalje zahtjev web poslužitelju i prikazuje primljene podatke u obliku web stranica korisniku. Dakle, preglednik će primljene podatke u obliku koda interpretirati u nešto korisniku razumljivo, odnosno prikazat će našu aplikaciju ''Planinarski dnevnik''. Konačan prikaz aplikacije može uključivati više dohvata resursa i često može sadržavati dodatke te pomoćne aplikacije za prikaz formata koje izvorno ne podržava.
+			Klijentski program, zvan preglednik, služi kao korisničko sučelje za pregledavanje sadržaja na webu. On je taj koji šalje zahtjev web poslužitelju i prikazuje primljene podatke u obliku web stranica korisniku. Dakle, preglednik će primljene podatke u obliku koda interpretirati u nešto korisniku razumljivo, odnosno prikazat će korisničko sučelje naše aplikacije. Konačan prikaz aplikacije može uključivati više dohvata resursa i često može sadržavati dodatke te pomoćne aplikacije za prikaz formata koje izvorno ne podržava.
 
 		\vspace{5mm} %5mm vertical space
 		\textbf{\underline{Web poslužitelj:} }\\
@@ -68,7 +68,7 @@
 		\begin{itemize}
 		\item \textbf{Model}	
 		
-		Poznat je kao najniža razina što znači da je odgovoran za održavanje podataka s kojima korisnik radi.Glavni zadatak je dohvat, manipulacija podatcima i uglavnom on surađuje s bazom podataka. Reagira na zahtjeve Controller-a jer on nikada sam ne razgovara s bazom podataka i nakono komunikacije prosljeđuje potrebne podatke Controllor-u. Jedna od bitnijih stvari za napomenuti je da Model nikada izravno ne komunicira s View.
+		Poznat je kao najniža razina što znači da je odgovoran za održavanje podataka s kojima korisnik radi. Glavni zadatak je dohvat, manipulacija podatcima i uglavnom on surađuje s bazom podataka. Reagira na zahtjeve Controller-a jer on nikada sam ne razgovara s bazom podataka i nakono komunikacije prosljeđuje potrebne podatke Controllor-u. Jedna od bitnijih stvari za napomenuti je da Model nikada izravno ne komunicira s View.
 
 		\item \textbf{View}
 		
