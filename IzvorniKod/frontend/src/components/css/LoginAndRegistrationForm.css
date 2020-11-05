@@ -1,0 +1,92 @@
+* {
+    box-sizing: border-box;
+}
+
+h1 {
+    text-align: center;
+}
+
+p {
+    padding: 0;
+    margin: 0;
+    font-size: 18px;
+}
+
+.profileImage {
+    height: 20rem;
+    width: 20rem;
+
+}
+
+button {
+    border-radius: 25px;
+    width: 8rem;
+    height: 2rem;
+    font-size: 18px;
+    background-color: #131E32;
+    color: white;
+}
+
+input {
+    margin: 0.3rem 0;
+    font-size: 16px;
+    border-radius: 10px;
+    text-indent: 5px;
+    height: 2.5rem;
+    width: 25rem;
+}
+
+.errorText {
+    color: red;
+}
+
+.inputComponent {
+    min-height: 6.5rem;
+    margin-left: auto;
+}
+
+.column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+    text-align: center;
+    vertical-align: middle;
+    height: auto;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.row {
+    padding-bottom: 6rem;
+}
+
+.text-area {
+    width: 32rem;
+    height: 12rem;
+    border-radius: 10px;
+}
+
+.loginForm {
+    text-align: center;
+    width: 100%;
+}
+
+.inputForm {
+    padding: 2rem 0;
+    display: inline-block;
+    text-align: left;
+}
+
+.textAlignLeft {
+    display: inline-block;
+    text-align: left;
+}
+
+.registrationForm {
+    text-align: center;
+
+}
