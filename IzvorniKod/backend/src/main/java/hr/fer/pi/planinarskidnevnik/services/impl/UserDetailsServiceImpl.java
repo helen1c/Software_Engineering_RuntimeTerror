@@ -1,4 +1,4 @@
-package hr.fer.pi.planinarskidnevnik.services;
+package hr.fer.pi.planinarskidnevnik.services.impl;
 
 import hr.fer.pi.planinarskidnevnik.models.User;
 import org.springframework.security.core.userdetails.UserDetails;

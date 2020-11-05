@@ -1,6 +1,6 @@
 package hr.fer.pi.planinarskidnevnik.security;
 
-import hr.fer.pi.planinarskidnevnik.services.UserDetailsServiceImpl;
+import hr.fer.pi.planinarskidnevnik.services.impl.UserDetailsServiceImpl;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -24,6 +24,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/users").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
+                .antMatchers("/mountain-lodges/**").permitAll()
                 .antMatchers("/home").permitAll()
                 .anyRequest().authenticated()
                 .and()
