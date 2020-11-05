@@ -1,3 +1,16 @@
 spring:
+  datasource:
+    username: ${DB_USER:sa}
+    password: ${DB_PASS:pass}
+    url: ${DB_URL:jdbc:h2:mem:model}
   liquibase:
     change-log: classpath:/db/liquibase-master.xml
+  h2:
+    console:
+      enabled: true
+planinarskidnevnik:
+  frontend:
+    path: ${FRONTEND_URL:http://localhost:3000}
+server:
+  servlet:
+    context-path: /api
