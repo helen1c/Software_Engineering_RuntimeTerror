@@ -91,38 +91,551 @@
 
 		\section{Baza podataka}
 			
-			\textbf{\textit{dio 1. revizije}}\\
-			
-		\textit{Potrebno je opisati koju vrstu i implementaciju baze podataka ste odabrali, glavne komponente od kojih se sastoji i slično.}
+		Za naš projekt odabrali smo \textbf{relacijsku bazu podataka} zbog njezine pogodnosti da prikaže mali dio stvarnog svijeta bez redundancije unutar same baze. Dohvaćanje podataka je jako brzo i jako lagano se može paralelizirati. Specifičnu implementaciju relacijske baze podataka koju smo odabrali je \textbf{PostgreSQL}. To je open source baza podataka s preko 30 godina aktivnog razvoja zbog kojega je zaslužila svoju čvrstu reputaciju za pouzdanost, bogatstvo opcijama i visokim performansama. Zbog načina na koji je SQL standard napisan, vrlo je slična ostalim SQL bazama podataka.\\ 
+		
+		Tijekom razvoja koristimo \textbf{H2 bazu}. To je privremena baza podataka koja služi za testiranje koda. Svi zapisi u njoj se nalaze u privremenoj memoriji i nisu perzistentni. Zbog toga je odlična za testiranje. Ona je open source, napisana u Javi i ima čvrste sigurnosne postavke. Na nju se isto može povezati s više konekcija i baza podataka je enkriptirana SHA-256 enkripcijom. Ima vrlo malu potrošnju memorije i jako malo mjesta zauzima na disku (oko 2MB). \\ 
+		
+		Također koristimo \textbf{JPA (Java Persistence API)} koje samo sadrži sučelja za stvaranje Persistence layouta. Dopušta nam da mapiramo entitete tablica i veze između tablica na objekte u Javi. Ovo sučelje definira svoj vlastiti query jezik (JPQA). JPQA prevoditelj interpretira kod i piše SQL queryje. JPA ne možemo samostalno koristiti, već nam treba konkretna implementacija toga sučelja. Implementaciju koju ćemo mi koristiti se zove Hibernate. \\ 
+		
+		Na bazu podataka se iz Jave spajamo preko \textbf{JdbcTemplatea}. To je snažni mehanizam za spajanje i izvođenje SQL queryja. On nam smanjuje količinu koda koju moramo napisati kako bismo izvršavali queryje, kao što je spajanje na bazu, kreiranje izraza i zatvaranje spoja. \\
+		
+	Naša baza podataka sastoji se od sljedećih tablica:
+		\begin{itemize}[noitemsep]
+		\item
+			user
+		\item
+			friends
+		\item
+			friendship-req
+		\item
+			role
+		\item
+			event
+		\item
+			event-attendance
+		\item
+			event-path
+		\item
+			path
+		\item
+			badge
+		\item
+			user-badge
+		\item
+			notification
+		\item
+			hill
+		\item
+			mountain-lodge
+		\item
+			utility
+		\item
+			lodge-utility
+		\item
+			path-user-grade
+		\item
+			path-wishlist
+		\item
+			completed-paths
+		\item
+			report-path
+		\item
+			visit-confirmation-request
+		\item
+			mountaneer-on-duty
+		\item
+			place-of-residence	
+
+
+\end{itemize}
+		
+		\definecolor{LightBlue}{rgb}{0.67, 0.9, 0.93}
+		\definecolor{LightGreen}{rgb}{0.4, 1.0, 0.0}
 		
 			\subsection{Opis tablica}
+			Primarni ključevi su označeni \textbf{podebljanjem}, a strani ključevi su \underline{podcrtani}. \\
 			
-
-				\textit{Svaku tablicu je potrebno opisati po zadanom predlošku. Lijevo se nalazi točno ime varijable u bazi podataka, u sredini se nalazi tip podataka, a desno se nalazi opis varijable. Svjetlozelenom bojom označite primarni ključ. Svjetlo plavom označite strani ključ}
+%Tablice
+			\textbf{user}  Ovaj entitet sadrži sve važne informacije o korisniku aplikacije. Sadrži atribute: name, email, password, image, role-id.  Ova tablica je u Many-to-One vezi s tablicom role preko atributa korisnika role-id.
+			
+			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+				\hline \multicolumn{3}{|c|}{\textbf{user - ime tablice}}	 \\[3pt] \hline
+				\endfirsthead
 				
-				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
-					
-					\hline \multicolumn{3}{|c|}{\textbf{korisnik - ime tablice}}	 \\[3pt] \hline
-					\endfirsthead
-					
-					\hline \multicolumn{3}{|c|}{\textbf{korisnik - ime tablice}}	 \\[3pt] \hline
-					\endhead
-					
-					\hline 
-					\endlastfoot
-					
-					\cellcolor{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam 	\\ \hline
-					korisnickoIme	& VARCHAR &   	\\ \hline 
-					email & VARCHAR &   \\ \hline 
-					ime & VARCHAR	&  		\\ \hline 
-					\cellcolor{LightBlue} primjer	& VARCHAR &   	\\ \hline 
-					
-					
-				\end{longtabu}
+				\hline \multicolumn{3}{|c|}{\textbf{user - ime tablice}}	 \\[3pt] \hline
+				\endhead
+				
+				\hline 
+				\endlastfoot
+				
+				\textbf{id} & BIGINT	&  	jedinstveni identifikator korisnika	\\ \hline
+				name	& VARCHAR &  ime i prezime korisnika 	\\ \hline 
+				email & VARCHAR &  email korisnika \\ \hline 
+				password & VARCHAR	&  	lozinka korisnika	\\ \hline 
+				image & bytea	&  	slika korisnika	\\ \hline 
+				\underline{role\_id} & BIGINT	&  	strani ključ uloge korisnika iz tablice role	\\ \hline 
+				address & int	&  	adresa stanovanja korisnika	\\ \hline 
+				\underline{place\_id} & BIGINT & strani ključ mjesta stanovanja korisnika iz tablice place\_of\_residence\\ \hline
+				date\_of\_birth & date & datum rođenja korisnika \\ \hline
+				
+				
+			\end{longtabu}
+			\vspace{10mm}
 			
+			\textbf{place\_of\_residence}  Ovaj entitet sadrži informaciju o različitim mjestima stanovanja. Povezuje se s tablicom korisnika.
 			
+			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+				
+				\hline \multicolumn{3}{|c|}{\textbf{place\_of\_residence - ime tablice}}	 \\[3pt] \hline
+				\endfirsthead
+				
+				\hline \multicolumn{3}{|c|}{\textbf{place\_of\_residence - ime tablice}}	 \\[3pt] \hline
+				\endhead
+				
+				\hline 
+				\endlastfoot
+				
+				\textbf{id} & BIGINT	&  	jedinstveni identifikator mjesta stanovanja	\\ \hline
+				name	& VARCHAR &  ime mjesta stanovanja 	\\ \hline 
+				%\cellcolor{LightBlue} primjer	& VARCHAR &   	\\ \hline 
+				
+				
+			\end{longtabu}
+			\vspace{10mm}
+			
+			\textbf{friends} Ovaj entitet sadrži informaciju o Many-To-Many prijateljskoj vezi između dva korisnika. Sadrži atribute: userId1, userId2, koji su oba strani ključevi iz tablice user
+			
+			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+				
+				\hline \multicolumn{3}{|c|}{\textbf{friends - ime tablice}}	 \\[3pt] \hline
+				\endfirsthead
+				
+				\hline \multicolumn{3}{|c|}{\textbf{friends - ime tablice}}	 \\[3pt] \hline
+				\endhead
+				
+				\hline 
+				\endlastfoot
+				
+				\underline{user\_id1} & BIGINT	&  strani ključ 1. korisnika iz tablice user	\\ \hline
+				\underline{user\_id2}	& BIGINT &   strani ključ 2. korisnika	iz tablice user\\ \hline 
+				created\_on	& date &   datum stvaranja prijateljstva	\\ \hline 
+				%\cellcolor{LightBlue} primjer	& VARCHAR &   	\\ \hline 
+				
+				
+			\end{longtabu}
+			\vspace{10mm}
+
+			\textbf{friendship\_req} Ovaj entitet sadrži informaciju o poslanom zahtjevu za prijateljstvo između 2 korisnika. Sadrži atribute: friendship\_send, friendship\_recieve, koji su oba strani ključevi iz tablice user
+			
+			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+				
+					\hline \multicolumn{3}{|c|}{\textbf{friendship\_req - ime tablice}}	 \\[3pt] \hline
+				\endfirsthead
+				
+				\hline \multicolumn{3}{|c|}{\textbf{friendship\_req - ime tablice}}	 \\[3pt] \hline
+				\endhead
+				
+				\hline 
+				\endlastfoot
+				
+				\underline{friendship\_} \underline{send} & BIGINT	&  strani ključ korisnika koji šalje zahtjev za prijateljstvom iz tablice user 	\\ \hline
+				\underline{friendship\_} \underline{recieve}	& BIGINT &   strani ključ korisnika koji prima zahtjev za prijateljstvom	iz tablice user\\ \hline 
+				%\cellcolor{LightBlue} primjer	& VARCHAR &   	\\ \hline 
+				
+				
+			\end{longtabu}
+			\vspace{10mm}
+		
+			\textbf{role} Ovaj entitet sadrži informaciju o ulozi koju ima određeni korisnik. Određuje razinu dozvole korisnika
+			
+			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+				
+				\hline \multicolumn{3}{|c|}{\textbf{role - ime tablice}}	 \\[3pt] \hline
+				\endfirsthead
+				
+				\hline \multicolumn{3}{|c|}{\textbf{role - ime tablice}}	 \\[3pt] \hline
+				\endhead
+				
+				\hline 
+				\endlastfoot
+				
+				\textbf{id} & BIGINT	&  jedinstveni ID uloge	\\ \hline
+				name	& VARCHAR &  ime uloge 	\\ \hline 
+
+			\end{longtabu}
+			\vspace{10mm}
+
+			\textbf{event} Ovaj entitet sadrži informaciju o događaju. Sadrži atribute: name, description, start\_date, end\_date, date\_created i u One-To-Many je vezi s tablicom user preko atributa author\_id.
+			
+			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+				
+				\hline \multicolumn{3}{|c|}{\textbf{event - ime tablice}}	 \\[3pt] \hline
+				\endfirsthead
+				
+				\hline \multicolumn{3}{|c|}{\textbf{event - ime tablice}}	 \\[3pt] \hline
+				\endhead
+				
+				\hline 
+				\endlastfoot
+				
+				\textbf{id} & BIGINT	&  	jedinstveni id događaja 	\\ \hline
+				name	& VARCHAR & ime događaja  	\\ \hline 
+				description & VARCHAR &  opis događaja \\ \hline 
+				start\_date & timestamp	&  	datum početka događaja	\\ \hline 
+				end\_date & timestamp	&  	datum kraja događaja	\\ \hline 
+				date\_created & timestamp	&  	datum stvaranja događaja	\\ \hline 
+				\underline{author\_id} & BIGINT	& strani ključ korisnika koji je stvorio događaj iz tablice user		\\ \hline 
+				
+				
+			\end{longtabu}
+			\vspace{10mm}
+
+			\textbf{event\_attendance} Ovaj entitet sadrži informaciju o Many-To-Many učestvovanju na nekom događaju nekog korisnika. Sadrži atribute: user\_id, event\_id koji su oba strani ključevi.
+			
+			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+				
+				\hline \multicolumn{3}{|c|}{\textbf{event\_attendance - ime tablice}}	 \\[3pt] \hline
+				\endfirsthead
+				
+				\hline \multicolumn{3}{|c|}{\textbf{event\_attendance - ime tablice}}	 \\[3pt] \hline
+				\endhead
+				
+				\hline 
+				\endlastfoot
+				
+				\underline{user\_id} & BIGINT	&  	strani ključ korisnika koji će prisustvovati događaju iz tablice user	\\ \hline
+				\underline{event\_id}	& BIGINT &  strani ključ događaja kojemu određena osoba pristupa	iz tablice event\\ \hline 
+				
+				
+			\end{longtabu}
+			\vspace{10mm}		
+			
+			\textbf{event\_path} Ovaj entitet sadrži informaciju o Many-To-Many vezi između staze i nekog događaja. Sadrži atribute: path\_id, event\_id koji su oba strani ključevi.
+			
+			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+				
+				\hline \multicolumn{3}{|c|}{\textbf{event\_path - ime tablice}}	 \\[3pt] \hline
+				\endfirsthead
+				
+				\hline \multicolumn{3}{|c|}{\textbf{event\_path - ime tablice}}	 \\[3pt] \hline
+				\endhead
+				
+				\hline 
+				\endlastfoot
+				
+				\underline{path-id} & BIGINT	&  	strani ključ staze koja je dio nekog događaja iz tablice path	\\ \hline
+				\underline{event-id}	& BIGINT &  strani ključ događaja u kojemu se pojedina staza koristi iz tablice event	\\ \hline 
+				
+				
+			\end{longtabu}
+			\vspace{10mm}
+
+			\textbf{path} Ovaj entitet sadrži informacije o pojedinoj stazi. Sadrži atribute: name, start, end, avg\_walk\_time, length, sea\_level\_diff, date\_created, is\_private, author\_id, hill\_id
+			
+			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+				
+				\hline \multicolumn{3}{|c|}{\textbf{path - ime tablice}}	 \\[3pt] \hline
+				\endfirsthead
+				
+				\hline \multicolumn{3}{|c|}{\textbf{path - ime tablice}}	 \\[3pt] \hline
+				\endhead
+				
+				\hline 
+				\endlastfoot
+				
+				\textbf{id} & BIGINT	&  	jedinstveni ID staze	\\ \hline
+				name	& VARCHAR &   ime staze	\\ \hline 
+				start & VARCHAR & ime početne staze  \\ \hline 
+				end & VARCHAR &  ime završne staze \\ \hline 
+				avg\_walk\_time & time &  prosječno vrijeme potrebno za prolazak staze u satima\\ \hline 
+				length & int &  dužina staze u km \\ \hline 
+				sea\_level\_diff & int & visinska razlika između početka i kraja staze mjerena po udaljenosti pojedine točke od razine mora u km\\ \hline 
+				date\_created & date &  datum stvaranja staze u bazi\\ \hline 
+				is\_private & boolean	&  je li staza dostupna javnosti  \\ \hline 
+				author\_id & BIGINT	&  	strani ključ korisnika koji je kreirao stazu iz tablice user	\\ \hline 
+				hill\_id & BIGINT	&  strani ključ visočja na kojemu se staza nalazi iz tablice hill		\\ \hline 
+				
+				
+			\end{longtabu}
+			\vspace{10mm}
+
+			\textbf{badge} Ovaj entitet sadrži informaciju o bedževima koje korisnici mogu osvojiti za neka dostignuća. Sadrže atribute id, name i image
+
+			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+				
+				\hline \multicolumn{3}{|c|}{\textbf{badge - ime tablice}}	 \\[3pt] \hline
+				\endfirsthead
+				
+				\hline \multicolumn{3}{|c|}{\textbf{badge - ime tablice}}	 \\[3pt] \hline
+				\endhead
+				
+				\hline 
+				\endlastfoot
+				
+				\textbf{id}	& BIGINT &   jedinstveni id bedža	\\ \hline 
+				name & VARCHAR &  ime bedža \\ \hline 
+				image & bytea	&  	slika bedža	\\ \hline 
+				
+				
+			\end{longtabu}
+			\vspace{10mm}
+		
+			\textbf{user\_badge} Ovaj entitet sadrži informaciju o Many-To-Many odnosu između bedževa i korisnika. Sadrži atribute: user\_id, badge\_id i date\_recieved
+		
+			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+				
+				\hline \multicolumn{3}{|c|}{\textbf{user\_badge - ime tablice}}	 \\[3pt] \hline
+				\endfirsthead
+				
+				\hline \multicolumn{3}{|c|}{\textbf{user\_badge - ime tablice}}	 \\[3pt] \hline
+				\endhead
+				
+				\hline 
+				\endlastfoot
+				
+				\underline{user\_id} & BIGINT	&  strani ključ korisnika kojemu je pripisan pojedini bedž iz tablice user\\ \hline
+				\underline{badge\_id}	& BIGINT &  strani ključ bedža kojega je dobio pojedini korisnik iz tablice badge	\\ \hline 
+				date\_recieved & date & datum dobivanja pojedinog bedža  \\ \hline 
+				
+				
+			\end{longtabu}
+			\vspace{10mm}
+		
+			\textbf{notification} Ovaj entitet sadrži informaciju o Many-To-Many odnosu između bedževa i korisnika, ali samo u smislu notificiranja korisnika. Kada korisnik potvrdi da je primio notifikaciju, pojedini unos se briše iz ovog entiteta . Sadrži atribute: user\_id, badge\_id
+			
+			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+				
+				\hline \multicolumn{3}{|c|}{\textbf{notification - ime tablice}}	 \\[3pt] \hline
+				\endfirsthead
+				
+				\hline \multicolumn{3}{|c|}{\textbf{notification - ime tablice}}	 \\[3pt] \hline
+				\endhead
+				
+				\hline 
+				\endlastfoot
+				
+				\underline{user\_id} & BIGINT	&  strani ključ korisnika kojemu je pripisan pojedini bedž iz tablice user\\ \hline
+				\underline{badge\_id}	& BIGINT) &  strani ključ bedža kojega je dobio pojedini korisnik iz tablice badge\\ \hline  
+				
+				
+			\end{longtabu}
+			\vspace{10mm}		
+		
+			\textbf{hill} Ovaj entitet sadrži informaciju o pojedinom visočju. Sadrži atribute: id i name
+			
+			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+				
+				\hline \multicolumn{3}{|c|}{\textbf{hill - ime tablice}}	 \\[3pt] \hline
+				\endfirsthead
+				
+				\hline \multicolumn{3}{|c|}{\textbf{hill - ime tablice}}	 \\[3pt] \hline
+				\endhead
+				
+				\hline 
+				\endlastfoot
+				
+				\textbf{id} & BIGINT	&  jedinstveni ID visočja 	\\ \hline
+				name & VARCHAR	&  ime visočja 	\\ \hline
+				
+				
+			\end{longtabu}
+			\vspace{10mm}		
+		
+			\textbf{mountain\_lodge} Ovaj entitet sadrži informaciju o planinarskom domu. Sadrži atribute: id, name, image i One-To-Many vezu između visočja hill\_id.
+			
+			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+				
+				\hline \multicolumn{3}{|c|}{\textbf{mountain\_lodge - ime tablice}}	 \\[3pt] \hline
+				\endfirsthead
+				
+				\hline \multicolumn{3}{|c|}{\textbf{mountain\_lodge - ime tablice}}	 \\[3pt] \hline
+				\endhead
+				
+				\hline 
+				\endlastfoot
+				
+				\textbf{id} & BIGINT	&  	jedinstveni ID planinarskog doma 	\\ \hline
+				name	& VARCHAR &   ime planinarskog doma	\\ \hline 
+				image & bytea &  slika planinarskog doma \\ \hline 
+				elevation & int & visina na kojoj se nalazi planinarski dom u km \\ \hline 
+				\underline{hill\_id} & BIGINT	&  strani ključ visočja na kojemu je planinarski dom iz tablice hill	\\ \hline 
+				
+				
+			\end{longtabu}
+			\vspace{10mm}		
+		
+		
+			\textbf{utility} Ovaj entitet sadrži informaciju o komunalijama, odnosno raznim značajkama kao što su Wi-fi, grijanje i slično.
+
+			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+				
+				\hline \multicolumn{3}{|c|}{\textbf{utility - ime tablice}}	 \\[3pt] \hline
+				\endfirsthead
+				
+				\hline \multicolumn{3}{|c|}{\textbf{utility - ime tablice}}	 \\[3pt] \hline
+				\endhead
+				
+				\hline 
+				\endlastfoot
+				
+				\textbf{id} & BIGINT	&  jedinstveni ID komunalije\\ \hline
+				name	& VARCHAR &  ime komunalije \\ \hline 
+				
+			\end{longtabu}
+			\vspace{10mm}		
+		
+			\textbf{lodge\_utility} Ovaj entitet sadrži informaciju o Many-To-Many odnosu između komunalija i planinarskih domova. Sadrži atribute: lodge\_id, utility\_id
+			
+			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+				
+				\hline \multicolumn{3}{|c|}{\textbf{lodge\_utility - ime tablice}}	 \\[3pt] \hline
+				\endfirsthead
+				
+				\hline \multicolumn{3}{|c|}{\textbf{lodge\_utility - ime tablice}}	 \\[3pt] \hline
+				\endhead
+				
+				\hline 
+				\endlastfoot
+				
+				\underline{lodge\_id} & BIGINT	&  strani ključ kojemu je pripisan pojedini planinarski dom iz tablice mountain\_lodge\\ \hline
+				\underline{utility\_id}	& BIGINT &  strani ključ kojemu je pripisana pojedina komunalija iz tablice utility \\ \hline 
+				
+				
+			\end{longtabu}
+			\vspace{10mm}
+			
+			\textbf{path\_user\_grade} Ovaj entitet sadrži informaciju o Many-To-Many odnosu između pojedinog korisnika i staze. Korisnik pripisuje ocjenu pojedinoj stazi.
+			
+			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+				
+				\hline \multicolumn{3}{|c|}{\textbf{path\_user\_grade - ime tablice}}	 \\[3pt] \hline
+				\endfirsthead
+				
+				\hline \multicolumn{3}{|c|}{\textbf{path\_user\_grade - ime tablice}}	 \\[3pt] \hline
+				\endhead
+				
+				\hline 
+				\endlastfoot
+				
+				\underline{user\_id} & BIGINT	& strani ključ korisnika koji daje ocjenu iz tablice user  	\\ \hline
+				\underline{path\_id}	& BIGINT &   strani ključ staze koja se ocjenjuje iz tablice path	\\ \hline 
+				grade & int & ocjena staze  \\ \hline 
+				
+				
+			\end{longtabu}
+			\vspace{10mm}		
+		
+			\textbf{path\_wishlist} Ovaj entitet sadrži informaciju o Many-To-Many odnosu između pojedinog korisnika i staze. Korisnik označuje koju stazu želi proći.
+		
+			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+				
+				\hline \multicolumn{3}{|c|}{\textbf{path\_wishlist - ime tablice}}	 \\[3pt] \hline
+				\endfirsthead
+				
+				\hline \multicolumn{3}{|c|}{\textbf{path\_wishlist - ime tablice}}	 \\[3pt] \hline
+				\endhead
+				
+				\hline 
+				\endlastfoot
+				
+				\underline{user\_id} & BIGINT	& strani ključ korisnika  koji želi proći neku stazu iz tablice user	\\ \hline
+				
+				
+			\end{longtabu}
+			\vspace{10mm}			
+			
+			\textbf{completed\_paths} Ovaj entitet sadrži informaciju o Many-To-Many odnosu između pojedinog korisnika i staza koje je već prešao.
+			
+			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+				
+				\hline \multicolumn{3}{|c|}{\textbf{completed\_paths - ime tablice}}	 \\[3pt] \hline
+				\endfirsthead
+				
+				\hline \multicolumn{3}{|c|}{\textbf{completed\_paths - ime tablice}}	 \\[3pt] \hline
+				\endhead
+				
+				\hline 
+				\endlastfoot
+				
+				\underline{user\_id} & BIGINT	& strani ključ korisnika  koji je prešao pojedinu stazu iz tablice user	\\ \hline
+				path\_id	& BIGINT &   strani ključ staze koju je prešao iz tablice path	\\ \hline 
+				date\_completed & date & datum prolaza staze  \\ \hline 
+				
+				
+			\end{longtabu}
+			\vspace{10mm}
+		
+			\textbf{report\_path} Ovaj entitet sadrži informaciju o Many-To-Many odnosu između pojedinog korisnika i staze koju želi prijaviti za netočne informacije. Sadrži atribute: user\_id, path\_id i description.
+			
+			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+				
+				\hline \multicolumn{3}{|c|}{\textbf{report\_path - ime tablice}}	 \\[3pt] \hline
+				\endfirsthead
+				
+				\hline \multicolumn{3}{|c|}{\textbf{report\_path - ime tablice}}	 \\[3pt] \hline
+				\endhead
+				
+				\hline 
+				\endlastfoot
+				
+				\underline{user\_id} & BIGINT	& strani ključ korisnika  koji prijavljuje stazu iz tablice user	\\ \hline
+				\underline{path\_id}	& BIGINT &   strani ključ staze koju prijavljuje iz tablice path	\\ \hline 
+				description & VARCHAR & opis staze  \\ \hline 
+				
+				
+			\end{longtabu}
+			\vspace{10mm}
+		
+		
+		
+			\textbf{visit\_confirmation\_request} Ovaj entitet sadrži informaciju o Many-To-Many poslanom zahtjevu za potvrdu dolaska u planinarski dom. Ovo je tablica koja povezuje planinarski dom s pojedinim korisnikom. Sadrži atribute: user\_id, lodge\_id, time\_requested, status, date\_visited
+			
+			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+				
+				\hline \multicolumn{3}{|c|}{\textbf{visit\_confirmation\_request - ime tablice}}	 \\[3pt] \hline
+				\endfirsthead
+				
+				\hline \multicolumn{3}{|c|}{\textbf{visit\_confirmation\_request - ime tablice}}	 \\[3pt] \hline
+				\endhead
+				
+				\hline 
+				\endlastfoot
+				
+				\underline{user-id} & BIGINT	&  strani ključ korisnika koji traži potvrdu posjeta iz tablice user\\ \hline
+				lodge\_id	& BIGINT & strani ključ planinarskog doma kojeg posjećuje iz tablice mountain\_lodge 	\\ \hline 
+				time\_requested & timestamp &  vrijeme zatraživanja potvrde posjeta \\ \hline 
+				status & VARCHAR	&  status potvrde	(odbijena, primljena...)	\\ \hline 
+				date\_visited & date &  vrijeme posjete \\ \hline 
+				
+				
+			\end{longtabu}
+			\vspace{10mm}
+		
+			\textbf{mountaneer\_on\_duty} Ovaj entitet sadrži informaciju o Many-To-Many odnosu između pojedinog planinarskog doma i dežurnog planinara. Sadrži atribute user\_id i lodge\_id.
+			
+			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+				
+				\hline \multicolumn{3}{|c|}{\textbf{mountaneer\_on\_duty - ime tablice}}	 \\[3pt] \hline
+				\endfirsthead
+				
+				\hline \multicolumn{3}{|c|}{\textbf{mountaneer\_on\_duty - ime tablice}}	 \\[3pt] \hline
+				\endhead
+				
+				\hline 
+				\endlastfoot
+				
+				\underline{user\_id} & BIGINT	& strani ključ korisnika koji je dežurni planinar iz tablice user	\\ \hline
+				\underline{lodge\_id}	& BIGINT &   strani ključ planinarskog doma u kojemu je dežuran iz tablice mountain\_lodge	\\ \hline 
+				
+				
+			\end{longtabu}
+			\vspace{10mm}
+
+
+
 			\subsection{Dijagram baze podataka}
-				\textit{ U ovom potpoglavlju potrebno je umetnuti dijagram baze podataka. Primarni i strani ključevi moraju biti označeni, a tablice povezane. Bazu podataka je potrebno normalizirati. Podsjetite se kolegija "Baze podataka".}
+				
+				\includegraphics[width=\linewidth]{slike/database.png}
 			
 			\eject
 			
@@ -143,25 +656,25 @@
 			
 			\eject
 		
-		\section{Dijagram stanja}
+		%\section{Dijagram stanja}
 			
 			
-			\textbf{\textit{dio 2. revizije}}\\
+		%	\textbf{\textit{dio 2. revizije}}\\
+		%	
+		%	\textit{Potrebno je priložiti dijagram stanja i opisati ga. Dovoljan je jedan dijagram stanja koji prikazuje \textbf{značajan dio funkcionalnosti} sustava. Na primjer, stanja korisničkog sučelja i tijek korištenja neke ključne funkcionalnosti jesu značajan dio sustava, a registracija i prijava nisu. }
 			
-			\textit{Potrebno je priložiti dijagram stanja i opisati ga. Dovoljan je jedan dijagram stanja koji prikazuje \textbf{značajan dio funkcionalnosti} sustava. Na primjer, stanja korisničkog sučelja i tijek korištenja neke ključne funkcionalnosti jesu značajan dio sustava, a registracija i prijava nisu. }
 			
-			
-			\eject 
+		%	\eject 
 		
-		\section{Dijagram aktivnosti}
+		%\section{Dijagram aktivnosti}
+		%	
+		%	\textbf{\textit{dio 2. revizije}}\\
 			
-			\textbf{\textit{dio 2. revizije}}\\
+		%	 \textit{Potrebno je priložiti dijagram aktivnosti s pripadajućim opisom. Dijagram aktivnosti treba prikazivati značajan dio sustava.}
 			
-			 \textit{Potrebno je priložiti dijagram aktivnosti s pripadajućim opisom. Dijagram aktivnosti treba prikazivati značajan dio sustava.}
-			
-			\eject
-		\section{Dijagram komponenti}
+		%	\eject
+		%\section{Dijagram komponenti}
 		
-			\textbf{\textit{dio 2. revizije}}\\
+		%	\textbf{\textit{dio 2. revizije}}\\
 		
-			 \textit{Potrebno je priložiti dijagram komponenti s pripadajućim opisom. Dijagram komponenti treba prikazivati strukturu cijele aplikacije.}
+		%	 \textit{Potrebno je priložiti dijagram komponenti s pripadajućim opisom. Dijagram komponenti treba prikazivati strukturu cijele aplikacije.}
