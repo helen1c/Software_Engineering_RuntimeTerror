@@ -3,7 +3,7 @@ package hr.fer.pi.planinarskidnevnik.models;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
+@Entity(name = "MOUNTAIN_LODGE")
 public class MountainLodge {
 
     @Id
@@ -22,7 +22,7 @@ public class MountainLodge {
 
     @ManyToMany
     @JoinTable(
-            name = "utility",
+            name = "mountain_lodge_utility",
             joinColumns = @JoinColumn(name = "LODGE_ID"),
             inverseJoinColumns = @JoinColumn(name = "UTILITY_ID")
     )

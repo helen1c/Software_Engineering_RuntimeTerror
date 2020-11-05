@@ -8,7 +8,7 @@ public class MountainLodgeSearchRequest extends PageSearchRequest {
 
     private String searchText;
 
-    private String hill;
+    private Long hillId;
 
     private List<String> utilities;
 
@@ -16,8 +16,8 @@ public class MountainLodgeSearchRequest extends PageSearchRequest {
         return utilities;
     }
 
-    public String getHill() {
-        return hill;
+    public Long getHillId() {
+        return hillId;
     }
 
     public String getSearchText() {

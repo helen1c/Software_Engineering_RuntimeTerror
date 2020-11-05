@@ -2,7 +2,7 @@ package hr.fer.pi.planinarskidnevnik.models;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "UTILITY")
 public class Utility {
 
     @Id

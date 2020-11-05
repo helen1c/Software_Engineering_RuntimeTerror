@@ -2,7 +2,7 @@ package hr.fer.pi.planinarskidnevnik.controllers;
 
 import hr.fer.pi.planinarskidnevnik.dtos.UserCreateDto;
 import hr.fer.pi.planinarskidnevnik.models.User;
-import hr.fer.pi.planinarskidnevnik.services.UserService;
+import hr.fer.pi.planinarskidnevnik.services.impl.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
