@@ -1,6 +1,6 @@
 package hr.fer.pi.planinarskidnevnik.services.impl;
 
-import hr.fer.pi.planinarskidnevnik.dtos.MountainLodgeSearchRequest;
+import hr.fer.pi.planinarskidnevnik.dtos.MountainLodge.MountainLodgeSearchRequest;
 import hr.fer.pi.planinarskidnevnik.models.MountainLodge;
 import hr.fer.pi.planinarskidnevnik.repositories.MountainLodgeRepository;
 import hr.fer.pi.planinarskidnevnik.services.MountainLodgeQueryService;
@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class MountainLodgeQueryServiceImpl implements MountainLodgeQueryService {
@@ -37,8 +35,4 @@ public class MountainLodgeQueryServiceImpl implements MountainLodgeQueryService 
         return repo.findAll(specification.getFilter(request), pageable);
     }
 
-    @Override
-    public List<MountainLodge> findAllLodges() {
-        return repo.findAll();
-    }
 }

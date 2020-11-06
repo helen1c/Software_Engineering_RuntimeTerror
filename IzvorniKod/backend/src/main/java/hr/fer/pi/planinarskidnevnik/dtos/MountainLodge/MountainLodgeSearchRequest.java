@@ -1,4 +1,4 @@
-package hr.fer.pi.planinarskidnevnik.dtos;
+package hr.fer.pi.planinarskidnevnik.dtos.MountainLodge;
 
 import hr.fer.pi.planinarskidnevnik.models.request.PageSearchRequest;
 

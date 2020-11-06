@@ -1,6 +1,6 @@
 package hr.fer.pi.planinarskidnevnik.specifications;
 
-import hr.fer.pi.planinarskidnevnik.dtos.MountainLodgeSearchRequest;
+import hr.fer.pi.planinarskidnevnik.dtos.MountainLodge.MountainLodgeSearchRequest;
 import hr.fer.pi.planinarskidnevnik.models.MountainLodge;
 import hr.fer.pi.planinarskidnevnik.util.specification.BaseSpecification;
 import org.springframework.data.jpa.domain.Specification;

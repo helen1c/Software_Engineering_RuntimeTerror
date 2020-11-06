@@ -11,7 +11,7 @@
         </insert>
         <insert tableName="utility">
             <column name="utility_id">2</column>
-            <column name="name">Prenoćište</column>
+            <column name="name">Spavanje</column>
         </insert>
         <insert tableName="utility">
             <column name="utility_id">3</column>
