@@ -19,7 +19,6 @@ public class MountainLodgeSearchSpecification implements BaseSpecification<Mount
 
         return ((root, query, cb) -> where(mountainLodgeNameContains(request.getSearchText()))
                                     .and(mountainLodgeIsOnHill(request.getHillId()))
-                                    .and(utilityIn("Voda"))
                                     .toPredicate(root, query, cb));
 
     }
