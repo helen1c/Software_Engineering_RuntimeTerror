@@ -6,10 +6,12 @@ import hr.fer.pi.planinarskidnevnik.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @RestController
 @RequestMapping("users")
@@ -34,5 +36,8 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(dto));
     }
 
-
+    @GetMapping(value = "/image", produces = MediaType.IMAGE_JPEG_VALUE)
+    public ResponseEntity<byte[]> getCurrentUserImage(Principal principal) {
+        return ResponseEntity.ok(userService.getImage(principal.getName()));
+    }
 }

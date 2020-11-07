@@ -9,6 +9,7 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -31,6 +32,12 @@ public class ExceptionHandlerControllerAdvice {
             constraintViolationDtos.add(new ConstraintViolationDto(error.getField(), error.getDefaultMessage()));
         }
         return ResponseEntity.badRequest().body(constraintViolationDtos);
+    }
+
+    @ExceptionHandler({UsernameNotFoundException.class})
+    public final ResponseEntity<?> handleUsernameNotFoundException(final Exception exception) {
+        LOGGER.error("Error during user fetching: {}", exception.getMessage());
+        return ResponseEntity.badRequest().body(exception.getMessage());
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)

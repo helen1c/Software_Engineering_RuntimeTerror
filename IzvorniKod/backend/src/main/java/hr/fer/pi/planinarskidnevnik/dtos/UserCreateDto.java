@@ -1,5 +1,7 @@
 package hr.fer.pi.planinarskidnevnik.dtos;
 
+import hr.fer.pi.planinarskidnevnik.validation.email.UniqueEmail;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -20,6 +22,7 @@ public class UserCreateDto {
     @Email(message = "E-mail mora biti u zadovoljavajućoj formi.")
     @NotBlank(message = "Email je obavezan.")
     @Size(max = 128, message = "E-mail smije sadržavati najviše 50 znakova.")
+    @UniqueEmail(uniqueUser = false)
     private String email;
 
     @Size(max = 128, message = "E-mail smije sadržavati najviše 128 znakova.")

@@ -12,19 +12,24 @@ p {
     font-size: 18px;
 }
 
+a:hover {
+    cursor: pointer;
+}
+
 .profileImage {
     height: 20rem;
     width: 20rem;
 
 }
 
-button {
+.submitButton {
     border-radius: 25px;
-    width: 8rem;
-    height: 2rem;
+    width: 9rem;
+    height: 2.5rem;
     font-size: 18px;
     background-color: #131E32;
     color: white;
+    margin-bottom: 3rem;
 }
 
 input {
@@ -76,7 +81,7 @@ input {
 }
 
 .inputForm {
-    padding: 2rem 0;
+    padding: 1rem 0 1rem 0;
     display: inline-block;
     text-align: left;
 }
@@ -88,5 +93,20 @@ input {
 
 .registrationForm {
     text-align: center;
+}
 
+.toRegistration {
+    margin-bottom: 2rem;
+}
+
+.toRegistrationAction {
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-color: #131E32;
+}
+
+.loginImage {
+    opacity:0.3;
+    height: 27rem;
+    width: 35rem;
 }
