@@ -82,3 +82,8 @@
 .login-cnt {
     margin-right: 3rem;
 }
+
+.user-cnt {
+    display: flex;
+    flex-direction: row;
+}
