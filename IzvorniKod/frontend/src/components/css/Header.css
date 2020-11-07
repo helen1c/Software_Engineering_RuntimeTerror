@@ -1,38 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
 .header{
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-    min-height: 10vh;
-    background: #272245;
+    height: 70px;
+    background: #211648;
     color: white;
 
 }
+
+.title-container{
+    display: flex;
+    flex-direction: row;
+    height: 70px;
+    margin-left: 3rem;
+    align-items: center;
+    align-content: center;
+}
+
 .title{
     text-align: center;
-    font-family: "Droid Sans Mono Dotted" ;
+    font-family: 'Lobster', cursive;
     color: white;
-}
-.header-logo{
-    background-position: center;
-    background-size: cover;
-    border-image-width: auto;
-    border-radius: 50%;
-    width: 720px;
-    height: 480px;
-
+    padding-left: 1.5rem;
+    font-size: 2rem;
 }
 
-.image{
+.logo-image {
     border-radius: 50%;
     width: 50px;
     height: 50px;
     background-size: cover;
     object-fit: cover;
-
 }
 
-.button-image {
-    background-size: 100% 100%;
+.profil-image {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    background-size: cover;
+    object-fit: cover;
+    margin-right: 6rem;
 }
 
 .link{
@@ -47,10 +56,29 @@
     text-align: center;
 }
 
-.loginAndRegisterButton {
+
+.loginAndRegisterButton, .logout-button {
     margin: auto 0.2rem;
     background-color: white;
-    border-width: 0;
+    border: 2px solid white;
     height: 2rem;
     font-weight: 400;
+    font-family: Roboto, sans-serif;
+    border-radius: 7px;
+    outline: none;
+    color: #211648;
+    background-color: white;
+}
+
+.logout-button {
+    margin-right: 2rem;
+}
+
+.loginAndRegisterButton:hover, .logout-button:hover {
+    color: white;
+    background-color: #211648;
+}
+
+.login-cnt {
+    margin-right: 3rem;
 }

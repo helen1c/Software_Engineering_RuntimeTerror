@@ -4,6 +4,8 @@ import { useFormik } from "formik";
 import { HttpCodesUtil } from "../errors/HttpCodesUtil";
 import "../components/css/LoginAndRegistrationForm.css";
 import { useHistory } from "react-router";
+import {IconButton} from "@material-ui/core";
+import {AddAPhotoOutlined} from "@material-ui/icons";
 
 export const RegistrationForm = () => {
   const [newImage, setNewImage] = useState("");
@@ -79,7 +81,7 @@ export const RegistrationForm = () => {
               <p>Ime i prezime:</p>
               <input
                 id="name"
-                className="text-field"
+                className="registration-input"
                 value={formik.values.name}
                 onChange={formik.handleChange}
               />
@@ -89,7 +91,7 @@ export const RegistrationForm = () => {
             </div>
             <div className="inputComponent textAlignLeft">
               <p>E-mail:</p>
-              <input
+              <input className="registration-input"
                 id="email"
                 value={formik.values.email}
                 onChange={formik.handleChange}
@@ -100,7 +102,7 @@ export const RegistrationForm = () => {
             </div>
             <div className="inputComponent textAlignLeft">
               <p>Lozinka:</p>
-              <input
+              <input className={"registration-input"}
                 id="password"
                 type="password"
                 value={formik.values.password}
@@ -113,6 +115,7 @@ export const RegistrationForm = () => {
             <div className="inputComponent textAlignLeft">
               <p>Ponovite lozinku:</p>
               <input
+                  className={"registration-input"}
                 id="confirmPassword"
                 type="password"
                 value={formik.values.confirmPassword}
@@ -126,7 +129,7 @@ export const RegistrationForm = () => {
             </div>
             <div className="inputComponent textAlignLeft">
               <p>Mjesto stanovanja:</p>
-              <input
+              <input className={"registration-input"}
                 id="placeOfResidence"
                 value={formik.values.placeOfResidence}
                 onChange={formik.handleChange}
@@ -139,7 +142,7 @@ export const RegistrationForm = () => {
             </div>
             <div className="textAlignLeft">
               <p>Datum rođenja:</p>
-              <input
+              <input className={"registration-input"}
                 id="dateOfBirth"
                 type="date"
                 value={formik.values.dateOfBirth}
@@ -148,23 +151,35 @@ export const RegistrationForm = () => {
             </div>
           </div>
           <div className="column">
-            {newImage ? (
+
+              {newImage ?
+                  <div className={"wrapper-picture"}>
               <img
+                  style = {{display:"block"}}
                 className="profileImage"
                 src={newImage}
                 alt="Slika profila"
               />
-            ) : null}
-            <div className="">
-              <label htmlFor="image">
-                <u>DODAJ SLIKU</u>
-              </label>
-              <input
-                className="hidden"
-                type="file"
-                onChange={(event) => showImage(event)}
-              />
             </div>
+             :
+                <>
+                <input className={"upload-picture"}
+                       accept={"image/*"}
+                       id={"icon-button-file"}
+                       type="file" multiple
+                       onChange={(event) => showImage(event)}
+                />
+                <div className={"wrapper-picture"}>
+              <div className={"picture-container"}>
+              <label htmlFor="icon-button-file">
+              <IconButton color="primary" aria-label="upload picture" component="span">
+              <AddAPhotoOutlined/>
+              </IconButton>
+              </label>
+              </div></div>
+            </>
+            }
+
             <div className="textAlignLeft">
               <p>O meni:</p>
               <textarea

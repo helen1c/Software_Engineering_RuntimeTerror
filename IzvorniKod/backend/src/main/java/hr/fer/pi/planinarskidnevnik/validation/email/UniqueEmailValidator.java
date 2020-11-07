@@ -1,7 +1,7 @@
 package hr.fer.pi.planinarskidnevnik.validation.email;
 
 import hr.fer.pi.planinarskidnevnik.models.User;
-import hr.fer.pi.planinarskidnevnik.services.UserService;
+import hr.fer.pi.planinarskidnevnik.services.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

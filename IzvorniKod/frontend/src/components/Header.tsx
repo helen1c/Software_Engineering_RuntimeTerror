@@ -22,27 +22,29 @@ function Header() {
     });
   }, []);
 
+  const logout = () => {
+    sessionStorage.removeItem("key");
+    window.location.assign("./home");
+  }
+
   return (
     <nav className="header">
-      <section>
-        <a href="/">
-          {" "}
-          <img src={logo} className="image" />
-        </a>
-      </section>
-
-      <h1 className="title">PLANINARSKI DNEVNIK</h1>
+      <div className="title-container">
+          <img src={logo} alt={"Logo"} className="logo-image" onClick={e => history.push("/home")}/>
+        <div className={"title"}>Planinarski dnevnik</div>
+      </div>
 
       <ul className="profil">
         <li className="profil-part">
           {!sessionStorage.getItem("key") ? (
-            <div>
+            <div className={"login-cnt"}>
               <button className="loginAndRegisterButton" onClick={e => history.push("/prijava")}>Prijavi se</button>
               <button className="loginAndRegisterButton" onClick={e => history.push("/registracija")}>Registriraj se</button>
             </div>
           ) : (
             <div>
-                <img className="image" src={profileImage} />
+                <img className="profil-image" alt={"Slika profila"} src={profileImage} />
+              <button className="logout-button" onClick={logout}>Odjava</button>
             </div>
           )}
         </li>
