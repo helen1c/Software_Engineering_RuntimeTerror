@@ -9,7 +9,7 @@ public class MountainLodgeSearchResponse {
     private byte[] image;
     private List<String> utilities;
     private Long elevation;
-
+    private String hillName;
 
     public Long getId() {
         return id;
@@ -49,5 +49,13 @@ public class MountainLodgeSearchResponse {
 
     public Long getElevation() {
         return elevation;
+    }
+
+    public String getHillName() {
+        return hillName;
+    }
+
+    public void setHillName(String hillName) {
+        this.hillName = hillName;
     }
 }

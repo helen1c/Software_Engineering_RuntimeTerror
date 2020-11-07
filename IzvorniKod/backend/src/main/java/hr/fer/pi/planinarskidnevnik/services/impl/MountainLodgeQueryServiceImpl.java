@@ -8,9 +8,11 @@ import hr.fer.pi.planinarskidnevnik.specifications.MountainLodgeSearchSpecificat
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MountainLodgeQueryServiceImpl implements MountainLodgeQueryService {
@@ -28,11 +30,29 @@ public class MountainLodgeQueryServiceImpl implements MountainLodgeQueryService 
     }
 
     @Override
-    public Page<MountainLodge> findAllMountainLodgeBySearchCriteria(MountainLodgeSearchRequest request) {
+    public List<MountainLodge> findAllMountainLodgeBySearchCriteria(MountainLodgeSearchRequest request) {
         LOGGER.info("Find all mountain lodges when searchText equals: {} and hill id equals {}", request.getSearchText(), request.getHillId());
 
-        Pageable pageable = request.toPageRequest();
-        return repo.findAll(specification.getFilter(request), pageable);
+        List<MountainLodge> modelResponses = repo.findAll(specification.getFilter(request));
+        List<MountainLodge> responses = new ArrayList<>();
+
+        for(MountainLodge lodge : modelResponses) {
+            List<String> ls = lodge.getUtilities().stream().map(v -> v.getName().toLowerCase()).collect(Collectors.toList());
+
+            boolean trt = true;
+            for(String s : request.getUtilities()) {
+                if (!ls.contains(s.toLowerCase())) {
+                    trt = false;
+                    break;
+                }
+            }
+
+            if(trt) {
+                responses.add(lodge);
+            }
+        }
+
+        return responses;
     }
 
 }
