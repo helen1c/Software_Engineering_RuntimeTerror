@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/mountain-lodges")
@@ -30,10 +31,9 @@ public class MountainLodgeController {
     }
 
     @PostMapping("/search")
-    public ResponseEntity<Page<MountainLodgeSearchResponse>> mountainLodgeSearch(@RequestBody @Valid MountainLodgeSearchRequest request) {
+    public ResponseEntity<List<MountainLodgeSearchResponse>> mountainLodgeSearch(@RequestBody @Valid MountainLodgeSearchRequest request) {
         LOGGER.info(request.getSearchText());
-        Page<MountainLodgeSearchResponse> responses = service.findAllMountainLodgeBySearchCriteria(request).map(mountainLodgeMapper::map);
-
+        List<MountainLodgeSearchResponse> responses = mountainLodgeMapper.mapToList(service.findAllMountainLodgeBySearchCriteria(request));
 
         return ResponseEntity.ok(responses);
     }

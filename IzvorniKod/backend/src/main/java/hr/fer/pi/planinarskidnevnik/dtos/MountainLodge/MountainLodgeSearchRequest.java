@@ -4,7 +4,7 @@ import hr.fer.pi.planinarskidnevnik.models.request.PageSearchRequest;
 
 import java.util.List;
 
-public class MountainLodgeSearchRequest extends PageSearchRequest {
+public class MountainLodgeSearchRequest {
 
     private String searchText;
 

@@ -21,6 +21,7 @@ public class MountainLodgeToMountainLodgeSearchResponseMapper implements Default
         response.setImage(from.getImage());
         response.setElevation(from.getElevation());
         response.setUtilities(from.getUtilities().stream().map(v -> v.getName()).collect(Collectors.toList()));
+        response.setHillName(from.getHill().getName());
 
         return response;
     }

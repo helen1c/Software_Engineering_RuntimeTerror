@@ -44,16 +44,4 @@ public class MountainLodgeSearchSpecification implements BaseSpecification<Mount
         };
     }
 
-    private Specification<MountainLodge> utilityIn(String names) {
-        if(names == null) {
-            return null;
-        }
-
-        return ((root, query, criteriaBuilder) -> {
-            Join join =  root.join("utilities");
-            return criteriaBuilder.equal(join.get("name"), names);
-        });
-
-    }
-
 }
