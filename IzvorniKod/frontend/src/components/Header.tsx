@@ -42,7 +42,7 @@ function Header() {
               <button className="loginAndRegisterButton" onClick={e => history.push("/registracija")}>Registriraj se</button>
             </div>
           ) : (
-            <div>
+            <div className={"user-cnt"}>
                 <img className="profil-image" alt={"Slika profila"} src={profileImage} />
               <button className="logout-button" onClick={logout}>Odjava</button>
             </div>
