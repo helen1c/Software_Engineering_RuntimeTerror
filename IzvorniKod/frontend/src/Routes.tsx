@@ -5,6 +5,7 @@ import {AboutUs} from "./aboutus/components/AboutUs/AboutUs";
 import Header from "./components/header/Header";
 import {RegistrationForm} from "./components/login-registration/RegistrationForm";
 import {LoginForm} from "./components/login-registration/LoginForm";
+import {MountainLodgeSearch} from "./components/mountain-lodge/search/MountainLodgeSearch";
 
 export const Routes = () => {
 
@@ -19,6 +20,7 @@ export const Routes = () => {
                 <Route path={"/aboutus"} component={AboutUs} exact={true}/>
                 <Route path="/registracija" component={RegistrationForm} exact={true}/>
                 <Route path="/prijava" component={LoginForm} exact={true}/>
+                <Route path="/mountain-lodges/search" component={MountainLodgeSearch} exact/>
             </Switch>
         </div>
     );

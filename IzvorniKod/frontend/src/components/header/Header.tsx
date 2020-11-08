@@ -8,6 +8,7 @@ function Header() {
   const history = useHistory();
 
   useEffect(() => {
+    if(sessionStorage.getItem("key") !== null)
     fetch("/api/users/image?", {
       method: "GET",
       headers: new Headers({
