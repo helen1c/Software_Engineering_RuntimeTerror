@@ -36,6 +36,10 @@ public class MountainLodgeQueryServiceImpl implements MountainLodgeQueryService 
         List<MountainLodge> modelResponses = repo.findAll(specification.getFilter(request));
         List<MountainLodge> responses = new ArrayList<>();
 
+        if(request.getUtilities() == null) {
+            return modelResponses;
+        }
+
         for(MountainLodge lodge : modelResponses) {
             List<String> ls = lodge.getUtilities().stream().map(v -> v.getName().toLowerCase()).collect(Collectors.toList());
 
