@@ -78,7 +78,7 @@ export const RegistrationForm = () => {
         <div className="registration-container">
           <div className="registration-column">
             <div className="inputComponent textAlignLeft">
-              <p>Ime i prezime:</p>
+              <p className={"inputLabel"}>Ime i prezime:</p>
               <input
                 id="name"
                 className="registration-input"
@@ -90,7 +90,7 @@ export const RegistrationForm = () => {
               </p>
             </div>
             <div className="inputComponent textAlignLeft">
-              <p>E-mail:</p>
+              <p className={"inputLabel"}>E-mail:</p>
               <input className="registration-input"
                 id="email"
                 value={formik.values.email}
@@ -101,7 +101,7 @@ export const RegistrationForm = () => {
               </p>
             </div>
             <div className="inputComponent textAlignLeft">
-              <p>Lozinka:</p>
+              <p className={"inputLabel"}>Lozinka:</p>
               <input className={"registration-input"}
                 id="password"
                 type="password"
@@ -113,7 +113,7 @@ export const RegistrationForm = () => {
               </p>
             </div>
             <div className="inputComponent textAlignLeft">
-              <p>Ponovite lozinku:</p>
+              <p className={"inputLabel"}>Ponovite lozinku:</p>
               <input
                   className={"registration-input"}
                 id="confirmPassword"
@@ -128,7 +128,7 @@ export const RegistrationForm = () => {
               </p>
             </div>
             <div className="inputComponent textAlignLeft">
-              <p>Mjesto stanovanja:</p>
+              <p className={"inputLabel"}>Mjesto stanovanja:</p>
               <input className={"registration-input"}
                 id="placeOfResidence"
                 value={formik.values.placeOfResidence}
@@ -141,7 +141,7 @@ export const RegistrationForm = () => {
               </p>
             </div>
             <div className="textAlignLeft">
-              <p>Datum rođenja:</p>
+              <p className={"inputLabel"}>Datum rođenja:</p>
               <input className={"registration-input"}
                 id="dateOfBirth"
                 type="date"
@@ -153,7 +153,7 @@ export const RegistrationForm = () => {
           <div className="registration-column">
 
             <div className="textAlignLeft">
-              <p style={{marginTop:"2rem"}}>O meni:</p>
+              <p style={{marginTop:"2rem"}} className={"inputLabel"}>O meni:</p>
               <textarea placeholder={"Unesite nešto više o sebi..."} className={"registration-text-area"}
                         id="description"
                         value={formik.values.description}

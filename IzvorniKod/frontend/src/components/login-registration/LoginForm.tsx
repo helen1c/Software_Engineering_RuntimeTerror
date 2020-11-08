@@ -56,7 +56,7 @@ export const LoginForm = () => {
         <h1>Prijava</h1>
         <div className="inputForm">
           <div className="inputComponent">
-            <p className={"input-label"}>E-mail:</p>
+            <p className={"inputLabel"}>E-mail:</p>
             <input className={"login-input"}
               id="email"
               value={formik.values.email}
@@ -66,7 +66,7 @@ export const LoginForm = () => {
             <p className="errorText">{formik.errors.email}</p>
           </div>
           <div className="inputComponent password-component">
-            <p className={"input-label"}>Lozinka:</p>
+            <p className={"inputLabel"}>Lozinka:</p>
             <input className={"login-input"}
               id="password"
               type="password"
