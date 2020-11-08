@@ -21,15 +21,21 @@ export const MountainLodgeSearch = () => {
 
     const handleSearchChange = (e : any) => setSearchText(e.target.value);
     const ispis = () => {
-        console.log(hill + " " + searchText);
+        console.log(searchText);
     }
 
     return (
         <>
-            <Input className={"search-input"} icon='search' placeholder='Search...' onChange={handleSearchChange} />
-            <Dropdown className={"search-select"}  onChange={handleChange} onClick={e => console.log()} clearable selection options={options} placeholder={"Odaberite područje..."}/>
-            <button onClick={ispis}>Button</button>
 
+
+            <input className={"input-search"} placeholder={"Pretražite planinarske domove..."} name={"search-text"} id={"search-text"}/>
+            <select className={"input-select"} placeholder={"Odaberite područje"} onChange={handleSearchChange} name={"hill-select"} id={"hill-select"}>
+
+                <option value={1}>Medvednica</option>
+                <option value={2}>Opatija</option>
+                <option value={3}>Sljeme</option>
+            </select>
+            <button onClick={ispis}>sadads</button>
             </>
         );
 
