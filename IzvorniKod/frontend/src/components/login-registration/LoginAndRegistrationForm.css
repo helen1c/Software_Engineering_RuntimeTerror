@@ -32,7 +32,7 @@ a:hover {
     margin-bottom: 3rem;
     outline: none !important;
     border: 2px solid white;
-    margin-top: 10px;
+    margin-top: 3rem;
 }
 
 .wrapper-picture {
@@ -56,7 +56,7 @@ a:hover {
     margin: 0.3rem 0;
     border-radius: 10px;
     text-indent: 5px;
-    height: 3rem;
+    height: 3.5rem;
     width: 25vw;
     min-width: 15rem;
     border: 2px solid #211648;
@@ -119,6 +119,10 @@ password-component {
     border-radius: 10px;
 }
 
+.inputLabel {
+    margin-bottom: 0;
+}
+
 .registration-text-area {
     min-height: 8rem;
     width: 25vw;
@@ -151,6 +155,7 @@ password-component {
 .loginForm {
     text-align: center;
     width: 100%;
+    margin-top: 3rem;
 }
 
 .inputForm {
@@ -166,6 +171,7 @@ password-component {
 
 .registrationForm {
     text-align: center;
+    margin-top: 3rem;
 }
 
 .toRegistration {
@@ -182,7 +188,7 @@ password-component {
 .loginImage {
     opacity:0.3;
     max-height: 40vh;
-    max-width: 30rem;
+    height: 35rem;
 }
 
 .registration-container {
