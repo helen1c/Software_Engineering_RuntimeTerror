@@ -39,8 +39,8 @@ function Header() {
         <li className="profil-part">
           {!sessionStorage.getItem("key") ? (
             <div className={"login-cnt"}>
-              <button className="loginAndRegisterButton" onClick={e => history.push("/prijava")}>Prijavi se</button>
-              <button className="loginAndRegisterButton" onClick={e => history.push("/registracija")}>Registriraj se</button>
+              <button className="loginAndRegisterButton" onClick={e => history.push("/login")}>Prijavi se</button>
+              <button className="loginAndRegisterButton" onClick={e => history.push("/register")}>Registriraj se</button>
             </div>
           ) : (
             <div className={"user-cnt"}>

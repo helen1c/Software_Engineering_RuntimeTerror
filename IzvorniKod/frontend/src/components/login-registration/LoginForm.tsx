@@ -92,7 +92,7 @@ export const LoginForm = () => {
             Nemaš korisnički račun?{" "}
             <a
               className="toRegistrationAction"
-              href={"/registracija"}
+              href={"/register"}
             >
               Registriraj se
             </a>
