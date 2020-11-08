@@ -41,7 +41,7 @@
     height: 50px;
     background-size: cover;
     object-fit: cover;
-    margin-right: 6rem;
+    margin-right: 3rem;
 }
 
 .link{
@@ -71,7 +71,7 @@
 }
 
 .logout-button {
-    margin-right: 2rem;
+    margin-right: 1rem;
 }
 
 .loginAndRegisterButton:hover, .logout-button:hover {

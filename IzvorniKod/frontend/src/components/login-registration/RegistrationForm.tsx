@@ -54,7 +54,7 @@ export const RegistrationForm = () => {
             });
           });
         } else {
-          history.push("/prijava");
+          history.push("/login");
         }
       });
     },
