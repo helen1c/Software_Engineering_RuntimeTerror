@@ -22,21 +22,21 @@
 }
 
 .main{
-    background-image: url("images/Iqbc14.jpg");
-
+    background-image: url("../../assets/ng.jpg");
+    min-height: calc(100vh - 70px);
 }
 .main-images{
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-evenly;
 }
 
 .staze{
-    background-image: url("images/750_x_375.jpg");
+    background-image: url("../../assets/staze.jpg");
     margin: 100px;
     text-align: center;
-    width: 420px;
-    height: 450px;
+    width: 30vw;
+    height: 30vw;
     background-position: center;
     background-size: cover;
 
@@ -44,7 +44,7 @@
 }
 
 .domovi{
-    background-image: url("images/1509616682.jpg");
+    background-image: url("../../assets/domove.jpg");
     margin: 100px;
     border-image-width: auto;
     text-align: center;
