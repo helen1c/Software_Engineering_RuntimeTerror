@@ -24,7 +24,6 @@
 .main{
     background-image: url("images/Iqbc14.jpg");
 
-
 }
 .main-images{
     display: flex;
@@ -52,7 +51,7 @@
     background-position: center;
     background-size: cover;
 
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.55));
 
     width: 420px;
     height: 450px;
@@ -62,5 +61,25 @@
 .pretraga{
     text-decoration: none;
     color: white;
+    font-size: x-large;
+    position: relative;
+    top: 50%;
+    left: 1%;
+    background-color: rgba(30, 139, 195, 0.4);
+    padding: 5px;
+    border-radius: 5%;
 
+
+}
+.pretraga:hover{
+    background-color: rgba(30, 139, 195,0.8) ;
+    border: 1px solid #356bd4;
+}
+.staze:hover{
+
+    transform: scale(1.05);
+}
+.domovi:hover{
+    z-index: auto;
+    transform: scale(1.05);
 }
