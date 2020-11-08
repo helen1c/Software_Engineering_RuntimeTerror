@@ -36,6 +36,7 @@ a:hover {
 }
 
 .wrapper-picture {
+    margin-top: 2rem;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -47,26 +48,12 @@ a:hover {
     border: 2px solid #211648;
 }
 
-.login-input {
-    margin: 0.3rem 0;
-    font-size: 16px;
-    border-radius: 10px;
-    text-indent: 5px;
-    height: 3rem;
-    width: 23vw;
-    min-width: 15rem;
-    border: 2px solid #211648;
-    box-shadow: none !important;
-    outline: none !important;
-}
-
 .upload-picture{
     display: none;
 }
 
-.registration-input {
+.registration-input, .login-input {
     margin: 0.3rem 0;
-    font-size: 16px;
     border-radius: 10px;
     text-indent: 5px;
     height: 3rem;
@@ -75,6 +62,8 @@ a:hover {
     border: 2px solid #211648;
     box-shadow: none !important;
     outline: none !important;
+    font-family: Roboto, sans-serif;
+    font-size: 1rem;
 }
 
 .MuiSvgIcon-root {
@@ -83,21 +72,28 @@ a:hover {
 }
 
 .profileImage {
-    width: 250px;
-    height: 250px;
+    max-width: 250px;
+    max-height: 250px;
     border: #211648 2px solid;
     border-radius: 10px;
+    width: 25vw;
+    min-width: 15rem;
+    height: 25vw;
+    min-height: 15rem;
 }
 
 .picture-container {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    width: 250px;
-    height: 250px;
+    width: 25vw;
+    min-width: 15rem;
+    height: 25vw;
+    min-height: 15rem;
+    max-width: 250px;
+    max-height: 250px;
     border: 3px solid #211648;
     border-radius: 10px;
-    margin-right: 10px;
 }
 
 .errorText {
@@ -117,30 +113,40 @@ password-component {
     max-height: 3rem;
 }
 
-.column {
-    float: left;
-    width: 50%;
-    padding: 10px;
-    text-align: center;
-    vertical-align: middle;
-    height: auto;
-}
-
-.row:after {
-    content: "";
-    display: table;
-    clear: both;
-}
-
-.row {
-    padding-bottom: 6rem;
-}
-
 .text-area {
     width: 32rem;
     height: 12rem;
     border-radius: 10px;
 }
+
+.registration-text-area {
+    min-height: 8rem;
+    width: 25vw;
+    min-width: 15rem;
+    border: 2px solid #211648;
+    box-shadow: none !important;
+    outline: none !important;
+    border-radius: 10px;
+    font-family: Roboto, sans-serif;
+    font-size: 1rem;
+    max-width: 25vw;
+    max-height: 15vw;
+}
+
+.registration-text-area::-webkit-scrollbar-track{
+    background-color: white
+}
+
+.registration-text-area::-webkit-scrollbar{
+    width: 0.5rem;
+    background-color: #F5F5F5;
+}
+
+.registration-text-area::-webkit-scrollbar-thumb{
+    border-radius: 100px;
+    background-color: #211648;
+}
+
 
 .loginForm {
     text-align: center;
@@ -178,3 +184,40 @@ password-component {
     max-height: 40vh;
     max-width: 30rem;
 }
+
+.registration-container {
+    align-content: flex-start;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.registration-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    align-content: center;
+}
+
+
+
+@media only screen and (max-width: 600px) {
+
+    .registration-container {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+    }
+
+    .registration-column{
+        justify-content: center;
+    }
+
+}
+
+
+
+
+

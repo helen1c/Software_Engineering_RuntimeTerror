@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import "./css/Header.css";
-import logo from "../assets/logo.jpg";
+import "./Header.css";
+import logo from "../../assets/logo.jpg";
 import {useHistory} from "react-router";
 
 function Header() {
@@ -30,7 +30,7 @@ function Header() {
   return (
     <nav className="header">
       <div className="title-container">
-          <img src={logo} alt={"Logo"} className="logo-image" onClick={e => history.push("/home")}/>
+        <img src={logo} alt={"Logo"} className="logo-image" onClick={e => history.push("/home")}/>
         <div className={"title"}>Planinarski dnevnik</div>
       </div>
 

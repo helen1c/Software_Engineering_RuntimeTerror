@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { HttpCodesUtil } from "../errors/HttpCodesUtil";
-import "../components/css/LoginAndRegistrationForm.css";
+import { HttpCodesUtil } from "../../errors/HttpCodesUtil";
+import "./LoginAndRegistrationForm.css";
 import { useHistory } from "react-router";
 import {IconButton} from "@material-ui/core";
 import {AddAPhotoOutlined} from "@material-ui/icons";
@@ -75,8 +75,8 @@ export const RegistrationForm = () => {
     <div className="registrationForm">
       <form onSubmit={formik.handleSubmit}>
         <h1>Registracija</h1>
-        <div className="row ">
-          <div className="column">
+        <div className="registration-container">
+          <div className="registration-column">
             <div className="inputComponent textAlignLeft">
               <p>Ime i prezime:</p>
               <input
@@ -150,7 +150,19 @@ export const RegistrationForm = () => {
               />
             </div>
           </div>
-          <div className="column">
+          <div className="registration-column">
+
+            <div className="textAlignLeft">
+              <p style={{marginTop:"2rem"}}>O meni:</p>
+              <textarea placeholder={"Unesite nešto više o sebi..."} className={"registration-text-area"}
+                        id="description"
+                        value={formik.values.description}
+                        onChange={formik.handleChange}
+              />
+              <p className="errorText">
+                {formik.errors.description ? formik.errors.description : null}
+              </p>
+            </div>
 
               {newImage ?
                   <div className={"wrapper-picture"}>
@@ -179,19 +191,6 @@ export const RegistrationForm = () => {
               </div></div>
             </>
             }
-
-            <div className="textAlignLeft">
-              <p>O meni:</p>
-              <textarea
-                id="description"
-                className="text-area "
-                value={formik.values.description}
-                onChange={formik.handleChange}
-              />
-              <p className="errorText">
-                {formik.errors.description ? formik.errors.description : null}
-              </p>
-            </div>
           </div>
         </div>
         <div>
