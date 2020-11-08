@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import "./css/Header.css";
-import logo from "../assets/logo.jpg";
+import "./Header.css";
+import logo from "../../assets/logo.jpg";
 import {useHistory} from "react-router";
 
 function Header() {
@@ -8,6 +8,7 @@ function Header() {
   const history = useHistory();
 
   useEffect(() => {
+    if(sessionStorage.getItem("key") !== null)
     fetch("/api/users/image?", {
       method: "GET",
       headers: new Headers({
@@ -22,27 +23,29 @@ function Header() {
     });
   }, []);
 
+  const logout = () => {
+    sessionStorage.removeItem("key");
+    window.location.assign("./home");
+  }
+
   return (
     <nav className="header">
-      <section>
-        <a href="/">
-          {" "}
-          <img src={logo} className="image" />
-        </a>
-      </section>
-
-      <h1 className="title">PLANINARSKI DNEVNIK</h1>
+      <div className="title-container">
+        <img src={logo} alt={"Logo"} className="logo-image" onClick={e => history.push("/home")}/>
+        <div className={"title"}>Planinarski dnevnik</div>
+      </div>
 
       <ul className="profil">
         <li className="profil-part">
           {!sessionStorage.getItem("key") ? (
-            <div>
+            <div className={"login-cnt"}>
               <button className="loginAndRegisterButton" onClick={e => history.push("/prijava")}>Prijavi se</button>
               <button className="loginAndRegisterButton" onClick={e => history.push("/registracija")}>Registriraj se</button>
             </div>
           ) : (
-            <div>
-                <img className="image" src={profileImage} />
+            <div className={"user-cnt"}>
+                <img className="profil-image" alt={"Slika profila"} src={profileImage} />
+              <button className="logout-button" onClick={logout}>Odjava</button>
             </div>
           )}
         </li>

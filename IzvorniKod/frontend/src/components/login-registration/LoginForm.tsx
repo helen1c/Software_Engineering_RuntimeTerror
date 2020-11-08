@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { HttpCodesUtil } from "../errors/HttpCodesUtil";
-import "../components/css/LoginAndRegistrationForm.css";
-import { useHistory } from "react-router";
-import loginImage from "../assets/login-image.png";
+import { HttpCodesUtil } from "../../errors/HttpCodesUtil";
+import "./LoginAndRegistrationForm.css";
+import loginImage from "../../assets/login-image.png";
 
 export const LoginForm = () => {
   const [showError, setShowError] = useState<boolean>(false);
-  const history = useHistory();
 
   const formik = useFormik({
     initialValues: {
@@ -20,9 +18,9 @@ export const LoginForm = () => {
     validateOnBlur: false,
     validationSchema: Yup.object({
       email: Yup.string()
-        .required("Obavezan unos.")
+        .required("Molimo unesite e-mail.")
         .email("Ne ispravan oblik mail-a."),
-      password: Yup.string().required("Obavezan unos."),
+      password: Yup.string().required("Molimo unesite lozinku."),
     }),
     onSubmit: (values) => {
       let loginInfo = {
@@ -56,31 +54,33 @@ export const LoginForm = () => {
     <div className="loginForm">
       <form onSubmit={formik.handleSubmit}>
         <h1>Prijava</h1>
-        <div>
-          {showError ? (
-            <p className="errorText">Neispravan e-mail ili lozinka.</p>
-          ) : null}
-        </div>
         <div className="inputForm">
           <div className="inputComponent">
-            <p>E-mail:</p>
-            <input
+            <p className={"inputLabel"}>E-mail:</p>
+            <input className={"login-input"}
               id="email"
               value={formik.values.email}
+              placeholder={"Unesite e-mail..."}
               onChange={formik.handleChange}
             />
             <p className="errorText">{formik.errors.email}</p>
           </div>
-          <div className="inputComponent">
-            <p>Lozinka:</p>
-            <input
+          <div className="inputComponent password-component">
+            <p className={"inputLabel"}>Lozinka:</p>
+            <input className={"login-input"}
               id="password"
               type="password"
+              placeholder={"Unesite lozinku..."}
               value={formik.values.password}
               onChange={formik.handleChange}
             />
             <p className="errorText">{formik.errors.password}</p>
           </div>
+        </div>
+        <div>
+          {showError ? (
+              <span className="errorText">Neispravan e-mail ili lozinka.</span>
+          ) : <></>}
         </div>
         <div>
           <button type={"submit"} className="submitButton">
@@ -92,14 +92,14 @@ export const LoginForm = () => {
             Nemaš korisnički račun?{" "}
             <a
               className="toRegistrationAction"
-              onClick={(e) => history.push("/registracija")}
+              href={"/registracija"}
             >
               Registriraj se
             </a>
           </p>
         </div>
         <div>
-          <img src={loginImage} className="loginImage" />
+          <img src={loginImage} alt={"Mountaineers pic"} className="loginImage" />
         </div>
       </form>
     </div>

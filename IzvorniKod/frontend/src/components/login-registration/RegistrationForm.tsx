@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { HttpCodesUtil } from "../errors/HttpCodesUtil";
-import "../components/css/LoginAndRegistrationForm.css";
+import { HttpCodesUtil } from "../../errors/HttpCodesUtil";
+import "./LoginAndRegistrationForm.css";
 import { useHistory } from "react-router";
+import {IconButton} from "@material-ui/core";
+import {AddAPhotoOutlined} from "@material-ui/icons";
 
 export const RegistrationForm = () => {
   const [newImage, setNewImage] = useState("");
@@ -73,13 +75,13 @@ export const RegistrationForm = () => {
     <div className="registrationForm">
       <form onSubmit={formik.handleSubmit}>
         <h1>Registracija</h1>
-        <div className="row ">
-          <div className="column">
+        <div className="registration-container">
+          <div className="registration-column">
             <div className="inputComponent textAlignLeft">
-              <p>Ime i prezime:</p>
+              <p className={"inputLabel"}>Ime i prezime:</p>
               <input
                 id="name"
-                className="text-field"
+                className="registration-input"
                 value={formik.values.name}
                 onChange={formik.handleChange}
               />
@@ -88,8 +90,8 @@ export const RegistrationForm = () => {
               </p>
             </div>
             <div className="inputComponent textAlignLeft">
-              <p>E-mail:</p>
-              <input
+              <p className={"inputLabel"}>E-mail:</p>
+              <input className="registration-input"
                 id="email"
                 value={formik.values.email}
                 onChange={formik.handleChange}
@@ -99,8 +101,8 @@ export const RegistrationForm = () => {
               </p>
             </div>
             <div className="inputComponent textAlignLeft">
-              <p>Lozinka:</p>
-              <input
+              <p className={"inputLabel"}>Lozinka:</p>
+              <input className={"registration-input"}
                 id="password"
                 type="password"
                 value={formik.values.password}
@@ -111,8 +113,9 @@ export const RegistrationForm = () => {
               </p>
             </div>
             <div className="inputComponent textAlignLeft">
-              <p>Ponovite lozinku:</p>
+              <p className={"inputLabel"}>Ponovite lozinku:</p>
               <input
+                  className={"registration-input"}
                 id="confirmPassword"
                 type="password"
                 value={formik.values.confirmPassword}
@@ -125,8 +128,8 @@ export const RegistrationForm = () => {
               </p>
             </div>
             <div className="inputComponent textAlignLeft">
-              <p>Mjesto stanovanja:</p>
-              <input
+              <p className={"inputLabel"}>Mjesto stanovanja:</p>
+              <input className={"registration-input"}
                 id="placeOfResidence"
                 value={formik.values.placeOfResidence}
                 onChange={formik.handleChange}
@@ -138,8 +141,8 @@ export const RegistrationForm = () => {
               </p>
             </div>
             <div className="textAlignLeft">
-              <p>Datum rođenja:</p>
-              <input
+              <p className={"inputLabel"}>Datum rođenja:</p>
+              <input className={"registration-input"}
                 id="dateOfBirth"
                 type="date"
                 value={formik.values.dateOfBirth}
@@ -147,36 +150,47 @@ export const RegistrationForm = () => {
               />
             </div>
           </div>
-          <div className="column">
-            {newImage ? (
-              <img
-                className="profileImage"
-                src={newImage}
-                alt="Slika profila"
-              />
-            ) : null}
-            <div className="">
-              <label htmlFor="image">
-                <u>DODAJ SLIKU</u>
-              </label>
-              <input
-                className="hidden"
-                type="file"
-                onChange={(event) => showImage(event)}
-              />
-            </div>
+          <div className="registration-column">
+
             <div className="textAlignLeft">
-              <p>O meni:</p>
-              <textarea
-                id="description"
-                className="text-area "
-                value={formik.values.description}
-                onChange={formik.handleChange}
+              <p style={{marginTop:"2rem"}} className={"inputLabel"}>O meni:</p>
+              <textarea placeholder={"Unesite nešto više o sebi..."} className={"registration-text-area"}
+                        id="description"
+                        value={formik.values.description}
+                        onChange={formik.handleChange}
               />
               <p className="errorText">
                 {formik.errors.description ? formik.errors.description : null}
               </p>
             </div>
+
+              {newImage ?
+                  <div className={"wrapper-picture"}>
+              <img
+                  style = {{display:"block"}}
+                className="profileImage"
+                src={newImage}
+                alt="Slika profila"
+              />
+            </div>
+             :
+                <>
+                <input className={"upload-picture"}
+                       accept={"image/*"}
+                       id={"icon-button-file"}
+                       type="file" multiple
+                       onChange={(event) => showImage(event)}
+                />
+                <div className={"wrapper-picture"}>
+              <div className={"picture-container"}>
+              <label htmlFor="icon-button-file">
+              <IconButton color="primary" aria-label="upload picture" component="span">
+              <AddAPhotoOutlined/>
+              </IconButton>
+              </label>
+              </div></div>
+            </>
+            }
           </div>
         </div>
         <div>

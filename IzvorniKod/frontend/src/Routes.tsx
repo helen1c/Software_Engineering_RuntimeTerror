@@ -2,10 +2,10 @@ import React from "react";
 import {Redirect, Route, Switch} from "react-router";
 import {HomePage} from "./components/HomePage";
 import {AboutUs} from "./aboutus/components/AboutUs/AboutUs";
-import {MountainLodgeSearch} from "./components/search/MountainLodgeSearch";
-import Header from "./components/Header";
-import {RegistrationForm} from "./components/RegistrationForm";
-import {LoginForm} from "./components/LoginForm";
+import Header from "./components/header/Header";
+import {RegistrationForm} from "./components/login-registration/RegistrationForm";
+import {LoginForm} from "./components/login-registration/LoginForm";
+import {MountainLodgeSearch} from "./components/mountain-lodge/search/MountainLodgeSearch";
 
 export const Routes = () => {
 
@@ -20,9 +20,7 @@ export const Routes = () => {
                 <Route path={"/aboutus"} component={AboutUs} exact={true}/>
                 <Route path="/registracija" component={RegistrationForm} exact={true}/>
                 <Route path="/prijava" component={LoginForm} exact={true}/>
-                <Route path="/mountain-lodge/search" exact>
-                    <MountainLodgeSearch/>
-                </Route>
+                <Route path="/mountain-lodges/search" component={MountainLodgeSearch} exact/>
             </Switch>
         </div>
     );
