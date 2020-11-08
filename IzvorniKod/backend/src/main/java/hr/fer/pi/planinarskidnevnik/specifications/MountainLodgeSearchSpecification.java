@@ -17,7 +17,7 @@ public class MountainLodgeSearchSpecification implements BaseSpecification<Mount
     @Override
     public Specification<MountainLodge> getFilter(MountainLodgeSearchRequest request) {
 
-        return ((root, query, cb) -> where(mountainLodgeNameContains(request.getSearchText()))
+        return ((root, query, cb) -> where(mountainLodgeNameContains(request.getSearchText().trim().replaceAll("\\s+", " ")))
                                     .and(mountainLodgeIsOnHill(request.getHillId()))
                                     .toPredicate(root, query, cb));
 
