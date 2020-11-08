@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { HttpCodesUtil } from "../errors/HttpCodesUtil";
-import "../components/css/LoginAndRegistrationForm.css";
-import loginImage from "../assets/login-image.png";
+import { HttpCodesUtil } from "../../errors/HttpCodesUtil";
+import "./LoginAndRegistrationForm.css";
+import loginImage from "../../assets/login-image.png";
 
 export const LoginForm = () => {
   const [showError, setShowError] = useState<boolean>(false);
