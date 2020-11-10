@@ -91,7 +91,7 @@
 			
 		Za naš projekt odabrali smo \textbf{relacijsku bazu podataka} zbog njezine pogodnosti da prikaže mali dio stvarnog svijeta bez redundancije unutar same baze. Dohvaćanje podataka je relativno brzo i lagano se može paralelizirati. Specifičnu implementaciju relacijske baze podataka koju smo odabrali je \textbf{PostgreSQL}. To je baza podataka otvorenog koda s preko 30 godina aktivnog razvoja zbog kojega je zaslužila svoju čvrstu reputaciju za pouzdanost, bogatstvo opcijama i visokim performansama. Zbog načina na koji je SQL standard napisan, vrlo je slična ostalim SQL bazama podataka.\\ 
 		
-		Tijekom razvoja koristimo \textbf{H2 bazu}. To je privremena baza podataka koja služi za testiranje koda. Svi zapisi u njoj se nalaze u privremenoj memoriji i nisu perzistentni. Zbog toga je odlična za testiranje. Ona je otvorenog koda, napisana u Javi i ima čvrste sigurnosne postavke. Na nju se možemo povezati s više konekciju i baza podataka je enkriptirana SHA-256 enkripcijom. Ima vrlo malu potrošnju memorije i zauzima relativno malo prostora na disku (oko 2MB). \\ 
+		Tijekom razvoja koristimo \textbf{H2 bazu}. To je privremena baza podataka koja služi za testiranje koda. Svi zapisi u njoj se nalaze u privremenoj memoriji i nisu perzistentni. Zbog toga je odlična za testiranje. Ona je otvorenog koda, napisana u Javi i ima čvrste sigurnosne postavke. Na nju se možemo povezati s više konekcija i baza podataka je enkriptirana SHA-256 enkripcijom. Ima vrlo malu potrošnju memorije i zauzima relativno malo prostora na disku (oko 2MB). \\ 
 		
 		Također koristimo \textbf{JPA (Java Persistence API)} koje samo sadrži sučelja za stvaranje Persistence layouta. Dopušta nam da mapiramo entitete tablica i veze između tablica na objekte u Javi. Ovo sučelje definira svoj vlastiti jezik za upite (JPQA). JPQA prevoditelj interpretira kod i piše SQL upite. JPA ne možemo samostalno koristiti, već nam treba konkretna implementacija toga sučelja. Implementacija koju ćemo mi koristiti se zove Hibernate. \\ 
 		
@@ -266,14 +266,14 @@
 				\end{longtabu}
 				\vspace{10mm}
 			
-			\textbf{path} Ovaj entitet sadrži informacije o pojedinoj planinarskoj stazi. Sadrži atribute: id, name, start\_point, end\_point, avg\_walk\_time, length, sea\_level\_diff, date\_created, is\_private, author\_id, hill\_id koji redom predstavljaju jedinstveni identifikacijski broj planinarske staze, naziv staze, polazišnu točku, završnu toku, prosječno vrijeme potrebno da se prepješači staza, duljinu staze, razliku u nadmorskoj visini između početne i završne točke, datum kreiranja pojedine staze od strane korisnika unutar naše aplikacije, vrijednost koja govori je li staza privatna ili javna, korisnika koji je stvorio stazu te identifikator visočja na kojemu se staza nalazi. Atribut author\_id te atribut hill\_id su strani ključevi obzirom na tablicu \textbf{user} odnosno \textbf{hill} te se radi o Many-To-One vezama.
+			\textbf{mountain\_path} Ovaj entitet sadrži informacije o pojedinoj planinarskoj stazi. Sadrži atribute: id, name, start\_point, end\_point, avg\_walk\_time, length, sea\_level\_diff, date\_created, is\_private, author\_id, hill\_id koji redom predstavljaju jedinstveni identifikacijski broj planinarske staze, naziv staze, polazišnu točku, završnu toku, prosječno vrijeme potrebno da se prepješači staza, duljinu staze, razliku u nadmorskoj visini između početne i završne točke, datum kreiranja pojedine staze od strane korisnika unutar naše aplikacije, vrijednost koja govori je li staza privatna ili javna, korisnika koji je stvorio stazu te identifikator visočja na kojemu se staza nalazi. Atribut author\_id te atribut hill\_id su strani ključevi obzirom na tablicu \textbf{user} odnosno \textbf{hill} te se radi o Many-To-One vezama.
 			
 			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 				
 				\hline \multicolumn{3}{|c|}{\textbf{mountain\_path - (Planinarska staza)}}	 \\[3pt] \hline
 				\endfirsthead
 				
-				\hline \multicolumn{3}{|c|}{\textbf{path - (Planinarska staza)}}	 \\[3pt] \hline
+				\hline \multicolumn{3}{|c|}{\textbf{mountain\_path - (Planinarska staza)}}	 \\[3pt] \hline
 				\endhead
 				
 				\hline 
@@ -356,7 +356,8 @@
 					
 					\textbf{id}	& BIGINT &   jedinstveni identifikacijski broj poruke	\\ \hline 
 					description & VARCHAR &  sadržaj poruke \\ \hline 
-					name & VARCHAR &  datum i vrijeme slanja poruke \\ \hline 
+					created\_on & DATE &  datum i vrijeme slanja poruke \\ \hline 
+					\underline{user\_id} & BIGINT	& jedinstveni identifikacijski broj korisnika koji je stvorio poruku unutar aplikacije		\\ \hline 
 					
 				\end{longtabu}
 				\vspace{10mm}
@@ -623,7 +624,7 @@
 				\underline{path\_id}	& BIGINT &   strani ključ planinarske staze koju korisnik prijavljuje, a odnosi se na tablicu \textbf{mountain\_path}	\\ \hline 
 				description & VARCHAR & opsi netočne ili neprecizne informacije o nekoj stazi  \\ \hline 
 				status & VARCHAR & status prijavljene pogreške  \\ \hline
-				date\_report & VARCHAR & vrijeme i datum prijave pogreške vezane uz određenu planinarsku stazu  \\ \hline
+				date\_report & TIMESTAMP & vrijeme i datum prijave pogreške vezane uz određenu planinarsku stazu  \\ \hline
 				
 		
 				
