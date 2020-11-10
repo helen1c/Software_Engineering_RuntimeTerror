@@ -12,8 +12,8 @@ public class HillToHillResponseMapper implements DefaultMapper<Hill, HillFindRes
     @Override
     public HillFindResponse map(Hill from) {
         HillFindResponse response = new HillFindResponse();
-        response.setId(from.getId());
-        response.setName(from.getName());
+        response.setValue(from.getId());
+        response.setLabel(from.getName());
 
         return response;
     }
