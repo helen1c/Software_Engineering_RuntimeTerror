@@ -36,6 +36,7 @@ a:hover {
 }
 
 .wrapper-picture {
+    position: relative;
     margin-top: 2rem;
     display: flex;
     flex-direction: row;
@@ -206,7 +207,24 @@ password-component {
     align-content: center;
 }
 
+.remove-picture {
+    position: absolute;
+    right: 5%;
+    top: 5%;
+    transform: translate(5%, -5%);
+    z-index: 1;
+    background: none;
+    outline: none;
+    opacity: 0.5;
+    font-size: 1rem;
+    color: white;
+}
 
+
+.remove-picture:hover {
+    opacity: 1;
+    min-height: 2rem;
+}
 
 @media only screen and (max-width: 600px) {
 
