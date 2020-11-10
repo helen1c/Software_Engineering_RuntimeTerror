@@ -7,6 +7,7 @@ import { useHistory } from "react-router";
 import { IconButton } from "@material-ui/core";
 import { AddAPhotoOutlined } from "@material-ui/icons";
 import moment from "moment";
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 export const RegistrationForm = () => {
   const [newImage, setNewImage] = useState("");
@@ -62,13 +63,15 @@ export const RegistrationForm = () => {
   });
 
   const showImage = (event: any) => {
+    if(!event) return;
     let file = event.target.files[0];
 
     let reader = new FileReader();
     reader.onload = function (newImage) {
-      // @ts-ignore
-      setNewImage(newImage.target.result as string);
+
+      setNewImage(newImage?.target?.result as string);
     };
+    if(file !== undefined)
     reader.readAsDataURL(file);
   };
 
@@ -172,40 +175,35 @@ export const RegistrationForm = () => {
                 {formik.errors.description ? formik.errors.description : null}
               </p>
             </div>
-            <>
-              <input
-                className={"upload-picture"}
-                accept={"image/*"}
-                id={"icon-button-file"}
-                type="file"
-                multiple
-                onChange={(event) => showImage(event)}
-              />
-              <div className={"wrapper-picture"}>
-                <div className={"picture-container"}>
-                  <label htmlFor="icon-button-file">
-                    {newImage ? (
-                      <div className="show-image">
-                        <img
-                          style={{ display: "block" }}
-                          className="profileImage"
-                          src={newImage}
-                          alt="Slika profila"
-                        />
-                      </div>
-                    ) : (
-                      <IconButton
-                        color="primary"
-                        aria-label="upload picture"
-                        component="span"
-                      >
-                        <AddAPhotoOutlined />
-                      </IconButton>
-                    )}
-                  </label>
+            <input className={"upload-picture"}
+                   accept={"image/*"}
+                   id={"icon-button-file"}
+                   type="file" multiple
+                   onChange={(event) => showImage(event)}
+            />
+            {newImage ?
+                <div className={"wrapper-picture"}>
+                  <img
+                      style = {{display:"block"}}
+                      className="profileImage"
+                      src={newImage}
+                      alt="Slika profila"
+                  />
+                  <span className={"remove-picture"} onClick={() => setNewImage("")}><DeleteForeverIcon/></span>
+
                 </div>
-              </div>
-            </>
+                :
+                <>
+                  <div className={"wrapper-picture"}>
+                    <div className={"picture-container"}>
+                      <label htmlFor="icon-button-file">
+                        <IconButton color="primary" aria-label="upload picture" component="span">
+                          <AddAPhotoOutlined/>
+                        </IconButton>
+                      </label>
+                    </div></div>
+                </>
+            }
           </div>
         </div>
         <div>
