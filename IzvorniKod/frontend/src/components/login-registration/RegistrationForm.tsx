@@ -63,16 +63,14 @@ export const RegistrationForm = () => {
   });
 
   const showImage = (event: any) => {
-    if(!event) return;
-    let file = event.target.files[0];
-
     let reader = new FileReader();
     reader.onload = function (newImage) {
 
       setNewImage(newImage?.target?.result as string);
     };
-    if(file !== undefined)
-    reader.readAsDataURL(file);
+    if(typeof event.target.files[0] == "object") {
+      reader.readAsDataURL(event.target.files[0]);
+    }
   };
 
   return (
