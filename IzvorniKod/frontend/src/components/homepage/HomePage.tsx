@@ -14,7 +14,7 @@ export const HomePage = () => {
 
         <main className="main">
             <div className="main-images">
-                <div className="staze" onClick={e => history.push("/paths/search")}>
+                <div className="staze" onClick={e => history.push("/mountain-path/search")}>
                     <span className="pretraga">Pretražite planinarske staze</span>
                 </div>
                 <div className="domovi" onClick={e => history.push("/mountain-lodge/search")}>
