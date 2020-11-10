@@ -179,7 +179,10 @@ export const RegistrationForm = () => {
                    accept={"image/*"}
                    id={"icon-button-file"}
                    type="file" multiple
-                   onChange={(event) => showImage(event)}
+                   onChange={(event) => {
+                     showImage(event)
+                     event.target.value=""
+                   }}
             />
             {newImage ?
                 <div className={"wrapper-picture"}>
