@@ -63,14 +63,16 @@ export const RegistrationForm = () => {
   });
 
   const showImage = (event: any) => {
+    if(!event) return;
+    let file = event.target.files[0];
+
     let reader = new FileReader();
     reader.onload = function (newImage) {
 
       setNewImage(newImage?.target?.result as string);
     };
-    if(typeof event.target.files[0] == "object") {
-      reader.readAsDataURL(event.target.files[0]);
-    }
+    if(file !== undefined)
+    reader.readAsDataURL(file);
   };
 
   return (
@@ -177,7 +179,10 @@ export const RegistrationForm = () => {
                    accept={"image/*"}
                    id={"icon-button-file"}
                    type="file" multiple
-                   onChange={(event) => showImage(event)}
+                   onChange={(event) => {
+                     showImage(event)
+                     event.target.value=""
+                   }}
             />
             {newImage ?
                 <div className={"wrapper-picture"}>
