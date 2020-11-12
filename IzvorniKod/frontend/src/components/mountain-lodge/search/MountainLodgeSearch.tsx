@@ -13,9 +13,7 @@ export const MountainLodgeSearch = () => {
     const dispatcher = useDispatch();
 
     const ispis = (request : MountainLodgeSearchRequest) => {
-        console.log(request.searchText);
-        console.log(request.hillId);
-        console.log("sada")
+        console.log("Upravo pretražujete dom naziva: " + request.searchText + ", a visočje je: " + results.filter(s => s.value === request.hillId));
     }
 
     const {results} = useSelector((state: MainReducer) => state.findAllHillsReducer);
