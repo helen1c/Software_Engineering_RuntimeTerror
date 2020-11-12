@@ -693,7 +693,7 @@
 		\section{Dijagram razreda}
 		
 			\subsection{Konceptualni model dijagrama razreda}
-			Prvi prikazani dijagram je konceptualni model dijagrama razreda. Na njemu se idejno prikazani razredi, njihove funkcionalnosti te odnosi između razreda. Svi razredi napravljeni su obzirom na obrasce uporabe i opise funkcionalnih zahtjeva.
+			Prvi prikazani dijagram je konceptualni model dijagrama razreda. Na njemu su idejno prikazani razredi, njihove funkcionalnosti te odnosi između razreda. Svi razredi napravljeni su obzirom na obrasce uporabe i opise funkcionalnih zahtjeva.
 		
 			\begin{figure}[H]
 				\includegraphics[scale=0.4, height=170mm, width=165mm]{dijagrami/domena-konceptualni.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
@@ -706,7 +706,7 @@
 			
 			\subsection{Implementacijski dijagrami razreda - model sustava}
 			\subsubsection{Sloj modela i objekti prijenosa podataka (DTO)}
-			Na ovom dijagramu prikazan je sloj modela te su prikazani objekti prijenosa podataka, tzv. \textit{Data Transfer Objects}. Ovaj dijagram modela odnosi se na modele sustava koji su trenutno implementirani i koji omogućuju generičke funkcionalnosti potrebne za prvu predaju. U daljnjem radu i razvitku ovaj dijagram će se nadopunjavati sve do konačnog modela sustava. Možemo reći da je glavni razred na dijagramu razred \textit{User}, koji predstavlja registriranog korisnika aplikacije, odnosno planinara. On je povezan s razredom \textit{Role}, na način da svaki korisnik može imati više aplikativnih uloga, npr. ulogu \textit{Admin} ili \textit{Dežurni planinar}, međutim funkcionalnosti vezane uz te uloge još nisu implementirane. Vidimo i razred \textit{MountainLodge} koji modelira jedan planinarski dom. Planinarski dom može imati više značajki infrastrukture, što je na dijagramu prikazano vezom razreda \textit{MountainLodge} s razredom \textit{Utility}. Planinarski dom se nalazi na isključivo jednom visočju, koje je modelirano razredom \textit{Hill}. Osim tih razreda prikazani su DTO razredi: \textit{HillFindResponse}, \textit{UserCreateDto}, \textit{MountainLodgeSearchRequest}, \textit{MountainLodgeSearchResponse} te \textit{PageSearchResponse}. To su razredi koji služe za prijenos podataka te omogućavaju da nadglednik nikada ne radi sa stvarnim modelima. Osim njih, prikazano je sučelje \textit{DefaultMapper} kojega implementiraju konkretni razredi za mapiranje, kojih je dužnost mapirati razrede prijenosa podataka u modele i obrnuto. Za razrede modela prikazane su metode, dok za DTO objekte metode nisu prikazane zbog preglednosti.
+			Na ovom dijagramu prikazan je sloj modela te su prikazani objekti prijenosa podataka, tzv. \textit{Data Transfer Objects}. Ovaj dijagram modela odnosi se na modele sustava koji su trenutno implementirani i koji omogućuju generičke funkcionalnosti potrebne za prvu predaju. U daljnjem radu i razvitku ovaj dijagram će se nadopunjavati sve do konačnog modela sustava. Možemo reći da je glavni razred na dijagramu razred \textit{User}, koji predstavlja registriranog korisnika aplikacije, odnosno planinara. On je povezan s razredom \textit{Role}, na način da svaki korisnik može imati više aplikativnih uloga, npr. ulogu \textit{Admin} ili \textit{Dežurni planinar}, međutim funkcionalnosti vezane uz te uloge još nisu implementirane. Vidimo i razred \textit{MountainLodge} koji modelira jedan planinarski dom. Planinarski dom može imati više značajki infrastrukture, što je na dijagramu prikazano vezom razreda \textit{MountainLodge} s razredom \textit{Utility}. Planinarski dom se isključivo nalazi na jednom visočju, koje je modelirano razredom \textit{Hill}. Osim tih razreda prikazani su DTO razredi: \textit{HillFindResponse}, \textit{UserCreateDto}, \textit{MountainLodgeSearchRequest}, \textit{MountainLodgeSearchResponse} te \textit{PageSearchResponse}. To su razredi koji služe za prijenos podataka i omogućavaju da nadglednik nikada ne radi sa stvarnim modelima. Osim njih, prikazano je sučelje \textit{DefaultMapper} kojeg implementiraju konkretni razredi za mapiranje, čija je dužnost mapirati razrede prijenosa podataka u modele i obrnuto. Za razrede modela prikazane su metode, dok za DTO objekte metode nisu prikazane zbog preglednosti.
 			\begin{figure}[H]
 				\includegraphics[scale=0.6, height=190mm, width=165mm]{dijagrami/model-DTO-sloj.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
 				\centering
@@ -715,7 +715,7 @@
 			\end{figure}
 			\newpage
 			\subsubsection{Daljnja idejna razrada sloja modela}
-			Na sljedećem dijagramu idejno su prikazani prethodni modeli s novim metodama te razredi koji će se razvijati u narednim iteracijama razvoja projekta. 
+			Na sljedećem dijagramu idejno su prikazani prethodni modeli s novim metodama i razredi koji će se razvijati u narednim iteracijama razvoja projekta. 
 			\begin{figure}[H]
 				\includegraphics[scale=0.6, height=170mm, width=165mm]{dijagrami/future-model.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
 				\centering
@@ -729,15 +729,15 @@
 				\item 
 					Sloj repozitorija - metode pristupa bazi podataka, dohvat modela
 				\item
-					Sloj servisa - tu se obavlja sva naša poslovna logika, pozivaju se metoda repozitorija te se dohvaćaju podaci
-				\item Sloj nadglednika - prima zahtjeve od korisnika te poziva metoda servisnog sloja	
+					Sloj servisa - tu se obavlja sva naša poslovna logika, pozivaju se metode repozitorija dohvaćaju se podaci
+				\item Sloj nadglednika - prima zahtjeve od korisnika i poziva metoda servisnog sloja	
 			\end{itemize}
 			Razredi koji su trenutno implementirani u ovom sloju prikazani su na dijagramu slijedno, od najnižeg podsloja odnosno pristupa bazi podataka pa sve do podsloja nadglednika koji prima i delegira zahtjeve korisnika.
 			Dijagram se sastoji od nekoliko nadglednika: \textit{MountainLodgeController}, \textit{HillController} te \textit{UserController}, a svi su označeni anotacijom \textit{@RestController}. 
 			
-			Podsloj nadglednika povezan je sa servisnim slojem preko konkretnog primjerka razreda servisnog sloja kojega čine razredi \textit{MountainLodgeQueryServiceImpl}, \textit{HillQueryServiceImpl} te \textit{UserQueryServiceImpl}, a oni predstavljaju implementacije odgovarajućih servisnih sučelja koji su također označeni na dijagramu.
+			Podsloj nadglednika povezan je sa servisnim slojem preko konkretnog primjerka razreda servisnog sloja kojeg čine razredi \textit{MountainLodgeQueryServiceImpl}, \textit{HillQueryServiceImpl} te \textit{UserQueryServiceImpl}, a oni predstavljaju implementacije odgovarajućih servisnih sučelja koji su također označeni na dijagramu.
 			
-			 Naposljetku, servisni sloj povezan je sa slojem repozitorija preko sučelja konkretnog repozitorija relevantnog za taj servis. U našem slučaju to su sučelja: \textit{MountainLodgeRepository}, \textit{HillRepository} te \textit{UserRepository}. Svako sučelje repozitorija nasljeđuje sučelje \textit{JpaRepository} koje sadrži konkretnu implementacije upita nad bazom podataka.
+			 Naposljetku, servisni sloj povezan je sa slojem repozitorija preko sučelja konkretnog repozitorija relevantnog za taj servis. U našem slučaju to su sučelja: \textit{MountainLodgeRepository}, \textit{HillRepository} te \textit{UserRepository}. Svako sučelje repozitorija nasljeđuje sučelje \textit{JpaRepository} koje sadrži konkretnu implementaciju upita nad bazom podataka.
 			 
 			  Sučelje \textit{JpaSpecificationExecutor} omogućuje nam korištenje specifikacije \textit{MountainLodgeSearchSpecification} prilikom pretraživanja planinarskih domova iz baze podataka.
 			\begin{figure}[H]
@@ -747,18 +747,18 @@
 				\label{fig:dijagrami_razreda4}
 			\end{figure}
 			\newpage
-			\subsubsection{Razredi vezani uz sigurnost te pomoćni razredi}
+			\subsubsection{Razredi vezani uz sigurnost i pomoćni razredi}
 			Prilikom prijave korisnika, zahtjev za prijavu se šalje na back end, točnije do nadglednika. Zahtjev se provjerava u razredu \textit{JWTAuthenticationFilter} pomoću metode \textit{attemptAuthentication} koja stvara instancu razreda \textit{UserLogin} i šalje ga na provjeru.
 			 
 			 Provjera se vrši tako da se zove metoda \textit{loadUserByUsername} razreda \textit{UserDetailsServiceImpl}, a ona provjerava postoji li korisnik koji sadrži e-mail koji je poslan unutar zahtjeva. 
 			 
 			 Nakon utvrđivanja da ta osoba postoji \textit{Spring security modul} provjerava lozinku i druge podatke vezane uz prijavu. Nakon uspješne prijave pomoću metode \textit{successfulAuthentication} se generira jedinstveni token (identifikator) i šalje korisniku. Svojstva tokena poput trajanja se određuju u razredu \textit{SecurityConstants}. 
 			
-			Prijavljeni korisnik za vrijeme rada unutar web aplikacije svaki zahtjev obavlja pomoću jedinstvenog tokena koji mu je dodijeljen, a koji se provjerava unutar razreda \textit{JWTAuthorizationFilter}. 
+			Prijavljeni korisnik za vrijeme rada unutar Web aplikacije svaki zahtjev obavlja pomoću jedinstvenog tokena koji mu je dodijeljen, a koji se provjerava unutar razreda \textit{JWTAuthorizationFilter}. 
 			
 			Metoda \textit{getPasswordEncoder} razreda \textit{Configuration} služi da bi definirali enkoder za zaštitu lozinki. 
 			
-			Razred \textit{UniqueEmailValidator} prilikom registracije provjerava postoji li u bazi podataka korisnik kojemu je e-mail isti e-mailu zahtjeva. Budući da ne možemo imati dva korisnika s istom adresom elektroničke pošte, u tom slučaju događa se iznimka \textit{UserWithEmailExistsException}.  
+			Razred \textit{UniqueEmailValidator} prilikom registracije provjerava postoji li u bazi podataka korisnik kojem je e-mail isti e-mailu zahtjeva. Budući da ne možemo imati dva korisnika s istom adresom elektroničke pošte, u tom slučaju događa se iznimka \textit{UserWithEmailExistsException}.  
 			
 			Razredi \textit{NoImageException} i \textit{ResourceNotFoundException} modeliraju iznimke koje se mogu dogoditi prilikom rada sustava.
 			Razred \textit{MountainLodgeSearchSpecification} koji je konkretna implementacija parametriziranog sučelja \textit{BaseSpecification} omogućava nam pretraživanje planinarskih domova prema određenim kriterijima.
@@ -767,7 +767,7 @@
 			\begin{figure}[H]
 				\includegraphics[scale=0.6, height=175mm, width=165mm]{dijagrami/helpers-class.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
 				\centering
-				\caption{Dijagram razreda - sigurnost te pomoćne metode}
+				\caption{Dijagram razreda - sigurnost i pomoćne metode}
 				\label{fig:dijagrami_razreda5}
 			\end{figure}
 			
