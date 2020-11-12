@@ -1,12 +1,16 @@
-import React from "react";
+import React, {useEffect} from "react";
 import './MountainLodgeSearch.css'
 import Select, {ValueType} from "react-select";
 import {Formik, Form, Field} from "formik";
 import {HillOption} from "../models/HillOption";
 import {MountainLodgeSearchRequest} from "../models/MountainLodgeSearchRequest";
+import {useDispatch, useSelector} from "react-redux";
+import {MainReducer} from "../../../store/reducer";
+import {findHills} from "../../../store/actions/findAllHillsActions";
 
 export const MountainLodgeSearch = () => {
 
+    const dispatcher = useDispatch();
 
     const ispis = (request : MountainLodgeSearchRequest) => {
         console.log(request.searchText);
@@ -14,17 +18,19 @@ export const MountainLodgeSearch = () => {
         console.log("sada")
     }
 
-    const options = [
-        { value: 1, label: 'Medvednica' },
-        { value: 2, label: 'Sljeme' },
-        { value: 3, label: 'Sjeverni Velebit' }
-    ]
+    const {results} = useSelector((state: MainReducer) => state.findAllHillsReducer);
+
+    useEffect(() => {
+        if(results === undefined || results.length === 0) {
+            console.log("Get all Hills...");
+            dispatcher(findHills());
+        }
+    }, [dispatcher, results]);
 
     return (
         <div className="search-form">
             <Formik initialValues={{
-                searchText: "1000",
-                hillId: 2
+                searchText: ""
             } as MountainLodgeSearchRequest
             } onSubmit={ispis}>
                 {({setFieldValue}) =>{
@@ -40,7 +46,7 @@ export const MountainLodgeSearch = () => {
                             onChange={(option: ValueType<HillOption>) => setFieldValue("hillId",
                                 option === null ? null : (option as HillOption).value)
                             }
-                            options={options}>
+                            options={results}>
                         </Select>
                     </Form>
                   );
