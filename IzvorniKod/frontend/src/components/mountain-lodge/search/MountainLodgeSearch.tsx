@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import './MountainLodgeSearch.css'
 import Select, {ValueType} from "react-select";
 import {Formik, Form, Field} from "formik";
@@ -11,9 +11,10 @@ import {findHills} from "../../../store/actions/findAllHillsActions";
 export const MountainLodgeSearch = () => {
 
     const dispatcher = useDispatch();
+    const [s, setS] = useState("");
 
     const ispis = (request : MountainLodgeSearchRequest) => {
-        console.log("Upravo pretražujete dom naziva: " + request.searchText + ", a visočje je: " + results.filter(s => s.value === request.hillId));
+        setS("Upravo pretražujete dom naziva: " + request.searchText);
     }
 
     const {results} = useSelector((state: MainReducer) => state.findAllHillsReducer);
@@ -47,10 +48,11 @@ export const MountainLodgeSearch = () => {
                             options={results}>
                         </Select>
                     </Form>
+
                   );
                 }}
             </Formik>
-
+            <p className={"searching"}>{s}</p>
 
             </div>
         );
