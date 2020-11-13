@@ -1,30 +1,60 @@
-import React, {useState} from "react";
-import 'semantic-ui-css/semantic.min.css'
+import React, {useEffect, useState} from "react";
 import './MountainLodgeSearch.css'
+import Select, {ValueType} from "react-select";
+import {Formik, Form, Field} from "formik";
+import {HillOption} from "../models/HillOption";
+import {MountainLodgeSearchRequest} from "../models/MountainLodgeSearchRequest";
+import {useDispatch, useSelector} from "react-redux";
+import {MainReducer} from "../../../store/reducer";
+import {findHills} from "../../../store/actions/findAllHillsActions";
 
 export const MountainLodgeSearch = () => {
 
+    const dispatcher = useDispatch();
+    const [s, setS] = useState("");
 
-    const [searchText, setSearchText] = useState();
-
-    const handleSearchChange = (e : any) => setSearchText(e.target.value);
-    const ispis = () => {
-        console.log(searchText);
+    const ispis = (request : MountainLodgeSearchRequest) => {
+        setS("Upravo pretražujete dom naziva: " + request.searchText);
     }
 
+    const {results} = useSelector((state: MainReducer) => state.findAllHillsReducer);
+
+    useEffect(() => {
+        if(results === undefined || results.length === 0) {
+            console.log("Get all Hills...");
+            dispatcher(findHills());
+        }
+    }, [dispatcher, results]);
+
     return (
-        <>
+        <div className="search-form">
+            <Formik initialValues={{
+                searchText: ""
+            } as MountainLodgeSearchRequest
+            } onSubmit={ispis}>
+                {({setFieldValue}) =>{
+                    return (<Form className="search-lodges-form">
+                            <button className="search-button" type="submit">&#8981;</button>
+                        <Field className={"input-search"} placeholder={"Pretražite planinarske domove..."} name={"searchText"} id={"searchText"}/>
+                        <Select
+                            className="hill-select"
+                            isClearable={true}
+                            isSearchable={true}
+                            placeholder="Odaberite područje..."
+                            name={"hillId"}
+                            onChange={(option: ValueType<HillOption>) => setFieldValue("hillId",
+                                option === null ? null : (option as HillOption).value)
+                            }
+                            options={results}>
+                        </Select>
+                    </Form>
 
+                  );
+                }}
+            </Formik>
+            <p className={"searching"}>{s}</p>
 
-            <input className={"input-search"} placeholder={"Pretražite planinarske domove..."} name={"search-text"} id={"search-text"}/>
-            <select className={"input-select"} placeholder={"Odaberite područje"} onChange={handleSearchChange} name={"hill-select"} id={"hill-select"}>
-
-                <option value={1}>Medvednica</option>
-                <option value={2}>Opatija</option>
-                <option value={3}>Sljeme</option>
-            </select>
-            <button onClick={ispis}>sadads</button>
-            </>
+            </div>
         );
 
 }

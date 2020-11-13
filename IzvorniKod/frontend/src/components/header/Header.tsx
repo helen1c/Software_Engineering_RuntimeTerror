@@ -25,7 +25,7 @@ function Header() {
 
   const logout = () => {
     sessionStorage.removeItem("key");
-    window.location.assign("./home");
+    window.location.assign("/home");
   }
 
   return (

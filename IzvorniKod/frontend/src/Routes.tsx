@@ -20,7 +20,7 @@ export const Routes = () => {
                 <Route path="/aboutus" component={AboutUs} exact={true}/>
                 <Route path="/register" component={RegistrationForm} exact={true}/>
                 <Route path="/login" component={LoginForm} exact={true}/>
-                <Route path="/mountain-lodges/search" component={MountainLodgeSearch} exact/>
+                <Route path="/mountain-lodge/search" component={MountainLodgeSearch} exact/>
             </Switch>
         </div>
     );
