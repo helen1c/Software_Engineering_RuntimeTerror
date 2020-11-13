@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+    background: #211648;
+    color: white;
+
+}
+
+.title-container{
+    display: flex;
+    flex-direction: row;
+    height: 70px;
+    margin-left: 3rem;
+    align-items: center;
+    align-content: center;
+}
+
+.title{
+    text-align: center;
+    font-family: 'Lobster', cursive;
+    color: white;
+    padding-left: 1.5rem;
+    font-size: 2rem;
+}
+
+.logo-image {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    background-size: cover;
+    object-fit: cover;
+}
+
+.profil-image {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    background-size: cover;
+    object-fit: cover;
+    margin-right: 3rem;
+}
+
+.link{
+    text-decoration: none;
+    color: white;
+}
+
+.profil{
+    list-style-type: none;
+}
+.profil-part{
+    text-align: center;
+}
+
+
+.loginAndRegisterButton, .logout-button {
+    margin: auto 0.2rem;
+    background-color: white;
+    border: 2px solid white;
+    height: 2rem;
+    font-weight: 400;
+    font-family: Roboto, sans-serif;
+    border-radius: 7px;
+    outline: none;
+    color: #211648;
+    background-color: white;
+}
+
+.logout-button {
+    margin-right: 1rem;
+}
+
+.loginAndRegisterButton:hover, .logout-button:hover {
+    color: white;
+    background-color: #211648;
+}
+
+.login-cnt {
+    margin-right: 3rem;
+}
+
+.user-cnt {
+    display: flex;
+    flex-direction: row;
+}
+
+@media screen and (max-width: 600px) {
+    .title {
+        display: none;
+    }
+}

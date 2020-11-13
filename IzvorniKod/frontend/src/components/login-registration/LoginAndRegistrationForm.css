@@ -1,0 +1,247 @@
+* {
+    box-sizing: border-box;
+}
+
+h1 {
+    text-align: center;
+}
+
+p {
+    padding: 0;
+    margin: 0;
+    font-size: 18px;
+}
+
+a:hover {
+    cursor: pointer;
+}
+
+.profileImage {
+    height: 20rem;
+    width: 20rem;
+
+}
+
+.submitButton {
+    border-radius: 10px;
+    width: 9rem;
+    height: 2.5rem;
+    font-size: 18px;
+    background-color: #211648;
+    color: white;
+    margin-bottom: 3rem;
+    outline: none !important;
+    border: 2px solid white;
+    margin-top: 3rem;
+}
+
+.wrapper-picture {
+    position: relative;
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.submitButton:hover {
+    color: #211648;
+    background-color: white;
+    border: 2px solid #211648;
+}
+
+.upload-picture{
+    display: none;
+}
+
+.registration-input, .login-input {
+    margin: 0.3rem 0;
+    border-radius: 10px;
+    text-indent: 5px;
+    height: 3.5rem;
+    width: 25vw;
+    min-width: 15rem;
+    border: 2px solid #211648;
+    box-shadow: none !important;
+    outline: none !important;
+    font-family: Roboto, sans-serif;
+    font-size: 1rem;
+}
+
+.MuiSvgIcon-root {
+    width: 3rem !important;
+    height: 3rem !important;
+}
+
+.profileImage {
+    max-width: 250px;
+    max-height: 250px;
+    border: #211648 2px solid;
+    border-radius: 10px;
+    width: 25vw;
+    min-width: 15rem;
+    height: 25vw;
+    min-height: 15rem;
+}
+
+.picture-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 25vw;
+    min-width: 15rem;
+    height: 25vw;
+    min-height: 15rem;
+    max-width: 250px;
+    max-height: 250px;
+    border: 3px solid #211648;
+    border-radius: 10px;
+}
+
+.errorText {
+    color: red;
+    font-family: Roboto, sans-serif;
+    font-size: 1.2rem;
+}
+
+.inputComponent {
+    min-height: 6.5rem;
+    margin-left: auto;
+}
+
+password-component {
+    margin-bottom: 0px;
+    padding-bottom: 0;
+    max-height: 3rem;
+}
+
+.text-area {
+    width: 32rem;
+    height: 12rem;
+    border-radius: 10px;
+}
+
+.inputLabel {
+    margin-bottom: 0;
+}
+
+.registration-text-area {
+    min-height: 8rem;
+    width: 25vw;
+    min-width: 15rem;
+    border: 2px solid #211648;
+    box-shadow: none !important;
+    outline: none !important;
+    border-radius: 10px;
+    font-family: Roboto, sans-serif;
+    font-size: 1rem;
+    max-width: 25vw;
+    max-height: 15vw;
+}
+
+.registration-text-area::-webkit-scrollbar-track{
+    background-color: white
+}
+
+.registration-text-area::-webkit-scrollbar{
+    width: 0.5rem;
+    background-color: #F5F5F5;
+}
+
+.registration-text-area::-webkit-scrollbar-thumb{
+    border-radius: 100px;
+    background-color: #211648;
+}
+
+
+.loginForm {
+    text-align: center;
+    width: 100%;
+    margin-top: 3rem;
+}
+
+.inputForm {
+    padding: 1rem 0 0rem 0;
+    display: inline-block;
+    text-align: left;
+}
+
+.textAlignLeft {
+    display: inline-block;
+    text-align: left;
+}
+
+.registrationForm {
+    text-align: center;
+    margin-top: 3rem;
+}
+
+.toRegistration {
+    margin-bottom: 2rem;
+    font-family: Roboto, sans-serif;
+}
+
+.toRegistrationAction {
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-color: #131E32;
+}
+
+.loginImage {
+    opacity:0.3;
+    max-height: 40vh;
+    height: 35rem;
+}
+
+.registration-container {
+    align-content: flex-start;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.registration-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    align-content: center;
+}
+
+.remove-picture {
+    position: absolute;
+    right: 5%;
+    top: 5%;
+    transform: translate(5%, -5%);
+    z-index: 1;
+    background: none;
+    outline: none;
+    opacity: 0.5;
+    font-size: 1rem;
+    color: white;
+}
+
+
+.remove-picture:hover {
+    opacity: 1;
+    min-height: 2rem;
+}
+
+@media only screen and (max-width: 600px) {
+
+    .registration-container {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+    }
+
+    .registration-column{
+        justify-content: center;
+    }
+
+}
+
+
+
+
+

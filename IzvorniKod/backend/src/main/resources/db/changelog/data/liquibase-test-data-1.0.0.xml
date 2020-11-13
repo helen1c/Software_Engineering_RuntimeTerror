@@ -1,0 +1,28 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="20201020205016" author="lravenscak">
+        <insert tableName="roles">
+            <column name="id">1</column>
+            <column name="role_name">ADMIN</column>
+        </insert>
+
+        <insert tableName="roles">
+            <column name="id">2</column>
+            <column name="role_name">PLANINAR</column>
+        </insert>
+
+        <insert tableName="user">
+            <column name="id">1</column>
+            <column name="name">Luka Ravenscak</column>
+            <column name="email">luka.ravenscak@fer.hr</column>
+            <column name="password">$2a$10$e.s/V3Ca845wfHy4DqBZmeRxpg4Pm5MR2owvcs/XCbO13ttDwqPDi</column>
+            <column name="place_of_residence">Bjelovar</column>
+            <column name="date_of_birth">2000-4-12</column>
+            <column name="description">Ja sam Luka.</column>
+        </insert>
+
+    </changeSet>
+</databaseChangeLog>
