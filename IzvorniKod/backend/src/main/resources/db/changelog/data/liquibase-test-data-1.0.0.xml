@@ -25,4 +25,17 @@
         </insert>
 
     </changeSet>
+
+    <changeSet id="20201129180400" author="lravenscak">
+        <insert tableName="user">
+            <column name="id">2</column>
+            <column name="name">admin</column>
+            <column name="email">admin@fer.hr</column>
+            <column name="password">$2a$10$e.s/V3Ca845wfHy4DqBZmeRxpg4Pm5MR2owvcs/XCbO13ttDwqPDi</column>
+            <column name="place_of_residence">Novoseljani</column>
+            <column name="date_of_birth">1999-8-3</column>
+            <column name="description">Ja sam admin.</column>
+            <column name="role_id">1</column>
+        </insert>
+    </changeSet>
 </databaseChangeLog>

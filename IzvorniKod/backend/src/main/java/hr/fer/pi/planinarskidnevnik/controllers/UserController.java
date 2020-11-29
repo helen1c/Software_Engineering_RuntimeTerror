@@ -31,6 +31,13 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    @GetMapping("role/{id}")
+    public ResponseEntity<?> getUserRoleById(@PathVariable("id") final Long userId) {
+        LOGGER.info("User fetching");
+        final User user = userService.getUserById(userId);
+        return ResponseEntity.ok(userService.getRole(user.getEmail()));
+    }
+
     @PostMapping
     public ResponseEntity<?> createUser(@Valid @RequestBody final UserCreateDto dto) {
         LOGGER.info("User creating");

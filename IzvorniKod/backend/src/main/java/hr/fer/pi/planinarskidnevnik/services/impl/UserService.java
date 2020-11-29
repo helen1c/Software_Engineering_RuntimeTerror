@@ -112,6 +112,10 @@ public class UserService {
         return exists;
     }
 
+    public String getRole(String email) {
+        return userRepository.findByEmail(email).get().getRole().getName();
+    }
+
     public void deleteUser(Long userId, Principal principal) {
         Optional<User> optionalCurrentUser = findUserByEmail(principal.getName());
 
