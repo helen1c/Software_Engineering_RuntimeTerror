@@ -47,6 +47,14 @@ export const MountainLodgeSearch = () => {
                             }
                             options={results}>
                         </Select>
+                        <div>
+                            <input type="checkbox" id="water" name="water"/>
+                                <label htmlFor="scales">Voda</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="food" name="food"/>
+                            <label htmlFor="scales">Hrana</label>
+                        </div>
                     </Form>
 
                   );

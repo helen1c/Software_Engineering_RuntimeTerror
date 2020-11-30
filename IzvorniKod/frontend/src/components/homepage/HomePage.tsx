@@ -10,7 +10,7 @@ export const HomePage = () => {
 
     return (
 
-        <body>
+        <>
 
         <main className="main">
             <div className="main-images">
@@ -23,7 +23,7 @@ export const HomePage = () => {
             </div>
         </main>
 
-        </body>
+        </>
 
     );
 

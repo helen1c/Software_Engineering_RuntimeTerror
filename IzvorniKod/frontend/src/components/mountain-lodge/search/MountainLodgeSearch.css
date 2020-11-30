@@ -73,6 +73,10 @@
     user-select: none !important;
 }
 
+.hill-select {
+    margin-right: 1.5rem;
+}
+
 @media screen and (max-width: 850px) {
 
     .hill-select >div {
@@ -85,4 +89,9 @@
         font-size: 0.9rem;
     }
 
+}
+
+.multi-select-utilities {
+    min-width: 220px;
+    max-width: 220px;
 }
