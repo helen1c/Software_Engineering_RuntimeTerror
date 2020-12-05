@@ -1,5 +1,7 @@
 package hr.fer.pi.planinarskidnevnik.security;
 
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,19 +12,10 @@ import javax.validation.constraints.Size;
 
 public class UserLogin {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(max = 50, message = "E-mail mora biti kraći od 50 znakova")
-    @NotEmpty(message = "Unos e-maila je obavezan.")
-    @Email(message = "Email mora biti u zadovoljavajućem formatu.")
-    @Column(unique = true)
     private String email;
 
-
-    @Size(max = 128, message = "Lozinka mora biti kraća od 50 znakova")
-    @NotEmpty(message = "Unos lozinke je obavezan.")
     private String password;
 
     public UserLogin() {
