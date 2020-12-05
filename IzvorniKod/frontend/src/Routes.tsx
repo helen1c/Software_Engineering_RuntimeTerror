@@ -6,6 +6,9 @@ import Header from "./components/header/Header";
 import {RegistrationForm} from "./components/login-registration/RegistrationForm";
 import {LoginForm} from "./components/login-registration/LoginForm";
 import {MountainLodgeSearch} from "./components/mountain-lodge/search/MountainLodgeSearch";
+import {MountaineeringCommunitySearch} from "./components/mountaineering-community/MountaineeringCommunitySearch"
+
+
 
 export const Routes = () => {
 
@@ -20,7 +23,9 @@ export const Routes = () => {
                 <Route path="/aboutus" component={AboutUs} exact={true}/>
                 <Route path="/register" component={RegistrationForm} exact={true}/>
                 <Route path="/login" component={LoginForm} exact={true}/>
+                <Route path="/mountaineering-community/search" component={MountaineeringCommunitySearch} exact/>
                 <Route path="/mountain-lodge/search" component={MountainLodgeSearch} exact/>
+
             </Switch>
         </div>
     );
