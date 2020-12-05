@@ -26,6 +26,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/mountain-lodges/**").permitAll()
                 .antMatchers("/home").permitAll()
+                .antMatchers("/users/community").permitAll()
                 .antMatchers("/hills/**").permitAll()
                 .anyRequest().authenticated()
                 .and()

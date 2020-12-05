@@ -1,6 +1,7 @@
 package hr.fer.pi.planinarskidnevnik.services.impl;
 
 import hr.fer.pi.planinarskidnevnik.dtos.UserCreateDto;
+import hr.fer.pi.planinarskidnevnik.dtos.UserSearchDto;
 import hr.fer.pi.planinarskidnevnik.exceptions.NoImageException;
 import hr.fer.pi.planinarskidnevnik.exceptions.ResourceNotFoundException;
 import hr.fer.pi.planinarskidnevnik.exceptions.UserWithEmailExistsException;
@@ -15,6 +16,8 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -108,5 +111,22 @@ public class UserService {
             throw new UserWithEmailExistsException("Korisnik s emailom " + email + " već postoji.");
         }
         return exists;
+    }
+
+    public List<UserSearchDto> getUserByName(String userName) {
+        UserSearchDto userSearchDto = null;
+        List<User> list = userRepository.findAll();  //filtriramo listu Usera
+        List<UserSearchDto> lista2 = new ArrayList<>();
+
+        for(User u: list) { //idemo po listi svih usera i ako naidemo na naseg, stavljamo ga u listu
+
+            byte[] i = u.getImage();
+            userSearchDto.setName(u.getName());
+            userSearchDto.setImage(i);
+            lista2.add(userSearchDto);
+        }
+
+        return lista2;
+
     }
 }
