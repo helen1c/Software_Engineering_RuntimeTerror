@@ -114,16 +114,11 @@ public class UserService {
     }
 
     public List<UserSearchDto> getUserByName(String userName) {
-        UserSearchDto userSearchDto = null;
         List<User> list = userRepository.findAll();  //filtriramo listu Usera
         List<UserSearchDto> lista2 = new ArrayList<>();
 
         for(User u: list) { //idemo po listi svih usera i ako naidemo na naseg, stavljamo ga u listu
-
-            byte[] i = u.getImage();
-            userSearchDto.setName(u.getName());
-            userSearchDto.setImage(i);
-            lista2.add(userSearchDto);
+            lista2.add(new UserSearchDto(u.getId(),u.getImage(), u.getName()));
         }
 
         return lista2;

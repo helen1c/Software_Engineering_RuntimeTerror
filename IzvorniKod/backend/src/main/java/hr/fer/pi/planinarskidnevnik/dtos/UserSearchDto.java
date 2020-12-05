@@ -6,6 +6,19 @@ public class UserSearchDto {
     private byte[] image;
     private String name;
 
+    public UserSearchDto(){}
+
+    public UserSearchDto(String name, byte[] image){
+        this.name=name;
+        this.image=image;
+    }
+
+    public UserSearchDto(Long id, byte[] image, String name) {
+        this.id = id;
+        this.image = image;
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }
@@ -28,13 +41,6 @@ public class UserSearchDto {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public UserSearchDto(){}
-
-    public UserSearchDto(String name, byte[] image){
-        this.name=name;
-        this.image=image;
     }
 
 
