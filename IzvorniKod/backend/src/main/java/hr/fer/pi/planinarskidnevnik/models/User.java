@@ -1,5 +1,7 @@
 package hr.fer.pi.planinarskidnevnik.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -41,6 +43,7 @@ public class User {
 
     @ManyToOne
     @JoinColumn(nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Role role;
 
     public User() {
@@ -61,7 +64,7 @@ public class User {
         this.image = image;
     }
 
-    public User(Long id, @Size(max = 50, message = "Ime mora biti kraće od 50 znakova") @NotEmpty(message = "Unos imena je obavezan.") String name, @Size(max = 50, message = "E-mail mora biti kraći od 50 znakova") @NotEmpty(message = "Unos e-maila je obavezan.") @Email(message = "Email mora biti u zadovoljavajućem formatu.") String email, @Size(max = 128, message = "E-mail smije sadržavati najviše 128 znakova.") String placeOfResidence, Date dateOfBirth, @Size(max = 2048, message = "Opis smije sadržavati najviše 2048 znakova.") String description, @Size(max = 128, message = "Lozinka mora biti kraća od 50 znakova") @NotEmpty(message = "Unos lozinke je obavezan.") String password, byte[] image, Role role) {
+    public User(String name, String password, String email, String placeOfResidence, Date dateOfBirth, String description, byte[] image, Role role) {
         this.id = id;
         this.name = name;
         this.email = email;

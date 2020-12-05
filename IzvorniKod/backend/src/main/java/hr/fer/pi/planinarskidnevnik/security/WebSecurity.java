@@ -25,8 +25,6 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/users").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/mountain-lodges/**").permitAll()
-                .antMatchers("/users/role/1").hasRole("PLANINAR")
-                .antMatchers("/users/role/2").hasRole("ADMIN")
                 .antMatchers("/home").permitAll()
                 .antMatchers("/hills/**").permitAll()
                 .anyRequest().authenticated()

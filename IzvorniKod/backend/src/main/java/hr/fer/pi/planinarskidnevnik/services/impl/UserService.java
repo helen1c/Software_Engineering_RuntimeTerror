@@ -5,7 +5,9 @@ import hr.fer.pi.planinarskidnevnik.exceptions.IllegalAccessException;
 import hr.fer.pi.planinarskidnevnik.exceptions.NoImageException;
 import hr.fer.pi.planinarskidnevnik.exceptions.ResourceNotFoundException;
 import hr.fer.pi.planinarskidnevnik.exceptions.UserWithEmailExistsException;
+import hr.fer.pi.planinarskidnevnik.models.Role;
 import hr.fer.pi.planinarskidnevnik.models.User;
+import hr.fer.pi.planinarskidnevnik.repositories.RoleRepository;
 import hr.fer.pi.planinarskidnevnik.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,11 +25,13 @@ import java.util.Optional;
 public class UserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     private final PasswordEncoder encoder;
     private final String DEFAULT_PROFILE_IMAGE = "/images/planinar.jpeg";
 
-    public UserService(UserRepository userRepository, PasswordEncoder encoder) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder encoder) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
         this.encoder = encoder;
     }
 
@@ -57,7 +61,8 @@ public class UserService {
             LOGGER.info("User with email {} cannot be created because user with same email already exists", userCreateDto.getEmail());
             throw new UserWithEmailExistsException("Korisnik s emailom već postoji.");
         }
-        final User user = new User(userCreateDto.getName(), encoder.encode(userCreateDto.getPassword()), userCreateDto.getEmail(), userCreateDto.getPlaceOfResidence(), userCreateDto.getDateOfBirth(), userCreateDto.getDescription(), userCreateDto.getImage());
+        Role role = roleRepository.getOne(2L);
+        final User user = new User(userCreateDto.getName(), encoder.encode(userCreateDto.getPassword()), userCreateDto.getEmail(), userCreateDto.getPlaceOfResidence(), userCreateDto.getDateOfBirth(), userCreateDto.getDescription(), userCreateDto.getImage(), role);
         userRepository.save(user);
         LOGGER.info("New user {} created", user);
         return user;
