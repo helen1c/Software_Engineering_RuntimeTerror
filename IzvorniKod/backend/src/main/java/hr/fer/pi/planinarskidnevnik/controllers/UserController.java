@@ -48,10 +48,6 @@ public class UserController {
 
     @GetMapping("/me")
     public ResponseEntity<?> getCurrentUser(Principal principal) {
-        LOGGER.info("principal User fetching ");
-        if (principal == null) {
-            LOGGER.info("principal User NULL ");
-        }
         final User user = userService.checkForEmail(principal.getName());
         return ResponseEntity.ok(user);
     }
