@@ -1,0 +1,42 @@
+.profil-info-image {
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.profile-info-container {
+    display: flex;
+    flex-direction: row;
+    width: 70vw;
+    margin: auto;
+}
+
+.profile-info-text {
+    font-family: Roboto, 'sans-serif';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 35px;
+    color: #000000;
+}
+
+.profile-info-description {
+    line-height: 20px;
+    display: flex;
+    flex-direction: row;
+}
+
+.profile-info-title {
+    font-family: Roboto, 'sans-serif';
+}
+
+.profile-text-wrap {
+    width: 70%;
+    margin-top: 30px;
+    margin-right: 10px;
+}
+
+.profile-image-wrap {
+
+}
