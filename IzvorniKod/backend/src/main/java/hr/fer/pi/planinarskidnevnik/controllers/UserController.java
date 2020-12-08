@@ -50,9 +50,9 @@ public class UserController {
     }
 
     @PatchMapping("/current")
-    public ResponseEntity<UserCreateDto> editCurrentUser(@RequestBody UserCreateDto userCreateDto) {
+    public ResponseEntity<UserCreateDto> editCurrentUser(@RequestBody UserCreateDto userCreateDto, Principal principal) {
         LOGGER.info("Current user editing");
-        final User user = userService.editCurrentUser(userCreateDto);
-        return ResponseEntity.ok(new UserCreateDto(user.getUsername(), user.getPassword(), user.getEmail(), user.getFullName()));
+        final User user = userService.editCurrentUser(userCreateDto, principal);
+        return ResponseEntity.ok(new UserCreateDto(user.getName(), user.getPassword(), user.getEmail(), user.getPlaceOfResidence(), user.getDateOfBirth(), user.getDescription(), null));
     }
 }

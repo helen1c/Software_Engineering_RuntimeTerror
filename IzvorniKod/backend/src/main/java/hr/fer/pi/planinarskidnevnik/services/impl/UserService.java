@@ -130,4 +130,28 @@ public class UserService {
         }
         LOGGER.info("User with id {} removed", userId);
     }
+
+    public User editCurrentUser(UserCreateDto userCreateDto, Principal principal) {
+        Optional<User> optionalCurrentUser = userRepository.findByEmail(principal.getName());
+        if (optionalCurrentUser.isEmpty()) {
+            LOGGER.error("User {} doesn't exist", principal.getName());
+            throw new ResourceNotFoundException(String.format("Korisnik %s ne postoji", principal.getName()));
+        }
+
+        User currentUser = optionalCurrentUser.get();
+        if (!currentUser.getEmail().equals(userCreateDto.getEmail())) {       //Makni ako se odluci mijenjat mail
+            LOGGER.error("Not allowed to edit user");
+            throw new ResourceNotFoundException("Nemate dozvolu za uređivanje ovog korisnika");
+        }
+
+        currentUser.setName(userCreateDto.getName());
+        currentUser.setPlaceOfResidence(userCreateDto.getPlaceOfResidence());
+        currentUser.setDateOfBirth(userCreateDto.getDateOfBirth());
+        currentUser.setDescription(userCreateDto.getDescription());
+        currentUser.setImage(userCreateDto.getImage());
+
+        userRepository.save(currentUser);
+
+        return currentUser;
+    }
 }
