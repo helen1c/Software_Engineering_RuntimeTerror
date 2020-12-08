@@ -1,5 +1,6 @@
 package hr.fer.pi.planinarskidnevnik.services.impl;
 
+import hr.fer.pi.planinarskidnevnik.dtos.MountainLodge.MountainLodgeDto;
 import hr.fer.pi.planinarskidnevnik.dtos.MountainLodge.MountainLodgeSearchRequest;
 import hr.fer.pi.planinarskidnevnik.models.MountainLodge;
 import hr.fer.pi.planinarskidnevnik.models.Utility;
@@ -61,4 +62,13 @@ public class MountainLodgeQueryServiceImpl implements MountainLodgeQueryService 
         return responses;
     }
 
+    @Override
+    public MountainLodge createMountainLodge(MountainLodgeDto dto) {
+
+        final MountainLodge mountainLodge = new MountainLodge(dto.getName(), dto.getElevation(), dto.getHillName(), dto.getUtilities(), dto.getImage());
+        repo.save(mountainLodge);
+
+        LOGGER.info("New mountainLodge {} created", mountainLodge);
+        return mountainLodge;
+    }
 }

@@ -26,10 +26,22 @@ public class MountainLodge {
             joinColumns = @JoinColumn(name = "LODGE_ID"),
             inverseJoinColumns = @JoinColumn(name = "UTILITY_ID")
     )
+
     private List<Utility> utilities;
 
     private Long elevation;
 
+
+    public MountainLodge(){
+
+    }
+    public MountainLodge(String name, Long elevation, Hill hillName, List<Utility> utilities, byte[] image) {
+        this.name = name;
+        this.elevation = elevation;
+        this.hill = hillName;
+        this.utilities = utilities;
+        this.image = image;
+    }
     public Long getElevation() {
         return elevation;
     }
