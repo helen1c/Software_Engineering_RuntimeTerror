@@ -15,6 +15,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.Optional;
 
 @Service
@@ -45,7 +46,7 @@ public class UserService {
         Optional<User> optionalUser = userRepository.findById(userId);
         if (optionalUser.isEmpty()) {
             LOGGER.info("User with id {} doesn't exist", userId);
-            throw new ResourceNotFoundException("jbg");
+            throw new ResourceNotFoundException("Korisnik ne postoji");
         }
         return optionalUser.get();
     }
@@ -108,5 +109,25 @@ public class UserService {
             throw new UserWithEmailExistsException("Korisnik s emailom " + email + " već postoji.");
         }
         return exists;
+    }
+
+    public void deleteUser(Long userId, Principal principal) {
+        Optional<User> optionalCurrentUser = findUserByEmail(principal.getName());
+
+        if (optionalCurrentUser.isEmpty()) {
+            LOGGER.error("User with id {} doesn't exist", userId);
+            throw new ResourceNotFoundException(String.format("Korisnik s id %s ne postoji", userId));
+        }
+
+        User currentUser = optionalCurrentUser.get();
+        User userForRemoval = getUserById(userId);
+
+        if (currentUser.getId() == userForRemoval.getId()) {
+            userRepository.delete(userForRemoval);
+        } else {
+            LOGGER.error("Not allowed to delete user");
+            throw new ResourceNotFoundException("Nemate dozvolu za brisanje ovog korisnika");
+        }
+        LOGGER.info("User with id {} removed", userId);
     }
 }

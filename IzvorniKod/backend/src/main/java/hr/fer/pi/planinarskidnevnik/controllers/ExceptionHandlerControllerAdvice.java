@@ -40,6 +40,12 @@ public class ExceptionHandlerControllerAdvice {
         return ResponseEntity.badRequest().body(exception.getMessage());
     }
 
+    @ExceptionHandler({IllegalAccessException.class})
+    public final ResponseEntity<?> handleIllegalAccessException(final Exception exception) {
+        LOGGER.error(String.valueOf(exception));
+        return ResponseEntity.badRequest().body(exception.getMessage());
+    }
+
     @ExceptionHandler(ResourceNotFoundException.class)
     public final ResponseEntity<?> handleNotFoundException(final ResourceNotFoundException exception) {
         LOGGER.error(String.valueOf(exception));

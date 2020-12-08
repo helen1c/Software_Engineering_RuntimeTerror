@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 import java.security.Principal;
 
 @RestController
@@ -39,5 +40,19 @@ public class UserController {
     @GetMapping(value = "/image", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<byte[]> getCurrentUserImage(Principal principal) {
         return ResponseEntity.ok(userService.getImage(principal.getName()));
+    }
+
+    @RequestMapping(value = "{id}",method=RequestMethod.DELETE)
+    public ResponseEntity<?> deleteUser(@PathVariable("id") final Long userId, Principal principal) {
+        LOGGER.info("User removing");
+        userService.deleteUser(userId, principal);
+        return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/current")
+    public ResponseEntity<UserCreateDto> editCurrentUser(@RequestBody UserCreateDto userCreateDto) {
+        LOGGER.info("Current user editing");
+        final User user = userService.editCurrentUser(userCreateDto);
+        return ResponseEntity.ok(new UserCreateDto(user.getUsername(), user.getPassword(), user.getEmail(), user.getFullName()));
     }
 }
