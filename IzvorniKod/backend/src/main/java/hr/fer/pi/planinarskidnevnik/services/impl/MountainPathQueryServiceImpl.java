@@ -1,5 +1,6 @@
 package hr.fer.pi.planinarskidnevnik.services.impl;
 
+import hr.fer.pi.planinarskidnevnik.dtos.MountainPath.MountainPathCreate;
 import hr.fer.pi.planinarskidnevnik.models.MountainPath;
 import hr.fer.pi.planinarskidnevnik.repositories.MountainPathRepository;
 import hr.fer.pi.planinarskidnevnik.services.MountainPathQueryService;
@@ -27,5 +28,16 @@ public class MountainPathQueryServiceImpl implements MountainPathQueryService {
         LOGGER.info("Getting all mountain paths.");
 
         return mountainPathRepository.findAllByOrderByNameAsc();
+    }
+
+    @Override
+    public MountainPath createMountainPath(MountainPathCreate dto) {
+
+        final MountainPath mountainPath = new MountainPath(dto.getHill(), dto.getName(), dto.getStartPoint(), dto.getEndPoint(),
+        dto.getAvgWalkTime(), dto.getLength(), dto.getSeaLevelDiff(), dto.getDateCreated(), dto.isPrivate(), dto.getAuthor());
+        mountainPathRepository.save(mountainPath);
+
+        LOGGER.info("New mountainPath {} created", mountainPath);
+        return mountainPath;
     }
 }
