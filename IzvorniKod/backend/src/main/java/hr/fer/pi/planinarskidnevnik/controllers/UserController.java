@@ -17,7 +17,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 import java.security.Principal;
 import java.util.List;
 
@@ -82,6 +84,18 @@ public class UserController {
         return ResponseEntity.ok(userService.getImage(principal.getName()));
     }
 
+    @PostMapping("/friend-request/{id}")
+    public ResponseEntity<?> sendFriendRequest(Principal principal, @PathVariable("id") final Long receiverId) {
+        userService.sendFriendRequest(principal.getName(), receiverId);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/friend-requests-revieved")
+    public ResponseEntity<?> checkFriendRequests(Principal principal, Long friendId) {
+        return ResponseEntity.ok(userService.checkFriendRequests(principal.getName()));
+    }
+
+    @RequestMapping(value = "{id}",method=RequestMethod.DELETE)
     @GetMapping(value = "/image/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<byte[]> getImageById(@PathVariable("id") final Long id) {
         return ResponseEntity.ok(userService.getImage(userService.getUserById(id).getEmail()));

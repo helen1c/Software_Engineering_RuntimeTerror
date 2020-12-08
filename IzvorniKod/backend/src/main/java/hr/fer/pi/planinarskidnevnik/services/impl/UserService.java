@@ -30,6 +30,8 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -257,5 +259,18 @@ public class UserService {
         User currUser = getCurrentUser(principal);
         List<MountainPathGrade> mountainPathGradeList = currUser.getMountainPathGradeList();
         return pathGradeResponseMapper.mapToList(mountainPathGradeList);
+    }
+
+    public void sendFriendRequest(String email, Long friendId) {
+        User sender = findByEmail(email).orElseThrow(() -> new ResourceNotFoundException(email));
+        List<User> users = new ArrayList<>();
+        users.add(sender);
+        User receiver = userRepository.getOne(friendId);
+        receiver.setFriendRequests(users);
+    }
+
+    public List<User> checkFriendRequests(String email) {
+        User user = findByEmail(email).orElseThrow(() -> new ResourceNotFoundException(email));
+        return user.getFriendRequests();
     }
 }

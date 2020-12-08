@@ -1,5 +1,7 @@
 package hr.fer.pi.planinarskidnevnik.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import hr.fer.pi.planinarskidnevnik.models.MountainLodgeUserArchive.MountainLodgeUserArchive;
 import hr.fer.pi.planinarskidnevnik.models.MountainPathUserArchive.MountainPathUserArchive;
@@ -45,6 +47,11 @@ public class User {
     private String password;
 
     private byte[] image;
+
+    @OneToMany
+    @JoinColumn(referencedColumnName = "id")
+    @JsonBackReference
+    private List<User> friendRequests;
 
     @ManyToOne
     @JoinColumn(nullable = false)
@@ -192,6 +199,21 @@ public class User {
     public List<UserBadge> getUserBadgeList() { return userBadgeList; }
 
     public void setUserBadgeList(List<UserBadge> userBadgeList) { this.userBadgeList = userBadgeList; }
+
+    public List<User> getFriendRequests() {
+        return friendRequests;
+    }
+
+    public void setFriendRequests(List<User> friendRequest) {
+        this.friendRequests = friendRequest;
+    }
+
+    public void addFriendRequest(User sender) {
+        if (friendRequests == null) {
+            friendRequests = new ArrayList<>();
+        }
+        friendRequests.add(sender);
+    }
 
     @Override
     public String toString() {
