@@ -1,6 +1,7 @@
 package hr.fer.pi.planinarskidnevnik.services.impl;
 
 import hr.fer.pi.planinarskidnevnik.dtos.UserCreateDto;
+import hr.fer.pi.planinarskidnevnik.exceptions.IllegalAccessException;
 import hr.fer.pi.planinarskidnevnik.exceptions.NoImageException;
 import hr.fer.pi.planinarskidnevnik.exceptions.ResourceNotFoundException;
 import hr.fer.pi.planinarskidnevnik.exceptions.UserWithEmailExistsException;
@@ -126,7 +127,7 @@ public class UserService {
             userRepository.delete(userForRemoval);
         } else {
             LOGGER.error("Not allowed to delete user");
-            throw new ResourceNotFoundException("Nemate dozvolu za brisanje ovog korisnika");
+            throw new IllegalAccessException("Nemate dozvolu za brisanje ovog korisnika");
         }
         LOGGER.info("User with id {} removed", userId);
     }
@@ -141,7 +142,7 @@ public class UserService {
         User currentUser = optionalCurrentUser.get();
         if (!currentUser.getEmail().equals(userCreateDto.getEmail())) {       //Makni ako se odluci mijenjat mail
             LOGGER.error("Not allowed to edit user");
-            throw new ResourceNotFoundException("Nemate dozvolu za uređivanje ovog korisnika");
+            throw new IllegalAccessException("Nemate dozvolu za uređivanje ovog korisnika");
         }
 
         currentUser.setName(userCreateDto.getName());

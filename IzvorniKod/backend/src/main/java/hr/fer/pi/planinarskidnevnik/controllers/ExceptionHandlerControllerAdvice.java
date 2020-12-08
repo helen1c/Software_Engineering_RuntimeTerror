@@ -1,5 +1,6 @@
 package hr.fer.pi.planinarskidnevnik.controllers;
 
+import hr.fer.pi.planinarskidnevnik.exceptions.IllegalAccessException;
 import hr.fer.pi.planinarskidnevnik.exceptions.ResourceNotFoundException;
 import hr.fer.pi.planinarskidnevnik.exceptions.UserWithEmailExistsException;
 import hr.fer.pi.planinarskidnevnik.exceptions.dtos.ConstraintViolationDto;
@@ -40,7 +41,7 @@ public class ExceptionHandlerControllerAdvice {
         return ResponseEntity.badRequest().body(exception.getMessage());
     }
 
-    @ExceptionHandler({IllegalAccessException.class})
+    @ExceptionHandler(IllegalAccessException.class)
     public final ResponseEntity<?> handleIllegalAccessException(final Exception exception) {
         LOGGER.error(String.valueOf(exception));
         return ResponseEntity.badRequest().body(exception.getMessage());
