@@ -49,4 +49,9 @@ public class UserController {
     public ResponseEntity<byte[]> getCurrentUserImage(Principal principal) {
         return ResponseEntity.ok(userService.getImage(principal.getName()));
     }
+
+    @GetMapping(value = "/image/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
+    public ResponseEntity<byte[]> getImageById(@PathVariable("id") final Long id) {
+        return ResponseEntity.ok(userService.getImage(userService.getUserById(id).getEmail()));
+    }
 }

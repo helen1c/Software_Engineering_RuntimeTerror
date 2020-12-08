@@ -114,19 +114,15 @@ public class UserService {
     }
 
     public List<UserSearchDto> getUserByName(String userName) { //userName je ono sto smo unijeli
-        List<User> list = userRepository.findAll();  //dohvatimo listu svih Usera
+        List<User> allUsers = userRepository.findAll();  //dohvatimo listu svih Usera
+        List<UserSearchDto> searchResult = new ArrayList<>();
 
-        List<UserSearchDto> lista2 = new ArrayList<>();
-
-        for(User u: list) {
-
-            if(u.getName().substring(0, userName.length()).equals(userName)) {
-
-                lista2.add(new UserSearchDto(u.getId(), u.getImage(), u.getName()));
+        for (User u : allUsers) {
+            if (u.getName().toLowerCase().contains(userName.toLowerCase())) {
+                searchResult.add(new UserSearchDto(u.getId(), u.getImage(), u.getName()));
             }
         }
 
-            return lista2;
-
+        return searchResult;
     }
 }
