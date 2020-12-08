@@ -113,15 +113,20 @@ public class UserService {
         return exists;
     }
 
-    public List<UserSearchDto> getUserByName(String userName) {
-        List<User> list = userRepository.findAll();  //filtriramo listu Usera
+    public List<UserSearchDto> getUserByName(String userName) { //userName je ono sto smo unijeli
+        List<User> list = userRepository.findAll();  //dohvatimo listu svih Usera
+
         List<UserSearchDto> lista2 = new ArrayList<>();
 
-        for(User u: list) { //idemo po listi svih usera i ako naidemo na naseg, stavljamo ga u listu
-            lista2.add(new UserSearchDto(u.getId(),u.getImage(), u.getName()));
+        for(User u: list) {
+
+            if(u.getName().substring(0, userName.length()).equals(userName)) {
+
+                lista2.add(new UserSearchDto(u.getId(), u.getImage(), u.getName()));
+            }
         }
 
-        return lista2;
+            return lista2;
 
     }
 }
