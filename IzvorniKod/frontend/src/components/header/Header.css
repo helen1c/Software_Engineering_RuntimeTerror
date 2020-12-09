@@ -25,6 +25,7 @@
     color: white;
     padding-left: 1.5rem;
     font-size: 2rem;
+    cursor: default;
 }
 
 .logo-image {
@@ -33,6 +34,7 @@
     height: 50px;
     background-size: cover;
     object-fit: cover;
+    cursor: pointer;
 }
 
 .profil-image {
@@ -68,6 +70,7 @@
     outline: none;
     color: #211648;
     background-color: white;
+    cursor: pointer;
 }
 
 .logout-button {

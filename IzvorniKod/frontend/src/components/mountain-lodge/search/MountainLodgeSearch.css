@@ -67,6 +67,7 @@
     height: 3rem;
     outline: none;
     margin-top: 1rem;
+    cursor: pointer;
 }
 
 .search-button:hover {
