@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { UserInfo } from "../mountain-lodge/models/UserInfo";
 import { HttpCodesUtil } from "./HttpCodesUtil";
+import './MountaineeringCommunitySearch.css';
+import {useHistory} from "react-router";
 
 interface Props {
   user: UserInfo;
@@ -8,6 +10,8 @@ interface Props {
 
 export const ShowUser = ({ user }: Props) => {
   const [image, setImage] = useState<any>();
+
+  const history = useHistory();
 
   useEffect(() => {
     fetch("/api/users/image/" + user.id, {
@@ -24,10 +28,11 @@ export const ShowUser = ({ user }: Props) => {
     });
   }, []);
 
+  //link ce voditi na profilnu stranicu korisnika
   return (
     <div>
       <div>
-        <img alt={user.name} src={image} />
+        <img alt={user.name}  src={image} className = "photo" onClick={e => history.push("/")}/>
       </div>
       <div>
         <p>{user.name}</p>
