@@ -2,6 +2,7 @@ package hr.fer.pi.planinarskidnevnik.services.impl;
 
 import hr.fer.pi.planinarskidnevnik.dtos.MountainLodge.MountainLodgeSearchRequest;
 import hr.fer.pi.planinarskidnevnik.models.MountainLodge;
+import hr.fer.pi.planinarskidnevnik.models.Utility;
 import hr.fer.pi.planinarskidnevnik.repositories.MountainLodgeRepository;
 import hr.fer.pi.planinarskidnevnik.services.MountainLodgeQueryService;
 import hr.fer.pi.planinarskidnevnik.specifications.MountainLodgeSearchSpecification;
@@ -42,7 +43,7 @@ public class MountainLodgeQueryServiceImpl implements MountainLodgeQueryService 
 
 
         for(MountainLodge lodge : modelResponses) {
-            List<Long> ls = lodge.getUtilities().stream().map(v -> v.getId()).collect(Collectors.toList());
+            List<Long> ls = lodge.getUtilities().stream().map(Utility::getId).collect(Collectors.toList());
 
             boolean trt = true;
             for(long s : request.getUtilities()) {
