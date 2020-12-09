@@ -6,14 +6,12 @@ import  { useState } from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { HttpCodesUtil } from "../../errors/HttpCodesUtil";
-import { IconButton } from "@material-ui/core";
 import moment from "moment";
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+
 
 export const CreateEventPage = () => {
 
     const history = useHistory();
-    const [newImage, setNewImage] = useState("");
 
     const formik = useFormik({
         initialValues: {
