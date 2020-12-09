@@ -31,6 +31,11 @@
     flex-direction: column;
     align-items: center;
     align-content: center;
+    background-image: url("../../../assets/mountain-lodges.jpg");
+    min-height: 300px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .search-hill {
@@ -68,6 +73,12 @@
     outline: none;
     margin-top: 1rem;
     cursor: pointer;
+}
+
+.results-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    margin-top: 3rem;
 }
 
 .search-button:hover {

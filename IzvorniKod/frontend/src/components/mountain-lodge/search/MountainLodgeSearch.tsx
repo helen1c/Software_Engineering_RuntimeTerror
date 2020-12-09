@@ -24,9 +24,6 @@ export const MountainLodgeSearch = () => {
     };
 
     const search = async (request: MountainLodgeSearchRequest) => {
-        console.log(request.hillId);
-        console.log(request.searchText);
-        console.log(selectedOptions);
 
         const sRequest = {
             hillId: request.hillId,
@@ -45,7 +42,6 @@ export const MountainLodgeSearch = () => {
         const json = await response.json();
 
         setSearchResults(json);
-
     }
 
     const {results: hillResults} = useSelector((state: MainReducer) => state.findAllHillsReducer);
@@ -60,7 +56,7 @@ export const MountainLodgeSearch = () => {
 
     useEffect(() => {
         if (utilityResults === undefined || utilityResults.length === 0) {
-            console.log("Get all Utilites...");
+            console.log("Get all Utilities...");
             dispatcher(findUtilities());
         }
     }, [dispatcher, utilityResults]);
@@ -80,7 +76,7 @@ export const MountainLodgeSearch = () => {
                                 <button className="search-button" type="submit">&#8981;</button>
                                 <Field className={"input-search"} placeholder={"Pretražite planinarske domove..."}
                                        name={"searchText"} id={"searchText"}/>
-
+s
                             </div>
                             <div className="selects">
                                 <Select
@@ -111,7 +107,7 @@ export const MountainLodgeSearch = () => {
                 }}
             </Formik>
         </div>
-        <div>
+        <div className="results-container">
             {searchResults.length > 0 && searchResults.map(result =>
                 <MountainLodgeSearchResult result={result} key={result.id}/>) }
         </div>

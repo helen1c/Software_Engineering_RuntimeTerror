@@ -1,6 +1,5 @@
 
 export interface MountainLodgeSearchRequest {
     searchText: string,
-    hillId: number,
-    utilities: number[]
+    hillId: number | undefined,
 }
