@@ -91,7 +91,7 @@ public class UserController {
     }
 
     @GetMapping("/friend-requests-revieved")
-    public ResponseEntity<?> checkFriendRequests(Principal principal, Long friendId) {
+    public ResponseEntity<?> checkFriendRequests(Principal principal) {
         return ResponseEntity.ok(userService.checkFriendRequests(principal.getName()));
     }
 

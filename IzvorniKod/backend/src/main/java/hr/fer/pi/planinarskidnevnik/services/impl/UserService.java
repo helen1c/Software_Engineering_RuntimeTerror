@@ -14,10 +14,18 @@ import hr.fer.pi.planinarskidnevnik.mappers.MountainLodgeArchiveToMountainLodgeA
 import hr.fer.pi.planinarskidnevnik.mappers.MountainPathGradeToMountainPathGradeResponseMapper;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainPathUserArchiveToMountainPathArchiveResponseMapper;
 import hr.fer.pi.planinarskidnevnik.models.MountainPathGrade;
+import hr.fer.pi.planinarskidnevnik.exceptions.NoImageException;
+import hr.fer.pi.planinarskidnevnik.exceptions.ResourceNotFoundException;
+import hr.fer.pi.planinarskidnevnik.exceptions.UserWithEmailExistsException;
+import hr.fer.pi.planinarskidnevnik.exceptions.IllegalAccessException;
+import hr.fer.pi.planinarskidnevnik.models.FriendshipRequest;
+import hr.fer.pi.planinarskidnevnik.models.Role;
 import hr.fer.pi.planinarskidnevnik.models.Role;
 import hr.fer.pi.planinarskidnevnik.models.User;
 import hr.fer.pi.planinarskidnevnik.repositories.MountainLodgeRepository;
 import hr.fer.pi.planinarskidnevnik.models.UserBadge.UserBadge;
+import hr.fer.pi.planinarskidnevnik.repositories.FriendshipRequestRepository;
+import hr.fer.pi.planinarskidnevnik.repositories.RoleRepository;
 import hr.fer.pi.planinarskidnevnik.repositories.RoleRepository;
 import hr.fer.pi.planinarskidnevnik.repositories.UserRepository;
 import org.slf4j.Logger;
@@ -35,6 +43,7 @@ import java.util.List;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -42,6 +51,7 @@ public class UserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final FriendshipRequestRepository friendshipRequestRepository;
     private final PasswordEncoder encoder;
     private final String DEFAULT_PROFILE_IMAGE = "/images/planinar.jpeg";
     private final MountainLodgeArchiveToMountainLodgeArchiveResponseMapper lodgeArchiveResponseMapper;
@@ -49,9 +59,10 @@ public class UserService {
     private final MountainPathGradeToMountainPathGradeResponseMapper pathGradeResponseMapper;
 
     @Autowired
-    public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder encoder, MountainLodgeRepository mountainLodgeRepository, MountainLodgeArchiveToMountainLodgeArchiveResponseMapper lodgeArchiveResponseMapper, MountainPathUserArchiveToMountainPathArchiveResponseMapper pathArchiveResponseMapper, MountainPathGradeToMountainPathGradeResponseMapper pathGradeResponseMapper) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder encoder, FriendshipRequestRepository friendshipRequestRepository,MountainLodgeRepository mountainLodgeRepository, MountainLodgeArchiveToMountainLodgeArchiveResponseMapper lodgeArchiveResponseMapper, MountainPathUserArchiveToMountainPathArchiveResponseMapper pathArchiveResponseMapper, MountainPathGradeToMountainPathGradeResponseMapper pathGradeResponseMapper) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.friendshipRequestRepository = friendshipRequestRepository;
         this.encoder = encoder;
         this.lodgeArchiveResponseMapper = lodgeArchiveResponseMapper;
         this.pathArchiveResponseMapper = pathArchiveResponseMapper;
@@ -263,14 +274,14 @@ public class UserService {
 
     public void sendFriendRequest(String email, Long friendId) {
         User sender = findByEmail(email).orElseThrow(() -> new ResourceNotFoundException(email));
-        List<User> users = new ArrayList<>();
-        users.add(sender);
         User receiver = userRepository.getOne(friendId);
-        receiver.setFriendRequests(users);
+        FriendshipRequest friendshipRequest = new FriendshipRequest(sender, receiver);
+        friendshipRequestRepository.save(friendshipRequest);
     }
 
-    public List<User> checkFriendRequests(String email) {
+    public List<FriendshipRequest> checkFriendRequests(String email) {
         User user = findByEmail(email).orElseThrow(() -> new ResourceNotFoundException(email));
-        return user.getFriendRequests();
+        List<FriendshipRequest> req = friendshipRequestRepository.getAllByTargetUser(user);
+        return req;
     }
 }

@@ -1,28 +1,40 @@
 package hr.fer.pi.planinarskidnevnik.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "friendship_request")
+@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class FriendshipRequest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
-    @OneToMany
-    private List<User> subComments = new ArrayList<>();
+    @ManyToOne()
+    @JoinColumn(name = "sender")
+    //@Column(name = "sender")
+    private User sourceUser;
 
-    @ManyToOne
-    @JoinColumn(referencedColumnName = "id")
-    private User sender;
+    @ManyToOne()
+    @JoinColumn(name = "receiver")
+    //@Column(name = "receiver")
+    private User targetUser;
 
-    public FriendshipRequest(String id, List<User> subComments, User sender) {
+    public FriendshipRequest(String id, User sourceUser, User targetUser) {
         this.id = id;
-        this.subComments = subComments;
-        this.sender = sender;
+        this.sourceUser = sourceUser;
+        this.targetUser = targetUser;
+    }
+
+    public FriendshipRequest(User sourceUser, User targetUser) {
+        this.sourceUser = sourceUser;
+        this.targetUser = targetUser;
     }
 
     public FriendshipRequest() {
@@ -36,19 +48,19 @@ public class FriendshipRequest {
         this.id = id;
     }
 
-    public List<User> getSubComments() {
-        return subComments;
+    public User getSourceUser() {
+        return sourceUser;
     }
 
-    public void setSubComments(List<User> subComments) {
-        this.subComments = subComments;
+    public void setSourceUser(User sourceUser) {
+        this.sourceUser = sourceUser;
     }
 
-    public User getSender() {
-        return sender;
+    public User getTargetUser() {
+        return targetUser;
     }
 
-    public void setSender(User sender) {
-        this.sender = sender;
+    public void setTargetUser(User targetUser) {
+        this.targetUser = targetUser;
     }
 }

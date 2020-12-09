@@ -48,23 +48,15 @@
         </addColumn>
     </changeSet>
 
-    <changeSet id="20201129180400" author="lravenscak">
-        <addColumn tableName="user">
-            <column name="role_id" type="BIGINT" defaultValue="2">
-                <constraints foreignKeyName="role_id" references="roles(id)"/>
-            </column>
-        </addColumn>
-    </changeSet>
-
     <changeSet id="20201207221641" author="lravenscak">
         <createTable tableName="friendship_request">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="friendship_send" type="BIGINT">
+            <column name="sender" type="BIGINT">
                 <constraints foreignKeyName="user_sender_id" references="user(id)"/>
             </column>
-            <column name="friendship_receive" type="BIGINT">
+            <column name="receiver" type="BIGINT">
                 <constraints foreignKeyName="user_receiver_id" references="user(id)"/>
             </column>
         </createTable>
