@@ -11,8 +11,8 @@ public class UtilityToUtilityResponseMapper implements DefaultMapper<Utility, Ut
     @Override
     public UtilityFindResponse map(Utility from) {
         UtilityFindResponse response = new UtilityFindResponse();
-        response.setLabel(from.getId());
-        response.setValue(from.getName());
+        response.setValue(from.getId());
+        response.setLabel(from.getName());
 
         return response;
     }

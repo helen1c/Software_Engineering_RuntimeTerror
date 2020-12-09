@@ -1,3 +1,4 @@
+import {UtilityOption} from "../../components/mountain-lodge/models/UtilityOption";
 
 export const FIND_ALL_UTILITIES = "FIND_ALL_UTILITIES";
 export const FIND_ALL_UTILITIES_SUCCESS = "FIND_ALL_UTILITIES_SUCCESS";
@@ -10,7 +11,7 @@ interface findAllUtilities {
 
 interface findAllUtilitiesSuccess {
     type: typeof FIND_ALL_UTILITIES_SUCCESS,
-    payload: HillOption[]
+    payload: UtilityOption[]
 }
 
 interface findAllUtilitiesError {

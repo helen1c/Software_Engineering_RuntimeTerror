@@ -28,13 +28,27 @@
 .search-lodges-form {
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+}
+
+.search-hill {
+    display: flex;
     flex-direction: row;
     align-items: baseline;
+    justify-content: space-evenly;
+}
 
+.selects {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 1rem;
 }
 
 
-.hill-select {
+.hill-select, .utility-select {
     min-width: 200px;
     width: 12vw;
     margin-left: 1rem;
@@ -61,8 +75,8 @@
     border: white;
 }
 
-.hill-select >div {
-    width:25vw;
+.hill-select >div, .utility-select >div {
+    width:240px;
     max-width: 250px;
     min-height: 4rem;
     border-radius: 10px;
@@ -73,19 +87,38 @@
     user-select: none !important;
 }
 
+.utility-select >div {
+    width:300px;
+    max-width: 300px;
+    min-height: 4rem;
+    border-radius: 10px;
+    border-color: #211648 !important;
+    outline: none !important;
+    border-width: 2px;
+    font-size: 1.1rem;
+    user-select: none !important;
+    margin-left: 10px;
+}
+
+.utility-select {
+    width: 320px !important;
+    position: static;
+}
+
+.utility-select > div:last-child {
+    display: none !important;
+}
+
+
 .hill-select {
     margin-right: 1.5rem;
 }
 
 @media screen and (max-width: 850px) {
 
-    .hill-select >div {
-        font-size: 0.9rem;
-        min-height: 3rem;
-    }
 
     .input-search {
-        min-height: 3rem;
+        min-width: 300px;
         font-size: 0.9rem;
     }
 
@@ -94,4 +127,21 @@
 .multi-select-utilities {
     min-width: 220px;
     max-width: 220px;
+}
+
+.css-1rhbuit-multiValue {
+    background-color: #406cba !important;
+    border-radius: 5px !important;
+    color: white !important;
+    height: 23px !important;
+    display: flex;
+    align-items: center !important;
+}
+
+.css-yk16xz-control {
+
+}
+
+.css-12jo7m5 {
+    color: white !important;
 }

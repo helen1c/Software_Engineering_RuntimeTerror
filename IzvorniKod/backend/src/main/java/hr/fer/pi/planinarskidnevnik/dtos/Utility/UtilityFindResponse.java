@@ -2,22 +2,22 @@ package hr.fer.pi.planinarskidnevnik.dtos.Utility;
 
 public class UtilityFindResponse {
 
-    private Long label;
-    private String value;
+    private Long value;
+    private String label;
 
-    public Long getLabel() {
-        return label;
-    }
-
-    public String getValue() {
+    public Long getValue() {
         return value;
     }
 
-    public void setLabel(Long label) {
-        this.label = label;
+    public String getLabel() {
+        return label;
     }
 
-    public void setValue(String value) {
+    public void setValue(Long value) {
         this.value = value;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 }
