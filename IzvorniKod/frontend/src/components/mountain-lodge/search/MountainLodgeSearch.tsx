@@ -8,11 +8,14 @@ import {useDispatch, useSelector} from "react-redux";
 import {MainReducer} from "../../../store/reducer";
 import {findHills} from "../../../store/actions/findAllHillsActions";
 import {findUtilities} from "../../../store/actions/findAllUtilitiesActions";
+import {MountainLodgeSearchResult} from "../component/MountainLodgeSearchResult";
+import {MountainLodgeResult} from "../models/MountainLodgeResult";
 
 export const MountainLodgeSearch = () => {
 
     const dispatcher = useDispatch();
     const [selectedOptions, setSelectedOptions] = useState([]);
+    const [searchResults, setSearchResults] = useState<MountainLodgeResult[]>([]);
 
     // @ts-ignore
     const handleChange = e => {
@@ -20,10 +23,29 @@ export const MountainLodgeSearch = () => {
         setSelectedOptions(Array.isArray(e) ? e.map(x => x.value) : []);
     };
 
-    const search = (request: MountainLodgeSearchRequest) => {
+    const search = async (request: MountainLodgeSearchRequest) => {
         console.log(request.hillId);
         console.log(request.searchText);
         console.log(selectedOptions);
+
+        const sRequest = {
+            hillId: request.hillId,
+            searchText: request.searchText,
+            utilities: selectedOptions
+        };
+
+        const requestOptions = {
+            method: "POST",
+            body: JSON.stringify(sRequest),
+            headers: {Accept: "application/json",
+            "Content-Type": "application/json"}
+        };
+
+        const response = await fetch("/api/mountain-lodges/search", requestOptions);
+        const json = await response.json();
+
+        setSearchResults(json);
+
     }
 
     const {results: hillResults} = useSelector((state: MainReducer) => state.findAllHillsReducer);
@@ -45,6 +67,7 @@ export const MountainLodgeSearch = () => {
 
 
     return (
+        <>
         <div className="search-form">
             <Formik initialValues={{
                 searchText: ""
@@ -88,6 +111,11 @@ export const MountainLodgeSearch = () => {
                 }}
             </Formik>
         </div>
+        <div>
+            {searchResults.length > 0 && searchResults.map(result =>
+                <MountainLodgeSearchResult result={result} key={result.id}/>) }
+        </div>
+    </>
     );
 
 }
