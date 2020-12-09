@@ -17,14 +17,14 @@ export const MountainLodgeSearch = () => {
         setS("Upravo pretražujete dom naziva: " + request.searchText);
     }
 
-    const {results} = useSelector((state: MainReducer) => state.findAllHillsReducer);
+    const {results: hillResults} = useSelector((state: MainReducer) => state.findAllHillsReducer);
 
     useEffect(() => {
-        if(results === undefined || results.length === 0) {
+        if(hillResults === undefined || hillResults.length === 0) {
             console.log("Get all Hills...");
             dispatcher(findHills());
         }
-    }, [dispatcher, results]);
+    }, [dispatcher, hillResults]);
 
     return (
         <div className="search-form">
@@ -45,16 +45,19 @@ export const MountainLodgeSearch = () => {
                             onChange={(option: ValueType<HillOption>) => setFieldValue("hillId",
                                 option === null ? null : (option as HillOption).value)
                             }
-                            options={results}>
+                            options={hillResults}>
                         </Select>
-                        <div>
-                            <input type="checkbox" id="water" name="water"/>
-                                <label htmlFor="scales">Voda</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" id="food" name="food"/>
-                            <label htmlFor="scales">Hrana</label>
-                        </div>
+                            <Select
+                                className="utility-select"
+                                isClearable={true}
+                                isSearchable={true}
+                                placeholder="Poželjna infrastruktura"
+                                name={"utlities"}
+                                onChange={(option: ValueType<HillOption>) => setFieldValue("hillId",
+                                    option === null ? null : (option as HillOption).value)
+                                }
+                                options={hillResults}>
+                            </Select>
                     </Form>
 
                   );
