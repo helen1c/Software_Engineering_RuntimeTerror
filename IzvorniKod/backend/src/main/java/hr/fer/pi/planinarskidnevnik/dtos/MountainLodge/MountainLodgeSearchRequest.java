@@ -1,7 +1,5 @@
 package hr.fer.pi.planinarskidnevnik.dtos.MountainLodge;
 
-import hr.fer.pi.planinarskidnevnik.models.request.PageSearchRequest;
-
 import java.util.List;
 
 public class MountainLodgeSearchRequest {

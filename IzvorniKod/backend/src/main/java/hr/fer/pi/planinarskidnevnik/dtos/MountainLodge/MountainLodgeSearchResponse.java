@@ -6,7 +6,7 @@ import java.util.List;
 
 public class MountainLodgeSearchResponse {
 
-    private Long id;
+    private java.lang.Long id;
     private String name;
     private byte[] image;
     private List<Utility> utilities;
@@ -17,7 +17,7 @@ public class MountainLodgeSearchResponse {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(java.lang.Long id) {
         this.id = id;
     }
 
@@ -33,7 +33,7 @@ public class MountainLodgeSearchResponse {
         this.utilities = utilities;
     }
 
-    public void setElevation(Long elevation) {
+    public void setElevation(java.lang.Long elevation) {
         this.elevation = elevation;
     }
 
@@ -49,7 +49,7 @@ public class MountainLodgeSearchResponse {
         return utilities;
     }
 
-    public Long getElevation() {
+    public java.lang.Long getElevation() {
         return elevation;
     }
 

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { HttpCodesUtil } from "../../errors/HttpCodesUtil";
-import "./Test.css";
+import "./MountainLodgeCreate.css";
 import { useHistory } from "react-router";
 import { IconButton } from "@material-ui/core";
 import { AddAPhotoOutlined } from "@material-ui/icons";
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export const Test = () => {
+export const MountainLodgeCreate = () => {
     const [newImage, setNewImage] = useState("");
     const history = useHistory();
 

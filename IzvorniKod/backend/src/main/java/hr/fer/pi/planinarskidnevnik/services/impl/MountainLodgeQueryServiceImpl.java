@@ -1,10 +1,14 @@
 package hr.fer.pi.planinarskidnevnik.services.impl;
 
-import hr.fer.pi.planinarskidnevnik.dtos.MountainLodge.MountainLodgeDto;
+import hr.fer.pi.planinarskidnevnik.dtos.MountainLodge.MountainLodgeCreateRequest;
 import hr.fer.pi.planinarskidnevnik.dtos.MountainLodge.MountainLodgeSearchRequest;
+import hr.fer.pi.planinarskidnevnik.exceptions.ResourceNotFoundException;
+import hr.fer.pi.planinarskidnevnik.models.Hill;
 import hr.fer.pi.planinarskidnevnik.models.MountainLodge;
 import hr.fer.pi.planinarskidnevnik.models.Utility;
+import hr.fer.pi.planinarskidnevnik.repositories.HillRepository;
 import hr.fer.pi.planinarskidnevnik.repositories.MountainLodgeRepository;
+import hr.fer.pi.planinarskidnevnik.repositories.UtilityRepository;
 import hr.fer.pi.planinarskidnevnik.services.MountainLodgeQueryService;
 import hr.fer.pi.planinarskidnevnik.specifications.MountainLodgeSearchSpecification;
 import org.slf4j.Logger;
@@ -22,20 +26,28 @@ public class MountainLodgeQueryServiceImpl implements MountainLodgeQueryService 
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MountainLodgeQueryServiceImpl.class);
 
-    private final MountainLodgeRepository repo;
+    private final MountainLodgeRepository mountainLodgeRepository;
     private final MountainLodgeSearchSpecification specification;
+    private final HillRepository hillRepository;
+    private final UtilityRepository utilityRepository;
 
     @Autowired
-    public MountainLodgeQueryServiceImpl(MountainLodgeRepository repo, MountainLodgeSearchSpecification specification) {
-        this.repo = repo;
+    public MountainLodgeQueryServiceImpl(MountainLodgeRepository mountainLodgeRepository,
+                                         MountainLodgeSearchSpecification specification,
+                                         HillRepository hillRepository,
+                                         UtilityRepository utilityRepository) {
+        this.mountainLodgeRepository = mountainLodgeRepository;
         this.specification = specification;
+        this.hillRepository = hillRepository;
+        this.utilityRepository = utilityRepository;
     }
+
 
     @Override
     public List<MountainLodge> findAllMountainLodgeBySearchCriteria(MountainLodgeSearchRequest request) {
         LOGGER.info("Find all mountain lodges when searchText equals: {} and hill id equals {}", request.getSearchText(), request.getHillId());
 
-        List<MountainLodge> modelResponses = repo.findAll(specification.getFilter(request));
+        List<MountainLodge> modelResponses = mountainLodgeRepository.findAll(specification.getFilter(request));
         List<MountainLodge> responses = new ArrayList<>();
 
         if (request.getUtilities() == null) {
@@ -44,7 +56,7 @@ public class MountainLodgeQueryServiceImpl implements MountainLodgeQueryService 
 
 
         for(MountainLodge lodge : modelResponses) {
-            List<Long> ls = lodge.getUtilities().stream().map(Utility::getId).collect(Collectors.toList());
+            List<java.lang.Long> ls = lodge.getUtilities().stream().map(Utility::getId).collect(Collectors.toList());
 
             boolean trt = true;
             for(long s : request.getUtilities()) {
@@ -63,12 +75,24 @@ public class MountainLodgeQueryServiceImpl implements MountainLodgeQueryService 
     }
 
     @Override
-    public MountainLodge createMountainLodge(MountainLodgeDto dto) {
+    public MountainLodge createMountainLodge(MountainLodgeCreateRequest dto) {
 
-        final MountainLodge mountainLodge = new MountainLodge(dto.getName(), dto.getElevation(), dto.getHillName(), dto.getUtilities(), dto.getImage());
-        repo.save(mountainLodge);
+        LOGGER.info("Creating new mountain lodge with name: " + dto.getName());
 
-        LOGGER.info("New mountainLodge {} created", mountainLodge);
-        return mountainLodge;
+
+        MountainLodge mountainLodge = new MountainLodge();
+        List<Utility> utilities = utilityRepository.findAllByOrderByNameAsc();
+        Hill hill = hillRepository.findById(dto.getHillId()).orElseThrow(() -> new ResourceNotFoundException("Cannot find hill with hill id "+ dto.getHillId()));
+
+        mountainLodge.setElevation(dto.getElevation());
+        mountainLodge.setImage(dto.getImage());
+        mountainLodge.setName(dto.getName());
+        mountainLodge.setHill(hill);
+        if(dto.getUtilities() != null)
+        mountainLodge.setUtilities(utilities.stream()
+                                            .filter(v -> dto.getUtilities().contains(v.getId()))
+                                            .collect(Collectors.toList()));
+
+        return mountainLodgeRepository.save(mountainLodge);
     }
 }

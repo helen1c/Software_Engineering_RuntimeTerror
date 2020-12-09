@@ -7,7 +7,7 @@ import java.util.List;
 public class MountainLodge {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "mountain_lodge_id_gen")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "mountain_lodge_id_gen")
     @SequenceGenerator(name = "mountain_lodge_id_gen", sequenceName = "mountain_lodge_id_seq", allocationSize = 1)
     @Column(name = "LODGE_ID")
     private Long id;
@@ -29,24 +29,24 @@ public class MountainLodge {
 
     private List<Utility> utilities;
 
-    private Long elevation;
+    private java.lang.Long elevation;
 
 
     public MountainLodge(){
 
     }
-    public MountainLodge(String name, Long elevation, Hill hillName, List<Utility> utilities, byte[] image) {
+    public MountainLodge(String name, java.lang.Long elevation, Hill hillName, List<Utility> utilities, byte[] image) {
         this.name = name;
         this.elevation = elevation;
         this.hill = hillName;
         this.utilities = utilities;
         this.image = image;
     }
-    public Long getElevation() {
+    public java.lang.Long getElevation() {
         return elevation;
     }
 
-    public void setElevation(Long elevation) {
+    public void setElevation(java.lang.Long elevation) {
         this.elevation = elevation;
     }
 
@@ -54,7 +54,7 @@ public class MountainLodge {
         return name;
     }
 
-    public Long getId() {
+    public java.lang.Long getId() {
         return id;
     }
 
@@ -70,7 +70,7 @@ public class MountainLodge {
         return utilities;
     }
 
-    public void setId(Long id) {
+    public void setId(java.lang.Long id) {
         this.id = id;
     }
 

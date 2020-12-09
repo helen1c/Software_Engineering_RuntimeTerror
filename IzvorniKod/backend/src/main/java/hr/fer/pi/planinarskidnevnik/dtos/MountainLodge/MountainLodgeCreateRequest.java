@@ -4,33 +4,33 @@ import hr.fer.pi.planinarskidnevnik.models.Hill;
 import hr.fer.pi.planinarskidnevnik.models.Utility;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
-public class MountainLodgeDto {
+public class MountainLodgeCreateRequest {
 
         @Size(max = 50, message = "Ime smije sadržavati najviše 50 znakova.")
         @NotBlank(message = "Ime je obavezno.")
         private String name;
 
-        @NotBlank(message = "Nadmorska visina je obavezna")
+        @NotNull
         private Long elevation;
 
-        @Size(max = 50, message = "Ime smije sadržavati najviše 50 znakova.")
-        @NotBlank(message = "Planina je obavezna")
-        private Hill hillName;
+        @NotNull
+        private Long hillId;
 
-        private List<Utility> utilities;
+        private List<Long> utilities;
 
         private byte[] image;
 
-        public MountainLodgeDto() {
+        public MountainLodgeCreateRequest() {
         }
 
-        public MountainLodgeDto(String name, Long elevation, Hill hillName, List<Utility> utilities, byte[] image) {
+        public MountainLodgeCreateRequest(String name, Long elevation, Long hillId, List<Long> utilities, byte[] image) {
             this.name = name;
             this.elevation = elevation;
-            this.hillName = hillName;
+            this.hillId = hillId;
             this.utilities = utilities;
             this.image = image;
         }
@@ -39,17 +39,17 @@ public class MountainLodgeDto {
 
         public void setName(String name) { this.name = name; }
 
-        public Long getElevation() { return elevation; }
+        public java.lang.Long getElevation() { return elevation; }
 
-        public void setElevation(Long elevation) { this.elevation = elevation; }
+        public void setElevation(java.lang.Long elevation) { this.elevation = elevation; }
 
-        public Hill getHillName() { return hillName; }
+        public Long getHillId() { return hillId; }
 
-        public void setHillName(Hill hillName) { this.hillName = hillName; }
+        public void setHillId(Long hillId) { this.hillId = hillId; }
 
-        public List<Utility> getUtilities() { return utilities; }
+        public List<Long> getUtilities() { return utilities; }
 
-        public void setUtilities(List<Utility> utilities) { this.utilities = utilities; }
+        public void setUtilities(List<Long> utilities) { this.utilities = utilities; }
 
         public byte[] getImage() { return image; }
 
@@ -60,7 +60,7 @@ public class MountainLodgeDto {
             return "UserCreateDto{" +
                     "name='" + name + '\'' +
                     ", elevation=" + elevation +
-                    ", hillName='" + hillName + '\'' +
+                    ", hillName='" + hillId + '\'' +
                     ", utilities=" + utilities +
                     ", image=" + java.util.Arrays.toString(image) +
                     '}';
@@ -68,7 +68,7 @@ public class MountainLodgeDto {
 
 
         public int hashCode() {
-            int result = java.util.Objects.hash(super.hashCode(), name, elevation, hillName, utilities);
+            int result = java.util.Objects.hash(super.hashCode(), name, elevation, hillId, utilities);
             result = 31 * result + java.util.Arrays.hashCode(image);
             return result;
         }
