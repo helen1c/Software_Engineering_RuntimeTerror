@@ -1,5 +1,7 @@
 package hr.fer.pi.planinarskidnevnik.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -39,6 +41,11 @@ public class User {
 
     private byte[] image;
 
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Role role;
+
     public User() {
     }
 
@@ -55,6 +62,18 @@ public class User {
         this.dateOfBirth = dateOfBirth;
         this.description = description;
         this.image = image;
+    }
+
+    public User(String name, String password, String email, String placeOfResidence, Date dateOfBirth, String description, byte[] image, Role role) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.placeOfResidence = placeOfResidence;
+        this.dateOfBirth = dateOfBirth;
+        this.description = description;
+        this.password = password;
+        this.image = image;
+        this.role = role;
     }
 
     public Long getId() {
@@ -119,6 +138,14 @@ public class User {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override

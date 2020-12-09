@@ -39,4 +39,12 @@
             <column name="image" type="BYTEA"/>
         </createTable>
     </changeSet>
+
+    <changeSet id="20201129180400" author="lravenscak">
+        <addColumn tableName="user">
+            <column name="role_id" type="BIGINT" defaultValue="2">
+                <constraints foreignKeyName="role_id" references="roles(id)"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
