@@ -31,7 +31,7 @@
     flex-direction: column;
     align-items: center;
     align-content: center;
-    background-image: url("../../../assets/mountain-lodges.jpg");
+    background-image: url("../../../../assets/mountain-lodges.jpg");
     min-height: 300px;
     background-position: center;
     background-size: cover;
