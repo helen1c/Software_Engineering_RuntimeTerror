@@ -77,7 +77,6 @@ export const MountainLodgeSearch = () => {
                                 <button className="search-button" type="submit">&#8981;</button>
                                 <Field className={"input-search"} placeholder={"Pretražite planinarske domove..."}
                                        name={"searchText"} id={"searchText"}/>
-s
                             </div>
                             <div className="selects">
                                 <Select

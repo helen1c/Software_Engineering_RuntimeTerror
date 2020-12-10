@@ -1,0 +1,61 @@
+.mountain-lodge-cnt {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    grid-column-gap: 20px;
+    min-height: 350px;
+    min-width: 350px;
+    border: 3px solid #272245;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-radius: 5px;
+    height: 400px;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.mountain-lodge-utils > span {
+    display: block;
+}
+
+.mountain-lodge-utils {
+    min-height: 25%;
+    max-width: 60%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    font-family: Roboto, sans-serif;
+    font-size: 1.4rem;
+}
+
+.util-pic {
+    margin-left: 5px;
+    width: 2rem;
+    height: 2rem;
+}
+
+.mountain-lodge-picture {
+    width: 90%;
+    height: 60%;
+    max-height: 350px;
+    margin: auto;
+    border-radius: 5px;
+}
+
+.mountain-lodge-name {
+    text-align: center;
+    font-family: Roboto, sans-serif;
+    font-size: 1.5rem;
+    margin-top: 0.7rem;
+}
+
+.image-util-cnt {
+    display: flex;
+    flex-direction: column;
+}
+
+.lodge-description-cnt {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

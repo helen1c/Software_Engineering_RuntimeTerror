@@ -1,21 +1,13 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import * as Yup from "yup";
-import { useFormik } from "formik";
-import { HttpCodesUtil } from "../../../../errors/HttpCodesUtil";
+import {useFormik} from "formik";
+import {HttpCodesUtil} from "../../../../errors/HttpCodesUtil";
 import "./MountainLodgeCreate.css";
-import { useHistory } from "react-router";
-import { IconButton } from "@material-ui/core";
-import { AddAPhotoOutlined } from "@material-ui/icons";
+import {IconButton} from "@material-ui/core";
+import {AddAPhotoOutlined} from "@material-ui/icons";
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-
-
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Checkbox from '@material-ui/core/Checkbox';
+import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
+import Compress from "react-image-file-resizer";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -30,30 +22,24 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const MountainLodgeCreate = () => {
     const [newImage, setNewImage] = useState("");
-    const history = useHistory();
-
 
     const classes = useStyles();
     const [state, setState] = React.useState({
-        voda : false,
-        hrana : false,
-        wifi : false,
+        voda: false,
+        hrana: false,
+        wifi: false,
     });
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setState({ ...state, [event.target.name]: event.target.checked });
+        setState({...state, [event.target.name]: event.target.checked});
     };
-
-    const { voda, hrana, wifi } = state;
-    const error = [voda, hrana, wifi].filter((v) => v).length !== 2;
-
 
     const formik = useFormik({
         initialValues: {
             name: "",
             elevation: "",
-            hill: "",
-            utilities: ["","",""],
+            hillId: "",
+            utilities: [],
             image: "",
         },
         validateOnChange: false,
@@ -64,19 +50,7 @@ export const MountainLodgeCreate = () => {
         }),
         onSubmit: (values) => {
             values.image = newImage.split(",")[1];
-            let i=0;
-            if([voda]){
-                values.utilities[i] = "voda";
-                i++;
-            }
-            if([hrana]){
-                values.utilities[i] = "hrana";
-                i++;
-            }
-            if([wifi]){
-                values.utilities[i] = "wifi";
-                i++;
-            }
+            values.hillId = "1";
 
             fetch("/api/mountain-lodges/create", {
                 method: "POST",
@@ -94,26 +68,50 @@ export const MountainLodgeCreate = () => {
                         });
                     });
                 } else {
-                    history.push("/login");
+                    console.log("Dom uspjesno stvoren...")
                 }
             });
         },
     });
 
 
-
     const showImage = (event: any) => {
-        if(!event) return;
+
+
+        if (!event) return;
         let file = event.target.files[0];
 
         let reader = new FileReader();
         reader.onload = function (newImage) {
 
             setNewImage(newImage?.target?.result as string);
+            console.log(newImage)
         };
-        if(file !== undefined)
+        if (file !== undefined)
             reader.readAsDataURL(file);
     };
+
+    const showImage2 = (event: any) => {
+
+        if (!event) return;
+        let file = event.target.files[0];
+        console.log(file);
+        Compress.imageFileResizer(
+            file, 480, 480, "JPEG", 100, 0, (uri) => {
+                console.log(uri)
+
+                let reader = new FileReader();
+                if (uri !== undefined)
+                    reader.readAsDataURL(uri as Blob);
+
+                reader.onload = function (newImage) {
+                    setNewImage(newImage?.target?.result as string);
+                };
+            }, "blob"
+        );
+
+
+    }
 
     return (
         <div className="createForm">
@@ -150,11 +148,11 @@ export const MountainLodgeCreate = () => {
                             <input
                                 className={"create-input"}
                                 id="hill"
-                                value={formik.values.hill}
+                                value={formik.values.hillId}
                                 onChange={formik.handleChange}
                             />
                             <p className="errorText">
-                                {formik.errors.hill ? formik.errors.hill : null}
+                                {formik.errors.hillId ? formik.errors.hillId : null}
                             </p>
                         </div>
 
@@ -166,14 +164,14 @@ export const MountainLodgeCreate = () => {
                                id={"icon-button-file"}
                                type="file" multiple
                                onChange={(event) => {
-                                   showImage(event)
-                                   event.target.value=""
+                                   showImage2(event)
+                                   event.target.value = ""
                                }}
                         />
                         {newImage ?
                             <div className={"wrapper-picture"}>
                                 <img
-                                    style = {{display:"block"}}
+                                    style={{display: "block"}}
                                     className="profileImage"
                                     src={newImage}
                                     alt="Slika profila"
@@ -190,30 +188,10 @@ export const MountainLodgeCreate = () => {
                                                 <AddAPhotoOutlined/>
                                             </IconButton>
                                         </label>
-                                    </div></div>
+                                    </div>
+                                </div>
                             </>
                         }
-                        <div className={classes.root}>
-                            <FormControl component="fieldset" className={classes.formControl}>
-                                <FormLabel component="legend">Dodatni sadrzaj</FormLabel>
-                                <FormGroup>
-                                    <FormControlLabel
-                                        control={<Checkbox checked={voda} onChange={handleChange} name="voda" />}
-                                        label="Voda"
-                                    />
-                                    <FormControlLabel
-                                        control={<Checkbox checked={hrana} onChange={handleChange} name="hrana" />}
-                                        label="Hrana"
-                                    />
-                                    <FormControlLabel
-                                        control={<Checkbox checked={wifi} onChange={handleChange} name="wifi" />}
-                                        label="Wi-fi"
-                                    />
-                                </FormGroup>
-                                <FormHelperText>Odaberi</FormHelperText>
-                            </FormControl>
-
-                        </div>
                     </div>
                 </div>
 

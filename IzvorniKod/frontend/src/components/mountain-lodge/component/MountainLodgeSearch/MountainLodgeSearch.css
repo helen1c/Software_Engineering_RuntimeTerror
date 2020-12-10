@@ -36,6 +36,8 @@
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+    min-width: 100vw;
+    width: 100%;
 }
 
 .search-hill {
@@ -75,10 +77,40 @@
     cursor: pointer;
 }
 
+.body {
+    margin:0;
+    height: 100%;
+}
+
 .results-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    margin-top: 3rem;
+    display: inline-grid;
+    grid-template-columns: 1fr 1fr;
+    max-width: 1250px;
+    grid-column-gap: 5rem;
+    grid-row-gap: 2rem;
+    position: relative;
+    margin: 0;
+    left: 50%;
+    top: 3rem;
+    transform: translateX(-50%);
+}
+
+@media screen and (max-width: 950px) {
+
+
+    .results-container {
+        display: inline-grid;
+        grid-template-columns: 1fr;
+        max-width: 600px;
+        grid-column-gap: 5rem;
+        grid-row-gap: 2rem;
+        position: relative;
+        margin: 0;
+        left: 50%;
+        top: 3rem;
+        transform: translateX(-50%);
+    }
+
 }
 
 .search-button:hover {
