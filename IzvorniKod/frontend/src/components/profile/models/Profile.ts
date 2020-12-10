@@ -3,5 +3,17 @@ export interface Profile {
     email: string;
     placeOfResidence: string;
     description: string;
-    dateOfBirth: Date;
+    dateOfBirth: string;
+    image: string
 }
+
+export const getEmptyProfile = (): Profile => {
+    return {
+        name: "",
+        email: "",
+        placeOfResidence: "",
+        description: "",
+        dateOfBirth: "",
+        image: ""
+    };
+};

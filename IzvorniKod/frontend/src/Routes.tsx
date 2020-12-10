@@ -26,8 +26,7 @@ export const Routes = () => {
                 <Route path="/login" component={LoginForm} exact={true}/>
                 <Route path="/mountaineering-community/search" component={MountaineeringCommunitySearch} exact/>
                 <Route path="/mountain-lodge/search" component={MountainLodgeSearch} exact/>
-                <Route path="/profile" component={ProfileUserInfo} exact/>
-
+                <Route path="/profile/:id" component={ProfileUserInfo} exact/>
             </Switch>
         </div>
     );

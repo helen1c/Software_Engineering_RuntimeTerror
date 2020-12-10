@@ -48,6 +48,7 @@ public class UserController {
 
     @GetMapping("/me")
     public ResponseEntity<?> getCurrentUser(Principal principal) {
+        LOGGER.info("Getting current user");
         final User user = userService.checkForEmail(principal.getName());
         return ResponseEntity.ok(user);
     }
