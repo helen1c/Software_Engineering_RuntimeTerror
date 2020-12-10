@@ -23,17 +23,6 @@ const useStyles = makeStyles((theme: Theme) =>
 export const MountainLodgeCreate = () => {
     const [newImage, setNewImage] = useState("");
 
-    const classes = useStyles();
-    const [state, setState] = React.useState({
-        voda: false,
-        hrana: false,
-        wifi: false,
-    });
-
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setState({...state, [event.target.name]: event.target.checked});
-    };
-
     const formik = useFormik({
         initialValues: {
             name: "",
@@ -109,8 +98,6 @@ export const MountainLodgeCreate = () => {
                 };
             }, "blob"
         );
-
-
     }
 
     return (
