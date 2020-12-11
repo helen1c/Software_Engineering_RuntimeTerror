@@ -175,16 +175,6 @@ password-component {
     margin-top: 3rem;
 }
 
-.toRegistration {
-    margin-bottom: 2rem;
-    font-family: Roboto, sans-serif;
-}
-
-.toRegistrationAction {
-    font-weight: 700;
-    text-decoration: underline;
-    text-decoration-color: #131E32;
-}
 
 .loginImage {
     opacity:0.3;
@@ -255,7 +245,13 @@ password-component {
 .hill-select {
     margin-right: 1.5rem;
     display: inline-block;
+    border-radius: 10px;
 }
-
+.select-box{
+    width: 30vw;
+    max-width: 500px;
+    min-height: 4rem;
+    padding-left: 3.5rem;
+}
 
 

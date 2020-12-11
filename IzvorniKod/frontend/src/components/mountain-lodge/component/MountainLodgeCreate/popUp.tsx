@@ -69,7 +69,6 @@ export default function FormDialog() {
 
         const response = await fetch("/api/mountain-lodges/create", requestOptions);
         const json = await response.json();
-
     }
 
     const showImage2 = (event: any) => {
@@ -95,6 +94,8 @@ export default function FormDialog() {
 
     const handleClickOpen = () => {
         setOpen(true);
+        setNewImage("");
+        setSelectedOptions([]);
     };
 
     const handleClose = () => {
@@ -115,7 +116,7 @@ export default function FormDialog() {
                     {({setFieldValue}) => {
                         return (
                                      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                                         <Form >
+                                         <Form>
                                          <DialogTitle id="form-dialog-title">Stvori novi dom</DialogTitle>
                                          <DialogContent>
                                              <div className="create-column">
@@ -129,7 +130,6 @@ export default function FormDialog() {
                                                  </div>
                                              </div>
 
-                                             <div >
                                                  <Select
                                                      className="hill-select"
                                                      isClearable={true}
@@ -141,6 +141,7 @@ export default function FormDialog() {
                                                      }
                                                      options={hillResults}>
                                                  </Select>
+
                                                  <Select
                                                      className="utility-select"
                                                      isClearable={true}
@@ -151,7 +152,7 @@ export default function FormDialog() {
                                                      onChange={handleChange}
                                                      options={utilityResults}>
                                                  </Select>
-                                             </div>
+
                                              <div className="create-column">
 
                                                  <input className={"upload-picture"}
@@ -193,10 +194,9 @@ export default function FormDialog() {
                                              <Button onClick={handleClose} color="primary">
                                                  ODUSTANI
                                              </Button>
-                                             <Button type="submit">
+                                             <Button type="submit" color="primary">
                                                  STVORI
                                              </Button>
-
                                          </DialogActions>
                                          </Form>
                                      </Dialog>
