@@ -1,15 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Select, {ValueType} from "react-select";
 import {Field, Form, Formik, useFormik} from "formik";
-import * as Yup from "yup";
-import {HttpCodesUtil} from "../../../../errors/HttpCodesUtil";
 import Compress from "react-image-file-resizer";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import {IconButton} from "@material-ui/core";
@@ -17,7 +13,6 @@ import {AddAPhotoOutlined} from "@material-ui/icons";
 import "./popUp.css";
 import {useDispatch, useSelector} from "react-redux";
 import {MainReducer} from "../../../../store/reducer";
-import {MountainLodgeResult} from "../../models/MountainLodgeResult";
 import {findHills} from "../../../../store/actions/findAllHillsActions";
 import {findUtilities} from "../../../../store/actions/findAllUtilitiesActions";
 import {HillOption} from "../../models/HillOption";
@@ -54,7 +49,7 @@ export default function FormDialog() {
     }, [dispatcher, utilityResults]);
 
     const create = async (request: MountainLodgeCreateRequest) => {
-
+        setOpen(false);
         const sRequest = {
             name: request.name,
             elevation: request.elevation,
@@ -74,6 +69,7 @@ export default function FormDialog() {
 
         const response = await fetch("/api/mountain-lodges/create", requestOptions);
         const json = await response.json();
+
     }
 
     const showImage2 = (event: any) => {
@@ -117,8 +113,9 @@ export default function FormDialog() {
                 } as MountainLodgeCreateRequest
                 } onSubmit={create}>
                     {({setFieldValue}) => {
-                        return (<Form >
+                        return (
                                      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                                         <Form >
                                          <DialogTitle id="form-dialog-title">Stvori novi dom</DialogTitle>
                                          <DialogContent>
                                              <div className="create-column">
@@ -194,18 +191,15 @@ export default function FormDialog() {
                                          </DialogContent>
                                          <DialogActions>
                                              <Button onClick={handleClose} color="primary">
-                                                 Odustani
+                                                 ODUSTANI
                                              </Button>
-                                             <Button onClick={handleClose} color="primary">
-                                                 Stvori
+                                             <Button type="submit">
+                                                 STVORI
                                              </Button>
-                                             <button type="submit">
-                                                 napravi
-                                             </button>
 
                                          </DialogActions>
+                                         </Form>
                                      </Dialog>
-                            </Form>
                         );
                     }}
                 </Formik>
