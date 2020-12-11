@@ -46,6 +46,13 @@ public class UserController {
         return ResponseEntity.ok(userService.getRole(user.getEmail()));
     }
 
+    @GetMapping("profileOwner/{id}")
+    public ResponseEntity<?> isProfileOwner(@PathVariable("id") final Long profileId, Principal principal) {
+        LOGGER.info("Checking if current user is profile owner");
+        final Boolean isOwner = userService.isOwner(profileId, principal.getName());
+        return ResponseEntity.ok(isOwner);
+    }
+
     @GetMapping("/me")
     public ResponseEntity<?> getCurrentUser(Principal principal) {
         LOGGER.info("Getting current user");
@@ -70,6 +77,12 @@ public class UserController {
     }
 
     @RequestMapping(value = "{id}",method=RequestMethod.DELETE)
+    @GetMapping(value = "/profile-image/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
+    public ResponseEntity<byte[]> getProfileImage(@PathVariable("id") final Long profileId) {
+        return ResponseEntity.ok(userService.getImage(userService.getUserById(profileId).getEmail()));
+    }
+
+    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteUser(@PathVariable("id") final Long userId, Principal principal) {
         LOGGER.info("User removing");
         userService.deleteUser(userId, principal);

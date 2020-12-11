@@ -180,4 +180,14 @@ public class UserService {
 
         return searchResult;
     }
+
+    public boolean isOwner(Long id, String currentUserEmail) {
+        Optional<User> optionalCurrentUser = userRepository.findByEmail(currentUserEmail);
+        if (optionalCurrentUser.isEmpty()) {
+            LOGGER.error("User {} doesn't exist", currentUserEmail);
+            throw new ResourceNotFoundException(String.format("Korisnik %s ne postoji", currentUserEmail));
+        }
+        User currentUser = optionalCurrentUser.get();
+        return currentUser.getId().equals(id);
+    }
 }
