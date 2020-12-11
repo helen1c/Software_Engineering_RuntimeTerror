@@ -135,7 +135,7 @@ public class UserService {
         User currentUser = optionalCurrentUser.get();
         User userForRemoval = getUserById(userId);
 
-        if (currentUser.getId() == userForRemoval.getId()) {
+        if (currentUser.getId() == userForRemoval.getId() || getRole(currentUser.getEmail()).equals("ADMIN")) {
             userRepository.delete(userForRemoval);
         } else {
             LOGGER.error("Not allowed to delete user");

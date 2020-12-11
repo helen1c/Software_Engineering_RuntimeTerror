@@ -46,8 +46,14 @@ public class UserController {
         return ResponseEntity.ok(userService.getRole(user.getEmail()));
     }
 
+    @GetMapping("is-admin")
+    public ResponseEntity<Boolean> getIsAdmin(Principal principal) {
+        LOGGER.info("User fetching");
+        return ResponseEntity.ok(userService.getRole(principal.getName()).equals("ADMIN"));
+    }
+
     @GetMapping("profileOwner/{id}")
-    public ResponseEntity<?> isProfileOwner(@PathVariable("id") final Long profileId, Principal principal) {
+    public ResponseEntity<Boolean> isProfileOwner(@PathVariable("id") final Long profileId, Principal principal) {
         LOGGER.info("Checking if current user is profile owner");
         final Boolean isOwner = userService.isOwner(profileId, principal.getName());
         return ResponseEntity.ok(isOwner);

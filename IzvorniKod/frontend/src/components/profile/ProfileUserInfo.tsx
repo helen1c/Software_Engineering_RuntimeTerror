@@ -9,6 +9,7 @@ export const ProfileUserInfo = () => {
   const [edit, setEdit] = useState(false);
   const [nameError, setNameError] = useState("");
   const [isOwner, setIsOwner] = useState<boolean>(false);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const history = useHistory();
   const id = window.location.pathname.split("/")[2];
 
@@ -52,6 +53,18 @@ export const ProfileUserInfo = () => {
       if (response.status === 200) {
         response.json().then((owner) => {
           setIsOwner(owner);
+        });
+      }
+    });
+    fetch("/api/users/is-admin/", {
+      method: "GET",
+      headers: new Headers({
+        authorization: sessionStorage.getItem("key") || "",
+      }),
+    }).then(function (response) {
+      if (response.status === 200) {
+        response.json().then((owner) => {
+          setIsAdmin(owner);
         });
       }
     });
@@ -129,7 +142,9 @@ export const ProfileUserInfo = () => {
       }),
     }).then((response) => {
       if (response.status === 200) {
-        sessionStorage.clear();
+        if (isOwner) {
+          sessionStorage.clear();
+        }
         window.location.href = "/home";
       }
     });
@@ -247,21 +262,21 @@ export const ProfileUserInfo = () => {
         </div>
       </div>
       {isOwner ? (
-        <>
-          {!edit ? (
-            <div>
-              <button onClick={handleEditOnClick}>Izmijeni</button>
-            </div>
-          ) : (
-            <div>
-              <button onClick={handleCancelOnClick}>Odustani</button>
-              <button onClick={handleSaveOnClick}>Spremi</button>
-            </div>
-          )}
-          <button onClick={handleDeleteOnClick}>Ukloni račun</button>
-        </>
+        !edit ? (
+          <div>
+            <button onClick={handleEditOnClick}>Izmijeni</button>
+          </div>
+        ) : (
+          <div>
+            <button onClick={handleCancelOnClick}>Odustani</button>
+            <button onClick={handleSaveOnClick}>Spremi</button>
+          </div>
+        )
       ) : (
         <></>
+      )}
+      {(isOwner || isAdmin) && (
+        <button onClick={handleDeleteOnClick}>Ukloni račun</button>
       )}
     </div>
   );
