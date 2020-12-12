@@ -22,6 +22,10 @@ a:hover {
 
 }
 
+.error-input {
+    color: red;
+}
+
 .submitButton {
     border-radius: 10px;
     width: 9rem;

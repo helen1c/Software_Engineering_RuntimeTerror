@@ -105,7 +105,7 @@ export default function FormDialog() {
     const validationSchema = Yup.object().shape({
         name: Yup.string().required("Molimo Vas unesite ime planinarskog doma."),
         elevation: Yup.number().required("Molimo unesite nadmorsku visinu."),
-        hillId: Yup.number().required("Molimo odaberite visočje.")
+        hillId: Yup.object().nullable().required("Molimo odaberite visočje.")
     })
 
     return (
@@ -116,12 +116,14 @@ export default function FormDialog() {
                 </Button>
                 <Formik initialValues={{
                     name: "",
+                    elevation: 0
                 } as MountainLodgeCreateRequest
                 } onSubmit={create}
                 validateOnBlur={true}
                 validateOnMount={true}
+                validateOnChange={true}
                 validationSchema={validationSchema}>
-                    {({setFieldValue, handleReset}) => {
+                    {({setFieldValue, handleReset, errors, touched}) => {
                         return (
                             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
                                 <Form>
@@ -132,10 +134,13 @@ export default function FormDialog() {
                                                 <Field className={"input-search"}
                                                        placeholder={"Naziv planinarskog doma..."}
                                                        name={"name"} id={"name"}/>
+                                                {errors.name && touched.name ? <div className="error-input">{errors.name}</div> : <></>}
                                             </div>
                                             <div className="inputComponent textAlignLeft">
                                                 <Field className={"input-search"} placeholder={"Nadmorska visina..."}
                                                        name={"elevation"} id={"elevation"}/>
+                                                {errors.elevation && touched.elevation ? <div className="error-input">{errors.elevation}</div> : <></>}
+
                                             </div>
                                         </div>
 
@@ -150,7 +155,7 @@ export default function FormDialog() {
                                             }
                                             options={hillResults}>
                                         </Select>
-
+                                        {errors.hillId && touched.hillId ? <div className="error-input">{errors.hillId}</div> : <></>}
                                         <Select
                                             className="utility-select"
                                             isClearable={true}
