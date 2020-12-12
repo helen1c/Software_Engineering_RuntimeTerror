@@ -40,12 +40,13 @@ public class MountainLodgeQueryServiceImpl implements MountainLodgeQueryService 
             return modelResponses;
         }
 
-        for (MountainLodge lodge : modelResponses) {
-            List<String> ls = lodge.getUtilities().stream().map(v -> v.getName().toLowerCase()).collect(Collectors.toList());
+
+        for(MountainLodge lodge : modelResponses) {
+            List<Long> ls = lodge.getUtilities().stream().map(v -> v.getId()).collect(Collectors.toList());
 
             boolean trt = true;
-            for (String s : request.getUtilities()) {
-                if (!ls.contains(s.toLowerCase())) {
+            for(long s : request.getUtilities()) {
+                if (!ls.contains(s)) {
                     trt = false;
                     break;
                 }

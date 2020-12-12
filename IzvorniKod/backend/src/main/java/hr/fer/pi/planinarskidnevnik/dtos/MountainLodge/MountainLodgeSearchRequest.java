@@ -10,9 +10,9 @@ public class MountainLodgeSearchRequest {
 
     private Long hillId;
 
-    private List<String> utilities;
+    private List<Long> utilities;
 
-    public List<String> getUtilities() {
+    public List<Long> getUtilities() {
         return utilities;
     }
 
