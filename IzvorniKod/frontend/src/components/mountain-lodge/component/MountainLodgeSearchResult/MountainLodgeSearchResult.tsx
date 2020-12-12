@@ -34,9 +34,9 @@ export const MountainLodgeSearchResult = (prop: Props) => {
             <div className="image-util-cnt">
                 <span className="mountain-lodge-name">{prop.result.name}</span>
                 {prop.result.image ? <img className="mountain-lodge-picture" alt={"Slika"} src={image}/>
-                : <img className="mountain-lodge-picture" alt={"Slika"} src={defImage}/>}
+                : <img className="mountain-lodge-picture" alt={""} src={defImage}/>}
                 {prop.result.utilities && prop.result.utilities.length > 0 && <div className="mountain-lodge-utils">Pogodnosti:
-                    {prop.result.utilities.map(v => <img className="util-pic" src={utilpass[v.id]} key={v.id}/>)}
+                    {prop.result.utilities.map(v => <img alt={""} className="util-pic" src={utilpass[v.id]} key={v.id}/>)}
                 </div>
                 }
             </div>
