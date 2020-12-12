@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./ProfileUserInfo.css";
 import { getEmptyProfile, Profile } from "./models/Profile";
 import { useHistory } from "react-router";
+import { Button, Dialog, DialogActions, DialogTitle } from "@material-ui/core";
 
 export const ProfileUserInfo = () => {
   const [user, setUser] = useState<Profile>(getEmptyProfile);
@@ -10,6 +11,8 @@ export const ProfileUserInfo = () => {
   const [nameError, setNameError] = useState("");
   const [isOwner, setIsOwner] = useState<boolean>(false);
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
+  const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const history = useHistory();
   const id = window.location.pathname.split("/")[2];
 
@@ -134,6 +137,7 @@ export const ProfileUserInfo = () => {
   };
 
   const handleDeleteOnClick = () => {
+    setOpenDeleteModal(false);
     fetch("/api/users/" + id, {
       method: "DELETE",
       headers: new Headers({
@@ -269,15 +273,51 @@ export const ProfileUserInfo = () => {
         ) : (
           <div>
             <button onClick={handleCancelOnClick}>Odustani</button>
-            <button onClick={handleSaveOnClick}>Spremi</button>
+            <button onClick={() => setOpenEditModal(true)}>Spremi</button>
           </div>
         )
       ) : (
         <></>
       )}
       {(isOwner || isAdmin) && (
-        <button onClick={handleDeleteOnClick}>Ukloni račun</button>
+        <button onClick={() => setOpenDeleteModal(true)}>Ukloni račun</button>
       )}
+      <Dialog
+        open={openDeleteModal}
+        onClose={() => setOpenDeleteModal(false)}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Jeste li sigurni da želite obrisati račun?"}
+        </DialogTitle>
+        <DialogActions>
+          <Button onClick={() => setOpenDeleteModal(false)} color="primary">
+            NE
+          </Button>
+          <Button onClick={handleDeleteOnClick} color="primary" autoFocus>
+            DA
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog
+        open={openEditModal}
+        onClose={() => setOpenEditModal(false)}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Jeste li sigurni da želite urediti račun?"}
+        </DialogTitle>
+        <DialogActions>
+          <Button onClick={() => setOpenEditModal(false)} color="primary">
+            NE
+          </Button>
+          <Button onClick={handleSaveOnClick} color="primary" autoFocus>
+            DA
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
