@@ -6,7 +6,6 @@ import Header from "./components/header/Header";
 import {RegistrationForm} from "./components/login-registration/RegistrationForm";
 import {LoginForm} from "./components/login-registration/LoginForm";
 import {MountainLodgeSearch} from "./components/mountain-lodge/search/MountainLodgeSearch";
-import {ProfileUserInfo} from "./components/profile/ProfileUserInfo";
 import {MountaineeringCommunitySearch} from "./components/mountaineering-community/MountaineeringCommunitySearch"
 
 
@@ -16,7 +15,7 @@ export const Routes = () => {
 
     return (
         <div>
-        <Header/>
+            <Header/>
             <Switch>
                 <Route path={"/"} exact={true}>
                     <Redirect to={"home"}/>
@@ -33,4 +32,3 @@ export const Routes = () => {
     );
 
 }
-//<Route path="/profile/:id" component={ProfileUserInfo} exact/>
