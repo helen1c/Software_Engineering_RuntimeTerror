@@ -1,8 +1,6 @@
 package hr.fer.pi.planinarskidnevnik.dtos.MountainPath;
 
-import hr.fer.pi.planinarskidnevnik.models.Hill;
-import hr.fer.pi.planinarskidnevnik.models.MountainPath;
-import hr.fer.pi.planinarskidnevnik.models.User;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 import javax.validation.constraints.NotBlank;
@@ -10,9 +8,9 @@ import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.Objects;
 
-public class MountainPathCreate {
+public class MountainPathCreateRequest {
 
-    private Hill hill;
+    private Long hillId;
 
     @Size(max = 128, message = "Ime smije sadržavati najviše 128 znakova.")
     @NotBlank(message = "Ime je obavezno")
@@ -32,14 +30,16 @@ public class MountainPathCreate {
 
     private int seaLevelDiff;
 
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date dateCreated;
 
     private boolean isPrivate;
 
-    private User author;
-    public MountainPathCreate(Hill hill, String name, String startPoint, String endPoint, int avgWalkTime,
-                              int length, int seaLevelDiff, Date dateCreated, boolean isPrivate) {
-        this.hill = hill;
+    private Long authorId;
+
+    public MountainPathCreateRequest(long hillId, String name, String startPoint, String endPoint, int avgWalkTime,
+                                     int length, int seaLevelDiff, Date dateCreated, boolean isPrivate, long authorId) {
+        this.hillId = hillId;
         this.name = name;
         this.startPoint = startPoint;
         this.endPoint = endPoint;
@@ -48,9 +48,10 @@ public class MountainPathCreate {
         this.seaLevelDiff = seaLevelDiff;
         this.dateCreated = dateCreated;
         this.isPrivate = isPrivate;
+        this.authorId = authorId;
     }
 
-    public MountainPathCreate(){
+    public MountainPathCreateRequest(){
 
     }
 
@@ -87,18 +88,18 @@ public class MountainPathCreate {
 
     public void setPrivate(boolean aPrivate) {isPrivate = aPrivate;}
 
-    public Hill getHill() {return hill;}
+    public Long getHillId() {return hillId;}
 
-    public void setHill(Hill hill) {this.hill = hill;}
+    public void setHillId(long hillId) {this.hillId = hillId;}
 
-    public User getAuthor() {return author;}
+    public Long getAuthorId() {return authorId;}
 
-    public void setAuthor(User author) {this.author = author;}
+    public void setAuthorId(Long author) {this.authorId = authorId;}
 
     @Override
     public String toString() {
         return "MountainPath{" +
-                ", hill=" + hill +
+                ", hillId=" + hillId +
                 ", name='" + name + '\'' +
                 ", startPoint='" + startPoint + '\'' +
                 ", endPoint='" + endPoint + '\'' +
@@ -107,29 +108,29 @@ public class MountainPathCreate {
                 ", seaLevelDiff=" + seaLevelDiff +
                 ", dateCreated=" + dateCreated +
                 ", isPrivate=" + isPrivate +
-                ", author=" + author +
+                ", authorId=" + authorId +
                 '}';
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof MountainPathCreate)) return false;
-        MountainPathCreate that = (MountainPathCreate) o;
+        if (!(o instanceof MountainPathCreateRequest)) return false;
+        MountainPathCreateRequest that = (MountainPathCreateRequest) o;
         return getAvgWalkTime() == that.getAvgWalkTime() &&
                 getLength() == that.getLength() &&
                 getSeaLevelDiff() == that.getSeaLevelDiff() &&
                 isPrivate() == that.isPrivate() &&
-                hill.equals(that.hill) &&
+                hillId.equals(that.hillId) &&
                 getName().equals(that.getName()) &&
                 getStartPoint().equals(that.getStartPoint()) &&
                 getEndPoint().equals(that.getEndPoint()) &&
                 getDateCreated().equals(that.getDateCreated()) &&
-                author.equals(that.author);
+                authorId ==that.authorId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(hill, getName(), getStartPoint(), getEndPoint(), getAvgWalkTime(), getLength(), getSeaLevelDiff(), getDateCreated(), isPrivate(), author);
+        return Objects.hash(hillId, getName(), getStartPoint(), getEndPoint(), getAvgWalkTime(), getLength(), getSeaLevelDiff(), getDateCreated(), isPrivate(), authorId);
     }
 }

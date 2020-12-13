@@ -1,0 +1,64 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="02-11-2020-01" author="imartinovic">
+        <insert tableName="mountain_path">
+            <column name="id">1</column>
+            <column name="hill_id">1</column>
+            <column name="name">Glavna staza na medvednici</column>
+            <column name="start_point">Susedgrad - PD Kameni svati</column>
+            <column name="end_point">PD Lipa-Rog - PD Vugrovec</column>
+            <column name="avg_walk_time">18:30:00</column>
+            <column name="length">50</column>
+            <column name="sea_level_diff">1000</column>
+            <column name="date_created">2020-12-13</column>
+            <column name="is_private">0</column>
+            <column name="author_id">1</column>
+        </insert>
+
+        <insert tableName="mountain_path">
+            <column name="id">2</column>
+            <column name="hill_id">1</column>
+            <column name="name">Kostanjek (Stenjevec) - Pl. staza 1</column>
+            <column name="start_point">Kostanjevka (Stenjevec)</column>
+            <column name="end_point">Pl. staza 1</column>
+            <column name="avg_walk_time">00:50:00</column>
+            <column name="length">2.73</column>
+            <column name="sea_level_diff">215</column>
+            <column name="date_created">2020-12-13</column>
+            <column name="is_private">0</column>
+            <column name="author_id">1</column>
+        </insert>
+
+        <insert tableName="mountain_path">
+            <column name="id">3</column>
+            <column name="hill_id">1</column>
+            <column name="name">Gornji Stenjevec - PD Glavica</column>
+            <column name="start_point">Gornji Stenjevec</column>
+            <column name="end_point">PD Glavica</column>
+            <column name="avg_walk_time">01:00:00</column>
+            <column name="length">3.0</column>
+            <column name="sea_level_diff">232</column>
+            <column name="date_created">2020-12-13</column>
+            <column name="is_private">0</column>
+            <column name="author_id">1</column>
+        </insert>
+
+        <insert tableName="mountain_path">
+            <column name="id">4</column>
+            <column name="hill_id">1</column>
+            <column name="name">Gornje Vrapče - Slap Sopot</column>
+            <column name="start_point">Gornje Vrapče</column>
+            <column name="end_point">Slap Sopot</column>
+            <column name="avg_walk_time">02:00:00</column>
+            <column name="length">6.5</column>
+            <column name="sea_level_diff">388</column>
+            <column name="date_created">2020-12-13</column>
+            <column name="is_private">0</column>
+            <column name="author_id">1</column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

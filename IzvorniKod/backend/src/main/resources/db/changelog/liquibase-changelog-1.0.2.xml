@@ -1,0 +1,47 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="13-12-2020-01" author="mrajnovic">
+
+        <createTable tableName="mountain_path">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="hill_id" type="BIGINT">
+                <constraints foreignKeyName="hill_id1" references="HILL(ID)"/>
+            </column>
+            <column name="name" type="VARCHAR(128)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="start_point" type="VARCHAR(128)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="end_point" type="VARCHAR(128)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="avg_walk_time" type="TIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="length" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sea_level_diff" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_created" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_private" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="author_id" type="BIGINT">
+                <constraints foreignKeyName="id" references="user(id)"/>
+            </column>
+        </createTable>
+        <createSequence sequenceName="mountain_path_id_seq" incrementBy="1" cycle="false" startValue="1" />
+    </changeSet>
+</databaseChangeLog>

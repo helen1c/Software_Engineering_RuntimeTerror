@@ -1,6 +1,7 @@
 package hr.fer.pi.planinarskidnevnik.controllers;
 
-import hr.fer.pi.planinarskidnevnik.dtos.MountainPath.MountainPathCreate;
+import hr.fer.pi.planinarskidnevnik.dtos.MountainPath.MountainPathCreateRequest;
+import hr.fer.pi.planinarskidnevnik.dtos.MountainPath.MountainPathCreateResponse;
 import hr.fer.pi.planinarskidnevnik.dtos.MountainPath.MountainPathFindResponse;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainPathToMountainPathResponseMapper;
 import hr.fer.pi.planinarskidnevnik.models.MountainPath;
@@ -20,27 +21,33 @@ public class MountainPathController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MountainPathController.class);
 
-    private final MountainPathQueryService mountainPathQueryService;
+    private final MountainPathQueryService service;
     private final MountainPathToMountainPathResponseMapper mountainPathToMountainPathResponseMapper;
 
-    public MountainPathController(MountainPathQueryService mountainPathQueryService, MountainPathToMountainPathResponseMapper mountainPathToMountainPathResponseMapper) {
-        this.mountainPathQueryService = mountainPathQueryService;
+    public MountainPathController(MountainPathQueryService service, MountainPathToMountainPathResponseMapper mountainPathToMountainPathResponseMapper) {
+        this.service = service;
         this.mountainPathToMountainPathResponseMapper = mountainPathToMountainPathResponseMapper;
     }
 
     @GetMapping("/all")
     public ResponseEntity<List<MountainPathFindResponse>> findAllMountainPathsOrderedByName() {
 
-        List<MountainPath> modelsResponse = mountainPathQueryService.getAllMountainPaths();
+        List<MountainPath> modelsResponse = service.getAllMountainPaths();
         List<MountainPathFindResponse> response = mountainPathToMountainPathResponseMapper.mapToList(modelsResponse);
 
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createMountainPath(@Valid @RequestBody final MountainPathCreate dto) {
-        LOGGER.info("MountainPath creating");
-        return ResponseEntity.status(HttpStatus.CREATED).body(mountainPathQueryService.createMountainPath(dto));
+    public ResponseEntity<?> createMountainPath(@Valid @RequestBody final MountainPathCreateRequest createRequest) {
+        LOGGER.info("Creating new Mountain Path with name: " + createRequest.getName() + " authorid " + createRequest.getAuthorId());
+
+        MountainPath mp = service.createMountainPath(createRequest);
+        MountainPathCreateResponse response = new MountainPathCreateResponse();
+
+        response.setName(mp.getName());
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
 }
