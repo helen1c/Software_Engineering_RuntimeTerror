@@ -28,11 +28,10 @@ export const ShowUser = ({ user }: Props) => {
     });
   }, []);
 
-  //link ce voditi na profilnu stranicu korisnika
   return (
     <div>
       <div>
-        <img alt={user.name}  src={image} className = "photo" onClick={e => history.push("/")}/>
+        <img alt={user.name}  src={image} className = "photo" onClick={e => history.push("/profile/" + user.id)}/>
       </div>
       <div>
         <p>{user.name}</p>
