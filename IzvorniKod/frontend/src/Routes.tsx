@@ -10,6 +10,7 @@ import {ProfileUserInfo} from "./components/profile/ProfileUserInfo";
 import {MountaineeringCommunitySearch} from "./components/mountaineering-community/MountaineeringCommunitySearch"
 
 
+import {MenuProfile} from "./components/menu-profile/MenuProfile";
 
 export const Routes = () => {
 
@@ -26,7 +27,7 @@ export const Routes = () => {
                 <Route path="/login" component={LoginForm} exact={true}/>
                 <Route path="/mountaineering-community/search" component={MountaineeringCommunitySearch} exact/>
                 <Route path="/mountain-lodge/search" component={MountainLodgeSearch} exact/>
-                <Route path="/profile/:id" component={ProfileUserInfo} exact/>
+                <Route path="/profile/:id" component={MenuProfile} exact/>
             </Switch>
         </div>
     );
