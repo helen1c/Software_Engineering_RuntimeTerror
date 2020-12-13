@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.websocket.server.PathParam;
 import java.security.Principal;
 import java.util.List;
 
@@ -47,6 +46,26 @@ public class UserController {
         return ResponseEntity.ok(userService.getRole(user.getEmail()));
     }
 
+    @GetMapping("is-admin")
+    public ResponseEntity<Boolean> getIsAdmin(Principal principal) {
+        LOGGER.info("User fetching");
+        return ResponseEntity.ok(userService.getRole(principal.getName()).equals("ADMIN"));
+    }
+
+    @GetMapping("profileOwner/{id}")
+    public ResponseEntity<Boolean> isProfileOwner(@PathVariable("id") final Long profileId, Principal principal) {
+        LOGGER.info("Checking if current user is profile owner");
+        final Boolean isOwner = userService.isOwner(profileId, principal.getName());
+        return ResponseEntity.ok(isOwner);
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<?> getCurrentUser(Principal principal) {
+        LOGGER.info("Getting current user");
+        final User user = userService.checkForEmail(principal.getName());
+        return ResponseEntity.ok(user);
+    }
+
     @PostMapping
     public ResponseEntity<?> createUser(@Valid @RequestBody final UserCreateDto dto) {
         LOGGER.info("User creating");
@@ -63,7 +82,12 @@ public class UserController {
         return ResponseEntity.ok(userService.getImage(userService.getUserById(id).getEmail()));
     }
 
-    @RequestMapping(value = "{id}",method=RequestMethod.DELETE)
+    @GetMapping(value = "/profile-image/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
+    public ResponseEntity<byte[]> getProfileImage(@PathVariable("id") final Long profileId) {
+        return ResponseEntity.ok(userService.getImage(userService.getUserById(profileId).getEmail()));
+    }
+
+    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteUser(@PathVariable("id") final Long userId, Principal principal) {
         LOGGER.info("User removing");
         userService.deleteUser(userId, principal);

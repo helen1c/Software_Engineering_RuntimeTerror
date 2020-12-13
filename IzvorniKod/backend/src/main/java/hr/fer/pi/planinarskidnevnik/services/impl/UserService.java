@@ -135,7 +135,7 @@ public class UserService {
         User currentUser = optionalCurrentUser.get();
         User userForRemoval = getUserById(userId);
 
-        if (currentUser.getId() == userForRemoval.getId()) {
+        if (currentUser.getId() == userForRemoval.getId() || getRole(currentUser.getEmail()).equals("ADMIN")) {
             userRepository.delete(userForRemoval);
         } else {
             LOGGER.error("Not allowed to delete user");
@@ -179,5 +179,15 @@ public class UserService {
         }
 
         return searchResult;
+    }
+
+    public boolean isOwner(Long id, String currentUserEmail) {
+        Optional<User> optionalCurrentUser = userRepository.findByEmail(currentUserEmail);
+        if (optionalCurrentUser.isEmpty()) {
+            LOGGER.error("User {} doesn't exist", currentUserEmail);
+            throw new ResourceNotFoundException(String.format("Korisnik %s ne postoji", currentUserEmail));
+        }
+        User currentUser = optionalCurrentUser.get();
+        return currentUser.getId().equals(id);
     }
 }
