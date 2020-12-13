@@ -2,10 +2,13 @@ package hr.fer.pi.planinarskidnevnik.services.impl;
 
 import hr.fer.pi.planinarskidnevnik.dtos.UserCreateDto;
 import hr.fer.pi.planinarskidnevnik.dtos.UserSearchDto;
+import hr.fer.pi.planinarskidnevnik.exceptions.IllegalAccessException;
 import hr.fer.pi.planinarskidnevnik.exceptions.NoImageException;
 import hr.fer.pi.planinarskidnevnik.exceptions.ResourceNotFoundException;
 import hr.fer.pi.planinarskidnevnik.exceptions.UserWithEmailExistsException;
+import hr.fer.pi.planinarskidnevnik.models.Role;
 import hr.fer.pi.planinarskidnevnik.models.User;
+import hr.fer.pi.planinarskidnevnik.repositories.RoleRepository;
 import hr.fer.pi.planinarskidnevnik.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,17 +21,20 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.security.Principal;
 import java.util.Optional;
 
 @Service
 public class UserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     private final PasswordEncoder encoder;
     private final String DEFAULT_PROFILE_IMAGE = "/images/planinar.jpeg";
 
-    public UserService(UserRepository userRepository, PasswordEncoder encoder) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder encoder) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
         this.encoder = encoder;
     }
 
@@ -48,7 +54,7 @@ public class UserService {
         Optional<User> optionalUser = userRepository.findById(userId);
         if (optionalUser.isEmpty()) {
             LOGGER.info("User with id {} doesn't exist", userId);
-            throw new ResourceNotFoundException("jbg");
+            throw new ResourceNotFoundException("Korisnik ne postoji");
         }
         return optionalUser.get();
     }
@@ -58,7 +64,8 @@ public class UserService {
             LOGGER.info("User with email {} cannot be created because user with same email already exists", userCreateDto.getEmail());
             throw new UserWithEmailExistsException("Korisnik s emailom već postoji.");
         }
-        final User user = new User(userCreateDto.getName(), encoder.encode(userCreateDto.getPassword()), userCreateDto.getEmail(), userCreateDto.getPlaceOfResidence(), userCreateDto.getDateOfBirth(), userCreateDto.getDescription(), userCreateDto.getImage());
+        Role role = roleRepository.getOne(2L);
+        final User user = new User(userCreateDto.getName(), encoder.encode(userCreateDto.getPassword()), userCreateDto.getEmail(), userCreateDto.getPlaceOfResidence(), userCreateDto.getDateOfBirth(), userCreateDto.getDescription(), userCreateDto.getImage(), role);
         userRepository.save(user);
         LOGGER.info("New user {} created", user);
         return user;
@@ -111,6 +118,54 @@ public class UserService {
             throw new UserWithEmailExistsException("Korisnik s emailom " + email + " već postoji.");
         }
         return exists;
+    }
+
+    public String getRole(String email) {
+        return userRepository.findByEmail(email).get().getRole().getName();
+    }
+
+    public void deleteUser(Long userId, Principal principal) {
+        Optional<User> optionalCurrentUser = findUserByEmail(principal.getName());
+
+        if (optionalCurrentUser.isEmpty()) {
+            LOGGER.error("User with id {} doesn't exist", userId);
+            throw new ResourceNotFoundException(String.format("Korisnik s id %s ne postoji", userId));
+        }
+
+        User currentUser = optionalCurrentUser.get();
+        User userForRemoval = getUserById(userId);
+
+        if (currentUser.getId() == userForRemoval.getId()) {
+            userRepository.delete(userForRemoval);
+        } else {
+            LOGGER.error("Not allowed to delete user");
+            throw new IllegalAccessException("Nemate dozvolu za brisanje ovog korisnika");
+        }
+        LOGGER.info("User with id {} removed", userId);
+    }
+
+    public User editCurrentUser(UserCreateDto userCreateDto, Principal principal) {
+        Optional<User> optionalCurrentUser = userRepository.findByEmail(principal.getName());
+        if (optionalCurrentUser.isEmpty()) {
+            LOGGER.error("User {} doesn't exist", principal.getName());
+            throw new ResourceNotFoundException(String.format("Korisnik %s ne postoji", principal.getName()));
+        }
+
+        User currentUser = optionalCurrentUser.get();
+        if (!currentUser.getEmail().equals(userCreateDto.getEmail())) {       //Makni ako se odluci mijenjat mail
+            LOGGER.error("Not allowed to edit user");
+            throw new IllegalAccessException("Nemate dozvolu za uređivanje ovog korisnika");
+        }
+
+        currentUser.setName(userCreateDto.getName());
+        currentUser.setPlaceOfResidence(userCreateDto.getPlaceOfResidence());
+        currentUser.setDateOfBirth(userCreateDto.getDateOfBirth());
+        currentUser.setDescription(userCreateDto.getDescription());
+        currentUser.setImage(userCreateDto.getImage());
+
+        userRepository.save(currentUser);
+
+        return currentUser;
     }
 
     public List<UserSearchDto> getUserByName(String userName) { //userName je ono sto smo unijeli

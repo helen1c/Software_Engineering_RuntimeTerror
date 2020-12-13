@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 import java.security.Principal;
 import java.util.List;
 
@@ -39,6 +40,13 @@ public class UserController {
         return ResponseEntity.ok(list);
     }
 
+    @GetMapping("role/{id}")
+    public ResponseEntity<?> getUserRoleById(@PathVariable("id") final Long userId) {
+        LOGGER.info("User fetching");
+        final User user = userService.getUserById(userId);
+        return ResponseEntity.ok(userService.getRole(user.getEmail()));
+    }
+
     @PostMapping
     public ResponseEntity<?> createUser(@Valid @RequestBody final UserCreateDto dto) {
         LOGGER.info("User creating");
@@ -53,5 +61,19 @@ public class UserController {
     @GetMapping(value = "/image/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<byte[]> getImageById(@PathVariable("id") final Long id) {
         return ResponseEntity.ok(userService.getImage(userService.getUserById(id).getEmail()));
+    }
+
+    @RequestMapping(value = "{id}",method=RequestMethod.DELETE)
+    public ResponseEntity<?> deleteUser(@PathVariable("id") final Long userId, Principal principal) {
+        LOGGER.info("User removing");
+        userService.deleteUser(userId, principal);
+        return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/current")
+    public ResponseEntity<UserCreateDto> editCurrentUser(@RequestBody UserCreateDto userCreateDto, Principal principal) {
+        LOGGER.info("Current user editing");
+        final User user = userService.editCurrentUser(userCreateDto, principal);
+        return ResponseEntity.ok(new UserCreateDto(user.getName(), user.getPassword(), user.getEmail(), user.getPlaceOfResidence(), user.getDateOfBirth(), user.getDescription(), null));
     }
 }

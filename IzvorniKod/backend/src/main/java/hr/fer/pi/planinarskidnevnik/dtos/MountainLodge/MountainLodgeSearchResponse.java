@@ -1,5 +1,7 @@
 package hr.fer.pi.planinarskidnevnik.dtos.MountainLodge;
 
+import hr.fer.pi.planinarskidnevnik.models.Utility;
+
 import java.util.List;
 
 public class MountainLodgeSearchResponse {
@@ -7,7 +9,7 @@ public class MountainLodgeSearchResponse {
     private Long id;
     private String name;
     private byte[] image;
-    private List<String> utilities;
+    private List<Utility> utilities;
     private Long elevation;
     private String hillName;
 
@@ -27,7 +29,7 @@ public class MountainLodgeSearchResponse {
         this.image = image;
     }
 
-    public void setUtilities(List<String> utilities) {
+    public void setUtilities(List<Utility> utilities) {
         this.utilities = utilities;
     }
 
@@ -43,7 +45,7 @@ public class MountainLodgeSearchResponse {
         return image;
     }
 
-    public List<String> getUtilities() {
+    public List<Utility> getUtilities() {
         return utilities;
     }
 

@@ -6,6 +6,7 @@ import {useHistory} from "react-router";
 function Header() {
   const [profileImage, setProfileImage] = useState("");
   const history = useHistory();
+  const [isProfileActive, setProfileActive] = useState(false);
 
   useEffect(() => {
     if(sessionStorage.getItem("key") !== null)
@@ -23,11 +24,6 @@ function Header() {
     });
   }, []);
 
-  const logout = () => {
-    sessionStorage.removeItem("key");
-    window.location.assign("/home");
-  }
-
   return (
     <nav className="header">
       <div className="title-container">
@@ -43,9 +39,37 @@ function Header() {
               <button className="loginAndRegisterButton" onClick={e => history.push("/register")}>Registriraj se</button>
             </div>
           ) : (
-            <div className={"user-cnt"}>
-                <img className="profil-image" alt={"Slika profila"} src={profileImage} />
-              <button className="logout-button" onClick={logout}>Odjava</button>
+              <div className="relative" onMouseLeave={() => setProfileActive(false)}>
+                <div className={"user-cnt"}>
+
+                <img className="profil-image" alt={"Slika profila"} src={profileImage} onClick={() => setProfileActive(!isProfileActive)}/>
+                  {isProfileActive && (
+                      <div>
+                        <div
+                            role="menu"
+                            aria-orientation="vertical"
+                            aria-labelledby="user-menu">
+                          <a
+                              href="/profil"
+                              style={{ color: 'orange' }}
+                              onClick={() => setProfileActive(false)}
+                              role="menuitem">
+                            Profil
+                          </a>
+                          <a
+                              href={"/home"}
+                              style={{ color: 'orange' }}
+                              onClick={() => {
+                                setProfileActive(false);
+                                sessionStorage.clear();
+                              }}
+                              role="menuitem">
+                            Odjavi se
+                          </a>
+                        </div>
+                      </div>
+                  )}
+                </div>
             </div>
           )}
         </li>

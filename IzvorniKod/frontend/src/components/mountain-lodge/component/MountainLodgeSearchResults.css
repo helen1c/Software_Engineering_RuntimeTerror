@@ -1,0 +1,13 @@
+.mountain-lodge-cnt {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: 300px;
+    border: 2px solid #211648;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+.utils > span {
+    display: block;
+}
