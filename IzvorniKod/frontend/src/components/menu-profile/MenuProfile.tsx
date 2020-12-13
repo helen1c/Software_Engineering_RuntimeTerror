@@ -73,15 +73,10 @@ export const MenuProfile = () => {
     return (
         <div>
             { isOwner ? (
-                <SidebarMenu></SidebarMenu>
+                    <SidebarMenu></SidebarMenu>
             ) : (
                 <ProfileUserInfo></ProfileUserInfo>
             )}
-            <div className="profile-info-container profile-info-text">
-                <div className="profile-text-wrap">
-                    <p>Ime: </p>
-                </div>
-            </div>
         </div>
     )
 }

@@ -37,11 +37,18 @@ const useStyles = makeStyles((theme: Theme) => ({
         flexGrow: 1,
         backgroundColor: theme.palette.background.paper,
         display: 'flex',
-        height: 650,
+        height: 700,
     },
     tabs: {
         borderRight: `1px solid ${theme.palette.divider}`,
+
     },
+    tab: {
+        display: 'flex',
+        height: 100,
+        width: 287,
+        background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    }
 }));
 
 export const SidebarMenu = () => {
@@ -61,10 +68,11 @@ export const SidebarMenu = () => {
                 aria-label="Vertical tabs example"
                 className={classes.tabs}
             >
-                <Tab label="MOJ PROFIL" id="{0}" />
-                <Tab label="ARHIVA" id="{1}" />
-                <Tab label="MOJE STAZE" id="{2}" />
-                <Tab label="MOJI DOGAĐAJI" id="{3}" />
+                <Tab className={classes.tab} label="MOJ PROFIL" id="{0}" />
+                <Tab className={classes.tab} label="ARHIVA" id="{1}" />
+                <Tab className={classes.tab} label="MOJE STAZE" id="{2}" />
+                <Tab className={classes.tab} label="MOJI DOGAĐAJI" id="{3}" />
+                <Tab className={classes.tab} label="" id="{4}" />
             </Tabs>
             <TabPanel value={value} index={0}>
                 <ProfileUserInfo></ProfileUserInfo>
@@ -77,6 +85,8 @@ export const SidebarMenu = () => {
             </TabPanel>
             <TabPanel value={value} index={3}>
                 Moji događaji
+            </TabPanel>
+            <TabPanel index={value} value={4}>
             </TabPanel>
         </div>
     );
