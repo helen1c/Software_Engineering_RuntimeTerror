@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./ProfileUserInfo.css";
 import { getEmptyProfile, Profile } from "./models/Profile";
-import {Route, useHistory} from "react-router";
+import { useHistory } from "react-router";
 import { Button, Dialog, DialogActions, DialogTitle } from "@material-ui/core";
-import {MountaineeringCommunitySearch} from "../mountaineering-community/MountaineeringCommunitySearch"
+import uredi from "../../assets/184-1840304_transparent-paper-icon-png-white-pen-and-paper.png";
+import obrisi from "../../assets/free-icons-png-ios-delete-icon-11562940143dqx9dhi9in.png";
 
 export const ProfileUserInfo = () => {
   const [user, setUser] = useState<Profile>(getEmptyProfile);
@@ -173,13 +174,15 @@ export const ProfileUserInfo = () => {
   };
 
   return (
-    <div>
-      <h1 className="profile-info-title">Korisnički podaci</h1>
+    <div >
+      <div className="main-profile">
+        <h1 className="profile-info-title">Korisnički podaci</h1>
       <div className="profile-info-container profile-info-text">
         <div className="profile-text-wrap">
-          <p>Ime: </p>
+          <div className="input-content-div">
+          <label>Ime: </label>
           {!edit ? (
-            <input
+            <input className="input-content"
               type="text"
               disabled
               value={user ? user.name : ""}
@@ -187,7 +190,7 @@ export const ProfileUserInfo = () => {
             />
           ) : (
             <>
-              <input
+              <input className="input-content"
                 type="text"
                 value={user.name}
                 onChange={(e) => setUser({ ...user, name: e.target.value })}
@@ -195,10 +198,20 @@ export const ProfileUserInfo = () => {
               <p className="mb-8">{nameError}</p>
             </>
           )}
-          <div>E-mail: {user ? user.email : ""}</div>
-          <p>Mjesto rođenja: </p>
+          </div>
+          <div className="input-content-div">
+            <label>E-mail: </label>
+            <input className="input-content"
+                   type="text"
+                   disabled
+                   value={user ? user.email : ""}
+
+            />
+          </div>
+          <div className="input-content-div">
+          <label>Mjesto rođenja: </label>
           {!edit ? (
-            <input
+            <input className="input-content"
               type="text"
               disabled
               value={user ? user.placeOfResidence : ""}
@@ -208,7 +221,7 @@ export const ProfileUserInfo = () => {
             />
           ) : (
             <>
-              <input
+              <input className="input-content"
                 type="text"
                 value={user.placeOfResidence}
                 onChange={(e) =>
@@ -218,9 +231,11 @@ export const ProfileUserInfo = () => {
               <p className="mb-8">{nameError}</p>
             </>
           )}
-          <p>Datum rođenja:</p>
+          </div>
+          <div className="input-content-div">
+          <label>Datum rođenja:</label>
           {!edit ? (
-            <input
+            <input className="input-content"
               type="date"
               disabled
               value={user.dateOfBirth}
@@ -230,7 +245,7 @@ export const ProfileUserInfo = () => {
             />
           ) : (
             <>
-              <input
+              <input className="input-content"
                 type="date"
                 value={user.dateOfBirth}
                 onChange={(e) =>
@@ -239,11 +254,13 @@ export const ProfileUserInfo = () => {
               />
             </>
           )}
+          </div>
+
           <div className="profile-info-description">
-            <div>O meni:</div>
+            <div><label> O meni:</label> </div>
             {!edit ? (
-              <input
-                type="text"
+              <textarea className="input-content-text"
+
                 disabled
                 value={user ? user.description : ""}
                 onChange={(e) =>
@@ -252,8 +269,8 @@ export const ProfileUserInfo = () => {
               />
             ) : (
               <>
-                <input
-                  type="text"
+                <textarea className="input-content-text"
+
                   value={user.description}
                   onChange={(e) =>
                     setUser({ ...user, description: e.target.value })
@@ -283,15 +300,23 @@ export const ProfileUserInfo = () => {
           )}
         </div>
       </div>
+      </div>
+      <div className="buttons-profile">
       {isOwner ? (
         !edit ? (
           <div>
-            <button onClick={handleEditOnClick}>Izmijeni</button>
+            <button className="button-profile" onClick={handleEditOnClick}>Uredi profil
+              <img
+                  src={uredi}
+                  alt={"Uredi"}
+                  className="buttons-profile-img"
+              /></button>
+
           </div>
         ) : (
           <div>
-            <button onClick={handleCancelOnClick}>Odustani</button>
-            <button onClick={() => setOpenEditModal(true)}>Spremi</button>
+            <button className="button-profile" onClick={handleCancelOnClick}>Odustani</button>
+            <button className="button-profile" onClick={() => setOpenEditModal(true)}>Spremi</button>
           </div>
         )
       ) : (
@@ -311,8 +336,14 @@ export const ProfileUserInfo = () => {
         </div>
       )}
       {(isOwner || isAdmin) && (
-        <button onClick={() => setOpenDeleteModal(true)}>Ukloni račun</button>
+        <button  className="button-profile" onClick={() => setOpenDeleteModal(true)}>Ukloni račun
+          <img
+            src={obrisi}
+            alt={"Obrisi"}
+            className="buttons-profile-img"
+        /></button>
       )}
+      </div>
       <Dialog
         open={openDeleteModal}
         onClose={() => setOpenDeleteModal(false)}
@@ -349,9 +380,7 @@ export const ProfileUserInfo = () => {
           </Button>
         </DialogActions>
       </Dialog>
-        {(isOwner) && (
-          < Route component={MountaineeringCommunitySearch} exact={true}/>
-        )}
+
     </div>
   );
 };
