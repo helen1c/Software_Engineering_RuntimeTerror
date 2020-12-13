@@ -82,7 +82,6 @@ public class UserController {
         return ResponseEntity.ok(userService.getImage(userService.getUserById(id).getEmail()));
     }
 
-    @RequestMapping(value = "{id}",method=RequestMethod.DELETE)
     @GetMapping(value = "/profile-image/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<byte[]> getProfileImage(@PathVariable("id") final Long profileId) {
         return ResponseEntity.ok(userService.getImage(userService.getUserById(profileId).getEmail()));
