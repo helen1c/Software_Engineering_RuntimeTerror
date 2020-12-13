@@ -1,6 +1,7 @@
 package hr.fer.pi.planinarskidnevnik.controllers;
 
 import hr.fer.pi.planinarskidnevnik.dtos.UserCreateDto;
+import hr.fer.pi.planinarskidnevnik.dtos.UserSearchDto;
 import hr.fer.pi.planinarskidnevnik.models.User;
 import hr.fer.pi.planinarskidnevnik.services.impl.UserService;
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping("users")
@@ -31,6 +33,13 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    @GetMapping("/community")
+    public ResponseEntity<?> getUserByName(@RequestParam("name") final String userName) {
+        LOGGER.info("User fetching by name");
+        final List<UserSearchDto> list = userService.getUserByName(userName);
+        return ResponseEntity.ok(list);
+    }
+
     @GetMapping("role/{id}")
     public ResponseEntity<?> getUserRoleById(@PathVariable("id") final Long userId) {
         LOGGER.info("User fetching");
@@ -47,6 +56,11 @@ public class UserController {
     @GetMapping(value = "/image", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<byte[]> getCurrentUserImage(Principal principal) {
         return ResponseEntity.ok(userService.getImage(principal.getName()));
+    }
+
+    @GetMapping(value = "/image/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
+    public ResponseEntity<byte[]> getImageById(@PathVariable("id") final Long id) {
+        return ResponseEntity.ok(userService.getImage(userService.getUserById(id).getEmail()));
     }
 
     @RequestMapping(value = "{id}",method=RequestMethod.DELETE)

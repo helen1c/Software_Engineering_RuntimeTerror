@@ -1,6 +1,7 @@
 package hr.fer.pi.planinarskidnevnik.services.impl;
 
 import hr.fer.pi.planinarskidnevnik.dtos.UserCreateDto;
+import hr.fer.pi.planinarskidnevnik.dtos.UserSearchDto;
 import hr.fer.pi.planinarskidnevnik.exceptions.IllegalAccessException;
 import hr.fer.pi.planinarskidnevnik.exceptions.NoImageException;
 import hr.fer.pi.planinarskidnevnik.exceptions.ResourceNotFoundException;
@@ -18,6 +19,8 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.security.Principal;
 import java.util.Optional;
 
@@ -163,5 +166,18 @@ public class UserService {
         userRepository.save(currentUser);
 
         return currentUser;
+    }
+
+    public List<UserSearchDto> getUserByName(String userName) { //userName je ono sto smo unijeli
+        List<User> allUsers = userRepository.findAll();  //dohvatimo listu svih Usera
+        List<UserSearchDto> searchResult = new ArrayList<>();
+
+        for (User u : allUsers) {
+            if (u.getName().toLowerCase().contains(userName.toLowerCase())) {
+                searchResult.add(new UserSearchDto(u.getId(), u.getImage(), u.getName()));
+            }
+        }
+
+        return searchResult;
     }
 }
