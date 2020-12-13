@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import {ProfileUserInfo} from "../profile/ProfileUserInfo";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -61,31 +62,21 @@ export const SidebarMenu = () => {
                 className={classes.tabs}
             >
                 <Tab label="MOJ PROFIL" id="{0}" />
-                <Tab label="Item Two" id="{1}" />
-                <Tab label="Item Three" id="{2}" />
-                <Tab label="Item Four" id="{3}" />
-                <Tab label="Item Five" id="{4}" />
+                <Tab label="ARHIVA" id="{1}" />
+                <Tab label="MOJE STAZE" id="{2}" />
+                <Tab label="MOJI DOGAĐAJI" id="{3}" />
             </Tabs>
             <TabPanel value={value} index={0}>
-                Item one
+                <ProfileUserInfo></ProfileUserInfo>
             </TabPanel>
             <TabPanel value={value} index={1}>
-                Item Two
+                Arhiva
             </TabPanel>
             <TabPanel value={value} index={2}>
-                Item Three
+                Moje staze
             </TabPanel>
             <TabPanel value={value} index={3}>
-                Item Four
-            </TabPanel>
-            <TabPanel value={value} index={4}>
-                Item Five
-            </TabPanel>
-            <TabPanel value={value} index={5}>
-                Item Six
-            </TabPanel>
-            <TabPanel value={value} index={6}>
-                Item Seven
+                Moji događaji
             </TabPanel>
         </div>
     );
