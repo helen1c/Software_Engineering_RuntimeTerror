@@ -3,6 +3,7 @@ import { getEmptyProfile, Profile } from "../profile/models/Profile";
 import { useHistory } from "react-router";
 import {SidebarMenu} from "../sidebar-menu/SidebarMenu";
 import {ProfileUserInfo} from "../profile/ProfileUserInfo";
+import {ProfileDashboard} from "../sidebar-menu/ProfileDashboard";
 
 export const MenuProfile = () => {
     const [user, setUser] = useState<Profile>(getEmptyProfile);
@@ -73,9 +74,9 @@ export const MenuProfile = () => {
     return (
         <div>
             { isOwner ? (
-                    <SidebarMenu></SidebarMenu>
+                    <ProfileDashboard/>
             ) : (
-                <ProfileUserInfo></ProfileUserInfo>
+                <ProfileUserInfo/>
             )}
         </div>
     )
