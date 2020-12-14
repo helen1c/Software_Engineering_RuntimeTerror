@@ -3,8 +3,8 @@ import "./ProfileUserInfo.css";
 import { getEmptyProfile, Profile } from "./models/Profile";
 import { useHistory } from "react-router";
 import { Button, Dialog, DialogActions, DialogTitle } from "@material-ui/core";
-import uredi from "../../assets/184-1840304_transparent-paper-icon-png-white-pen-and-paper.png";
-import obrisi from "../../assets/free-icons-png-ios-delete-icon-11562940143dqx9dhi9in.png";
+import uredi from "../../assets/paper-icon.png";
+import obrisi from "../../assets/delete-icon.png";
 
 export const ProfileUserInfo = () => {
   const [user, setUser] = useState<Profile>(getEmptyProfile);
@@ -209,8 +209,8 @@ export const ProfileUserInfo = () => {
             />
           </div>
           <div className="input-content-div">
-          <label>Mjesto rođenja: </label>
-          {!edit ? (
+          {!edit ? user.placeOfResidence &&
+              <><label>Mjesto rođenja: </label>
             <input className="input-content"
               type="text"
               disabled
@@ -219,8 +219,10 @@ export const ProfileUserInfo = () => {
                 setUser({ ...user, placeOfResidence: e.target.value })
               }
             />
-          ) : (
+            </>
+           : (
             <>
+              <label>Mjesto rođenja: </label>
               <input className="input-content"
                 type="text"
                 value={user.placeOfResidence}
@@ -234,16 +236,13 @@ export const ProfileUserInfo = () => {
           </div>
           <div className="input-content-div">
           <label>Datum rođenja:</label>
-          {!edit ? (
+          {!edit ? user.dateOfBirth &&
             <input className="input-content"
               type="date"
               disabled
               value={user.dateOfBirth}
-              onChange={(e) =>
-                setUser({ ...user, dateOfBirth: e.target.value })
-              }
             />
-          ) : (
+           :
             <>
               <input className="input-content"
                 type="date"
@@ -253,7 +252,7 @@ export const ProfileUserInfo = () => {
                 }
               />
             </>
-          )}
+          }
           </div>
 
           <div className="profile-info-description">
