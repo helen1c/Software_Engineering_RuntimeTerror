@@ -5,6 +5,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import {ProfileUserInfo} from "../profile/ProfileUserInfo";
+import {ViewProfileInfo} from "../profile/models/ViewProfileInfo";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -51,7 +52,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
 }));
 
-export const SidebarMenu = () => {
+
+interface Props {
+    user: ViewProfileInfo
+    setUser: (user: ViewProfileInfo) => void;
+}
+
+export const SidebarMenu = ({user, setUser}:Props) => {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
 
@@ -75,7 +82,7 @@ export const SidebarMenu = () => {
                 <Tab className={classes.tab} label="" id="{4}" />
             </Tabs>
             <TabPanel value={value} index={0}>
-                <ProfileUserInfo></ProfileUserInfo>
+                <ProfileUserInfo user={user} setUser={setUser}/>
             </TabPanel>
             <TabPanel value={value} index={1}>
                 Arhiva

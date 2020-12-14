@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useState} from "react";
 import "./ProfileUserInfo.css";
 import { getEmptyProfile, Profile } from "./models/Profile";
 import {Route, useHistory} from "react-router";
@@ -8,77 +8,24 @@ import obrisi from "../../assets/delete-icon.png";
 import odustani from "../../assets/blue-x-png-1.png";
 import spremi from "../../assets/save-icon.png";
 import {MountaineeringCommunitySearch} from "../mountaineering-community/MountaineeringCommunitySearch";
+import {getEmptyProfile, ViewProfileInfo} from "./models/ViewProfileInfo";
+import {Button, Dialog, DialogActions, DialogTitle} from "@material-ui/core";
 
-export const ProfileUserInfo = () => {
-  const [user, setUser] = useState<Profile>(getEmptyProfile);
-  const [oldUser, setOldUser] = useState<Profile>(getEmptyProfile);
+interface Props {
+  user: ViewProfileInfo;
+  setUser: (user: ViewProfileInfo) => void;
+}
+
+export const ProfileUserInfo = ({user, setUser}: Props) => {
+  const [oldUser, setOldUser] = useState<ViewProfileInfo>(getEmptyProfile);
   const [edit, setEdit] = useState(false);
   const [nameError, setNameError] = useState("");
-  const [isOwner, setIsOwner] = useState<boolean>(false);
-  const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [sentFriendRequest, setSentFriendRequest] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const history = useHistory();
   const id = window.location.pathname.split("/")[2];
-
-  useEffect(() => {
-    fetch("/api/users/" + id, {
-      method: "GET",
-      headers: new Headers({
-        authorization: sessionStorage.getItem("key") || "",
-      }),
-    }).then(function (response) {
-      if (response.status === 200) {
-        response.json().then((currentUser) => {
-          fetch("/api/users/profile-image/" + id, {
-            method: "GET",
-            headers: new Headers({
-              authorization: sessionStorage.getItem("key") || "",
-            }),
-          }).then(function (response) {
-            if (response.status === 200) {
-              response.blob().then((e) => {
-                setUser({
-                  ...currentUser,
-                  image: URL.createObjectURL(e),
-                });
-              });
-            } else {
-              setUser(currentUser);
-            }
-          });
-        });
-      } else if (response.status === 403) {
-        history.push("/naslovnica");
-      }
-    });
-    fetch("/api/users/profileOwner/" + id, {
-      method: "GET",
-      headers: new Headers({
-        authorization: sessionStorage.getItem("key") || "",
-      }),
-    }).then(function (response) {
-      if (response.status === 200) {
-        response.json().then((owner) => {
-          setIsOwner(owner);
-        });
-      }
-    });
-    fetch("/api/users/is-admin/", {
-      method: "GET",
-      headers: new Headers({
-        authorization: sessionStorage.getItem("key") || "",
-      }),
-    }).then(function (response) {
-      if (response.status === 200) {
-        response.json().then((owner) => {
-          setIsAdmin(owner);
-        });
-      }
-    });
-  }, []);
 
   const showImage = (event: any) => {
     var file = event.target.files[0];
@@ -153,7 +100,7 @@ export const ProfileUserInfo = () => {
       }),
     }).then((response) => {
       if (response.status === 200) {
-        if (isOwner) {
+        if (user.isOwner) {
           sessionStorage.clear();
         }
         window.location.href = "/home";
@@ -308,7 +255,7 @@ export const ProfileUserInfo = () => {
       </div>
       </div>
       <div className="buttons-profile">
-      {isOwner ? (
+      {user.isOwner ? (
         !edit ? (
           <div>
             <button className="button-profile" onClick={handleEditOnClick}>
@@ -355,7 +302,7 @@ export const ProfileUserInfo = () => {
           )}
         </div>
       )}
-      {(isOwner || isAdmin) && (
+      {(user.isOwner || user.isAdmin) && (
         <button  className="button-profile" onClick={() => setOpenDeleteModal(true)}>
           <span className="button-label" >Ukloni račun </span>
           <img

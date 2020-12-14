@@ -1,22 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { getEmptyProfile, Profile } from "../profile/models/Profile";
+import { getEmptyProfile, ViewProfileInfo } from "../profile/models/ViewProfileInfo";
 import { useHistory } from "react-router";
 import {SidebarMenu} from "../sidebar-menu/SidebarMenu";
 import {ProfileUserInfo} from "../profile/ProfileUserInfo";
 import {ProfileDashboard} from "../sidebar-menu/ProfileDashboard";
 
 export const MenuProfile = () => {
-    const [user, setUser] = useState<Profile>(getEmptyProfile);
-    const [oldUser, setOldUser] = useState<Profile>(getEmptyProfile);
-    const [edit, setEdit] = useState(false);
-    const [nameError, setNameError] = useState("");
-    const [isOwner, setIsOwner] = useState<boolean>(false);
-    const [isAdmin, setIsAdmin] = useState<boolean>(false);
+    const [user, setUser] = useState<ViewProfileInfo>(getEmptyProfile);
     const history = useHistory();
     const id = window.location.pathname.split("/")[2];
 
     useEffect(() => {
-        fetch("/api/users/" + id, {
+        fetch("/api/users/profile/" + id, {
             method: "GET",
             headers: new Headers({
                 authorization: sessionStorage.getItem("key") || "",
@@ -24,59 +19,24 @@ export const MenuProfile = () => {
         }).then(function (response) {
             if (response.status === 200) {
                 response.json().then((currentUser) => {
-                    fetch("/api/users/profile-image/" + id, {
-                        method: "GET",
-                        headers: new Headers({
-                            authorization: sessionStorage.getItem("key") || "",
-                        }),
-                    }).then(function (response) {
-                        if (response.status === 200) {
-                            response.blob().then((e) => {
-                                setUser({
-                                    ...currentUser,
-                                    image: URL.createObjectURL(e),
-                                });
-                            });
-                        } else {
-                            setUser(currentUser);
-                        }
+                    currentUser.image = "data:image/jpeg;base64," + currentUser.image;
+                    alert(currentUser.image)
+                    setUser({
+                        ...currentUser
                     });
                 });
             } else if (response.status === 403) {
                 history.push("/naslovnica");
             }
         });
-        fetch("/api/users/profileOwner/" + id, {
-            method: "GET",
-            headers: new Headers({
-                authorization: sessionStorage.getItem("key") || "",
-            }),
-        }).then(function (response) {
-            if (response.status === 200) {
-                response.json().then((owner) => {
-                    setIsOwner(owner);
-                });
-            }
-        });
-    }, []);
-
-    const showImage = (event: any) => {
-        var file = event.target.files[0];
-
-        var reader = new FileReader();
-        reader.onload = function (newImage) {
-            // @ts-ignore
-            setUser({ ...user, image: newImage.target.result as string });
-        };
-        reader.readAsDataURL(file);
-    };
+    }, [history, id]);
 
     return (
         <div>
-            { isOwner ? (
-                    <ProfileDashboard/>
+            { user.isOwner ? (
+                    <ProfileDashboard user={user} setUser={setUser}/>
             ) : (
-                <ProfileUserInfo/>
+                <ProfileUserInfo user={user} setUser={setUser}/>
             )}
         </div>
     )
