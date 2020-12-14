@@ -1,7 +1,8 @@
 package hr.fer.pi.planinarskidnevnik.models;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Time;
+import java.sql.Date;
 import java.util.Objects;
 
 @Entity(name = "MOUNTAIN_PATH")
@@ -22,11 +23,11 @@ public class MountainPath {
 
     private String endPoint;
 
-    private int avgWalkTime;
+    private Time avgWalkTime;
 
-    private int length;
+    private Long length;
 
-    private int seaLevelDiff;
+    private Long seaLevelDiff;
 
     private Date dateCreated;
 
@@ -36,103 +37,116 @@ public class MountainPath {
     @JoinColumn(nullable = false)
     private User author;
 
-    public MountainPath(Hill hill, String name, String startPoint, String endPoint,
-                        int avgWalkTime, int length, int seaLevelDiff, Date dateCreated, boolean isPrivate, User author) {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Hill getHill() {
+        return hill;
+    }
+
+    public void setHill(Hill hill) {
         this.hill = hill;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
         this.name = name;
+    }
+
+    public String getStartPoint() {
+        return startPoint;
+    }
+
+    public void setStartPoint(String startPoint) {
         this.startPoint = startPoint;
+    }
+
+    public String getEndPoint() {
+        return endPoint;
+    }
+
+    public void setEndPoint(String endPoint) {
         this.endPoint = endPoint;
+    }
+
+    public Time getAvgWalkTime() {
+        return avgWalkTime;
+    }
+
+    public void setAvgWalkTime(Time avgWalkTime) {
         this.avgWalkTime = avgWalkTime;
+    }
+
+    public Long getLength() {
+        return length;
+    }
+
+    public void setLength(Long length) {
         this.length = length;
+    }
+
+    public Long getSeaLevelDiff() {
+        return seaLevelDiff;
+    }
+
+    public void setSeaLevelDiff(Long seaLevelDiff) {
         this.seaLevelDiff = seaLevelDiff;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
-        this.isPrivate = isPrivate;
+    }
+
+    public boolean isPrivate() {
+        return isPrivate;
+    }
+
+    public void setPrivate(boolean aPrivate) {
+        isPrivate = aPrivate;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
         this.author = author;
     }
 
-    public MountainPath() {
 
-    }
-
-    public Long getId(){return id;}
-
-    public String getName() {return name;}
-
-    public void setName(String name) {this.name = name;}
-
-    public String getStartPoint() {return startPoint;}
-
-    public void setStartPoint(String startPoint) {this.startPoint = startPoint;}
-
-    public String getEndPoint() {return endPoint; }
-
-    public void setEndPoint(String endPoint) {this.endPoint = endPoint;}
-
-    public int getAvgWalkTime() {return avgWalkTime;}
-
-    public void setAvgWalkTime(int avgWalkTime) {this.avgWalkTime = avgWalkTime;}
-
-    public int getLength() {return length;}
-
-    public void setLength(int length) {this.length = length;}
-
-    public int getSeaLevelDiff() {return seaLevelDiff;}
-
-    public void setSeaLevelDiff(int seaLevelDiff) {this.seaLevelDiff = seaLevelDiff;}
-
-    public Date getDateCreated() {return dateCreated;}
-
-    public void setDateCreated(Date dateCreated) {this.dateCreated = dateCreated;}
-
-    public boolean isPrivate() {return isPrivate;}
-
-    public void setPrivate(boolean aPrivate) {isPrivate = aPrivate;}
-
-    public Hill getHill() {return hill;}
-
-    public void setHill(Hill hill) {this.hill = hill;}
-
-    public User getAuthor() {return author;}
-
-    public void setAuthor(User author) {this.author = author;}
-
-    @Override
-    public String toString() {
-        return "MountainPath{" +
-                "id=" + id +
-                ", hill=" + hill +
-                ", name='" + name + '\'' +
-                ", startPoint='" + startPoint + '\'' +
-                ", endPoint='" + endPoint + '\'' +
-                ", avgWalkTime=" + avgWalkTime +
-                ", length=" + length +
-                ", seaLevelDiff=" + seaLevelDiff +
-                ", dateCreated=" + dateCreated +
-                ", isPrivate=" + isPrivate +
-                ", author=" + author +
-                '}';
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof MountainPath)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         MountainPath that = (MountainPath) o;
-        return getAvgWalkTime() == that.getAvgWalkTime() &&
-                getLength() == that.getLength() &&
-                getSeaLevelDiff() == that.getSeaLevelDiff() &&
-                isPrivate() == that.isPrivate() &&
-                id.equals(that.id) &&
-                hill.equals(that.hill) &&
-                getName().equals(that.getName()) &&
-                getStartPoint().equals(that.getStartPoint()) &&
-                getEndPoint().equals(that.getEndPoint()) &&
-                getDateCreated().equals(that.getDateCreated()) &&
-                author.equals(that.author);
+        return isPrivate == that.isPrivate &&
+                Objects.equals(id, that.id) &&
+                Objects.equals(hill, that.hill) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(startPoint, that.startPoint) &&
+                Objects.equals(endPoint, that.endPoint) &&
+                Objects.equals(avgWalkTime, that.avgWalkTime) &&
+                Objects.equals(length, that.length) &&
+                Objects.equals(seaLevelDiff, that.seaLevelDiff) &&
+                Objects.equals(dateCreated, that.dateCreated) &&
+                Objects.equals(author, that.author);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, hill, getName(), getStartPoint(), getEndPoint(), getAvgWalkTime(), getLength(), getSeaLevelDiff(), getDateCreated(), isPrivate(), author);
+        return Objects.hash(id, hill, name, startPoint, endPoint, avgWalkTime, length, seaLevelDiff, dateCreated, isPrivate, author);
     }
 }

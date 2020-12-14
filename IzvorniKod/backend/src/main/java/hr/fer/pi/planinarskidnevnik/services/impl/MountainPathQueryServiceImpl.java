@@ -1,7 +1,9 @@
 package hr.fer.pi.planinarskidnevnik.services.impl;
 
 import hr.fer.pi.planinarskidnevnik.dtos.MountainPath.MountainPathCreateRequest;
+import hr.fer.pi.planinarskidnevnik.exceptions.MountainPathAlreadyExistsException;
 import hr.fer.pi.planinarskidnevnik.exceptions.ResourceNotFoundException;
+import hr.fer.pi.planinarskidnevnik.mappers.MountainPathCreateRequestToMountainPathMapper;
 import hr.fer.pi.planinarskidnevnik.models.Hill;
 import hr.fer.pi.planinarskidnevnik.models.MountainPath;
 import hr.fer.pi.planinarskidnevnik.models.User;
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.List;
 
 @Service
@@ -22,16 +25,16 @@ public class MountainPathQueryServiceImpl implements MountainPathQueryService {
     private static final Logger LOGGER = LoggerFactory.getLogger(MountainPathQueryServiceImpl.class);
 
     private final MountainPathRepository mountainPathRepository;
-
     private final HillRepository hillRepository;
-
     private final UserRepository userRepository;
+    private final MountainPathCreateRequestToMountainPathMapper createRequestToMountainPathMapper;
 
     @Autowired
-    public MountainPathQueryServiceImpl(MountainPathRepository mountainPathRepository, HillRepository hillRepository, UserRepository userRepository){
+    public MountainPathQueryServiceImpl(MountainPathRepository mountainPathRepository, HillRepository hillRepository, UserRepository userRepository, MountainPathCreateRequestToMountainPathMapper createRequestToMountainPathMapper){
         this.mountainPathRepository = mountainPathRepository;
         this.hillRepository = hillRepository;
         this.userRepository = userRepository;
+        this.createRequestToMountainPathMapper = createRequestToMountainPathMapper;
     }
 
     @Override
@@ -42,15 +45,21 @@ public class MountainPathQueryServiceImpl implements MountainPathQueryService {
     }
 
     @Override
-    public MountainPath createMountainPath(MountainPathCreateRequest dto) {
+    public MountainPath createMountainPath(MountainPathCreateRequest dto, Principal principal) {
         Hill hill = hillRepository.findById(dto.getHillId()).orElseThrow(() -> new ResourceNotFoundException("Cannot find hill with hill id "+ dto.getHillId()));
-        User author = userRepository.findById(dto.getAuthorId()).orElseThrow(() -> new ResourceNotFoundException("Cannot find user with user id "+ dto.getAuthorId()));
+        User author = userRepository.findByEmail(principal.getName()).orElseThrow(() -> new ResourceNotFoundException("Cannot find user with email: " + principal.getName()));
 
-        final MountainPath mountainPath = new MountainPath(hill, dto.getName(), dto.getStartPoint(), dto.getEndPoint(),
-        dto.getAvgWalkTime(), dto.getLength(), dto.getSeaLevelDiff(), dto.getDateCreated(), dto.isPrivate(), author);
-        mountainPathRepository.save(mountainPath);
+        if(mountainPathRepository.findByName(dto.getName()).isPresent()) {
+            throw new MountainPathAlreadyExistsException("Mountain path with name: " + dto.getName() + " already exists.");
+        }
 
-        LOGGER.info("New mountainPath {} created", mountainPath);
-        return mountainPath;
+        MountainPath path = createRequestToMountainPathMapper.map(dto);
+        path.setAuthor(author);
+        path.setHill(hill);
+
+        mountainPathRepository.save(path);
+
+        LOGGER.info("New mountainPath with id {} created", path);
+        return path;
     }
 }

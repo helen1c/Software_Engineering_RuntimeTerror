@@ -1,6 +1,7 @@
 package hr.fer.pi.planinarskidnevnik.controllers;
 
 import hr.fer.pi.planinarskidnevnik.exceptions.IllegalAccessException;
+import hr.fer.pi.planinarskidnevnik.exceptions.MountainPathAlreadyExistsException;
 import hr.fer.pi.planinarskidnevnik.exceptions.ResourceNotFoundException;
 import hr.fer.pi.planinarskidnevnik.exceptions.UserWithEmailExistsException;
 import hr.fer.pi.planinarskidnevnik.exceptions.dtos.ConstraintViolationDto;
@@ -56,6 +57,11 @@ public class ExceptionHandlerControllerAdvice {
     @ExceptionHandler(UserWithEmailExistsException.class)
     public final ResponseEntity<?> handleUsernameWithEmailAlreadyExistsException(final Exception exception) {
         LOGGER.error("User with email already exists!");
+        return ResponseEntity.badRequest().body(exception.getMessage());
+    }
+
+    @ExceptionHandler({MountainPathAlreadyExistsException.class})
+    public ResponseEntity<String> handleException(final Exception exception) {
         return ResponseEntity.badRequest().body(exception.getMessage());
     }
 

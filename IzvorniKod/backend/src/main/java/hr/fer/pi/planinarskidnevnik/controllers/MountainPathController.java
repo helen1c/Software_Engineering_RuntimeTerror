@@ -3,6 +3,7 @@ package hr.fer.pi.planinarskidnevnik.controllers;
 import hr.fer.pi.planinarskidnevnik.dtos.MountainPath.MountainPathCreateRequest;
 import hr.fer.pi.planinarskidnevnik.dtos.MountainPath.MountainPathCreateResponse;
 import hr.fer.pi.planinarskidnevnik.dtos.MountainPath.MountainPathFindResponse;
+import hr.fer.pi.planinarskidnevnik.exceptions.MountainPathAlreadyExistsException;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainPathToMountainPathResponseMapper;
 import hr.fer.pi.planinarskidnevnik.models.MountainPath;
 import hr.fer.pi.planinarskidnevnik.services.MountainPathQueryService;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -39,10 +41,10 @@ public class MountainPathController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createMountainPath(@Valid @RequestBody final MountainPathCreateRequest createRequest) {
-        LOGGER.info("Creating new Mountain Path with name: " + createRequest.getName() + " authorid " + createRequest.getAuthorId());
+    public ResponseEntity<?> createMountainPath(@Valid @RequestBody final MountainPathCreateRequest createRequest, Principal principal) {
+        LOGGER.info("Creating new Mountain Path with name: " + createRequest.getName());
 
-        MountainPath mp = service.createMountainPath(createRequest);
+        MountainPath mp = service.createMountainPath(createRequest, principal);
         MountainPathCreateResponse response = new MountainPathCreateResponse();
 
         response.setName(mp.getName());

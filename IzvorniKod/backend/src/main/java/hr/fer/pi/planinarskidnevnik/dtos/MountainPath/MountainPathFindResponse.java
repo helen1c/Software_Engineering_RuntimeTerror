@@ -1,7 +1,8 @@
 package hr.fer.pi.planinarskidnevnik.dtos.MountainPath;
 
 
-import java.util.Date;
+import java.sql.Date;
+import java.sql.Time;
 
 public class MountainPathFindResponse {
 
@@ -10,49 +11,89 @@ public class MountainPathFindResponse {
     private String name;
     private String startPoint;
     private String endPoint;
-    private int avgWalkTime;
-    private int length;
-    private int seaLevelDiff;
+    private Time avgWalkTime;
+    private Long length;
+    private Long seaLevelDiff;
     private Date dateCreated;
     private boolean isPrivate;
 
-    public Long getId() {return id;}
+    public Long getId() {
+        return id;
+    }
 
-    public void setId(Long id) {this.id = id;}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getHill() { return hill;}
+    public String getHill() {
+        return hill;
+    }
 
-    public void setHill(String hill) {this.hill = hill;}
+    public void setHill(String hill) {
+        this.hill = hill;
+    }
 
-    public String getName() {return name;}
+    public String getName() {
+        return name;
+    }
 
-    public void setName(String name) {this.name = name;}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public String getStartPoint() {return startPoint;}
+    public String getStartPoint() {
+        return startPoint;
+    }
 
-    public void setStartPoint(String startPoint) {this.startPoint = startPoint;}
+    public void setStartPoint(String startPoint) {
+        this.startPoint = startPoint;
+    }
 
-    public String getEndPoint() {return endPoint;}
+    public String getEndPoint() {
+        return endPoint;
+    }
 
-    public void setEndPoint(String endPoint) {this.endPoint = endPoint;}
+    public void setEndPoint(String endPoint) {
+        this.endPoint = endPoint;
+    }
 
-    public int getAvgWalkTime() { return avgWalkTime;}
+    public Time getAvgWalkTime() {
+        return avgWalkTime;
+    }
 
-    public void setAvgWalkTime(int avgWalkTime) {this.avgWalkTime = avgWalkTime;}
+    public void setAvgWalkTime(Time avgWalkTime) {
+        this.avgWalkTime = avgWalkTime;
+    }
 
-    public int getLength() {return length;}
+    public Long getLength() {
+        return length;
+    }
 
-    public void setLength(int length) {this.length = length;}
+    public void setLength(Long length) {
+        this.length = length;
+    }
 
-    public int getSeaLevelDiff() {return seaLevelDiff;}
+    public Long getSeaLevelDiff() {
+        return seaLevelDiff;
+    }
 
-    public void setSeaLevelDiff(int seaLevelDiff) {this.seaLevelDiff = seaLevelDiff;}
+    public void setSeaLevelDiff(Long seaLevelDiff) {
+        this.seaLevelDiff = seaLevelDiff;
+    }
 
-    public Date getDateCreated() {return dateCreated;}
+    public Date getDateCreated() {
+        return dateCreated;
+    }
 
-    public void setDateCreated(Date dateCreated) {this.dateCreated = dateCreated;}
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
 
-    public boolean isPrivate() {return isPrivate;}
+    public boolean isPrivate() {
+        return isPrivate;
+    }
 
-    public void setPrivate(boolean aPrivate) {isPrivate = aPrivate;}
+    public void setPrivate(boolean aPrivate) {
+        isPrivate = aPrivate;
+    }
 }

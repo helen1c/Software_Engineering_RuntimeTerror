@@ -12,7 +12,7 @@
             <column name="start_point">Susedgrad - PD Kameni svati</column>
             <column name="end_point">PD Lipa-Rog - PD Vugrovec</column>
             <column name="avg_walk_time">18:30:00</column>
-            <column name="length">50</column>
+            <column name="length">5000</column>
             <column name="sea_level_diff">1000</column>
             <column name="date_created">2020-12-13</column>
             <column name="is_private">0</column>
@@ -26,7 +26,7 @@
             <column name="start_point">Kostanjevka (Stenjevec)</column>
             <column name="end_point">Pl. staza 1</column>
             <column name="avg_walk_time">00:50:00</column>
-            <column name="length">2.73</column>
+            <column name="length">4500</column>
             <column name="sea_level_diff">215</column>
             <column name="date_created">2020-12-13</column>
             <column name="is_private">0</column>
@@ -40,7 +40,7 @@
             <column name="start_point">Gornji Stenjevec</column>
             <column name="end_point">PD Glavica</column>
             <column name="avg_walk_time">01:00:00</column>
-            <column name="length">3.0</column>
+            <column name="length">3000</column>
             <column name="sea_level_diff">232</column>
             <column name="date_created">2020-12-13</column>
             <column name="is_private">0</column>
@@ -54,7 +54,7 @@
             <column name="start_point">Gornje Vrapče</column>
             <column name="end_point">Slap Sopot</column>
             <column name="avg_walk_time">02:00:00</column>
-            <column name="length">6.5</column>
+            <column name="length">6500</column>
             <column name="sea_level_diff">388</column>
             <column name="date_created">2020-12-13</column>
             <column name="is_private">0</column>
