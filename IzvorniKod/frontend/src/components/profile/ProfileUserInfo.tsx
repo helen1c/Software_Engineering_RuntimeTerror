@@ -235,15 +235,17 @@ export const ProfileUserInfo = () => {
           )}
           </div>
           <div className="input-content-div">
-          <label>Datum rođenja:</label>
+
           {!edit ? user.dateOfBirth &&
+             <> <label>Datum rođenja:</label>
             <input className="input-content"
               type="date"
               disabled
               value={user.dateOfBirth}
             />
+             </>
            :
-            <>
+            <><label>Datum rođenja:</label>
               <input className="input-content"
                 type="date"
                 value={user.dateOfBirth}
@@ -255,10 +257,11 @@ export const ProfileUserInfo = () => {
           }
           </div>
 
-          <div className="profile-info-description">
-            <div><label> O meni:</label> </div>
-            {!edit ? (
-              <textarea className="input-content-text"
+          <div className="input-content-div">
+
+            {!edit ? ( user.description &&
+                 <>   <label> O meni:</label>
+                <textarea className="input-content-text"
 
                 disabled
                 value={user ? user.description : ""}
@@ -266,8 +269,9 @@ export const ProfileUserInfo = () => {
                   setUser({ ...user, description: e.target.value })
                 }
               />
+              </>
             ) : (
-              <>
+              <> <label> O meni:</label>
                 <textarea className="input-content-text"
 
                   value={user.description}
@@ -304,7 +308,8 @@ export const ProfileUserInfo = () => {
       {isOwner ? (
         !edit ? (
           <div>
-            <button className="button-profile" onClick={handleEditOnClick}>Uredi profil
+            <button className="button-profile" onClick={handleEditOnClick}>
+              <span className="button-label" >Uredi profil </span>
               <img
                   src={uredi}
                   alt={"Uredi"}
@@ -314,8 +319,11 @@ export const ProfileUserInfo = () => {
           </div>
         ) : (
           <div>
-            <button className="button-profile" onClick={handleCancelOnClick}>Odustani</button>
-            <button className="button-profile" onClick={() => setOpenEditModal(true)}>Spremi</button>
+            <button className="button-profile" onClick={handleCancelOnClick}>
+              Odustani </button>
+            <button className="button-profile" onClick={() => setOpenEditModal(true)}>
+              Spremi
+            </button>
           </div>
         )
       ) : (
@@ -335,7 +343,8 @@ export const ProfileUserInfo = () => {
         </div>
       )}
       {(isOwner || isAdmin) && (
-        <button  className="button-profile" onClick={() => setOpenDeleteModal(true)}>Ukloni račun
+        <button  className="button-profile" onClick={() => setOpenDeleteModal(true)}>
+          <span className="button-label" >Ukloni račun </span>
           <img
             src={obrisi}
             alt={"Obrisi"}

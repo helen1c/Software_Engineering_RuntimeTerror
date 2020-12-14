@@ -1,13 +1,13 @@
 .profil-info-image {
-    width: 250px;
-    height: 250px;
+    width: 280px;
+    height: 280px;
     border-radius: 5%;
     box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.5);
     border: 2px solid rgba(255, 255, 255, 0.5);
 
 }
-profil-info-image:hover{
-    box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.04), 0px 2px 6px rgba(9, 55, 53, 0.08), 0px 16px 24px rgba(9, 55, 53, 0.1), 0px 24px 32px rgba(9, 55, 53, 0.14);
+h1.profile-info-title {
+    font-family: Roboto, sans-serif;
 }
 .profile-info-container {
     display: flex;
@@ -43,13 +43,13 @@ profil-info-image:hover{
 .profile-text-wrap {
     width: 70%;
     margin-top: 30px;
-    margin-right: 10px;
+    margin-left: 3rem;
     display: flex;
     flex-direction: column;
 }
 
 .profile-image-wrap {
-
+    margin-right: 1rem;
 }
 
 .input-content{
@@ -57,19 +57,21 @@ profil-info-image:hover{
     border: none;
     color: black;
     padding-left: 0.5rem;
+    font-family: Roboto, sans-serif;
 }
 
 .input-content-div{
     display: flex;
     flex-direction: row;
-    font-family: bold;
+    font-family: bold,Roboto, sans-serif;
+    font-size: large;
 }
 
 .input-content-text{
     padding-left: 0.5rem;
     min-height: 8rem;
     width: 25vw;
-    min-width: 15rem;
+    min-width: 10rem;
     box-shadow: none !important;
     outline: none !important;
     border-radius: 10px;
@@ -88,7 +90,7 @@ profil-info-image:hover{
     display: block;
     margin-top: 0.3rem;
     margin-bottom: 0.3rem;
-    width: 150px;
+    width: 155px;
     font-size: large;
     text-align: left;
     color: white;
@@ -98,6 +100,7 @@ profil-info-image:hover{
     transition-property: transform;
     transform: translate(15px, 0);
     padding: 0.5rem;
+    font-family: Roboto, sans-serif;
 }
 .button-profile:hover{
     transform: translate(2px, 0);
@@ -111,16 +114,74 @@ profil-info-image:hover{
 .buttons-profile-img{
     height: 20px;
     width: 20px;
-    margin-left: 0.5rem;
+    margin-left: 0.3rem;
 }
 label{
     font-weight: bold;
+
 }
-
-@media only screen and (max-width: 764px) {
-
+input[type='text'] {
+    font-family: Roboto, sans-serif !important;
+    font-size: medium;
+}
+@media only screen and (max-width : 660px) {
     .profile-info-container {
         flex-direction: column;
+        width: 90vw;
     }
+    .button-label{
+        display: none;
+    }
+    .button-profile{
+        width: 50px;
+        font-size: smaller;
+    }
+    label{
+        min-width: 200px;
+    }
+    .input-content{
+        padding: 0;
+    }
+    .profile-text-wrap{
+        order: 2;
+        margin-left: 1rem;
+    }
+    .profile-image-wrap{
+        order: 1;
+    }
+}
 
+
+@media only screen and (min-width: 661px) and (max-width: 1070px) {
+    .button-label{
+        display: none;
+    }
+    .button-profile{
+        width: 50px;
+        font-size: smaller;
+    }
+    label{
+        min-width: 200px;
+    }
+    .input-content{
+        padding: 0;
+    }
+    .profile-text-wrap{
+        order: 2;
+        margin-left: 1rem;
+    }
+    .profile-image-wrap{
+        order: 1;
+    }
+    .profile-info-container {
+        flex-direction: column;
+        width: 70vw;
+    }
+}
+
+input[type="date" i] {
+    min-width: min-content;
+    padding: 0px;
+    padding-inline-start: 1px;
+    font-size: medium;
 }
