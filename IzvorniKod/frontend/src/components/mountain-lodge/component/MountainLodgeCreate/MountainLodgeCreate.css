@@ -14,7 +14,6 @@ a:hover {
     cursor: pointer;
 }
 .wrapper-picture {
-    position: relative;
     margin-top: 2rem;
     display: flex;
     flex-direction: row;
@@ -24,6 +23,7 @@ a:hover {
 .upload-picture{
     display: none;
 }
+
 .picture-container {
     display: flex;
     justify-content: center;
@@ -37,6 +37,12 @@ a:hover {
     border: 3px solid #211648;
     border-radius: 10px;
 }
+
+.label-picture {
+    display: flex;
+    justify-content: center;
+}
+
 .errorText {
     color: red;
     font-family: Roboto, sans-serif;
@@ -69,17 +75,42 @@ a:hover {
     align-content: center;
 }
 
+.MuiSnackbar-root {
+    height: 120px;
+    top: 120px;
+}
+
+.dialog-title {
+    text-align: center;
+    font-size: 42rem;
+}
+
+.pic {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
 .remove-picture {
     position: absolute;
     right: 5%;
     top: 5%;
     transform: translate(5%, -5%);
-    z-index: 1;
-    background: none;
+    background-color: #5d4ca7;
+    border-radius: 35px;
     outline: none;
     opacity: 0.5;
     font-size: 1rem;
     color: white;
+}
+
+
+.lodge-create-selects {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
 }
 
 .remove-picture:hover {
@@ -121,5 +152,4 @@ a:hover {
     margin-left: 1rem;
     outline: none !important;
     border: none !important;
-
 }

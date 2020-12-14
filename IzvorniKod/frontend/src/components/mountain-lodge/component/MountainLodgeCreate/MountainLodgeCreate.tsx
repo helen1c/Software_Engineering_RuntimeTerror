@@ -42,27 +42,27 @@ export default function MountainLodgeCreate() {
     const [selectedOptions, setSelectedOptions] = useState([]);
 
     const classes = useStyles();
-    const [open2, setOpen2] = React.useState(false);
-    const [open3, setOpen3] = React.useState(false);
+    const [success, setSuccessMessage] = React.useState(false);
+    const [error, setErrorMessage] = React.useState(false);
 
-    const handleClick = () => {
-        setOpen2(true);
+    const successMessage = () => {
+        setSuccessMessage(true);
     };
-    const handleClick2 = () => {
-        setOpen3(true);
+    const errorMessage = () => {
+        setErrorMessage(true);
     };
 
     const handleClose2 = (event?: React.SyntheticEvent, reason?: string) => {
         if (reason === 'clickaway') {
             return;
         }
-        setOpen2(false);
+        setSuccessMessage(false);
     };
     const handleClose3 = (event?: React.SyntheticEvent, reason?: string) => {
         if (reason === 'clickaway') {
             return;
         }
-        setOpen3(false);
+        setErrorMessage(false);
     };
 
     const dispatcher = useDispatch();
@@ -91,6 +91,8 @@ export default function MountainLodgeCreate() {
     }, [dispatcher, utilityResults]);
 
     const create = async (request: MountainLodgeCreateRequest) => {
+
+
         setOpen(false);
         const sRequest = {
             name: request.name,
@@ -109,10 +111,10 @@ export default function MountainLodgeCreate() {
             }
         };
         const response = await fetch("/api/mountain-lodges/create", requestOptions);
-        if((response.status) === 201){
-            handleClick();
+        if((response.status) === 201 || (response.status / 10 >= 20 && response.status/10 < 30)){
+            successMessage();
         } else{
-            handleClick2();
+            errorMessage();
         }
     }
 
@@ -139,13 +141,14 @@ export default function MountainLodgeCreate() {
         setOpen(true);
     };
     const handleClose = () => {
+        setNewImage("");
         setOpen(false);
     };
 
     const validationSchema = Yup.object().shape({
         name: Yup.string().required("Molimo Vas unesite ime planinarskog doma."),
-        elevation: Yup.number().required("Molimo unesite nadmorsku visinu."),
-        // hillId: Yup.object().nullable().required("Molimo odaberite visočje.")
+        elevation: Yup.number().typeError("Nadmorska visina mora biti broj.").positive("Nadmorska visina mora biti pozitivan broj.").required("Molimo unesite nadmorsku visinu."),
+        hillId: Yup.number().typeError("Molimo odaberite visočje.").required("Molimo odaberite visočje.")
     })
 
     return (
@@ -153,20 +156,22 @@ export default function MountainLodgeCreate() {
             <Button variant="outlined" color="primary" onClick={handleClickOpen}>
                 STVORI DOM
             </Button>
-            <Snackbar open={open2} autoHideDuration={2000} onClose={handleClose2}>
+            <Snackbar open={success} autoHideDuration={2000} onClose={handleClose2}>
                 <Alert onClose={handleClose2} severity="success">
-                    This is a success message!
+                    Planinarski dom je uspješno stvoren.
                 </Alert>
             </Snackbar>
-            <Snackbar open={open3} autoHideDuration={2000} onClose={handleClose3}>
+            <Snackbar open={error} autoHideDuration={1000000} onClose={handleClose3}>
                 <Alert onClose={handleClose3} severity="error">
-                    This is an error message!
+                    Dogodila se pogreška prilikom stvaranja planinarskog doma. Pokušajte kasnije.
                 </Alert>
             </Snackbar>
             <Formik initialValues={{
                 name: "",
+                hillId: null,
+                elevation: null
             } as MountainLodgeCreateRequest
-            } onSubmit={create}
+            } onSubmit={create} onReset={handleClose}
                     validateOnBlur={true}
                     validateOnMount={true}
                     validateOnChange={true}
@@ -178,7 +183,7 @@ export default function MountainLodgeCreate() {
                             handleReset();
                         }} aria-labelledby="form-dialog-title">
                             <Form>
-                                <DialogTitle id="form-dialog-title">Stvori novi dom</DialogTitle>
+                                <DialogTitle className={"dialog-title"} id="form-dialog-title">Stvori novi dom</DialogTitle>
                                 <DialogContent>
                                     <div className="create-column">
                                         <Field className={"input-search"}
@@ -189,6 +194,45 @@ export default function MountainLodgeCreate() {
                                                name={"elevation"} id={"elevation"}/>
                                         {errors.elevation && touched.elevation ? <div className="errorText">{errors.elevation}</div> : <></>}
 
+                                        <div className="pic">
+
+                                            <input className={"upload-picture"}
+                                                   accept={"image/*"}
+                                                   id={"icon-button-file"}
+                                                   type="file" multiple
+                                                   onChange={(event) => {
+                                                       showImage2(event)
+                                                       event.target.value = ""
+                                                   }}
+                                            />
+                                            {newImage ?
+                                                <div className={"wrapper-picture"}>
+                                                    <img
+                                                        style={{display: "block"}}
+                                                        className="profileImage"
+                                                        src={newImage}
+                                                        alt="Slika profila"
+                                                    />
+                                                    <span className={"remove-picture"}
+                                                          onClick={() => setNewImage("")}><DeleteForeverIcon/></span>
+
+                                                </div>
+                                                :
+                                                <>
+                                                    <div className={"wrapper-picture"}>
+                                                        <div className={"picture-container"}>
+                                                            <label className="label-picture" htmlFor="icon-button-file">
+                                                                <IconButton color="primary" aria-label="upload picture"
+                                                                            component="span">
+                                                                    <AddAPhotoOutlined/>
+                                                                </IconButton>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </>
+                                            }
+                                        </div>
+                                        <div className="lodge-create-selects">
                                         <Select
                                             className="hill-select"
                                             isClearable={true}
@@ -201,7 +245,7 @@ export default function MountainLodgeCreate() {
                                             options={hillResults}>
                                         </Select>
 
-                                        {/*// {errors.hillId && touched.hillId ? <div className="error-input">{errors.hillId}</div> : <></>}*/}
+                                        {errors.hillId && touched.hillId ? <div className="errorText">{errors.hillId}</div> : <></>}
 
                                         <Select
                                             className="utility-select"
@@ -213,45 +257,7 @@ export default function MountainLodgeCreate() {
                                             onChange={handleChange}
                                             options={utilityResults}>
                                         </Select>
-                                    </div>
-
-                                    <div className="create-column">
-
-                                        <input className={"upload-picture"}
-                                               accept={"image/*"}
-                                               id={"icon-button-file"}
-                                               type="file" multiple
-                                               onChange={(event) => {
-                                                   showImage2(event)
-                                                   event.target.value = ""
-                                               }}
-                                        />
-                                        {newImage ?
-                                            <div className={"wrapper-picture"}>
-                                                <img
-                                                    style={{display: "block"}}
-                                                    className="profileImage"
-                                                    src={newImage}
-                                                    alt="Slika profila"
-                                                />
-                                                <span className={"remove-picture"}
-                                                      onClick={() => setNewImage("")}><DeleteForeverIcon/></span>
-
-                                            </div>
-                                            :
-                                            <>
-                                                <div className={"wrapper-picture"}>
-                                                    <div className={"picture-container"}>
-                                                        <label htmlFor="icon-button-file">
-                                                            <IconButton color="primary" aria-label="upload picture"
-                                                                        component="span">
-                                                                <AddAPhotoOutlined/>
-                                                            </IconButton>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </>
-                                        }
+                                        </div>
                                     </div>
                                 </DialogContent>
                                 <DialogActions>
