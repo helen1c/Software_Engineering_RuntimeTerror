@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {ProfileUserInfo} from "../profile/ProfileUserInfo";
+import {ProfileUserInfo} from "./ProfileUserInfo";
 import "./ProfileDashboard.css"
 import menu from "../../assets/menu-bar.jpg";
 import {ViewProfileInfo} from "./models/ViewProfileInfo";

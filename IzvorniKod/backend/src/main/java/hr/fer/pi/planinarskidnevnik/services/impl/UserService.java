@@ -1,6 +1,7 @@
 package hr.fer.pi.planinarskidnevnik.services.impl;
 
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserCreateDto;
+import hr.fer.pi.planinarskidnevnik.dtos.User.UserHeaderDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserProfilePageDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserSearchDto;
 import hr.fer.pi.planinarskidnevnik.exceptions.IllegalAccessException;
@@ -22,7 +23,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -73,8 +73,8 @@ public class UserService {
         return user;
     }
 
-    public byte[] getImage(String username) {
-        User user = checkForEmail(username);
+    public byte[] getImage(String email) {
+        User user = checkForEmail(email);
 
         if (user.getImage() == null) {
             try {
@@ -127,7 +127,7 @@ public class UserService {
     }
 
     public void deleteUser(Long userId, Principal principal) {
-        User currentUser = currentUser(principal);
+        User currentUser = getCurrentUser(principal);
         User userForRemoval = getUserById(userId);
 
         if (currentUser.getId() == userForRemoval.getId() || getRole(currentUser.getEmail()).equals("ADMIN")) {
@@ -140,7 +140,7 @@ public class UserService {
     }
 
     public User editCurrentUser(UserCreateDto userCreateDto, Principal principal) {
-        User currentUser = currentUser(principal);
+        User currentUser = getCurrentUser(principal);
         if (!currentUser.getEmail().equals(userCreateDto.getEmail())) {       //Makni ako se odluci mijenjat mail
             LOGGER.error("Not allowed to edit user");
             throw new IllegalAccessException("Nemate dozvolu za uređivanje ovog korisnika");
@@ -180,7 +180,7 @@ public class UserService {
         return currentUser.getId().equals(id);
     }
 
-    public User currentUser(Principal principal) {
+    public User getCurrentUser(Principal principal) {
         Optional<User> optionalCurrentUser = userRepository.findByEmail(principal.getName());
         if (optionalCurrentUser.isEmpty()) {
             LOGGER.error("User {} doesn't exist", principal.getName());
@@ -200,5 +200,10 @@ public class UserService {
                 user.getImage() == null ? getImage(user.getEmail()): user.getImage(),
                 isOwner(profileId, principal.getName()),
                 getRole(principal.getName()).equals("ADMIN"));
+    }
+
+    public UserHeaderDto getHeaderInformation(Principal principal) {
+        User user = getCurrentUser(principal);
+        return new UserHeaderDto(user.getId(), getImage(user.getEmail()));
     }
 }

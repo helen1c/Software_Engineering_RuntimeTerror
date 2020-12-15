@@ -1,6 +1,7 @@
 package hr.fer.pi.planinarskidnevnik.controllers;
 
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserCreateDto;
+import hr.fer.pi.planinarskidnevnik.dtos.User.UserHeaderDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserProfilePageDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserSearchDto;
 import hr.fer.pi.planinarskidnevnik.models.User;
@@ -61,10 +62,9 @@ public class UserController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<?> getCurrentUser(Principal principal) {
+    public ResponseEntity<UserHeaderDto> getCurrentUser(Principal principal) {
         LOGGER.info("Getting current user");
-        final User user = userService.checkForEmail(principal.getName());
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(userService.getHeaderInformation(principal));
     }
 
     @PostMapping
