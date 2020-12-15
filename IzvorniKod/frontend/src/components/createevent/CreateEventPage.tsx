@@ -5,12 +5,18 @@ import {useHistory} from "react-router";
 import  { useState } from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { HttpCodesUtil } from "../../errors/HttpCodesUtil";
+import {EventInfo} from "./EventInfo";
 import moment from "moment";
+import {Route} from "react-router";
+import {ShowEvent} from "./ShowEvent";
 
+ interface Props {
+    event: EventInfo;
+}
 
-export const CreateEventPage = () => {
+export const CreateEventPage =({ event }: Props) => {
 
+    const [isSubmit, setIsSubmit] = useState<boolean>(false);
     const history = useHistory();
 
     const formik = useFormik({
@@ -22,6 +28,7 @@ export const CreateEventPage = () => {
             dateCreated: "",
             description: "",
         },
+
         validateOnChange: false,
         validateOnMount: false,
         validateOnBlur: false,
@@ -32,11 +39,23 @@ export const CreateEventPage = () => {
             startDate: Yup.date().required("Obavezan unos!"),
             endDate: Yup.date().min(Yup.ref("startDate")).required("Obavezan unos!")
         }),
+
+
         onSubmit: (values) => {
+            var date1 = new Date(values.endDate);
+            var date2= new Date(values.startDate);
+
+            var admission = moment(date1, 'DD-MM-YYYY');
+            var discharge = moment(date2, 'DD-MM-YYYY');
+
+            event.during=discharge.diff(admission, 'days');
+            setIsSubmit(true);
+
 
         }
-
     });
+
+
 
 
     return (
@@ -48,7 +67,6 @@ export const CreateEventPage = () => {
             <div className="main-event">
 
             <form onSubmit={formik.handleSubmit}>
-
 
                 <div className="event-container">
                     <div className="event-column">
@@ -129,9 +147,15 @@ export const CreateEventPage = () => {
 
                 </div>
                 <div>
-                    <button type="submit" className="submitButton">
+                    <button type="submit" className="submitButton" >
                         Stvori događaj
+
                     </button>
+
+                    {(isSubmit) && (
+                        < Route component={ShowEvent} exact={true}/>
+                    )}
+
                 </div>
             </form>
             </div>
