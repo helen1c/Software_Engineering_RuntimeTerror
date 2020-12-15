@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { EventInfo } from "./EventInfo";
+import React from "react";
 
 interface Props {
-    event: EventInfo;
+  numberOfDays: number;
 }
 
-export const ShowEvent = ({ event }: Props) => {
-
-    return (
-            <div>
-                <p>{event.during}</p>
-            </div>
-    );
+export const ShowEvent = ({ numberOfDays }: Props) => {
+  return (
+    <div>
+      <p>{numberOfDays}</p>
+    </div>
+  );
 };

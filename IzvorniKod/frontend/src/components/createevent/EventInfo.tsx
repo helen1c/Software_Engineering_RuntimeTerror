@@ -1,10 +1,10 @@
 export interface EventInfo {
-    during: number
+    event: number
 
 }
 
 export const getEmptyEventInfo = (): EventInfo => {
     return {
-        during: 0
+        event: 0
     };
 };
