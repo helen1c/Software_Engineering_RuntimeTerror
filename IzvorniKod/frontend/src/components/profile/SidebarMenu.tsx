@@ -4,8 +4,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import {ProfileUserInfo} from "../profile/ProfileUserInfo";
-import {ViewProfileInfo} from "../profile/models/ViewProfileInfo";
+import {ProfileUserInfo} from "./ProfileUserInfo";
+import {ViewProfileInfo} from "./models/ViewProfileInfo";
 
 interface TabPanelProps {
     children?: React.ReactNode;

@@ -19,11 +19,11 @@ public class UserProfilePageDto {
 
     private String description;
 
+    private Boolean isOwner;
+
+    private Boolean isAdmin;
+
     private byte[] image;
-
-    private boolean isOwner;
-
-    private boolean isAdmin;
 
     public UserProfilePageDto(String name, String email, String placeOfResidence, Date dateOfBirth, String description, byte[] image, boolean isOwner, boolean isAdmin) {
         this.name = name;
@@ -84,19 +84,19 @@ public class UserProfilePageDto {
         this.image = image;
     }
 
-    public boolean isOwner() {
+    public boolean getIsOwner() {
         return isOwner;
     }
 
-    public void setOwner(boolean owner) {
+    public void setIsOwner(boolean owner) {
         isOwner = owner;
     }
 
-    public boolean isAdmin() {
+    public boolean getIsAdmin() {
         return isAdmin;
     }
 
-    public void setAdmin(boolean admin) {
+    public void setIsAdmin(boolean admin) {
         isAdmin = admin;
     }
 }

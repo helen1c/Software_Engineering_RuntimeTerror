@@ -4,9 +4,9 @@ export interface ViewProfileInfo {
     placeOfResidence: string;
     description: string;
     dateOfBirth: string;
-    image: string;
     isOwner: boolean;
     isAdmin: boolean;
+    image: string;
 }
 
 export const getEmptyProfile = (): ViewProfileInfo => {
@@ -16,8 +16,8 @@ export const getEmptyProfile = (): ViewProfileInfo => {
         placeOfResidence: "",
         description: "",
         dateOfBirth: "",
-        image: "",
         isOwner: false,
-        isAdmin: false
+        isAdmin: false,
+        image: ""
     };
 };

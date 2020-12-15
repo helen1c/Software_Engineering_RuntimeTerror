@@ -163,7 +163,7 @@ public class UserService {
 
         for (User u : allUsers) {
             if (u.getName().toLowerCase().contains(userName.toLowerCase())) {
-                searchResult.add(new UserSearchDto(u.getId(), u.getImage(), u.getName()));
+                searchResult.add(new UserSearchDto(u.getId(), getImage(u.getEmail()), u.getName()));
             }
         }
 
