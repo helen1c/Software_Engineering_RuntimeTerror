@@ -31,7 +31,7 @@ export const ShowUser = ({ user }: Props) => {
   return (
     <div>
       <div>
-        <img alt={user.name}  src={image} className = "photo" onClick={e => history.push("/profile/" + user.id)}/>
+        <img alt={user.name}  src={image} className = "photo" onClick={e => window.location.href = "/profile/" + user.id}/>
       </div>
       <div>
         <p>{user.name}</p>
