@@ -71,6 +71,7 @@ export const ProfileUserInfo = () => {
         });
       }
     });
+
   }, []);
 
   const showImage = (event: any) => {
@@ -79,7 +80,7 @@ export const ProfileUserInfo = () => {
     var reader = new FileReader();
     reader.onload = function (newImage) {
       // @ts-ignore
-      setUser({ ...user, image: newImage.target.result as string });
+      setUser({...user, image: newImage.target.result as string});
     };
     reader.readAsDataURL(file);
   };
@@ -117,7 +118,7 @@ export const ProfileUserInfo = () => {
 
   const handleSaveOnClick = () => {
     if (validateProfile()) {
-      let transfer = { ...user };
+      let transfer = {...user};
       transfer.image = transfer.image.split(",")[1];
       fetch("/api/users/current", {
         method: "PATCH",
@@ -154,170 +155,185 @@ export const ProfileUserInfo = () => {
     });
   };
 
-  return (
-    <div>
-      <h1 className="profile-info-title">Korisnički podaci</h1>
-      <div className="profile-info-container profile-info-text">
-        <div className="profile-text-wrap">
-          <p>Ime: </p>
-          {!edit ? (
-            <input
-              type="text"
-              disabled
-              value={user ? user.name : ""}
-              onChange={(e) => setUser({ ...user, name: e.target.value })}
-            />
-          ) : (
-            <>
-              <input
-                type="text"
-                value={user.name}
-                onChange={(e) => setUser({ ...user, name: e.target.value })}
-              />
-              <p className="mb-8">{nameError}</p>
-            </>
-          )}
-          <div>E-mail: {user ? user.email : ""}</div>
-          <p>Mjesto rođenja: </p>
-          {!edit ? (
-            <input
-              type="text"
-              disabled
-              value={user ? user.placeOfResidence : ""}
-              onChange={(e) =>
-                setUser({ ...user, placeOfResidence: e.target.value })
-              }
-            />
-          ) : (
-            <>
-              <input
-                type="text"
-                value={user.placeOfResidence}
-                onChange={(e) =>
-                  setUser({ ...user, placeOfResidence: e.target.value })
-                }
-              />
-              <p className="mb-8">{nameError}</p>
-            </>
-          )}
-          <p>Datum rođenja:</p>
-          {!edit ? (
-            <input
-              type="date"
-              disabled
-              value={user.dateOfBirth}
-              onChange={(e) =>
-                setUser({ ...user, dateOfBirth: e.target.value })
-              }
-            />
-          ) : (
-            <>
-              <input
-                type="date"
-                value={user.dateOfBirth}
-                onChange={(e) =>
-                  setUser({ ...user, dateOfBirth: e.target.value })
-                }
-              />
-            </>
-          )}
-          <div className="profile-info-description">
-            <div>O meni:</div>
-            {!edit ? (
-              <input
-                type="text"
-                disabled
-                value={user ? user.description : ""}
-                onChange={(e) =>
-                  setUser({ ...user, description: e.target.value })
-                }
-              />
-            ) : (
-              <>
-                <input
-                  type="text"
-                  value={user.description}
-                  onChange={(e) =>
-                    setUser({ ...user, description: e.target.value })
-                  }
-                />
-              </>
-            )}
-          </div>
-        </div>
-        <div className="profile-image-wrap">
-          <img
-            className="profil-info-image"
-            alt={"Slika profila"}
-            src={user.image}
-          />
-          {edit && (
-            <div className="">
-              <label htmlFor="image">
-                <u>DODAJ SLIKU</u>
-              </label>
-              <input
-                id="image"
-                type="file"
-                onChange={(event) => showImage(event)}
-              />
+  const handleAddUserAsFriend = () => {
+    fetch("/api/users/add-friend/" + id, {
+      method: "POST",
+      headers: new Headers({
+        authorization: sessionStorage.getItem("key") || "",
+      }),
+    }).then(function (response) {
+      if (response.status === 200) {
+        window.location.href = "/profile/" + id;
+      }
+    });
+  }
+
+    return (
+        <div>
+          <h1 className="profile-info-title">Korisnički podaci</h1>
+          <div className="profile-info-container profile-info-text">
+            <div className="profile-text-wrap">
+              <p>Ime: </p>
+              {!edit ? (
+                  <input
+                      type="text"
+                      disabled
+                      value={user ? user.name : ""}
+                      onChange={(e) => setUser({...user, name: e.target.value})}
+                  />
+              ) : (
+                  <>
+                    <input
+                        type="text"
+                        value={user.name}
+                        onChange={(e) => setUser({...user, name: e.target.value})}
+                    />
+                    <p className="mb-8">{nameError}</p>
+                  </>
+              )}
+              <div>E-mail: {user ? user.email : ""}</div>
+              <p>Mjesto rođenja: </p>
+              {!edit ? (
+                  <input
+                      type="text"
+                      disabled
+                      value={user ? user.placeOfResidence : ""}
+                      onChange={(e) =>
+                          setUser({...user, placeOfResidence: e.target.value})
+                      }
+                  />
+              ) : (
+                  <>
+                    <input
+                        type="text"
+                        value={user.placeOfResidence}
+                        onChange={(e) =>
+                            setUser({...user, placeOfResidence: e.target.value})
+                        }
+                    />
+                    <p className="mb-8">{nameError}</p>
+                  </>
+              )}
+              <p>Datum rođenja:</p>
+              {!edit ? (
+                  <input
+                      type="date"
+                      disabled
+                      value={user.dateOfBirth}
+                      onChange={(e) =>
+                          setUser({...user, dateOfBirth: e.target.value})
+                      }
+                  />
+              ) : (
+                  <>
+                    <input
+                        type="date"
+                        value={user.dateOfBirth}
+                        onChange={(e) =>
+                            setUser({...user, dateOfBirth: e.target.value})
+                        }
+                    />
+                  </>
+              )}
+              <div className="profile-info-description">
+                <div>O meni:</div>
+                {!edit ? (
+                    <input
+                        type="text"
+                        disabled
+                        value={user ? user.description : ""}
+                        onChange={(e) =>
+                            setUser({...user, description: e.target.value})
+                        }
+                    />
+                ) : (
+                    <>
+                      <input
+                          type="text"
+                          value={user.description}
+                          onChange={(e) =>
+                              setUser({...user, description: e.target.value})
+                          }
+                      />
+                    </>
+                )}
+              </div>
             </div>
+            <div className="profile-image-wrap">
+              <img
+                  className="profil-info-image"
+                  alt={"Slika profila"}
+                  src={user.image}
+              />
+              {edit && (
+                  <div className="">
+                    <label htmlFor="image">
+                      <u>DODAJ SLIKU</u>
+                    </label>
+                    <input
+                        id="image"
+                        type="file"
+                        onChange={(event) => showImage(event)}
+                    />
+                  </div>
+              )}
+            </div>
+          </div>
+          {isOwner ? (
+              !edit ? (
+                  <div>
+                    <button onClick={handleEditOnClick}>Izmijeni</button>
+                  </div>
+              ) : (
+                  <div>
+                    <button onClick={handleCancelOnClick}>Odustani</button>
+                    <button onClick={() => setOpenEditModal(true)}>Spremi</button>
+                  </div>
+              )
+          ) : (
+              <div>
+                <button onClick={handleAddUserAsFriend}>Dodaj prijatelja</button>
+              </div>
           )}
+          {(isOwner || isAdmin) && (
+              <button onClick={() => setOpenDeleteModal(true)}>Ukloni račun</button>
+          )}
+          <Dialog
+              open={openDeleteModal}
+              onClose={() => setOpenDeleteModal(false)}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">
+              {"Jeste li sigurni da želite obrisati račun?"}
+            </DialogTitle>
+            <DialogActions>
+              <Button onClick={() => setOpenDeleteModal(false)} color="primary">
+                NE
+              </Button>
+              <Button onClick={handleDeleteOnClick} color="primary" autoFocus>
+                DA
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Dialog
+              open={openEditModal}
+              onClose={() => setOpenEditModal(false)}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">
+              {"Jeste li sigurni da želite urediti račun?"}
+            </DialogTitle>
+            <DialogActions>
+              <Button onClick={() => setOpenEditModal(false)} color="primary">
+                NE
+              </Button>
+              <Button onClick={handleSaveOnClick} color="primary" autoFocus>
+                DA
+              </Button>
+            </DialogActions>
+          </Dialog>
         </div>
-      </div>
-      {isOwner ? (
-        !edit ? (
-          <div>
-            <button onClick={handleEditOnClick}>Izmijeni</button>
-          </div>
-        ) : (
-          <div>
-            <button onClick={handleCancelOnClick}>Odustani</button>
-            <button onClick={() => setOpenEditModal(true)}>Spremi</button>
-          </div>
-        )
-      ) : (
-        <></>
-      )}
-      {(isOwner || isAdmin) && (
-        <button onClick={() => setOpenDeleteModal(true)}>Ukloni račun</button>
-      )}
-      <Dialog
-        open={openDeleteModal}
-        onClose={() => setOpenDeleteModal(false)}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"Jeste li sigurni da želite obrisati račun?"}
-        </DialogTitle>
-        <DialogActions>
-          <Button onClick={() => setOpenDeleteModal(false)} color="primary">
-            NE
-          </Button>
-          <Button onClick={handleDeleteOnClick} color="primary" autoFocus>
-            DA
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <Dialog
-        open={openEditModal}
-        onClose={() => setOpenEditModal(false)}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"Jeste li sigurni da želite urediti račun?"}
-        </DialogTitle>
-        <DialogActions>
-          <Button onClick={() => setOpenEditModal(false)} color="primary">
-            NE
-          </Button>
-          <Button onClick={handleSaveOnClick} color="primary" autoFocus>
-            DA
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
-  );
-};
+    );
+  };
