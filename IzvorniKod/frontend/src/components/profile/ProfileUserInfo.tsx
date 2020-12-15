@@ -13,6 +13,8 @@ export const ProfileUserInfo = () => {
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
+  const [sentFriendRequest, setSentFriendRequest] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
   const history = useHistory();
   const id = window.location.pathname.split("/")[2];
 
@@ -163,7 +165,9 @@ export const ProfileUserInfo = () => {
       }),
     }).then(function (response) {
       if (response.status === 200) {
-        window.location.href = "/profile/" + id;
+        setSentFriendRequest(true);
+      } else {
+        setError(true);
       }
     });
   }
@@ -292,7 +296,15 @@ export const ProfileUserInfo = () => {
               )
           ) : (
               <div>
-                <button onClick={handleAddUserAsFriend}>Dodaj prijatelja</button>
+                {!error ? (
+                    !sentFriendRequest ? (
+                        <button onClick={handleAddUserAsFriend}>Dodaj prijatelja</button>
+                        ) : (
+                        <button disabled={true}>Zahtjev poslan &#10004;</button>
+                        )
+                ) : (
+                    <span className="errorText">Greška prilikom dodavanja prijatelja.</span>
+                )}
               </div>
           )}
           {(isOwner || isAdmin) && (
