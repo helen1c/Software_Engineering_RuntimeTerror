@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { getEmptyProfile, ViewProfileInfo } from "./models/ViewProfileInfo";
 import { useHistory } from "react-router";
-import { SidebarMenu } from "./SidebarMenu";
 import { ProfileUserInfo } from "./ProfileUserInfo";
+import { ProfileDashboard } from "./ProfileDashboard";
 
 export const MenuProfile = () => {
   const [user, setUser] = useState<ViewProfileInfo>(getEmptyProfile);
@@ -32,7 +32,7 @@ export const MenuProfile = () => {
   return (
     <div>
       {user.isOwner ? (
-        <SidebarMenu user={user} setUser={setUser} />
+        <ProfileDashboard user={user} setUser={setUser} />
       ) : (
         <ProfileUserInfo user={user} setUser={setUser} />
       )}

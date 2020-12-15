@@ -83,7 +83,7 @@ export const SidebarMenu = ({ user, setUser }: Props) => {
         <ProfileUserInfo user={user} setUser={setUser} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Arhiva
+        Arh iva
       </TabPanel>
       <TabPanel value={value} index={2}>
         Moje staze
