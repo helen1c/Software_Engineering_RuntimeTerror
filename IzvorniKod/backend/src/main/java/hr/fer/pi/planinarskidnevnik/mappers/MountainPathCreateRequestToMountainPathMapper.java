@@ -12,7 +12,6 @@ public class MountainPathCreateRequestToMountainPathMapper implements DefaultMap
 
         MountainPath mp = new MountainPath();
         mp.setAvgWalkTime(from.getAvgWalkTime());
-        mp.setDateCreated(from.getDateCreated());
         mp.setEndPoint(from.getEndPoint());
         mp.setStartPoint(from.getStartPoint());
         mp.setLength(from.getLength());

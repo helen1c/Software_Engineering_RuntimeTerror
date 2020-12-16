@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.sql.Date;
 import java.util.List;
 
 @Service
@@ -48,6 +49,7 @@ public class MountainPathQueryServiceImpl implements MountainPathQueryService {
     public MountainPath createMountainPath(MountainPathCreateRequest dto, Principal principal) {
         Hill hill = hillRepository.findById(dto.getHillId()).orElseThrow(() -> new ResourceNotFoundException("Cannot find hill with hill id "+ dto.getHillId()));
         User author = userRepository.findByEmail(principal.getName()).orElseThrow(() -> new ResourceNotFoundException("Cannot find user with email: " + principal.getName()));
+        Date dateCreated = new Date(System.currentTimeMillis());
 
         if(mountainPathRepository.findByName(dto.getName()).isPresent()) {
             throw new MountainPathAlreadyExistsException("Mountain path with name: " + dto.getName() + " already exists.");
@@ -56,7 +58,7 @@ public class MountainPathQueryServiceImpl implements MountainPathQueryService {
         MountainPath path = createRequestToMountainPathMapper.map(dto);
         path.setAuthor(author);
         path.setHill(hill);
-
+        path.setDateCreated(dateCreated);
         mountainPathRepository.save(path);
 
         LOGGER.info("New mountainPath with id {} created", path);

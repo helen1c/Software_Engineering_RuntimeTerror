@@ -95,14 +95,6 @@ public class MountainPathCreateRequest {
         this.seaLevelDiff = seaLevelDiff;
     }
 
-    public Date getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
     public boolean isPrivate() {
         return isPrivate;
     }

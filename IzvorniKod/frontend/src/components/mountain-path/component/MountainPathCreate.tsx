@@ -1,221 +1,227 @@
-import React, {useState} from "react";
-import * as Yup from "yup";
-import {useFormik} from "formik";
-import {HttpCodesUtil} from "../../../errors/HttpCodesUtil";
+import React, {useEffect, useState} from 'react';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Select, {ValueType} from "react-select";
+import {Field, Form, Formik} from "formik";
 import "./MountainPathCreate.css";
-import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
+import {useDispatch, useSelector} from "react-redux";
+import {MainReducer} from "../../../store/reducer";
+import {findHills} from "../../../store/actions/findAllHillsActions";
+import {HillOption} from "../models/HillOption";
+import {MountainPathCreateRequest} from "../models/MountainPathCreateRequest";
+import * as Yup from "yup";
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
+import { makeStyles, Theme } from '@material-ui/core/styles';
+import TimePicker from 'react-time-picker';
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            display: 'flex',
+function Alert(props: AlertProps) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+const useStyles = makeStyles((theme: Theme) => ({
+    root: {
+        width: '100%',
+        '& > * + *': {
+            marginTop: theme.spacing(2),
         },
-        formControl: {
-            margin: theme.spacing(3),
-        },
-    }),
-);
+    },
+}));
 
-export const MountainPathCreate = () => {
-    const [newImage, setNewImage] = useState("");
+export default function MountainPathCreate() {
 
-    const formik = useFormik({
-        initialValues: {
-            name: "",
-            startPoint: "",
-            endPoint: "",
-            avgWalkTime: "",
-            length: "",
-            seaLevelDiff: "",
-            dateCreated: "",
-            isPrivate: "",
-            hillId: "",
-            authorId: ""
-        },
-        validateOnChange: false,
-        validateOnMount: false,
-        validateOnBlur: false,
-        validationSchema: Yup.object({
-            name: Yup.string().required("Obavezan unos!"),
-        }),
-        onSubmit: (values) => {
-            values.hillId = "1";
+    const [open, setOpen] = useState(false);
 
-            fetch("/api/mountain-paths/create", {
-                method: "POST",
-                body: JSON.stringify(values),
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            }).then((response) => {
-                if (response.status !== HttpCodesUtil.CREATED) {
-                    response.text().then((errors) => {
-                        errors = JSON.parse(errors);
-                        Object.values(errors).forEach((value) => {
-                            const error = JSON.parse(JSON.stringify(value));
-                            formik.setFieldError(error.fieldName, error.message);
-                        });
-                    });
-                } else {
-                    console.log("Planinarska staza uspjesno stvorena...")
-                }
-            });
-        },
-    });
+    const [success, setSuccessMessage] = React.useState(false);
+    const [error, setErrorMessage] = React.useState(false);
 
+    // @ts-ignore
+    const[value, onChange] = useState('10:00');
 
-    const showImage = (event: any) => {
-
-
-        if (!event) return;
-        let file = event.target.files[0];
-
-        let reader = new FileReader();
-        reader.onload = function (newImage) {
-
-            setNewImage(newImage?.target?.result as string);
-            console.log(newImage)
-        };
-        if (file !== undefined)
-            reader.readAsDataURL(file);
+    const successMessage = () => {
+        setSuccessMessage(true);
+    };
+    const errorMessage = () => {
+        setErrorMessage(true);
     };
 
+    const handleClose2 = (event?: React.SyntheticEvent, reason?: string) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setSuccessMessage(false);
+    };
+    const handleClose3 = (event?: React.SyntheticEvent, reason?: string) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setErrorMessage(false);
+    };
+
+    const dispatcher = useDispatch();
+
+    const {results: hillResults} = useSelector((state: MainReducer) => state.findAllHillsReducer);
+
+    useEffect(() => {
+        if (hillResults === undefined || hillResults.length === 0) {
+            console.log("Get all Hills...");
+            dispatcher(findHills());
+        }
+    }, [dispatcher, hillResults]);
+
+    const create = async (request: MountainPathCreateRequest) => {
+
+        setOpen(false);
+        const sRequest = {
+            name: request.name,
+            startPoint: request.startPoint,
+            hillId: request.hillId,
+            endPoint: request.endPoint,
+            avgWalkTime: request.avgWalkTime,
+            length: request.length,
+            seaLevelDiff: request.seaLevelDiff,
+            isPrivate: request.isPrivate,
+        };
+
+        const requestOptions = {
+            method: "POST",
+            body: JSON.stringify(sRequest),
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            }
+        };
+        const response = await fetch("/api/mountain-paths/create", requestOptions);
+        if((response.status) === 201 || (response.status / 10 >= 20 && response.status/10 < 30)){
+            successMessage();
+        } else{
+            errorMessage();
+        }
+    }
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const validationSchema = Yup.object().shape({
+        name: Yup.string().required("Molimo Vas unesite ime planinarske staze."),
+        startPoint: Yup.string().required("Molimo Vas početnu točku planinarske staze"),
+        hillId: Yup.number().typeError("Molimo odaberite visočje.").required("Molimo odaberite visočje."),
+        endPoint: Yup.string().required("Molimo Vas završnu točku planinarske staze"),
+        length: Yup.number().typeError("Duljina staze mora biti broj.").positive("Duljina staze mora biti pozitivan broj.").required("Molimo unesite duljinu staze."),
+        seaLevelDiff: Yup.number().typeError("Visinska razlika mora biti broj.").positive("Visinska razlika mora biti pozitivan broj.").required("Molimo unesite visinsku razliku"),
+        isPrivate: Yup.boolean().typeError("Je li staza privatna ili ne mora biti broj ili 1 ili 0")
+    })
 
     return (
-        <div className="createForm">
-            <form onSubmit={formik.handleSubmit}>
-                <h1>Dodaj Planinarsku stazu</h1>
-                <div className="create-container">
-                    <div className="create-column">
-                        <div className="inputComponent textAlignLeft">
-                            <p className={"inputLabel"}>Naziv staze:</p>
-                            <input
-                                id="name"
-                                className="create-input"
-                                value={formik.values.name}
-                                onChange={formik.handleChange}
-                            />
-                            <p className="errorText">
-                                {formik.errors.name ? formik.errors.name : null}
-                            </p>
-                        </div>
+        <>
+            <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+                STVORI STAZU
+            </Button>
+            <Snackbar open={success} autoHideDuration={2000} onClose={handleClose2}>
+                <Alert onClose={handleClose2} severity="success">
+                    Planinarska staua je uspješno stvorena.
+                </Alert>
+            </Snackbar>
+            <Snackbar open={error} autoHideDuration={1000000} onClose={handleClose3}>
+                <Alert onClose={handleClose3} severity="error">
+                    Dogodila se pogreška prilikom stvaranja planinarske staze. Pokušajte kasnije.
+                </Alert>
+            </Snackbar>
+            <Formik initialValues={{
+                name: "",
+                startPoint: "",
+                endPoint: "",
+                avgWalkTime: "",
+                length: 0,
+                seaLevelDiff: 0,
+                isPrivate: false,
+                hillId: 0,
 
-                        <div className="inputComponent textAlignLeft">
-                            <p className={"inputLabel"}>Planina:</p>
-                            <input
-                                className={"create-input"}
-                                id="hillId"
-                                value={formik.values.hillId}
-                                onChange={formik.handleChange}
-                            />
-                            <p className="errorText">
-                                {formik.errors.hillId ? formik.errors.hillId : null}
-                            </p>
-                        </div>
-                        <div className="inputComponent textAlignLeft">
-                            <p className={"inputLabel"}>Početna točka:</p>
-                            <input
-                                className="create-input"
-                                id="startPoint"
-                                value={formik.values.startPoint}
-                                onChange={formik.handleChange}
-                            />
-                            <p className="errorText">
-                                {formik.errors.startPoint ? formik.errors.startPoint : null}
-                            </p>
-                        </div>
-                        <div className="inputComponent textAlignLeft">
-                            <p className={"inputLabel"}>Završna točka:</p>
-                            <input
-                                className="create-input"
-                                id="endPoint"
-                                value={formik.values.endPoint}
-                                onChange={formik.handleChange}
-                            />
-                            <p className="errorText">
-                                {formik.errors.startPoint ? formik.errors.endPoint : null}
-                            </p>
-                        </div>
-                        <div className="inputComponent textAlignLeft">
-                            <p className={"inputLabel"}>Prosječno vrijeme za šetnju:</p>
-                            <input
-                                className="create-input"
-                                id="avgWalkTime"
-                                value={formik.values.avgWalkTime}
-                                onChange={formik.handleChange}
-                            />
-                            <p className="errorText">
-                                {formik.errors.avgWalkTime ? formik.errors.avgWalkTime : null}
-                            </p>
-                        </div>
-                        <div className="inputComponent textAlignLeft">
-                            <p className={"inputLabel"}>Duljina staze</p>
-                            <input
-                                className="create-input"
-                                id="length"
-                                value={formik.values.length}
-                                onChange={formik.handleChange}
-                            />
-                            <p className="errorText">
-                                {formik.errors.length ? formik.errors.length : null}
-                            </p>
-                        </div>
-                        <div className="inputComponent textAlignLeft">
-                            <p className={"inputLabel"}>Razlika u nadmorskoj visini</p>
-                            <input
-                                className="create-input"
-                                id="seaLevelDiff"
-                                value={formik.values.seaLevelDiff}
-                                onChange={formik.handleChange}
-                            />
-                            <p className="errorText">
-                                {formik.errors.seaLevelDiff ? formik.errors.seaLevelDiff : null}
-                            </p>
-                        </div>
-                        <div className="inputComponent textAlignLeft">
-                            <p className={"inputLabel"}>Datum stvaranja</p>
-                            <input
-                                className="create-input"
-                                id="dateCreated"
-                                value={formik.values.dateCreated}
-                                onChange={formik.handleChange}
-                            />
-                            <p className="errorText">
-                                {formik.errors.dateCreated ? formik.errors.dateCreated : null}
-                            </p>
-                        </div>
-                        <div className="inputComponent textAlignLeft">
-                            <p className={"inputLabel"}>Je li staza privatna</p>
-                            <input
-                                className="create-input"
-                                id="isPrivate"
-                                value={formik.values.isPrivate}
-                                onChange={formik.handleChange}
-                            />
-                            <p className="errorText">
-                                {formik.errors.isPrivate ? formik.errors.isPrivate : null}
-                            </p>
-                        </div>
-                        <div className="inputComponent textAlignLeft">
-                            <input
-                                className={"create-input"}
-                                id="authorId"
-                                value={formik.values.authorId}
-                                onChange={formik.handleChange}
-                            />
-                            <p className="errorText">
-                                {formik.errors.authorId ? formik.errors.authorId : null}
-                            </p>
-                        </div>
-                    </div>
-                </div>
+            } as MountainPathCreateRequest
+            } onSubmit={create} onReset={handleClose}
+                    validateOnBlur={true}
+                    validateOnMount={true}
+                    validateOnChange={true}
+                    validationSchema={validationSchema}>
+                {({setFieldValue, handleReset, errors, touched}) => {
+                    // @ts-ignore
+                    // @ts-ignore
+                    return (
+                        <Dialog open={open} onClose={() => {
+                            handleClose();
+                            handleReset();
+                        }} aria-labelledby="form-dialog-title">
+                            <Form>
+                                <DialogTitle className={"dialog-title"} id="form-dialog-title">Stvori novu planinarsku stazu</DialogTitle>
+                                <DialogContent>
+                                    <div className="create-column">
+                                        <Field className={"input-search"}
+                                               placeholder={"Naziv planinarske staze..."}
+                                               name={"name"} id={"name"}/>
+                                        {errors.name && touched.name ? <div className="errorText">{errors.name}</div> : <></>}
+                                        <Field className={"input-search"}
+                                               placeholder={"Naziv početne točke..."}
+                                               name={"startPoint"} id={"startPoint"}/>
+                                        {errors.startPoint && touched.startPoint ? <div className="errorText">{errors.startPoint}</div> : <></>}
+                                        <Field className={"input-search"}
+                                               placeholder={"Naziv završne točke..."}
+                                               name={"endPoint"} id={"endPoint"}/>
+                                        {errors.endPoint && touched.endPoint ? <div className="errorText">{errors.endPoint}</div> : <></>}
+                                        <Field className={"input-search"}
+                                               placeholder={"Duljina staze..."}
+                                               name={"length"} id={"length"}/>
+                                        {errors.length && touched.length ? <div className="errorText">{errors.length}</div> : <></>}
+                                        <Field className={"input-search"} placeholder={"Visinska razlika..."}
+                                               name={"seaLevelDiff"} id={"seaLevelDiff"}/>
+                                        {errors.seaLevelDiff && touched.seaLevelDiff ? <div className="errorText">{errors.seaLevelDiff}</div> : <></>}
+                                        <Field className={"input-search"} placeholder={"Je li ili nije privatna staza..."}
+                                               name={"isPrivate"} id={"isPrivate"}/>
+                                        {errors.isPrivate && touched.isPrivate ? <div className="errorText">{errors.isPrivate}</div> : <></>}
+                                        <TimePicker className={"input-search"}
+                                                    value={value.toString()} format="HH:mm" name={"avgWalkTime"} onChange={onChange}/>
 
-                <div>
-                    <button type="submit" className="submitButton">
-                        Izradi Dom
-                    </button>
-                </div>
-            </form>
-        </div>
+                                        <div className="lodge-create-selects">
+                                            <Select
+                                                className="hill-select"
+                                                isClearable={true}
+                                                isSearchable={true}
+                                                placeholder="Odaberite područje..."
+                                                name={"hillId"}
+                                                onChange={(option: ValueType<HillOption>) => setFieldValue("hillId",
+                                                    option === null ? null : (option as HillOption).value)
+                                                }
+                                                options={hillResults}>
+                                            </Select>
+
+                                            {errors.hillId && touched.hillId ? <div className="errorText">{errors.hillId}</div> : <></>}
+                                        </div>
+                                    </div>
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button onClick={() => {
+                                        handleClose();
+                                        handleReset();
+                                    }} color="primary">
+                                        ODUSTANI
+                                    </Button>
+                                    <Button type="submit"
+                                            color="primary">
+                                        STVORI
+                                    </Button>
+                                </DialogActions>
+                            </Form>
+                        </Dialog>
+                    );
+                }}
+            </Formik>
+        </>
     );
-};
+}
+
