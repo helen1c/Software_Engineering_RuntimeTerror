@@ -4,7 +4,7 @@ package hr.fer.pi.planinarskidnevnik.dtos.MountainPath;
 import java.sql.Date;
 import java.sql.Time;
 
-public class MountainPathFindResponse {
+public class MountainPathSearchResponse {
 
     private Long id;
     private String hill;

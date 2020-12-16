@@ -1,6 +1,7 @@
 package hr.fer.pi.planinarskidnevnik.services.impl;
 
 import hr.fer.pi.planinarskidnevnik.dtos.MountainPath.MountainPathCreateRequest;
+import hr.fer.pi.planinarskidnevnik.dtos.MountainPath.MountainPathSearchRequest;
 import hr.fer.pi.planinarskidnevnik.exceptions.MountainPathAlreadyExistsException;
 import hr.fer.pi.planinarskidnevnik.exceptions.ResourceNotFoundException;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainPathCreateRequestToMountainPathMapper;
@@ -11,6 +12,7 @@ import hr.fer.pi.planinarskidnevnik.repositories.HillRepository;
 import hr.fer.pi.planinarskidnevnik.repositories.MountainPathRepository;
 import hr.fer.pi.planinarskidnevnik.repositories.UserRepository;
 import hr.fer.pi.planinarskidnevnik.services.MountainPathQueryService;
+import hr.fer.pi.planinarskidnevnik.specifications.MountainPathSearchSpecification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +31,17 @@ public class MountainPathQueryServiceImpl implements MountainPathQueryService {
     private final HillRepository hillRepository;
     private final UserRepository userRepository;
     private final MountainPathCreateRequestToMountainPathMapper createRequestToMountainPathMapper;
+    private final MountainPathSearchSpecification specification;
 
     @Autowired
-    public MountainPathQueryServiceImpl(MountainPathRepository mountainPathRepository, HillRepository hillRepository, UserRepository userRepository, MountainPathCreateRequestToMountainPathMapper createRequestToMountainPathMapper){
+    public MountainPathQueryServiceImpl(MountainPathRepository mountainPathRepository, HillRepository hillRepository,
+                                        UserRepository userRepository, MountainPathCreateRequestToMountainPathMapper createRequestToMountainPathMapper,
+                                        MountainPathSearchSpecification specification){
         this.mountainPathRepository = mountainPathRepository;
         this.hillRepository = hillRepository;
         this.userRepository = userRepository;
         this.createRequestToMountainPathMapper = createRequestToMountainPathMapper;
+        this.specification = specification;
     }
 
     @Override
@@ -63,5 +69,12 @@ public class MountainPathQueryServiceImpl implements MountainPathQueryService {
 
         LOGGER.info("New mountainPath with id {} created", path);
         return path;
+    }
+
+    @Override
+    public List<MountainPath> findAllMountainPathBySearchCriteria(MountainPathSearchRequest request) {
+        LOGGER.info("Find all mountain lodges when searchText equals: {} and hill id equals {}", request.getName(), request.getHillId());
+
+        return mountainPathRepository.findAll(specification.getFilter(request));
     }
 }

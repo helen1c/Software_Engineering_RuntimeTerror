@@ -1,10 +1,12 @@
 package hr.fer.pi.planinarskidnevnik.controllers;
 
+
 import hr.fer.pi.planinarskidnevnik.dtos.MountainPath.MountainPathCreateRequest;
 import hr.fer.pi.planinarskidnevnik.dtos.MountainPath.MountainPathCreateResponse;
-import hr.fer.pi.planinarskidnevnik.dtos.MountainPath.MountainPathFindResponse;
-import hr.fer.pi.planinarskidnevnik.exceptions.MountainPathAlreadyExistsException;
+import hr.fer.pi.planinarskidnevnik.dtos.MountainPath.MountainPathSearchRequest;
+import hr.fer.pi.planinarskidnevnik.dtos.MountainPath.MountainPathSearchResponse;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainPathToMountainPathResponseMapper;
+import hr.fer.pi.planinarskidnevnik.mappers.MountainPathToMountainPathSearchResponseMapper;
 import hr.fer.pi.planinarskidnevnik.models.MountainPath;
 import hr.fer.pi.planinarskidnevnik.services.MountainPathQueryService;
 import org.slf4j.Logger;
@@ -25,17 +27,21 @@ public class MountainPathController {
 
     private final MountainPathQueryService service;
     private final MountainPathToMountainPathResponseMapper mountainPathToMountainPathResponseMapper;
+    private final MountainPathToMountainPathSearchResponseMapper mountainPathToMountainPathSearchResponseMapper;
 
-    public MountainPathController(MountainPathQueryService service, MountainPathToMountainPathResponseMapper mountainPathToMountainPathResponseMapper) {
+    public MountainPathController(MountainPathQueryService service,
+                                  MountainPathToMountainPathResponseMapper mountainPathToMountainPathResponseMapper,
+                                  MountainPathToMountainPathSearchResponseMapper mountainPathToMountainPathSearchResponseMapper) {
         this.service = service;
         this.mountainPathToMountainPathResponseMapper = mountainPathToMountainPathResponseMapper;
+        this.mountainPathToMountainPathSearchResponseMapper = mountainPathToMountainPathSearchResponseMapper;
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<MountainPathFindResponse>> findAllMountainPathsOrderedByName() {
+    public ResponseEntity<List<MountainPathSearchResponse>> findAllMountainPathsOrderedByName() {
 
         List<MountainPath> modelsResponse = service.getAllMountainPaths();
-        List<MountainPathFindResponse> response = mountainPathToMountainPathResponseMapper.mapToList(modelsResponse);
+        List<MountainPathSearchResponse> response = mountainPathToMountainPathResponseMapper.mapToList(modelsResponse);
 
         return ResponseEntity.ok(response);
     }
@@ -50,6 +56,14 @@ public class MountainPathController {
         response.setName(mp.getName());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PostMapping("/search")
+    public ResponseEntity<List<MountainPathSearchResponse>> mountainLodgeSearch(@RequestBody @Valid MountainPathSearchRequest request) {
+        LOGGER.info(request.getName());
+        List<MountainPathSearchResponse> responses = mountainPathToMountainPathSearchResponseMapper.mapToList(service.findAllMountainPathBySearchCriteria(request));
+
+        return ResponseEntity.ok(responses);
     }
 
 }
