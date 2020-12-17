@@ -14,6 +14,8 @@ export const ProfileUserInfo = () => {
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
+  const [sentFriendRequest, setSentFriendRequest] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
   const history = useHistory();
   const id = window.location.pathname.split("/")[2];
 
@@ -155,6 +157,21 @@ export const ProfileUserInfo = () => {
     });
   };
 
+  const handleAddUserAsFriend = () => {
+    fetch("/api/users/add-friend/" + id, {
+      method: "POST",
+      headers: new Headers({
+        authorization: sessionStorage.getItem("key") || "",
+      }),
+    }).then(function (response) {
+      if (response.status === 200) {
+        setSentFriendRequest(true);
+      } else {
+        setError(true);
+      }
+    });
+  };
+
   return (
     <div>
       <h1 className="profile-info-title">Korisnički podaci</h1>
@@ -278,7 +295,20 @@ export const ProfileUserInfo = () => {
           </div>
         )
       ) : (
-        <></>
+        <div>
+          {!error ? (
+            !sentFriendRequest ? (
+              <button onClick={handleAddUserAsFriend}>Dodaj prijatelja</button>
+            ) : (
+              <button disabled={true}>Zahtjev poslan &#10004;</button>
+            )
+          ) : (
+            <span className="errorText">
+              Greška prilikom dodavanja prijatelja.
+              <button onClick={handleAddUserAsFriend}>Dodaj prijatelja</button>
+            </span>
+          )}
+        </div>
       )}
       {(isOwner || isAdmin) && (
         <button onClick={() => setOpenDeleteModal(true)}>Ukloni račun</button>
