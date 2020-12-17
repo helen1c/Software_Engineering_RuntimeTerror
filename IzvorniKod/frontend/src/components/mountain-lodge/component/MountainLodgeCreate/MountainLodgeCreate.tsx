@@ -5,7 +5,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Select, {ValueType} from "react-select";
-import {Field, Form, Formik, useFormik} from "formik";
+import {Field, Form, Formik } from "formik";
 import Compress from "react-image-file-resizer";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import {IconButton} from "@material-ui/core";
@@ -182,15 +182,15 @@ export default function MountainLodgeCreate() {
                             handleClose();
                             handleReset();
                         }} aria-labelledby="form-dialog-title">
-                            <Form>
+                            <Form className={"form-dialog"}>
                                 <DialogTitle className={"dialog-title"} id="form-dialog-title">Stvori novi dom</DialogTitle>
                                 <DialogContent>
                                     <div className="create-column">
-                                        <Field className={"input-search"}
+                                        <Field className={"input-create"}
                                                placeholder={"Naziv planinarskog doma..."}
                                                name={"name"} id={"name"}/>
                                         {errors.name && touched.name ? <div className="errorText">{errors.name}</div> : <></>}
-                                        <Field className={"input-search"} placeholder={"Nadmorska visina..."}
+                                        <Field className={"input-create"} placeholder={"Nadmorska visina..."}
                                                name={"elevation"} id={"elevation"}/>
                                         {errors.elevation && touched.elevation ? <div className="errorText">{errors.elevation}</div> : <></>}
 

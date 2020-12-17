@@ -57,7 +57,7 @@ a:hover {
     margin-bottom: 0;
 }
 .inputForm {
-    padding: 1rem 0 0rem 0;
+    padding: 1rem 0 0 0;
     display: inline-block;
     text-align: left;
 }
@@ -123,9 +123,9 @@ a:hover {
 .utility-select{
     margin-top: 1em;
 }
-.input-search {
-    width: 30vw;
-    max-width: 500px;
+.input-create {
+    width: 20vw;
+    min-width: 250px;
     min-height: 4rem;
     padding-left: 0.5rem;
     font-family: Roboto, sans-serif;
@@ -153,3 +153,38 @@ a:hover {
     outline: none !important;
     border: none !important;
 }
+
+.lodge-create-selects {
+    margin-bottom: 150px;
+}
+
+
+
+@media only screen and (max-width: 500px) {
+
+    .input-create {
+        width: 250px;
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+
+    .form-dialog {
+       max-width: 300px;
+    }
+
+}
+
+@media only screen and (max-width: 350px) {
+
+    .input-create {
+        width: 250px;
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+
+    .form-dialog {
+        min-width: 330px;
+    }
+
+}
+
