@@ -4,11 +4,12 @@ import "../../App.css";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import moment from "moment";
-import { ShowEvent } from "./ShowEvent";
+import { EventDays } from "./EventDays";
+import { EventInfo } from "./EventInfo";
 
 export const CreateEventPage = () => {
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
-  const [numberOfDays, setNumberOfDays] = useState();
+  const [eventDays, setEventDays] = useState<EventInfo[]>([]);
 
   const formik = useFormik({
     initialValues: {
@@ -32,8 +33,7 @@ export const CreateEventPage = () => {
     }),
 
     onSubmit: (values) => {
-        //ovdje se treba slati dok sve bude ispunjeno i one kucice se trebaju stvoriti odmah ispod onog gumba, ja bi to sve ubacio na jednu stranicu
-
+      //ovdje se treba slati dok sve bude ispunjeno i one kucice se trebaju stvoriti odmah ispod onog gumba, ja bi to sve ubacio na jednu stranicu
       // var date1 = new Date(values.endDate);
       // var date2 = new Date(values.startDate);
       //
@@ -52,9 +52,18 @@ export const CreateEventPage = () => {
     var admission = moment(date1, "DD-MM-YYYY");
     var discharge = moment(date2, "DD-MM-YYYY");
 
-    setNumberOfDays(admission.diff(discharge, "days"));
+    initializeCards(admission.diff(discharge, "days"));
     setIsSubmit(true);
   }
+
+  const initializeCards = (differenceInDays: Number) => {
+    let cards: EventInfo[] = [];
+    for (let i = 0; i <= differenceInDays; i++) {
+      const card: EventInfo = { date: i };
+      cards.push(card);
+    }
+    setEventDays(cards);
+  };
 
   return (
     <main className="main">
@@ -145,7 +154,7 @@ export const CreateEventPage = () => {
               Stvori događaj
             </button>
 
-            {isSubmit && <ShowEvent numberOfDays={numberOfDays} />}
+            {isSubmit && <EventDays cardsToRender={eventDays} />}
           </div>
         </form>
       </div>
