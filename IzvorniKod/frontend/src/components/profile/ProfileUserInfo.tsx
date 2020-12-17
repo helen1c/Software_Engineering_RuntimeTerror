@@ -5,6 +5,8 @@ import { useHistory } from "react-router";
 import { Button, Dialog, DialogActions, DialogTitle } from "@material-ui/core";
 import uredi from "../../assets/paper-icon.png";
 import obrisi from "../../assets/delete-icon.png";
+import odustani from "../../assets/blue-x-png-1.png";
+import spremi from "../../assets/save-icon.png";
 
 export const ProfileUserInfo = () => {
   const [user, setUser] = useState<Profile>(getEmptyProfile);
@@ -190,7 +192,7 @@ export const ProfileUserInfo = () => {
             />
           ) : (
             <>
-              <input className="input-content"
+              <input className="input-content-edit"
                 type="text"
                 value={user.name}
                 onChange={(e) => setUser({ ...user, name: e.target.value })}
@@ -223,7 +225,7 @@ export const ProfileUserInfo = () => {
            : (
             <>
               <label>Mjesto rođenja: </label>
-              <input className="input-content"
+              <input className="input-content-edit"
                 type="text"
                 value={user.placeOfResidence}
                 onChange={(e) =>
@@ -246,7 +248,7 @@ export const ProfileUserInfo = () => {
              </>
            :
             <><label>Datum rođenja:</label>
-              <input className="input-content"
+              <input className="input-content-edit"
                 type="date"
                 value={user.dateOfBirth}
                 onChange={(e) =>
@@ -272,7 +274,7 @@ export const ProfileUserInfo = () => {
               </>
             ) : (
               <> <label> O meni:</label>
-                <textarea className="input-content-text"
+                <textarea className="input-content-text input-content-edit"
 
                   value={user.description}
                   onChange={(e) =>
@@ -290,7 +292,7 @@ export const ProfileUserInfo = () => {
             src={user.image}
           />
           {edit && (
-            <div className="">
+            <div className="image-input">
               <label htmlFor="image">
                 <u>DODAJ SLIKU</u>
               </label>
@@ -320,9 +322,19 @@ export const ProfileUserInfo = () => {
         ) : (
           <div>
             <button className="button-profile" onClick={handleCancelOnClick}>
-              Odustani </button>
+              <span className="button-label"> Odustani </span>
+              <img
+                  src={odustani}
+                  alt={"Odustani"}
+                  className="buttons-profile-img"
+              /></button>
             <button className="button-profile" onClick={() => setOpenEditModal(true)}>
-              Spremi
+              <span className="button-label"> Spremi </span>
+              <img
+                  src={spremi}
+                  alt={"Spremi"}
+                  className="buttons-profile-img"
+              />
             </button>
           </div>
         )
