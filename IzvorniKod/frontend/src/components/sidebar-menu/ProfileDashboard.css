@@ -9,16 +9,16 @@
     left: 0;
     top: 110px;
     min-width: 120px;
-    background-image: linear-gradient(to top, rgba(0,0,255,0), rgb(126, 200, 250));
+    background-image: linear-gradient(to top, rgba(0,0,255,0), rgb(130, 203, 245));
 }
 
 .sidebar .selected {
-    background-color: #b9d0f8;
+    background-color: white;
     border-style: outset;
 }
 
 .sidebar__item:hover {
-    background-color: #b9d0f8;
+    background-color: white;
     cursor: pointer;
     transform: scale(1.03);
 }
@@ -29,7 +29,6 @@
 
 button {
     outline: none;
-
 }
 
 .sidebar__item:focus {
@@ -50,22 +49,30 @@ button {
     font-size: 1rem;
     transition: all .25s cubic-bezier(0.75, 0.25, 0.25, 0.75);
     min-width: 100px;
-    border-radius: 10px;
+    border-radius: 15px;
     border: none;
-    font-family: Roboto,sans-serif;
+    font-family: 'Oswald', sans-serif;
     color: #211648;
 }
 .sidebar__image {
-     width: 1.7rem;
-     height: 1.7rem;
-     transition: all .25s cubic-bezier(0.75, 0.25, 0.25, 0.75);
- }
+    width: 1.7rem;
+    height: 1.7rem;
+    transition: all .25s cubic-bezier(0.75, 0.25, 0.25, 0.75);
+}
 
 .admin-layout {
-    width: 86%;
+    width: 95%;
     float: right;
     padding-left: 3rem;
 }
+
+@media only screen and (max-width: 600px) {
+    .admin-layout {
+        width: 100%;
+    }
+}
+
+
 .menu-image{
     width: 40px;
     height: 40px;
@@ -98,4 +105,9 @@ button {
         display: none;
     }
 
+}
+@media only screen and (max-width:  500px) {
+    .admin-layout{
+        padding-left: 0;
+    }
 }
