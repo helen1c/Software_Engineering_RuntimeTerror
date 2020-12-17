@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./ProfileUserInfo.css";
 import { getEmptyProfile, Profile } from "./models/Profile";
-import { useHistory } from "react-router";
+import {Route, useHistory} from "react-router";
 import { Button, Dialog, DialogActions, DialogTitle } from "@material-ui/core";
 import uredi from "../../assets/paper-icon.png";
 import obrisi from "../../assets/delete-icon.png";
 import odustani from "../../assets/blue-x-png-1.png";
 import spremi from "../../assets/save-icon.png";
+import {MountaineeringCommunitySearch} from "../mountaineering-community/MountaineeringCommunitySearch";
 
 export const ProfileUserInfo = () => {
   const [user, setUser] = useState<Profile>(getEmptyProfile);
@@ -400,7 +401,9 @@ export const ProfileUserInfo = () => {
           </Button>
         </DialogActions>
       </Dialog>
-
+      {(isOwner) && (
+          < Route component={MountaineeringCommunitySearch} exact={true}/>
+      )}
     </div>
   );
 };
