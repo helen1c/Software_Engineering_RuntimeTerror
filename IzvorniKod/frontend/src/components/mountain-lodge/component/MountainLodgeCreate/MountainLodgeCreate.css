@@ -1,0 +1,190 @@
+*{
+    box-sizing: border-box;
+}
+
+h1 {
+    text-align: center;
+}
+p {
+    padding: 0;
+    margin: 0;
+    font-size: 18px;
+}
+a:hover {
+    cursor: pointer;
+}
+.wrapper-picture {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.upload-picture{
+    display: none;
+}
+
+.picture-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 25vw;
+    min-width: 15rem;
+    height: 25vw;
+    min-height: 15rem;
+    max-width: 250px;
+    max-height: 250px;
+    border: 3px solid #211648;
+    border-radius: 10px;
+}
+
+.label-picture {
+    display: flex;
+    justify-content: center;
+}
+
+.errorText {
+    color: red;
+    font-family: Roboto, sans-serif;
+    font-size: 1.2rem;
+}
+.inputComponent {
+    min-height: 6.5rem;
+    margin-left: auto;
+}
+
+.inputLabel {
+    margin-bottom: 0;
+}
+.inputForm {
+    padding: 1rem 0 0 0;
+    display: inline-block;
+    text-align: left;
+}
+
+.textAlignLeft {
+    display: inline-block;
+    text-align: left;
+}
+
+.create-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    align-content: center;
+}
+
+.MuiSnackbar-root {
+    height: 120px;
+    top: 120px;
+}
+
+.dialog-title {
+    text-align: center;
+    font-size: 42rem;
+}
+
+.pic {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.remove-picture {
+    position: absolute;
+    right: 5%;
+    top: 5%;
+    transform: translate(5%, -5%);
+    background-color: #5d4ca7;
+    border-radius: 35px;
+    outline: none;
+    opacity: 0.5;
+    font-size: 1rem;
+    color: white;
+}
+
+
+.lodge-create-selects {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.remove-picture:hover {
+    opacity: 1;
+    min-height: 2rem;
+}
+.hill-select {
+    margin-top: 1em;
+}
+.utility-select{
+    margin-top: 1em;
+}
+.input-create {
+    width: 20vw;
+    min-width: 250px;
+    min-height: 4rem;
+    padding-left: 0.5rem;
+    font-family: Roboto, sans-serif;
+    font-size: 1.2rem;
+    outline: none !important;
+    border: 2px solid #211648;
+    border-radius: 10px;
+    margin-top: 1em;
+}
+.hill-select >div, .utility-select >div {
+    width:240px;
+    max-width: 250px;
+    min-height: 4rem;
+    border-radius: 10px;
+    border-color: #211648 !important;
+    outline: none !important;
+    border-width: 2px;
+    font-size: 1.1rem;
+    user-select: none !important;
+}
+.hill-select, .utility-select {
+    min-width: 200px;
+    width: unset;
+    margin-left: 1rem;
+    outline: none !important;
+    border: none !important;
+}
+
+.lodge-create-selects {
+    margin-bottom: 80px;
+}
+
+
+
+@media only screen and (max-width: 500px) {
+
+    .input-create {
+        width: 250px;
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+
+    .form-dialog {
+       max-width: 300px;
+    }
+
+}
+
+@media only screen and (max-width: 350px) {
+
+    .input-create {
+        width: 250px;
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+
+    .form-dialog {
+        min-width: 330px;
+    }
+
+}
+

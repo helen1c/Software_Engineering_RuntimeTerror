@@ -2,14 +2,14 @@ import React, {useEffect, useState} from "react";
 import './MountainLodgeSearch.css'
 import Select, {ValueType} from "react-select";
 import {Field, Form, Formik} from "formik";
-import {HillOption} from "../models/HillOption";
-import {MountainLodgeSearchRequest} from "../models/MountainLodgeSearchRequest";
+import {HillOption} from "../../models/HillOption";
+import {MountainLodgeSearchRequest} from "../../models/MountainLodgeSearchRequest";
 import {useDispatch, useSelector} from "react-redux";
-import {MainReducer} from "../../../store/reducer";
-import {findHills} from "../../../store/actions/findAllHillsActions";
-import {findUtilities} from "../../../store/actions/findAllUtilitiesActions";
-import {MountainLodgeSearchResult} from "../component/MountainLodgeSearchResult";
-import {MountainLodgeResult} from "../models/MountainLodgeResult";
+import {MainReducer} from "../../../../store/reducer";
+import {findHills} from "../../../../store/actions/findAllHillsActions";
+import {findUtilities} from "../../../../store/actions/findAllUtilitiesActions";
+import {MountainLodgeSearchResult} from "../MountainLodgeSearchResult/MountainLodgeSearchResult";
+import {MountainLodgeResult} from "../../models/MountainLodgeResult";
 
 export const MountainLodgeSearch = () => {
 
@@ -42,6 +42,7 @@ export const MountainLodgeSearch = () => {
         const json = await response.json();
 
         setSearchResults(json);
+
     }
 
     const {results: hillResults} = useSelector((state: MainReducer) => state.findAllHillsReducer);
@@ -76,7 +77,6 @@ export const MountainLodgeSearch = () => {
                                 <button className="search-button" type="submit">&#8981;</button>
                                 <Field className={"input-search"} placeholder={"Pretražite planinarske domove..."}
                                        name={"searchText"} id={"searchText"}/>
-s
                             </div>
                             <div className="selects">
                                 <Select

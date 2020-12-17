@@ -198,7 +198,5 @@
             <column name="lodge_id">12</column>
             <column name="utility_id">2</column>
         </insert>
-
-
     </changeSet>
 </databaseChangeLog>

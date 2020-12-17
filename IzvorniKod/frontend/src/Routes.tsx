@@ -5,11 +5,10 @@ import {AboutUs} from "./aboutus/components/AboutUs/AboutUs";
 import Header from "./components/header/Header";
 import {RegistrationForm} from "./components/login-registration/RegistrationForm";
 import {LoginForm} from "./components/login-registration/LoginForm";
-import {MountainLodgeSearch} from "./components/mountain-lodge/search/MountainLodgeSearch";
 import {MountaineeringCommunitySearch} from "./components/mountaineering-community/MountaineeringCommunitySearch"
-
-
 import {MenuProfile} from "./components/menu-profile/MenuProfile";
+import MountainLodgeCreate from "./components/mountain-lodge/component/MountainLodgeCreate/MountainLodgeCreate";
+import {MountainLodgeSearch} from "./components/mountain-lodge/component/MountainLodgeSearch/MountainLodgeSearch";
 
 export const Routes = () => {
 
@@ -27,6 +26,7 @@ export const Routes = () => {
                 <Route path="/mountaineering-community/search" component={MountaineeringCommunitySearch} exact/>
                 <Route path="/mountain-lodge/search" component={MountainLodgeSearch} exact/>
                 <Route path="/profile/:id" component={MenuProfile} exact/>
+                <Route path="/mountain-lodge/create" component={MountainLodgeCreate} exact/>
             </Switch>
         </div>
     );

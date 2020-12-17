@@ -1,12 +1,8 @@
 package hr.fer.pi.planinarskidnevnik.controllers;
 
-import hr.fer.pi.planinarskidnevnik.dtos.Hill.HillFindResponse;
 import hr.fer.pi.planinarskidnevnik.dtos.Utility.UtilityFindResponse;
-import hr.fer.pi.planinarskidnevnik.mappers.HillToHillResponseMapper;
 import hr.fer.pi.planinarskidnevnik.mappers.UtilityToUtilityResponseMapper;
-import hr.fer.pi.planinarskidnevnik.models.Hill;
 import hr.fer.pi.planinarskidnevnik.models.Utility;
-import hr.fer.pi.planinarskidnevnik.services.HillQueryService;
 import hr.fer.pi.planinarskidnevnik.services.UtilityQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

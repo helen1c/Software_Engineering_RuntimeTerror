@@ -1,5 +1,7 @@
 package hr.fer.pi.planinarskidnevnik.controllers;
 
+import hr.fer.pi.planinarskidnevnik.dtos.MountainLodge.MountainLodgeCreateRequest;
+import hr.fer.pi.planinarskidnevnik.dtos.MountainLodge.MountainLodgeCreateResponse;
 import hr.fer.pi.planinarskidnevnik.dtos.MountainLodge.MountainLodgeSearchRequest;
 import hr.fer.pi.planinarskidnevnik.dtos.MountainLodge.MountainLodgeSearchResponse;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainLodgeToMountainLodgeSearchResponseMapper;
@@ -8,7 +10,7 @@ import hr.fer.pi.planinarskidnevnik.services.MountainLodgeQueryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +26,7 @@ public class MountainLodgeController {
     private final MountainLodgeQueryService service;
     private final MountainLodgeToMountainLodgeSearchResponseMapper mountainLodgeMapper;
 
+
     @Autowired
     public MountainLodgeController(MountainLodgeQueryService service, MountainLodgeToMountainLodgeSearchResponseMapper mountainLodgeToMountainLodgeSearchResponseMapper) {
         this.service = service;
@@ -36,6 +39,18 @@ public class MountainLodgeController {
         List<MountainLodgeSearchResponse> responses = mountainLodgeMapper.mapToList(service.findAllMountainLodgeBySearchCriteria(request));
 
         return ResponseEntity.ok(responses);
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<MountainLodgeCreateResponse> createMountainLodge(@Valid @RequestBody final MountainLodgeCreateRequest createRequest) {
+        LOGGER.info("Creating new Mountain Lodge with name: " + createRequest.getName());
+
+        MountainLodge ml = service.createMountainLodge(createRequest);
+        MountainLodgeCreateResponse response = new MountainLodgeCreateResponse();
+
+        response.setName(ml.getName());
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
 }
