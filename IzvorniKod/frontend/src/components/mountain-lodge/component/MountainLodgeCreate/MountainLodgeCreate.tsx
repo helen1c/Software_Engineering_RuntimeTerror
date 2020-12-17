@@ -5,7 +5,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Select, {ValueType} from "react-select";
-import {Field, Form, Formik } from "formik";
+import {Field, Form, Formik} from "formik";
 import Compress from "react-image-file-resizer";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import {IconButton} from "@material-ui/core";
@@ -19,8 +19,8 @@ import {HillOption} from "../../models/HillOption";
 import {MountainLodgeCreateRequest} from "../../models/MountainLodgeCreateRequest";
 import * as Yup from "yup";
 import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import MuiAlert, {AlertProps} from '@material-ui/lab/Alert';
+import {makeStyles, Theme} from '@material-ui/core/styles';
 
 function Alert(props: AlertProps) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -90,9 +90,10 @@ export default function MountainLodgeCreate() {
         }
     }, [dispatcher, utilityResults]);
 
-    const create = async (request: MountainLodgeCreateRequest) => {
+    // @ts-ignore
+    const create = async (request: MountainLodgeCreateRequest,  {resetForm }) => {
 
-
+        resetForm();
         setOpen(false);
         const sRequest = {
             name: request.name,
@@ -111,9 +112,9 @@ export default function MountainLodgeCreate() {
             }
         };
         const response = await fetch("/api/mountain-lodges/create", requestOptions);
-        if((response.status) === 201 || (response.status / 10 >= 20 && response.status/10 < 30)){
+        if ((response.status) === 201 || (response.status / 10 >= 20 && response.status / 10 < 30)) {
             successMessage();
-        } else{
+        } else {
             errorMessage();
         }
     }
@@ -183,16 +184,19 @@ export default function MountainLodgeCreate() {
                             handleReset();
                         }} aria-labelledby="form-dialog-title">
                             <Form className={"form-dialog"}>
-                                <DialogTitle className={"dialog-title"} id="form-dialog-title">Stvori novi dom</DialogTitle>
+                                <DialogTitle className={"dialog-title"} id="form-dialog-title">Stvori novi
+                                    dom</DialogTitle>
                                 <DialogContent>
                                     <div className="create-column">
                                         <Field className={"input-create"}
                                                placeholder={"Naziv planinarskog doma..."}
                                                name={"name"} id={"name"}/>
-                                        {errors.name && touched.name ? <div className="errorText">{errors.name}</div> : <></>}
+                                        {errors.name && touched.name ?
+                                            <div className="errorText">{errors.name}</div> : <></>}
                                         <Field className={"input-create"} placeholder={"Nadmorska visina..."}
                                                name={"elevation"} id={"elevation"}/>
-                                        {errors.elevation && touched.elevation ? <div className="errorText">{errors.elevation}</div> : <></>}
+                                        {errors.elevation && touched.elevation ?
+                                            <div className="errorText">{errors.elevation}</div> : <></>}
 
                                         <div className="pic">
 
@@ -233,30 +237,31 @@ export default function MountainLodgeCreate() {
                                             }
                                         </div>
                                         <div className="lodge-create-selects">
-                                        <Select
-                                            className="hill-select"
-                                            isClearable={true}
-                                            isSearchable={true}
-                                            placeholder="Odaberite područje..."
-                                            name={"hillId"}
-                                            onChange={(option: ValueType<HillOption>) => setFieldValue("hillId",
-                                                option === null ? null : (option as HillOption).value)
-                                            }
-                                            options={hillResults}>
-                                        </Select>
+                                            <Select
+                                                className="hill-select"
+                                                isClearable={true}
+                                                isSearchable={true}
+                                                placeholder="Odaberite područje..."
+                                                name={"hillId"}
+                                                onChange={(option: ValueType<HillOption>) => setFieldValue("hillId",
+                                                    option === null ? null : (option as HillOption).value)
+                                                }
+                                                options={hillResults}>
+                                            </Select>
 
-                                        {errors.hillId && touched.hillId ? <div className="errorText">{errors.hillId}</div> : <></>}
+                                            {errors.hillId && touched.hillId ?
+                                                <div className="errorText">{errors.hillId}</div> : <></>}
 
-                                        <Select
-                                            className="utility-select"
-                                            isClearable={true}
-                                            isSearchable={true}
-                                            placeholder="Odaberite infrastrukturu..."
-                                            name={"utilities"}
-                                            isMulti
-                                            onChange={handleChange}
-                                            options={utilityResults}>
-                                        </Select>
+                                            <Select
+                                                className="utility-select"
+                                                isClearable={true}
+                                                isSearchable={true}
+                                                placeholder="Odaberite infrastrukturu..."
+                                                name={"utilities"}
+                                                isMulti
+                                                onChange={handleChange}
+                                                options={utilityResults}>
+                                            </Select>
                                         </div>
                                     </div>
                                 </DialogContent>
@@ -267,8 +272,7 @@ export default function MountainLodgeCreate() {
                                     }} color="primary">
                                         ODUSTANI
                                     </Button>
-                                    <Button type="submit"
-                                            color="primary">
+                                    <Button type="submit" color="primary">
                                         STVORI
                                     </Button>
                                 </DialogActions>
