@@ -161,7 +161,7 @@ export default function MountainLodgeCreate() {
                     Planinarski dom je uspješno stvoren.
                 </Alert>
             </Snackbar>
-            <Snackbar open={error} autoHideDuration={1000000} onClose={handleClose3}>
+            <Snackbar open={error} autoHideDuration={2000} onClose={handleClose3}>
                 <Alert onClose={handleClose3} severity="error">
                     Dogodila se pogreška prilikom stvaranja planinarskog doma. Pokušajte kasnije.
                 </Alert>
