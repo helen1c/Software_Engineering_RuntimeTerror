@@ -10,21 +10,6 @@ interface Props {
 export const ShowUser = ({ user }: Props) => {
   const history = useHistory();
 
-  useEffect(() => {
-    fetch("/api/users/image/" + user.id, {
-      method: "GET",
-      headers: new Headers({
-        authorization: sessionStorage.getItem("key") || "",
-      }),
-    }).then(function (response) {
-      if (response.status === HttpCodesUtil.SUCCESS) {
-        response.blob().then((e) => {
-          setImage(URL.createObjectURL(e));
-        });
-      }
-    });
-  }, []);
-
   return (
     <div>
       <div>

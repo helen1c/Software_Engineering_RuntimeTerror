@@ -8,6 +8,7 @@ import { IconButton } from "@material-ui/core";
 import { AddAPhotoOutlined } from "@material-ui/icons";
 import moment from "moment";
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import Compress from "react-image-file-resizer";
 
 export const RegistrationForm = () => {
   const [newImage, setNewImage] = useState("");
@@ -63,16 +64,22 @@ export const RegistrationForm = () => {
   });
 
   const showImage = (event: any) => {
-    if(!event) return;
+    if (!event) return;
     let file = event.target.files[0];
+    console.log(file);
+    Compress.imageFileResizer(
+        file, 480, 480, "JPEG", 100, 0, (uri) => {
+          console.log(uri)
 
-    let reader = new FileReader();
-    reader.onload = function (newImage) {
+          let reader = new FileReader();
+          if (uri !== undefined)
+            reader.readAsDataURL(uri as Blob);
 
-      setNewImage(newImage?.target?.result as string);
-    };
-    if(file !== undefined)
-    reader.readAsDataURL(file);
+          reader.onload = function (newImage) {
+            setNewImage(newImage?.target?.result as string);
+          };
+        }, "blob"
+    );
   };
 
   return (
