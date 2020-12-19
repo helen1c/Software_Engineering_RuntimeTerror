@@ -157,14 +157,13 @@ public class UserService {
         return currentUser;
     }
 
-    public List<UserSearchDto> getUserByName(String userName) { //userName je ono sto smo unijeli
-        List<User> allUsers = userRepository.findAll();  //dohvatimo listu svih Usera
+    public List<UserSearchDto> getUserCommunity(Principal principal) {
+        User currentUser = getCurrentUser(principal);
+        List<User> allUsers = userRepository.getAllByIdNot(currentUser.getId());
         List<UserSearchDto> searchResult = new ArrayList<>();
 
         for (User u : allUsers) {
-            if (u.getName().toLowerCase().contains(userName.toLowerCase())) {
-                searchResult.add(new UserSearchDto(u.getId(), getImage(u.getEmail()), u.getName()));
-            }
+            searchResult.add(new UserSearchDto(u.getId(), getImage(u.getEmail()), u.getName()));
         }
 
         return searchResult;
@@ -197,7 +196,7 @@ public class UserService {
                 user.getPlaceOfResidence(),
                 user.getDateOfBirth(),
                 user.getDescription(),
-                user.getImage() == null ? getImage(user.getEmail()): user.getImage(),
+                user.getImage() == null ? getImage(user.getEmail()) : user.getImage(),
                 isOwner(profileId, principal.getName()),
                 getRole(principal.getName()).equals("ADMIN"));
     }

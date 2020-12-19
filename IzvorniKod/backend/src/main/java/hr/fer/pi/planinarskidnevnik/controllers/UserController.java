@@ -35,9 +35,9 @@ public class UserController {
     }
 
     @GetMapping("/community")
-    public ResponseEntity<?> getUserByName(@RequestParam("name") final String userName) {
+    public ResponseEntity<?> getUserCommunity(Principal principal) {
         LOGGER.info("User fetching by name");
-        final List<UserSearchDto> list = userService.getUserByName(userName);
+        final List<UserSearchDto> list = userService.getUserCommunity(principal);
         return ResponseEntity.ok(list);
     }
 
