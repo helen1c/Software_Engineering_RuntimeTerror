@@ -7,10 +7,13 @@ import moment from "moment";
 import { EventDays } from "./EventDays";
 import { EventInfo } from "./EventInfo";
 
+
 export const CreateEventPage = () => {
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
   const [eventDays, setEventDays] = useState<EventInfo[]>([]);
+  const [falseDate, setIsFalseDate] = useState<boolean>(false);
 
+// {isSubmit  &&<EventDays cardsToRender={eventDays} />}
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -50,15 +53,22 @@ export const CreateEventPage = () => {
     var date2 = new Date(formik.values.startDate);
 
     var admission = moment(date1, "DD-MM-YYYY");
-    var discharge = moment(date2, "DD-MM-YYYY");
+    var discharge = moment(date2, "DD-MM-YYYY")
 
     initializeCards(admission.diff(discharge, "days"));
+
     setIsSubmit(true);
+    setIsFalseDate(false);
+
+    if(date1<date2) {
+      setIsFalseDate(true);
+    }
+
   }
 
   const initializeCards = (differenceInDays: Number) => {
     let cards: EventInfo[] = [];
-    for (let i = 0; i <= differenceInDays; i++) {
+    for (let i = 1; i <= differenceInDays.valueOf()+1; i++) {
       const card: EventInfo = { date: i };
       cards.push(card);
     }
@@ -151,10 +161,15 @@ export const CreateEventPage = () => {
           </div>
           <div>
             <button type="submit" className="submitButton" onClick={() => a()}>
-              Stvori događaj
+              Unesi detalje po danima
             </button>
 
-            {isSubmit && <EventDays cardsToRender={eventDays} />}
+            {falseDate ? (
+                <div>Datum početka mora biti prije datuma završetka</div>
+            ) : (
+                <EventDays cardsToRender={eventDays}/>
+            )}
+
           </div>
         </form>
       </div>
