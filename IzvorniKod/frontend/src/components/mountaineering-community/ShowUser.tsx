@@ -1,7 +1,8 @@
 import React from "react";
 import { UserInfo } from "../mountain-lodge/models/UserInfo";
-import "./MountaineeringCommunitySearch.css";
-import { useHistory } from "react-router";
+import './MountaineeringCommunitySearch.css';
+import {useHistory} from "react-router";
+import "./ShowUser.css";
 
 interface Props {
   user: UserInfo;
@@ -11,8 +12,9 @@ export const ShowUser = ({ user }: Props) => {
   const history = useHistory();
 
   return (
-    <div>
+    <div className="user-container">
       <div>
+        <img alt={user.name}  src={image} className = "user-photo" onClick={e => window.location.href = "/profile/" + user.id}/>
         <img
           alt={user.name}
           src={user.image}

@@ -1,0 +1,14 @@
+.users-container{
+    display: flex;
+    flex-direction: row;
+}
+
+@media only screen and (max-width:  660px) {
+    .users-container{
+        display: flex;
+        flex-wrap: wrap;
+        width: 100vw;
+        margin: inherit;
+    }
+
+}

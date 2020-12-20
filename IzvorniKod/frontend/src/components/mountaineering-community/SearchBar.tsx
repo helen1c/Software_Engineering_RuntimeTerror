@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 
 import { UserInfo } from "../mountain-lodge/models/UserInfo";
-import { HttpCodesUtil } from "./HttpCodesUtil";
+import {HttpCodesUtil} from "./HttpCodesUtil";
+import "./SearchBar.css";
 
 interface Props {
   dataFunction: (userArray: UserInfo[]) => void;
@@ -46,32 +47,32 @@ export const SearchBar = ({ dataFunction }: Props) => {
     },
   });
 
-  const placeholder = () => {
-    return formik.values.searchText === ""
-      ? "Unesi ključnu riječ"
-      : "Prvi korisnik, drugi korisnik, treći korisnik,...";
-  };
+    const placeholder = () => {
+        return formik.values.searchText === ""
+            ? "Pretražite planinarsku zajednicu..."
+            : "Prvi korisnik, drugi korisnik, treći korisnik,...";
+    };
 
   function handleSearchChanged(e: any) {
     formik.handleChange(e);
     dataRequest(e.target.value);
   }
 
-  return (
-    <div>
-      <form onSubmit={formik.handleSubmit}>
-        <div>
-          <div>
-            <input
-              type="text"
-              name="searchText"
-              placeholder={placeholder()}
-              onChange={(e) => handleSearchChanged(e)}
-              value={formik.values.searchText}
-            />
-          </div>
+    return (
+        <div className="user-search-div">
+            <form onSubmit={formik.handleSubmit}>
+                <div>
+                    <div>
+                        <input className="user-search-bar"
+                            type="text"
+                            name="searchText"
+                            placeholder={placeholder()}
+                            onChange={(e) => handleSearchChanged(e)}
+                            value={formik.values.searchText}
+                        />
+                    </div>
+                </div>
+            </form>
         </div>
-      </form>
-    </div>
-  );
+    );
 };

@@ -1,0 +1,13 @@
+.user-photo{
+    border-radius: 50%;
+    height: 80px;
+    width: 80px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+@media only screen and (max-width:  660px) {
+    .user-container{
+        padding: 0.5rem;
+    }
+
+}

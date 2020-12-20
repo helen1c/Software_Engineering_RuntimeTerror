@@ -8,6 +8,8 @@ import spremi from "../../assets/save-icon.png";
 import { MountaineeringCommunitySearch } from "../mountaineering-community/MountaineeringCommunitySearch";
 import { getEmptyProfile, ViewProfileInfo } from "./models/ViewProfileInfo";
 import Compress from "react-image-file-resizer";
+import {MountaineeringCommunitySearch} from "../mountaineering-community/MountaineeringCommunitySearch";
+import friend from"../../assets/friend.png";
 
 interface Props {
   user: ViewProfileInfo;
