@@ -7,6 +7,7 @@ import odustani from "../../assets/blue-x-png-1.png";
 import spremi from "../../assets/save-icon.png";
 import { MountaineeringCommunitySearch } from "../mountaineering-community/MountaineeringCommunitySearch";
 import { getEmptyProfile, ViewProfileInfo } from "./models/ViewProfileInfo";
+import Compress from "react-image-file-resizer";
 
 interface Props {
   user: ViewProfileInfo;
@@ -24,14 +25,22 @@ export const ProfileUserInfo = ({ user, setUser }: Props) => {
   const id = window.location.pathname.split("/")[2];
 
   const showImage = (event: any) => {
-    var file = event.target.files[0];
+    if (!event) return;
+    let file = event.target.files[0];
+    console.log(file);
+    Compress.imageFileResizer(
+        file, 480, 480, "JPEG", 100, 0, (uri) => {
+          console.log(uri)
 
-    var reader = new FileReader();
-    reader.onload = function (newImage) {
-      // @ts-ignore
-      setUser({ ...user, image: newImage.target.result as string });
-    };
-    reader.readAsDataURL(file);
+          let reader = new FileReader();
+          if (uri !== undefined)
+            reader.readAsDataURL(uri as Blob);
+
+          reader.onload = function (newImage) {
+            setUser({ ...user, image: newImage?.target?.result as string });
+          };
+        }, "blob"
+    );
   };
 
   const handleEditOnClick = () => {

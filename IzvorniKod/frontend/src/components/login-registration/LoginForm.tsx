@@ -4,9 +4,23 @@ import { useFormik } from "formik";
 import { HttpCodesUtil } from "../../errors/HttpCodesUtil";
 import "./LoginAndRegistrationForm.css";
 import loginImage from "../../assets/login-image.png";
+import Snackbar from "@material-ui/core/Snackbar";
+import {Alert} from "@material-ui/lab";
 
-export const LoginForm = () => {
+interface Props {
+  successfulRegistration?: boolean
+}
+
+export const LoginForm = ({ successfulRegistration }: Props) => {
   const [showError, setShowError] = useState<boolean>(false);
+  const [success, setSuccessMessage] = useState(successfulRegistration);
+
+  const handleClose2 = (event?: React.SyntheticEvent, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSuccessMessage(false);
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -52,6 +66,11 @@ export const LoginForm = () => {
 
   return (
     <div className="loginForm">
+      <Snackbar open={success} autoHideDuration={2000} onClose={handleClose2}>
+        <Alert onClose={handleClose2} severity="success">
+          Uspješno ste se registrirali.
+        </Alert>
+      </Snackbar>
       <form onSubmit={formik.handleSubmit}>
         <h1>Prijava</h1>
         <div className="inputForm">

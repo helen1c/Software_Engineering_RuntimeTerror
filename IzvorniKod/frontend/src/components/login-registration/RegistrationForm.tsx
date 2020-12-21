@@ -57,7 +57,10 @@ export const RegistrationForm = () => {
             });
           });
         } else {
-          history.push("/login");
+          history.push({
+          pathname: '/login',
+          state: { successfulRegistration: true}
+        })
         }
       });
     },
