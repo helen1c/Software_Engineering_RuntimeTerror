@@ -10,6 +10,8 @@ import {MenuProfile} from "./components/profile/MenuProfile";
 import MountainPathCreate from "./components/mountain-path/component/MountainPathCreate/MountainPathCreate";
 import MountainLodgeCreate from "./components/mountain-lodge/component/MountainLodgeCreate/MountainLodgeCreate";
 import {MountainLodgeSearch} from "./components/mountain-lodge/component/MountainLodgeSearch/MountainLodgeSearch";
+import Footer from "./components/footer/Footer";
+import "./Routes.css";
 import {MountainPathSearch} from "./components/mountain-path/component/MountainPathSearch/MountainPathSearch";
 import {CreateEventPage} from "./components/createevent/CreateEventPage";
 import {FriendshipRequestList} from "./components/friendship-request-list/FriendshipRequestList";
@@ -23,7 +25,9 @@ export const Routes = () => {
 
     return (
         <div>
+
             <Header/>
+            <div className="body-page">
             <Switch>
                 <Route path={"/"} exact={true}>
                     <Redirect to={"home"}/>
@@ -46,6 +50,8 @@ export const Routes = () => {
                 <Route path="/my-events" component={MyCommunityEventsResults} exact/>
                 <Route path="/mountaineering-community" component={MountaineeringCommunity} exact/>
             </Switch>
+            </div>
+            <Footer/>
         </div>
     );
 

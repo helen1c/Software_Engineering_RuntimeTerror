@@ -64,6 +64,7 @@ button {
 .admin-layout {
     width: 95%;
     float: right;
+    display: contents;
     padding-left: 3rem;
 }
 
