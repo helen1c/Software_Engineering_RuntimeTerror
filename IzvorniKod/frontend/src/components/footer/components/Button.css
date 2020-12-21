@@ -1,0 +1,34 @@
+.message-content{
+    min-height: 8rem;
+    width: 25vw;
+    min-width: 15rem;
+    border: 2px solid #211648;
+    box-shadow: none !important;
+    outline: none !important;
+    border-radius: 10px;
+    font-family: Roboto, sans-serif;
+    font-size: 1rem;
+    max-width: 25vw;
+    max-height: 15vw;
+}
+.message-title{
+    margin: 0.3rem 0;
+    border-radius: 10px;
+    text-indent: 5px;
+    height: 3.5rem;
+    width: 25vw;
+    min-width: 15rem;
+    border: 2px solid #211648;
+    box-shadow: none !important;
+    outline: none !important;
+    font-family: Roboto, sans-serif;
+    font-size: 1rem;
+}
+.box-title{
+    font-size: larger;
+    font-family: ui-monospace;
+}
+.MuiTypography-h6{
+    font-family: none!important;
+    font-size: 2rem!important;
+}
