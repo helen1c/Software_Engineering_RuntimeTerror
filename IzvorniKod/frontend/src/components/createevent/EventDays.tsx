@@ -1,5 +1,6 @@
 import React from "react";
 import { EventInfo } from "./EventInfo";
+import "./CreateEventPage.css";
 
 interface Props {
   cardsToRender: EventInfo[];
@@ -7,51 +8,26 @@ interface Props {
 
 export const EventDays = ({ cardsToRender }: Props) => {
 
-  const placeholder1 = () => {
-    return "Početna točka";
-  };
-
-  const placeholder2 = () => {
-    return "Krajnja točka";
-  };
-
-  const placeholder3 = () => {
-    return "Predviđeno trajanje";
+  const placeholder = () => {
+    return "Unesite ime staze";
   };
 
   return (
     <div>
       {cardsToRender.map((day) => (
-        <div key={day.date.toString()}>{day.date}. dan
-
-          <div>
-          <input
+          <div key={day.date.toString()}>
+            <span className="eventComponent">{day.date} . dan: </span>
+            <input
               type="text"
-              name="text"
-              placeholder={placeholder1()}
-          />
-          </div>
-
-          <div>
-            <input
-                type="text"
-                name="text"
-                placeholder={placeholder2()}
+              name="searchText"
+              className="event-input"
+              placeholder={placeholder()}
             />
-          </div>
-
-          <div>
-            <input
-                type="text"
-                name="text"
-                placeholder={placeholder3()}
-            />
-          </div>
+            <p className="eventComponent">Informacije o stazi s backenda</p>
         </div>
-
       ))}
       { (cardsToRender.length) ? (
-        <button type="submit" className="submitButton">
+        <button type="submit" className="submitButton" >
           Stvori događaj
         </button>
         ): (

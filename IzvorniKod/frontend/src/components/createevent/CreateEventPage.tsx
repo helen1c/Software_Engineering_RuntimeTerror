@@ -165,7 +165,7 @@ export const CreateEventPage = () => {
             </button>
 
             {falseDate ? (
-                <div>Datum početka mora biti prije datuma završetka</div>
+                <div className="event-input">Datum početka mora biti prije datuma završetka</div>
             ) : (
                 <EventDays cardsToRender={eventDays}/>
             )}
