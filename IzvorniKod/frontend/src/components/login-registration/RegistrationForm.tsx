@@ -7,7 +7,7 @@ import { useHistory } from "react-router";
 import { IconButton } from "@material-ui/core";
 import { AddAPhotoOutlined } from "@material-ui/icons";
 import moment from "moment";
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import Compress from "react-image-file-resizer";
 
 export const RegistrationForm = () => {
@@ -57,10 +57,10 @@ export const RegistrationForm = () => {
             });
           });
         } else {
+          sessionStorage.setItem("successfulRegistration", "true");
           history.push({
-          pathname: '/login',
-          state: { successfulRegistration: true}
-        })
+            pathname: "/login",
+          });
         }
       });
     },
@@ -71,17 +71,23 @@ export const RegistrationForm = () => {
     let file = event.target.files[0];
     console.log(file);
     Compress.imageFileResizer(
-        file, 480, 480, "JPEG", 100, 0, (uri) => {
-          console.log(uri)
+      file,
+      480,
+      480,
+      "JPEG",
+      100,
+      0,
+      (uri) => {
+        console.log(uri);
 
-          let reader = new FileReader();
-          if (uri !== undefined)
-            reader.readAsDataURL(uri as Blob);
+        let reader = new FileReader();
+        if (uri !== undefined) reader.readAsDataURL(uri as Blob);
 
-          reader.onload = function (newImage) {
-            setNewImage(newImage?.target?.result as string);
-          };
-        }, "blob"
+        reader.onload = function (newImage) {
+          setNewImage(newImage?.target?.result as string);
+        };
+      },
+      "blob"
     );
   };
 
@@ -185,38 +191,49 @@ export const RegistrationForm = () => {
                 {formik.errors.description ? formik.errors.description : null}
               </p>
             </div>
-            <input className={"upload-picture"}
-                   accept={"image/*"}
-                   id={"icon-button-file"}
-                   type="file" multiple
-                   onChange={(event) => {
-                     showImage(event)
-                     event.target.value=""
-                   }}
+            <input
+              className={"upload-picture"}
+              accept={"image/*"}
+              id={"icon-button-file"}
+              type="file"
+              multiple
+              onChange={(event) => {
+                showImage(event);
+                event.target.value = "";
+              }}
             />
-            {newImage ?
+            {newImage ? (
+              <div className={"wrapper-picture"}>
+                <img
+                  style={{ display: "block" }}
+                  className="profileImage"
+                  src={newImage}
+                  alt="Slika profila"
+                />
+                <span
+                  className={"remove-picture"}
+                  onClick={() => setNewImage("")}
+                >
+                  <DeleteForeverIcon />
+                </span>
+              </div>
+            ) : (
+              <>
                 <div className={"wrapper-picture"}>
-                  <img
-                      style = {{display:"block"}}
-                      className="profileImage"
-                      src={newImage}
-                      alt="Slika profila"
-                  />
-                  <span className={"remove-picture"} onClick={() => setNewImage("")}><DeleteForeverIcon/></span>
-
+                  <div className={"picture-container"}>
+                    <label htmlFor="icon-button-file">
+                      <IconButton
+                        color="primary"
+                        aria-label="upload picture"
+                        component="span"
+                      >
+                        <AddAPhotoOutlined />
+                      </IconButton>
+                    </label>
+                  </div>
                 </div>
-                :
-                <>
-                  <div className={"wrapper-picture"}>
-                    <div className={"picture-container"}>
-                      <label htmlFor="icon-button-file">
-                        <IconButton color="primary" aria-label="upload picture" component="span">
-                          <AddAPhotoOutlined/>
-                        </IconButton>
-                      </label>
-                    </div></div>
-                </>
-            }
+              </>
+            )}
           </div>
         </div>
         <div>

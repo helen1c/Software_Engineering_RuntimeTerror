@@ -1,22 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { HttpCodesUtil } from "../../errors/HttpCodesUtil";
 import "./LoginAndRegistrationForm.css";
 import loginImage from "../../assets/login-image.png";
 import Snackbar from "@material-ui/core/Snackbar";
-import {Alert} from "@material-ui/lab";
+import { Alert } from "@material-ui/lab";
 
-interface Props {
-  successfulRegistration?: boolean
-}
-
-export const LoginForm = ({ successfulRegistration }: Props) => {
+export const LoginForm = () => {
   const [showError, setShowError] = useState<boolean>(false);
-  const [success, setSuccessMessage] = useState(successfulRegistration);
+  const [success, setSuccessMessage] = useState<boolean>();
 
+  useEffect(() => {
+    setSuccessMessage(
+      (sessionStorage.getItem("successfulRegistration") || "") === "true"
+    );
+    sessionStorage.removeItem("successfulRegistration");
+  }, []);
   const handleClose2 = (event?: React.SyntheticEvent, reason?: string) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
     setSuccessMessage(false);
@@ -66,7 +68,7 @@ export const LoginForm = ({ successfulRegistration }: Props) => {
 
   return (
     <div className="loginForm">
-      <Snackbar open={success} autoHideDuration={2000} onClose={handleClose2}>
+      <Snackbar open={success} autoHideDuration={3000} onClose={handleClose2}>
         <Alert onClose={handleClose2} severity="success">
           Uspješno ste se registrirali.
         </Alert>
@@ -76,7 +78,8 @@ export const LoginForm = ({ successfulRegistration }: Props) => {
         <div className="inputForm">
           <div className="inputComponent">
             <p className={"inputLabel"}>E-mail:</p>
-            <input className={"login-input"}
+            <input
+              className={"login-input"}
               id="email"
               value={formik.values.email}
               placeholder={"Unesite e-mail..."}
@@ -86,7 +89,8 @@ export const LoginForm = ({ successfulRegistration }: Props) => {
           </div>
           <div className="inputComponent password-component">
             <p className={"inputLabel"}>Lozinka:</p>
-            <input className={"login-input"}
+            <input
+              className={"login-input"}
               id="password"
               type="password"
               placeholder={"Unesite lozinku..."}
@@ -97,9 +101,7 @@ export const LoginForm = ({ successfulRegistration }: Props) => {
           </div>
         </div>
         <div>
-          {showError ? (
-              <span className="errorText">Neispravan e-mail ili lozinka.</span>
-          ) : <></>}
+          {showError && <span className="errorText">Neispravan e-mail ili lozinka.</span>}
         </div>
         <div>
           <button type={"submit"} className="submitButton">
@@ -109,16 +111,17 @@ export const LoginForm = ({ successfulRegistration }: Props) => {
         <div>
           <p className="toRegistration">
             Nemaš korisnički račun?{" "}
-            <a
-              className="toRegistrationAction"
-              href={"/register"}
-            >
+            <a className="toRegistrationAction" href={"/register"}>
               Registriraj se
             </a>
           </p>
         </div>
         <div>
-          <img src={loginImage} alt={"Mountaineers pic"} className="loginImage" />
+          <img
+            src={loginImage}
+            alt={"Mountaineers pic"}
+            className="loginImage"
+          />
         </div>
       </form>
     </div>
