@@ -7,7 +7,8 @@ import { useHistory } from "react-router";
 import { IconButton } from "@material-ui/core";
 import { AddAPhotoOutlined } from "@material-ui/icons";
 import moment from "moment";
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import Compress from "react-image-file-resizer";
 
 export const RegistrationForm = () => {
   const [newImage, setNewImage] = useState("");
@@ -56,23 +57,38 @@ export const RegistrationForm = () => {
             });
           });
         } else {
-          history.push("/login");
+          sessionStorage.setItem("successfulRegistration", "true");
+          history.push({
+            pathname: "/login",
+          });
         }
       });
     },
   });
 
   const showImage = (event: any) => {
-    if(!event) return;
+    if (!event) return;
     let file = event.target.files[0];
+    console.log(file);
+    Compress.imageFileResizer(
+      file,
+      480,
+      480,
+      "JPEG",
+      100,
+      0,
+      (uri) => {
+        console.log(uri);
 
-    let reader = new FileReader();
-    reader.onload = function (newImage) {
+        let reader = new FileReader();
+        if (uri !== undefined) reader.readAsDataURL(uri as Blob);
 
-      setNewImage(newImage?.target?.result as string);
-    };
-    if(file !== undefined)
-    reader.readAsDataURL(file);
+        reader.onload = function (newImage) {
+          setNewImage(newImage?.target?.result as string);
+        };
+      },
+      "blob"
+    );
   };
 
   return (
@@ -175,38 +191,49 @@ export const RegistrationForm = () => {
                 {formik.errors.description ? formik.errors.description : null}
               </p>
             </div>
-            <input className={"upload-picture"}
-                   accept={"image/*"}
-                   id={"icon-button-file"}
-                   type="file" multiple
-                   onChange={(event) => {
-                     showImage(event)
-                     event.target.value=""
-                   }}
+            <input
+              className={"upload-picture"}
+              accept={"image/*"}
+              id={"icon-button-file"}
+              type="file"
+              multiple
+              onChange={(event) => {
+                showImage(event);
+                event.target.value = "";
+              }}
             />
-            {newImage ?
+            {newImage ? (
+              <div className={"wrapper-picture"}>
+                <img
+                  style={{ display: "block" }}
+                  className="profileImage"
+                  src={newImage}
+                  alt="Slika profila"
+                />
+                <span
+                  className={"remove-picture"}
+                  onClick={() => setNewImage("")}
+                >
+                  <DeleteForeverIcon />
+                </span>
+              </div>
+            ) : (
+              <>
                 <div className={"wrapper-picture"}>
-                  <img
-                      style = {{display:"block"}}
-                      className="profileImage"
-                      src={newImage}
-                      alt="Slika profila"
-                  />
-                  <span className={"remove-picture"} onClick={() => setNewImage("")}><DeleteForeverIcon/></span>
-
+                  <div className={"picture-container"}>
+                    <label htmlFor="icon-button-file">
+                      <IconButton
+                        color="primary"
+                        aria-label="upload picture"
+                        component="span"
+                      >
+                        <AddAPhotoOutlined />
+                      </IconButton>
+                    </label>
+                  </div>
                 </div>
-                :
-                <>
-                  <div className={"wrapper-picture"}>
-                    <div className={"picture-container"}>
-                      <label htmlFor="icon-button-file">
-                        <IconButton color="primary" aria-label="upload picture" component="span">
-                          <AddAPhotoOutlined/>
-                        </IconButton>
-                      </label>
-                    </div></div>
-                </>
-            }
+              </>
+            )}
           </div>
         </div>
         <div>

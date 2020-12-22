@@ -1,7 +1,9 @@
 package hr.fer.pi.planinarskidnevnik.controllers;
 
-import hr.fer.pi.planinarskidnevnik.dtos.UserCreateDto;
-import hr.fer.pi.planinarskidnevnik.dtos.UserSearchDto;
+import hr.fer.pi.planinarskidnevnik.dtos.User.UserCreateDto;
+import hr.fer.pi.planinarskidnevnik.dtos.User.UserHeaderDto;
+import hr.fer.pi.planinarskidnevnik.dtos.User.UserProfilePageDto;
+import hr.fer.pi.planinarskidnevnik.dtos.User.UserSearchDto;
 import hr.fer.pi.planinarskidnevnik.models.User;
 import hr.fer.pi.planinarskidnevnik.services.impl.UserService;
 import org.slf4j.Logger;
@@ -33,9 +35,9 @@ public class UserController {
     }
 
     @GetMapping("/community")
-    public ResponseEntity<?> getUserByName(@RequestParam("name") final String userName) {
+    public ResponseEntity<?> getUserCommunity(Principal principal) {
         LOGGER.info("User fetching by name");
-        final List<UserSearchDto> list = userService.getUserByName(userName);
+        final List<UserSearchDto> list = userService.getUserCommunity(principal);
         return ResponseEntity.ok(list);
     }
 
@@ -60,10 +62,9 @@ public class UserController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<?> getCurrentUser(Principal principal) {
+    public ResponseEntity<UserHeaderDto> getCurrentUser(Principal principal) {
         LOGGER.info("Getting current user");
-        final User user = userService.checkForEmail(principal.getName());
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(userService.getHeaderInformation(principal));
     }
 
     @PostMapping
@@ -82,9 +83,9 @@ public class UserController {
         return ResponseEntity.ok(userService.getImage(userService.getUserById(id).getEmail()));
     }
 
-    @GetMapping(value = "/profile-image/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
-    public ResponseEntity<byte[]> getProfileImage(@PathVariable("id") final Long profileId) {
-        return ResponseEntity.ok(userService.getImage(userService.getUserById(profileId).getEmail()));
+    @GetMapping(value = "/profile/{id}")
+    public ResponseEntity<UserProfilePageDto> getProfilePageInfo(@PathVariable("id") final Long profileId, Principal principal) {
+        return ResponseEntity.ok(userService.getProfilePageInfo(profileId, principal));
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)

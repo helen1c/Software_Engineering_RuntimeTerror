@@ -1,7 +1,9 @@
 package hr.fer.pi.planinarskidnevnik.services.impl;
 
-import hr.fer.pi.planinarskidnevnik.dtos.UserCreateDto;
-import hr.fer.pi.planinarskidnevnik.dtos.UserSearchDto;
+import hr.fer.pi.planinarskidnevnik.dtos.User.UserCreateDto;
+import hr.fer.pi.planinarskidnevnik.dtos.User.UserHeaderDto;
+import hr.fer.pi.planinarskidnevnik.dtos.User.UserProfilePageDto;
+import hr.fer.pi.planinarskidnevnik.dtos.User.UserSearchDto;
 import hr.fer.pi.planinarskidnevnik.exceptions.IllegalAccessException;
 import hr.fer.pi.planinarskidnevnik.exceptions.NoImageException;
 import hr.fer.pi.planinarskidnevnik.exceptions.ResourceNotFoundException;
@@ -19,9 +21,9 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
-import java.security.Principal;
 import java.util.Optional;
 
 @Service
@@ -71,8 +73,8 @@ public class UserService {
         return user;
     }
 
-    public byte[] getImage(String username) {
-        User user = checkForEmail(username);
+    public byte[] getImage(String email) {
+        User user = checkForEmail(email);
 
         if (user.getImage() == null) {
             try {
@@ -125,14 +127,7 @@ public class UserService {
     }
 
     public void deleteUser(Long userId, Principal principal) {
-        Optional<User> optionalCurrentUser = findUserByEmail(principal.getName());
-
-        if (optionalCurrentUser.isEmpty()) {
-            LOGGER.error("User with id {} doesn't exist", userId);
-            throw new ResourceNotFoundException(String.format("Korisnik s id %s ne postoji", userId));
-        }
-
-        User currentUser = optionalCurrentUser.get();
+        User currentUser = getCurrentUser(principal);
         User userForRemoval = getUserById(userId);
 
         if (currentUser.getId() == userForRemoval.getId() || getRole(currentUser.getEmail()).equals("ADMIN")) {
@@ -145,13 +140,7 @@ public class UserService {
     }
 
     public User editCurrentUser(UserCreateDto userCreateDto, Principal principal) {
-        Optional<User> optionalCurrentUser = userRepository.findByEmail(principal.getName());
-        if (optionalCurrentUser.isEmpty()) {
-            LOGGER.error("User {} doesn't exist", principal.getName());
-            throw new ResourceNotFoundException(String.format("Korisnik %s ne postoji", principal.getName()));
-        }
-
-        User currentUser = optionalCurrentUser.get();
+        User currentUser = getCurrentUser(principal);
         if (!currentUser.getEmail().equals(userCreateDto.getEmail())) {       //Makni ako se odluci mijenjat mail
             LOGGER.error("Not allowed to edit user");
             throw new IllegalAccessException("Nemate dozvolu za uređivanje ovog korisnika");
@@ -168,14 +157,13 @@ public class UserService {
         return currentUser;
     }
 
-    public List<UserSearchDto> getUserByName(String userName) { //userName je ono sto smo unijeli
-        List<User> allUsers = userRepository.findAll();  //dohvatimo listu svih Usera
+    public List<UserSearchDto> getUserCommunity(Principal principal) {
+        User currentUser = getCurrentUser(principal);
+        List<User> allUsers = userRepository.getAllByIdNot(currentUser.getId());
         List<UserSearchDto> searchResult = new ArrayList<>();
 
         for (User u : allUsers) {
-            if (u.getName().toLowerCase().contains(userName.toLowerCase())) {
-                searchResult.add(new UserSearchDto(u.getId(), u.getImage(), u.getName()));
-            }
+            searchResult.add(new UserSearchDto(u.getId(), getImage(u.getEmail()), u.getName()));
         }
 
         return searchResult;
@@ -189,5 +177,32 @@ public class UserService {
         }
         User currentUser = optionalCurrentUser.get();
         return currentUser.getId().equals(id);
+    }
+
+    public User getCurrentUser(Principal principal) {
+        Optional<User> optionalCurrentUser = userRepository.findByEmail(principal.getName());
+        if (optionalCurrentUser.isEmpty()) {
+            LOGGER.error("User {} doesn't exist", principal.getName());
+            throw new ResourceNotFoundException(String.format("Korisnik %s ne postoji", principal.getName()));
+        }
+        return optionalCurrentUser.get();
+    }
+
+    public UserProfilePageDto getProfilePageInfo(Long profileId, Principal principal) {
+        User user = getUserById(profileId);
+
+        return new UserProfilePageDto(user.getName(),
+                user.getEmail(),
+                user.getPlaceOfResidence(),
+                user.getDateOfBirth(),
+                user.getDescription(),
+                user.getImage() == null ? getImage(user.getEmail()) : user.getImage(),
+                isOwner(profileId, principal.getName()),
+                getRole(principal.getName()).equals("ADMIN"));
+    }
+
+    public UserHeaderDto getHeaderInformation(Principal principal) {
+        User user = getCurrentUser(principal);
+        return new UserHeaderDto(user.getId(), getImage(user.getEmail()));
     }
 }

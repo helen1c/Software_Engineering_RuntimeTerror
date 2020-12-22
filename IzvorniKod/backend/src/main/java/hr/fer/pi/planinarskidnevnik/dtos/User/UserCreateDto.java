@@ -1,4 +1,4 @@
-package hr.fer.pi.planinarskidnevnik.dtos;
+package hr.fer.pi.planinarskidnevnik.dtos.User;
 
 import hr.fer.pi.planinarskidnevnik.validation.email.UniqueEmail;
 

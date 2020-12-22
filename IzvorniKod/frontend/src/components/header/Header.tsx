@@ -11,19 +11,6 @@ function Header() {
 
   useEffect(() => {
     if (sessionStorage.getItem("key") !== null)
-      fetch("/api/users/image?", {
-        method: "GET",
-        headers: new Headers({
-          authorization: sessionStorage.getItem("key") || "",
-        }),
-      }).then(function (response) {
-        if (response.status === 200) {
-          response.blob().then((e) => {
-            setProfileImage(URL.createObjectURL(e));
-          });
-        }
-      });
-    if (sessionStorage.getItem("key") !== null)
       fetch("/api/users/me", {
         method: "GET",
         headers: new Headers({
@@ -32,6 +19,7 @@ function Header() {
       }).then(function (response) {
         if (response.status === 200) {
           response.json().then((e) => {
+            setProfileImage("data:image/jpeg;base64," + e.image)
             setProfileLink("/profile/" + e.id);
           });
         }

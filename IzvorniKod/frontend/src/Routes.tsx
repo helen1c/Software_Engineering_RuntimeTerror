@@ -6,9 +6,9 @@ import Header from "./components/header/Header";
 import {RegistrationForm} from "./components/login-registration/RegistrationForm";
 import {LoginForm} from "./components/login-registration/LoginForm";
 import {MountaineeringCommunitySearch} from "./components/mountaineering-community/MountaineeringCommunitySearch"
-import {MenuProfile} from "./components/menu-profile/MenuProfile";
 import MountainLodgeCreate from "./components/mountain-lodge/component/MountainLodgeCreate/MountainLodgeCreate";
 import {MountainLodgeSearch} from "./components/mountain-lodge/component/MountainLodgeSearch/MountainLodgeSearch";
+import {MenuProfile} from "./components/profile/MenuProfile";
 
 export const Routes = () => {
 
