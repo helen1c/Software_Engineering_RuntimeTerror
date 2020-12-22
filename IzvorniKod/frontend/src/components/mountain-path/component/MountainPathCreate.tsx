@@ -39,7 +39,7 @@ export default function MountainPathCreate() {
     const [error, setErrorMessage] = React.useState(false);
 
     // @ts-ignore
-    const[value, onChange] = useState('10:00');
+    const[value, setValue] = useState('10:00');
 
     const successMessage = () => {
         setSuccessMessage(true);
@@ -184,8 +184,6 @@ export default function MountainPathCreate() {
                                         <Field className={"input-search"} placeholder={"Je li ili nije privatna staza..."}
                                                name={"isPrivate"} id={"isPrivate"}/>
                                         {errors.isPrivate && touched.isPrivate ? <div className="errorText">{errors.isPrivate}</div> : <></>}
-                                        <TimePicker className={"input-search"}
-                                                    value={value.toString()} format="HH:mm" name={"avgWalkTime"} onChange={onChange}/>
 
                                         <div className="lodge-create-selects">
                                             <Select

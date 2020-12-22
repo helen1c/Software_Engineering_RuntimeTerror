@@ -27,7 +27,7 @@ export const Routes = () => {
                 <Route path="/mountaineering-community/search" component={MountaineeringCommunitySearch} exact/>
                 <Route path="/mountain-lodge/search" component={MountainLodgeSearch} exact/>
                 <Route path="/profile/:id" component={MenuProfile} exact/>
-                <Route path="/mountain-paths/create" component={MountainPathCreate} exact/>
+                <Route path="/mountain-path/create" component={MountainPathCreate} exact/>
                 <Route path="/mountain-lodge/create" component={MountainLodgeCreate} exact/>
             </Switch>
         </div>
