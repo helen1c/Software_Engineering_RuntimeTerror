@@ -4,14 +4,20 @@
     grid-column-gap: 20px;
     min-height: 350px;
     min-width: 350px;
-    border: 3px solid #272245;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    border-radius: 5px;
+    padding: 1rem;
+    border-radius: 10px;
     height: 400px;
-    margin-left: 1rem;
-    margin-right: 1rem;
+    margin: 1rem;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .5);
+    background-color: whitesmoke;
 }
+
+.mountain-lodge-cnt:hover{
+    transform: scale3d(1.03, 1.03, 1.03);
+    transition: all .20s linear;
+    opacity: 1;
+}
+
 
 .mountain-lodge-utils > span {
     display: block;
@@ -29,9 +35,9 @@
 }
 
 .util-pic {
-    margin-left: 5px;
-    width: 2rem;
-    height: 2rem;
+    margin-left: 15px;
+    width: 2.2rem;
+    height: 2.2rem;
 }
 
 .mountain-lodge-picture {
@@ -40,7 +46,10 @@
     max-height: 350px;
     margin: auto;
     border-radius: 5px;
+//border: 1px solid #8d8d8d;
 }
+
+
 
 .mountain-lodge-name {
     text-align: center;
@@ -52,10 +61,27 @@
 .image-util-cnt {
     display: flex;
     flex-direction: column;
+    color: #406cba;
 }
 
 .lodge-description-cnt {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    color: #406cba;
+}
+.results-container:hover > .mountain-lodge-cnt{
+    opacity: 0.5;
+}
+.results-container .mountain-lodge-cnt:hover {
+    background-color: #fcf1f4;
+    opacity: 100%;
+}
+
+@media screen and (max-width: 600px ) {
+
+    .mountain-lodge-picture{
+        object-fit: cover;
+        border-radius: 5px;
+    }
 }
