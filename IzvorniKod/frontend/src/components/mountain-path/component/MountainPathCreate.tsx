@@ -17,6 +17,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import 'semantic-ui-css/semantic.min.css'
+import TimePicker, {TimePickerValue} from "react-time-picker";
 
 function Alert(props: AlertProps) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -37,10 +38,7 @@ export default function MountainPathCreate() {
 
     const [success, setSuccessMessage] = React.useState(false);
     const [error, setErrorMessage] = React.useState(false);
-
-    // @ts-ignore
-    const[value, setValue] = useState('10:00');
-
+    const [timePicker, setTimePicker] = useState<TimePickerValue>("00:00:00");
 
     const successMessage = () => {
         setSuccessMessage(true);
@@ -48,6 +46,8 @@ export default function MountainPathCreate() {
     const errorMessage = () => {
         setErrorMessage(true);
     };
+
+    const DEFAULT_TIME_PICKER_VALUE = "00:00:00";
 
     const handleClose2 = (event?: React.SyntheticEvent, reason?: string) => {
         if (reason === 'clickaway') {
@@ -73,26 +73,37 @@ export default function MountainPathCreate() {
         }
     }, [dispatcher, hillResults]);
 
-    const create = async (request: MountainPathCreateRequest) => {
 
-        console.log(request);
+    // @ts-ignore
+    const create = async (request: MountainPathCreateRequest, {resetForm }) => {
+
+        resetForm();
+        let sRequest = {};
+
+        if(timePicker === null) {
+            sRequest = {...sRequest, avgWalkTime: DEFAULT_TIME_PICKER_VALUE};
+        } else {
+            sRequest = {...sRequest, avgWalkTime: timePicker};
+        }
 
         setOpen(false);
-        const sRequest = {
+        sRequest = {...sRequest,
             name: request.name,
             startPoint: request.startPoint,
             hillId: request.hillId,
             endPoint: request.endPoint,
-            avgWalkTime: request.avgWalkTime,
             length: request.length,
             seaLevelDiff: request.seaLevelDiff,
             isPrivate: request.isPrivate
         };
 
+        setTimePicker(DEFAULT_TIME_PICKER_VALUE);
+
         const requestOptions = {
             method: "POST",
             body: JSON.stringify(sRequest),
             headers: {
+                authorization: sessionStorage.getItem("key") || "",
                 Accept: "application/json",
                 "Content-Type": "application/json"
             }
@@ -118,7 +129,8 @@ export default function MountainPathCreate() {
         hillId: Yup.number().typeError("Molimo odaberite visočje.").required("Molimo odaberite visočje."),
         endPoint: Yup.string().required("Molimo Vas završnu točku planinarske staze"),
         length: Yup.number().typeError("Duljina staze mora biti broj.").positive("Duljina staze mora biti pozitivan broj.").required("Molimo unesite duljinu staze."),
-        seaLevelDiff: Yup.number().typeError("Visinska razlika mora biti broj.").positive("Visinska razlika mora biti pozitivan broj.").required("Molimo unesite visinsku razliku")
+        seaLevelDiff: Yup.number().typeError("Visinska razlika mora biti broj.").positive("Visinska razlika mora biti pozitivan broj.").required("Molimo unesite visinsku razliku"),
+        avgWalkTime: Yup.string().required("Molimo unesite prosječno trajanje...")
     })
 
     return (
@@ -128,10 +140,10 @@ export default function MountainPathCreate() {
             </Button>
             <Snackbar open={success} autoHideDuration={2000} onClose={handleClose2}>
                 <Alert onClose={handleClose2} severity="success">
-                    Planinarska staua je uspješno stvorena.
+                    Planinarska staza je uspješno stvorena.
                 </Alert>
             </Snackbar>
-            <Snackbar open={error} autoHideDuration={1000000} onClose={handleClose3}>
+            <Snackbar open={error} autoHideDuration={2000} onClose={handleClose3}>
                 <Alert onClose={handleClose3} severity="error">
                     Dogodila se pogreška prilikom stvaranja planinarske staze. Pokušajte kasnije.
                 </Alert>
@@ -152,6 +164,7 @@ export default function MountainPathCreate() {
                     validateOnChange={true}
                     validationSchema={validationSchema}>
                 {({setFieldValue, handleReset, errors, touched, values}) => {
+                    // @ts-ignore
                     // @ts-ignore
                     // @ts-ignore
                     return (
@@ -181,12 +194,25 @@ export default function MountainPathCreate() {
                                         {errors.length && touched.length ? <div className="errorText">{errors.length}</div> : <></>}
                                         <Field className={"input-search"} placeholder={"Visinska razlika..."}
                                                name={"seaLevelDiff"} id={"seaLevelDiff"}/>
+
                                         {errors.seaLevelDiff && touched.seaLevelDiff ? <div className="errorText">{errors.seaLevelDiff}</div> : <></>}
 
                                         <div className="checkbox__cnt">
-                                       <label htmlFor="isPrivate" className="checkbox-label">Želite da staza bude privatna?</label>
+                                        <label htmlFor="isPrivate" className="checkbox-label">Želite da staza bude privatna?</label>
                                             <Field type="checkbox" name="isPrivate" className="checkbox"/>
                                         </div>
+
+                                        <TimePicker value={timePicker}
+                                                    clearIcon={undefined}
+                                                    disableClock
+                                                    name="avgWalkTime"
+                                                    format={"HH:mm:ss"}
+                                                    maxDetail={"second"}
+                                                    onChange={(value) => {
+                                            setTimePicker(value);
+                                        }}/>
+                                        {errors.avgWalkTime && touched.avgWalkTime && <div className={"errorText"}>{errors.avgWalkTime}</div>}
+
                                         <div className="lodge-create-selects">
                                             <Select
                                                 className="hill-select"
