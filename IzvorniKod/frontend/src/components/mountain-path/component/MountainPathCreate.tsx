@@ -16,7 +16,7 @@ import * as Yup from "yup";
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import TimePicker from 'react-time-picker';
+import 'semantic-ui-css/semantic.min.css'
 
 function Alert(props: AlertProps) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -40,6 +40,7 @@ export default function MountainPathCreate() {
 
     // @ts-ignore
     const[value, setValue] = useState('10:00');
+
 
     const successMessage = () => {
         setSuccessMessage(true);
@@ -74,6 +75,8 @@ export default function MountainPathCreate() {
 
     const create = async (request: MountainPathCreateRequest) => {
 
+        console.log(request);
+
         setOpen(false);
         const sRequest = {
             name: request.name,
@@ -83,7 +86,7 @@ export default function MountainPathCreate() {
             avgWalkTime: request.avgWalkTime,
             length: request.length,
             seaLevelDiff: request.seaLevelDiff,
-            isPrivate: request.isPrivate,
+            isPrivate: request.isPrivate
         };
 
         const requestOptions = {
@@ -115,8 +118,7 @@ export default function MountainPathCreate() {
         hillId: Yup.number().typeError("Molimo odaberite visočje.").required("Molimo odaberite visočje."),
         endPoint: Yup.string().required("Molimo Vas završnu točku planinarske staze"),
         length: Yup.number().typeError("Duljina staze mora biti broj.").positive("Duljina staze mora biti pozitivan broj.").required("Molimo unesite duljinu staze."),
-        seaLevelDiff: Yup.number().typeError("Visinska razlika mora biti broj.").positive("Visinska razlika mora biti pozitivan broj.").required("Molimo unesite visinsku razliku"),
-        isPrivate: Yup.boolean().typeError("Je li staza privatna ili ne mora biti broj ili 1 ili 0")
+        seaLevelDiff: Yup.number().typeError("Visinska razlika mora biti broj.").positive("Visinska razlika mora biti pozitivan broj.").required("Molimo unesite visinsku razliku")
     })
 
     return (
@@ -143,14 +145,13 @@ export default function MountainPathCreate() {
                 seaLevelDiff: 0,
                 isPrivate: false,
                 hillId: 0,
-
             } as MountainPathCreateRequest
             } onSubmit={create} onReset={handleClose}
                     validateOnBlur={true}
                     validateOnMount={true}
                     validateOnChange={true}
                     validationSchema={validationSchema}>
-                {({setFieldValue, handleReset, errors, touched}) => {
+                {({setFieldValue, handleReset, errors, touched, values}) => {
                     // @ts-ignore
                     // @ts-ignore
                     return (
@@ -181,10 +182,11 @@ export default function MountainPathCreate() {
                                         <Field className={"input-search"} placeholder={"Visinska razlika..."}
                                                name={"seaLevelDiff"} id={"seaLevelDiff"}/>
                                         {errors.seaLevelDiff && touched.seaLevelDiff ? <div className="errorText">{errors.seaLevelDiff}</div> : <></>}
-                                        <Field className={"input-search"} placeholder={"Je li ili nije privatna staza..."}
-                                               name={"isPrivate"} id={"isPrivate"}/>
-                                        {errors.isPrivate && touched.isPrivate ? <div className="errorText">{errors.isPrivate}</div> : <></>}
 
+                                        <div className="checkbox__cnt">
+                                       <label htmlFor="isPrivate" className="checkbox-label">Želite da staza bude privatna?</label>
+                                            <Field type="checkbox" name="isPrivate" className="checkbox"/>
+                                        </div>
                                         <div className="lodge-create-selects">
                                             <Select
                                                 className="hill-select"
