@@ -18,6 +18,7 @@ import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import 'semantic-ui-css/semantic.min.css'
 import TimePicker, {TimePickerValue} from "react-time-picker";
+import {HttpCodesUtil} from "../../../errors/HttpCodesUtil";
 
 function Alert(props: AlertProps) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -49,13 +50,13 @@ export default function MountainPathCreate() {
 
     const DEFAULT_TIME_PICKER_VALUE = "00:00:00";
 
-    const handleClose2 = (event?: React.SyntheticEvent, reason?: string) => {
+    const onCloseSuccess = (event?: React.SyntheticEvent, reason?: string) => {
         if (reason === 'clickaway') {
             return;
         }
         setSuccessMessage(false);
     };
-    const handleClose3 = (event?: React.SyntheticEvent, reason?: string) => {
+    const onCloseError = (event?: React.SyntheticEvent, reason?: string) => {
         if (reason === 'clickaway') {
             return;
         }
@@ -77,7 +78,6 @@ export default function MountainPathCreate() {
     // @ts-ignore
     const create = async (request: MountainPathCreateRequest, {resetForm }) => {
 
-        resetForm();
         let sRequest = {};
 
         if(timePicker === null) {
@@ -86,7 +86,6 @@ export default function MountainPathCreate() {
             sRequest = {...sRequest, avgWalkTime: timePicker};
         }
 
-        setOpen(false);
         sRequest = {...sRequest,
             name: request.name,
             startPoint: request.startPoint,
@@ -96,8 +95,6 @@ export default function MountainPathCreate() {
             seaLevelDiff: request.seaLevelDiff,
             isPrivate: request.isPrivate
         };
-
-        setTimePicker(DEFAULT_TIME_PICKER_VALUE);
 
         const requestOptions = {
             method: "POST",
@@ -109,17 +106,31 @@ export default function MountainPathCreate() {
             }
         };
         const response = await fetch("/api/mountain-paths/create", requestOptions);
-        if((response.status) === 201 || (response.status / 10 >= 20 && response.status/10 < 30)){
+        if((response.status) === HttpCodesUtil.CREATED || (response.status / 10 >= 20 && response.status/10 < 30)){
+            setOpen(false);
+            resetForm();
+            setTimePicker(DEFAULT_TIME_PICKER_VALUE);
+            setAlreadyExists(false);
             successMessage();
         } else{
-            errorMessage();
+            if(response.status === HttpCodesUtil.BAD_REQUEST) {
+                setAlreadyExists(true);
+            } else {
+                setAlreadyExists(false);
+                setOpen(false);
+                errorMessage();
+            }
+
         }
     }
+
+    const [alreadyExists, setAlreadyExists] = useState<boolean>(false);
 
     const handleClickOpen = () => {
         setOpen(true);
     };
     const handleClose = () => {
+        setAlreadyExists(false);
         setOpen(false);
     };
 
@@ -129,7 +140,7 @@ export default function MountainPathCreate() {
         hillId: Yup.number().typeError("Molimo odaberite visočje.").required("Molimo odaberite visočje."),
         endPoint: Yup.string().required("Molimo Vas završnu točku planinarske staze"),
         length: Yup.number().typeError("Duljina staze mora biti broj.").positive("Duljina staze mora biti pozitivan broj.").required("Molimo unesite duljinu staze."),
-        seaLevelDiff: Yup.number().typeError("Visinska razlika mora biti broj.").positive("Visinska razlika mora biti pozitivan broj.").required("Molimo unesite visinsku razliku"),
+        seaLevelDiff: Yup.number().typeError("Visinska razlika mora biti broj.").positive("Visinska razlika mora biti pozitivan broj."),
     })
 
     return (
@@ -137,13 +148,13 @@ export default function MountainPathCreate() {
             <Button variant="outlined" color="primary" onClick={handleClickOpen}>
                 STVORI STAZU
             </Button>
-            <Snackbar open={success} autoHideDuration={2000} onClose={handleClose2}>
-                <Alert onClose={handleClose2} severity="success">
+            <Snackbar open={success} autoHideDuration={1500} onClose={onCloseSuccess}>
+                <Alert onClose={onCloseSuccess} severity="success">
                     Planinarska staza je uspješno stvorena.
                 </Alert>
             </Snackbar>
-            <Snackbar open={error} autoHideDuration={2000} onClose={handleClose3}>
-                <Alert onClose={handleClose3} severity="error">
+            <Snackbar open={error} autoHideDuration={1500} onClose={onCloseError}>
+                <Alert onClose={onCloseError} severity="error">
                     Dogodila se pogreška prilikom stvaranja planinarske staze. Pokušajte kasnije.
                 </Alert>
             </Snackbar>
@@ -152,17 +163,17 @@ export default function MountainPathCreate() {
                 startPoint: "",
                 endPoint: "",
                 avgWalkTime: "",
-                length: 0,
-                seaLevelDiff: 0,
+                length: null,
+                seaLevelDiff: null,
                 isPrivate: false,
-                hillId: 0,
+                hillId: null,
             } as MountainPathCreateRequest
             } onSubmit={create} onReset={handleClose}
-                    validateOnBlur={true}
-                    validateOnMount={true}
+                    validateOnBlur={false}
+                    validateOnMount={false}
                     validateOnChange={true}
                     validationSchema={validationSchema}>
-                {({setFieldValue, handleReset, errors, touched, values}) => {
+                {({setFieldValue, handleReset, errors, touched, handleChange}) => {
                     // @ts-ignore
                     // @ts-ignore
                     // @ts-ignore
@@ -176,32 +187,42 @@ export default function MountainPathCreate() {
                                 <DialogContent>
                                     <div className="create-column">
                                         <Field className={"input-search"}
-                                               placeholder={"Naziv planinarske staze..."}
-                                               name={"name"} id={"name"}/>
+                                               placeholder={"Naziv planinarske staze.."}
+                                               name={"name"} id={"name"}
+                                               onChange={handleChange}
+
+                                        />
                                         {errors.name && touched.name ? <div className="errorText">{errors.name}</div> : <></>}
+                                        {alreadyExists && <div className="errorText">Naziv staze već postoji, pokušajte ponovno.</div>}
+
                                         <Field className={"input-search"}
-                                               placeholder={"Naziv početne točke..."}
+                                               placeholder={"Naziv početne točke.."}
                                                name={"startPoint"} id={"startPoint"}/>
                                         {errors.startPoint && touched.startPoint ? <div className="errorText">{errors.startPoint}</div> : <></>}
                                         <Field className={"input-search"}
-                                               placeholder={"Naziv završne točke..."}
+                                               placeholder={"Naziv završne točke.."}
                                                name={"endPoint"} id={"endPoint"}/>
                                         {errors.endPoint && touched.endPoint ? <div className="errorText">{errors.endPoint}</div> : <></>}
-                                        <Field className={"input-search"}
-                                               placeholder={"Duljina staze..."}
+                                        <Field  type="number" className={"input-number"} placeholder={"Visinska razlika u metrima.."}
+                                               name={"seaLevelDiff"} id={"seaLevelDiff"}/>
+                                        {errors.seaLevelDiff && touched.seaLevelDiff ? <div className="errorText">{errors.seaLevelDiff}</div> : <></>}
+
+                                        <Field type="number" className={"input-number"}
+                                               placeholder={"Duljina staze u metrima .."}
                                                name={"length"} id={"length"}/>
                                         {errors.length && touched.length ? <div className="errorText">{errors.length}</div> : <></>}
-                                        <Field className={"input-search"} placeholder={"Visinska razlika..."}
-                                               name={"seaLevelDiff"} id={"seaLevelDiff"}/>
 
-                                        {errors.seaLevelDiff && touched.seaLevelDiff ? <div className="errorText">{errors.seaLevelDiff}</div> : <></>}
+
 
                                         <div className="checkbox__cnt">
                                         <label htmlFor="isPrivate" className="checkbox-label">Želite da staza bude privatna?</label>
                                             <Field type="checkbox" name="isPrivate" className="checkbox"/>
+
                                         </div>
 
-                                        <TimePicker value={timePicker}
+                                        <div className={"checkbox__cnt"}>
+                                            <label className={"checkbox-label"} htmlFor={"avgWalkTime"}>Prosječno trajanje: </label>
+                                        <TimePicker value={timePicker} minutePlaceholder={"mm"} hourPlaceholder={"hh"} secondPlaceholder={"ss"}
                                                     clearIcon={undefined}
                                                     disableClock
                                                     name="avgWalkTime"
@@ -210,8 +231,9 @@ export default function MountainPathCreate() {
                                                     onChange={(value) => {
                                             setTimePicker(value);
                                         }}/>
-                                        {timePicker === null && <div className={"errorText"}>Molimo unesite prosječno trajanje...</div>}
 
+                                        </div>
+                                        {timePicker === null && <div className={"errorText"}>Molimo unesite prosječno trajanje...</div>}
                                         <div className="lodge-create-selects">
                                             <Select
                                                 className="hill-select"

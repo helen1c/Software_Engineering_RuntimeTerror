@@ -3,8 +3,8 @@ export interface MountainPathCreateRequest {
     startPoint: string,
     endPoint: string,
     avgWalkTime: string,
-    length: number,
-    seaLevelDiff: number,
+    length: number | null,
+    seaLevelDiff: number |null,
     isPrivate: boolean,
-    hillId: number,
+    hillId: number |null,
 }
