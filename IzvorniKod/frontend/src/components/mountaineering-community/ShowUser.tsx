@@ -14,7 +14,6 @@ export const ShowUser = ({ user }: Props) => {
   return (
     <div className="user-container">
       <div>
-        <img alt={user.name}  src={image} className = "user-photo" onClick={e => window.location.href = "/profile/" + user.id}/>
         <img
           alt={user.name}
           src={user.image}
