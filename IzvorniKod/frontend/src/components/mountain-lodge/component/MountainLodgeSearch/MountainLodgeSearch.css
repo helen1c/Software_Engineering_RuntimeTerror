@@ -20,7 +20,7 @@
     border: 2px solid #211648;
     border-radius: 10px;
     outline: none !important;
-    font-family: Roboto;
+    font-family: Roboto,sans-serif;
     font-size: 1rem;
 
 }
@@ -166,6 +166,18 @@
         font-size: 0.9rem;
     }
 
+}
+
+@media screen and (max-width: 600px ) {
+    .selects{
+        display: flex;
+        flex-direction: column;
+    }
+    .input-search{
+        min-width: 250px;
+    }
+    .hill-select{
+    }
 }
 
 .multi-select-utilities {

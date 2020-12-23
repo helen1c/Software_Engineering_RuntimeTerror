@@ -14,10 +14,10 @@ export const MountainLodgeSearchResult = (prop: Props) => {
 
     useEffect(() => {
         setLoading(true);
-       const base64Data = prop.result.image;
-       if(prop.result.image)
-       fetch(`data:image/jpeg;base64,${base64Data}`).then(response => response.blob()).then(resolve => {setImage(URL.createObjectURL(resolve)); setLoading(false)});
-       else setLoading(false)
+        const base64Data = prop.result.image;
+        if(prop.result.image)
+            fetch(`data:image/jpeg;base64,${base64Data}`).then(response => response.blob()).then(resolve => {setImage(URL.createObjectURL(resolve)); setLoading(false)});
+        else setLoading(false)
     }, [setLoading, prop.result.image]);
 
     const utilpass = {
@@ -28,24 +28,24 @@ export const MountainLodgeSearchResult = (prop: Props) => {
     } as any;
 
     return (
-      <>
-        {loading ? <div>Molimo pričekajte...</div> :
-        <div className="mountain-lodge-cnt">
-            <div className="image-util-cnt">
-                <span className="mountain-lodge-name">{prop.result.name}</span>
-                {prop.result.image ? <img className="mountain-lodge-picture" alt={"Slika"} src={image}/>
-                : <img className="mountain-lodge-picture" alt={""} src={defImage}/>}
-                {prop.result.utilities && prop.result.utilities.length > 0 && <div className="mountain-lodge-utils">Pogodnosti:
-                    {prop.result.utilities.map(v => <img alt={""} className="util-pic" src={utilpass[v.id]} key={v.id}/>)}
-                </div>
-                }
-            </div>
-            <div className="lodge-description-cnt">
-                <span className="mountain-lodge-elevation">Visina: {prop.result.elevation}m</span>
-                <span className="mountain-lodge-hill">Planina: {prop.result.hillName}</span>
-            </div>
-        </div>}
-      </>
+        <>
+            {loading ? <div>Molimo pričekajte...</div> :
+                <div className="mountain-lodge-cnt">
+                    <div className="image-util-cnt">
+                        <span className="mountain-lodge-name">{prop.result.name}</span>
+                        {prop.result.image ? <img className="mountain-lodge-picture" alt={"Slika"} src={image}/>
+                            : <img className="mountain-lodge-picture" alt={""} src={defImage}/>}
+                        {prop.result.utilities && prop.result.utilities.length > 0 && <div className="mountain-lodge-utils">
+                            {prop.result.utilities.map(v => <img alt={""} className="util-pic" src={utilpass[v.id]} key={v.id}/>)}
+                        </div>
+                        }
+                    </div>
+                    <div className="lodge-description-cnt">
+                        <span className="mountain-lodge-elevation">Visina: {prop.result.elevation}m</span>
+                        <span className="mountain-lodge-hill">Planina: {prop.result.hillName}</span>
+                    </div>
+                </div>}
+        </>
 
     );
 };

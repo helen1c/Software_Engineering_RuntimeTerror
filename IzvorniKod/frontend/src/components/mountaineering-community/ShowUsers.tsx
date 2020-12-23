@@ -1,6 +1,8 @@
 import React from "react";
 import { UserInfo } from "../mountain-lodge/models/UserInfo";
 import { ShowUser } from "./ShowUser";
+import "./ShowUsers.css"
+
 
 interface Props {
   users: UserInfo[];
@@ -9,7 +11,7 @@ interface Props {
 export const ShowUsers = ({ users }: Props) => {
   return (
     <div style={{ margin: "5px" }}>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 p-4">
+      <div className="users-container">
         {users.map((user) => (
           <div key={user.id}>
             <ShowUser user={user} />
