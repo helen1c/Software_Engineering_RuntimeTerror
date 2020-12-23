@@ -26,8 +26,18 @@ function Tipka() {
         setOpen(false);
         const sRequest = {
             name: request.name,
-            sadrzaj: request.sadrzaj,
+            content: request.content,
         };
+        const requestOptions = {
+            method: "POST",
+            body: JSON.stringify(sRequest),
+            headers: {
+                Accept: "application/json",
+                authorization: sessionStorage.getItem("key") || "",
+                "Content-Type": "application/json"
+            }
+        };
+        const response = await fetch("/api/messages/send", requestOptions);
     }
 
     const handleClickOpen = () => {
@@ -39,7 +49,7 @@ function Tipka() {
 
     const validationSchema = Yup.object().shape({
         name: Yup.string().required("Molimo Vas unesite opis poruke."),
-        sadrzaj: Yup.string().required("Molimo Vas unesite sadrzaj poruke."),
+        content: Yup.string().required("Molimo Vas unesite sadrzaj poruke."),
     })
 
     return(
@@ -48,7 +58,7 @@ function Tipka() {
 
             <Formik initialValues={{
                 name: "",
-                sadrzaj: "",
+                content: "",
             } as MessageForm
             } onSubmit={send} onReset={handleClose}
                     validateOnBlur={true}
@@ -72,10 +82,10 @@ function Tipka() {
                                         {errors.name && touched.name ?
                                             <div className="errorText">{errors.name}</div> : <></>}
                                         <div className="box-title">Sadrzaj poruke:</div>
-                                        <textarea className={"message-content"}
-                                                  name={"sadrzaj"} id={"sadrzaj"}/>
-                                        {errors.sadrzaj && touched.sadrzaj ?
-                                            <div className="errorText">{errors.sadrzaj}</div> : <></>}
+                                        <Field as={"textarea"} className={"message-content"}
+                                                  name={"content"} id={"content"}/>
+                                        {errors.content && touched.content ?
+                                            <div className="errorText">{errors.content}</div> : <></>}
                                     </div>
                                 </DialogContent>
                                 <DialogActions>

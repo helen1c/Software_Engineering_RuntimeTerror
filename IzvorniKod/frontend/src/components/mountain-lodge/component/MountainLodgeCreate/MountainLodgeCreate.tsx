@@ -52,13 +52,13 @@ export default function MountainLodgeCreate() {
         setErrorMessage(true);
     };
 
-    const handleClose2 = (event?: React.SyntheticEvent, reason?: string) => {
+    const closeSuccessMessage = (event?: React.SyntheticEvent, reason?: string) => {
         if (reason === 'clickaway') {
             return;
         }
         setSuccessMessage(false);
     };
-    const handleClose3 = (event?: React.SyntheticEvent, reason?: string) => {
+    const closeErrorMessage = (event?: React.SyntheticEvent, reason?: string) => {
         if (reason === 'clickaway') {
             return;
         }
@@ -157,13 +157,13 @@ export default function MountainLodgeCreate() {
             <Button variant="outlined" color="primary" onClick={handleClickOpen}>
                 STVORI DOM
             </Button>
-            <Snackbar open={success} autoHideDuration={2000} onClose={handleClose2}>
-                <Alert onClose={handleClose2} severity="success">
+            <Snackbar open={success} autoHideDuration={2000} onClose={closeSuccessMessage}>
+                <Alert onClose={closeSuccessMessage} severity="success">
                     Planinarski dom je uspješno stvoren.
                 </Alert>
             </Snackbar>
-            <Snackbar open={error} autoHideDuration={2000} onClose={handleClose3}>
-                <Alert onClose={handleClose3} severity="error">
+            <Snackbar open={error} autoHideDuration={2000} onClose={closeErrorMessage}>
+                <Alert onClose={closeErrorMessage} severity="error">
                     Dogodila se pogreška prilikom stvaranja planinarskog doma. Pokušajte kasnije.
                 </Alert>
             </Snackbar>
