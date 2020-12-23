@@ -130,7 +130,6 @@ export default function MountainPathCreate() {
         endPoint: Yup.string().required("Molimo Vas završnu točku planinarske staze"),
         length: Yup.number().typeError("Duljina staze mora biti broj.").positive("Duljina staze mora biti pozitivan broj.").required("Molimo unesite duljinu staze."),
         seaLevelDiff: Yup.number().typeError("Visinska razlika mora biti broj.").positive("Visinska razlika mora biti pozitivan broj.").required("Molimo unesite visinsku razliku"),
-        avgWalkTime: Yup.string().required("Molimo unesite prosječno trajanje...")
     })
 
     return (
@@ -211,7 +210,7 @@ export default function MountainPathCreate() {
                                                     onChange={(value) => {
                                             setTimePicker(value);
                                         }}/>
-                                        {errors.avgWalkTime && touched.avgWalkTime && <div className={"errorText"}>{errors.avgWalkTime}</div>}
+                                        {timePicker === null && <div className={"errorText"}>Molimo unesite prosječno trajanje...</div>}
 
                                         <div className="lodge-create-selects">
                                             <Select
