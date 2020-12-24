@@ -1,6 +1,8 @@
 package hr.fer.pi.planinarskidnevnik.models;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.sql.Date;
@@ -10,7 +12,9 @@ import java.sql.Date;
 public class CommunityEvent {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "event_id_gen")
+    @SequenceGenerator(name = "event_id_gen", sequenceName = "event_id_seq", allocationSize = 1)
+    @Column(name = "event_id")
     private Long id;
 
     private String name;

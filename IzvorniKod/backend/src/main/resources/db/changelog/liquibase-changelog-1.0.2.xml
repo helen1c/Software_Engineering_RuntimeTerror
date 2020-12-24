@@ -140,5 +140,6 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <createSequence sequenceName="event_id_seq" incrementBy="1" cycle="false" startValue="100" />
     </changeSet>
 </databaseChangeLog>

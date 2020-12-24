@@ -1,5 +1,7 @@
 package hr.fer.pi.planinarskidnevnik.dtos;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.sql.Date;
@@ -13,10 +15,13 @@ public class CommunityEventDto {
     @Size(max = 450, message = "Opis smije sadržavati najviše 450 znakova.")
     private String description;
 
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     private Date date_created;
 
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     private Date start_date;
 
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     private Date end_date;
 
     public CommunityEventDto() {
