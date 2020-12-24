@@ -19,7 +19,7 @@
     padding: 1rem;
 }
 .user-container:hover{
-    border: solid #91b5fa;
+    transform: scale(1.02);
 }
 
 .user-search-div{
