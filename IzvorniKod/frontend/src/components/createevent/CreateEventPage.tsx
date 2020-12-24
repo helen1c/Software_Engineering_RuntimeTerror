@@ -98,18 +98,6 @@ export const CreateEventPage = () => {
               </div>
 
               <div className="eventComponent">
-                <p className={"inputLabel"}>Naziv staze:</p>
-                <input
-                  className={"event-input"}
-                  id="path"
-                  value={formik.values.path}
-                  onChange={formik.handleChange}
-                />
-                <p className="errorText">
-                  {formik.errors.path ? formik.errors.path : null}
-                </p>
-              </div>
-              <div className="eventComponent">
                 <p style={{ marginTop: "2rem" }} className={"inputLabel"}>
                   Opis događaja:
                 </p>
