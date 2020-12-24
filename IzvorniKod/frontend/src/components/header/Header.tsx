@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./Header.css";
 import logo from "../../assets/logo.jpg";
 import { useHistory } from "react-router";
+import logout from "../../assets/logout.jpg";
+import profile from "../../assets/profile.png"
 
 function Header() {
   const [profileImage, setProfileImage] = useState("");
@@ -69,29 +71,31 @@ function Header() {
                 />
                 {isProfileActive && (
                   <div>
-                    <div
+                    <div className="dropdown-item-div"
                       role="menu"
                       aria-orientation="vertical"
                       aria-labelledby="user-menu"
                     >
-                      <a
+                      <a className="dropdown-item"
                         href={profileLink}
-                        style={{ color: "orange" }}
+                        //style={{ color: "blue" }}
                         onClick={() => setProfileActive(false)}
                         role="menuitem"
                       >
-                        Profil
+                        Pogledajte svoj profil
+                        <img src={profile} alt={"Profile"} className="dropdown-image" />
                       </a>
-                      <a
+                      <a className="dropdown-item"
                         href={"/home"}
-                        style={{ color: "orange" }}
+                        //style={{ color: "blue" }}
                         onClick={() => {
                           setProfileActive(false);
                           sessionStorage.clear();
                         }}
                         role="menuitem"
                       >
-                        Odjavi se
+                        Odjavite se
+                        <img src={logout} alt={"Logout"} className="dropdown-image" />
                       </a>
                     </div>
                   </div>
