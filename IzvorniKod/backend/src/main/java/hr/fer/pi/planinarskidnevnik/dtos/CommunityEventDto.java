@@ -1,0 +1,75 @@
+package hr.fer.pi.planinarskidnevnik.dtos;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.sql.Date;
+
+public class CommunityEventDto {
+
+    @Size(max = 50, message = "Ime smije sadržavati najviše 50 znakova.")
+    @NotBlank(message = "Ime je obavezno.")
+    private String name;
+
+    @Size(max = 450, message = "Opis smije sadržavati najviše 450 znakova.")
+    private String description;
+
+    private Date date_created;
+
+    private Date start_date;
+
+    private Date end_date;
+
+    public CommunityEventDto() {
+    }
+
+
+    public CommunityEventDto(String name, String description,  Date date_created, Date start_date, Date end_date) {
+        this.name=name;
+        this.description=description;
+        this.date_created=date_created;
+        this.start_date=start_date;
+        this.end_date=end_date;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Date getDateCreated() {
+        return date_created;
+    }
+
+    public void setDateCreated(Date date_created) {
+        this.date_created = date_created;
+    }
+
+    public Date getStartDate() {
+        return start_date;
+    }
+
+    public void setStartDate(Date start_date) {
+        this.start_date = start_date;
+    }
+
+    public Date getEndDate() {
+        return end_date;
+    }
+
+    public void setEndDate(Date end_date) {
+        this.end_date = end_date;
+    }
+
+
+}
