@@ -1,6 +1,6 @@
 package hr.fer.pi.planinarskidnevnik.services.impl;
 
-import hr.fer.pi.planinarskidnevnik.dtos.message.MessageDto;
+import hr.fer.pi.planinarskidnevnik.dtos.message.MessageCreateRequest;
 import hr.fer.pi.planinarskidnevnik.models.Message;
 import hr.fer.pi.planinarskidnevnik.repositories.MessageRepository;
 import hr.fer.pi.planinarskidnevnik.services.MessageQueryService;
@@ -23,7 +23,7 @@ public class MessageQueryServiceImpl implements MessageQueryService {
     }
 
     @Override
-    public Message createMessage(MessageDto dto){
+    public Message createMessage(MessageCreateRequest dto){
 
         Message message = new Message();
         message.setName(dto.getName());

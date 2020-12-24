@@ -8,10 +8,50 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
 import {MessageForm} from "../models/MessageForm";
+import MuiAlert, {AlertProps} from "@material-ui/lab/Alert";
+import {makeStyles, Theme} from "@material-ui/core/styles";
+import Snackbar from "@material-ui/core/Snackbar";
+
+function Alert(props: AlertProps) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+const useStyles = makeStyles((theme: Theme) => ({
+    root: {
+        width: '100%',
+        '& > * + *': {
+            marginTop: theme.spacing(2),
+        },
+    },
+}));
 
 function Tipka() {
 
     const [open, setOpen] = useState(false);
+
+    const classes = useStyles();
+    const [success, setSuccessMessage] = React.useState(false);
+    const [error, setErrorMessage] = React.useState(false);
+
+    const successMessage = () => {
+        setSuccessMessage(true);
+    };
+    const errorMessage = () => {
+        setErrorMessage(true);
+    };
+
+    const closeSuccessMessage = (event?: React.SyntheticEvent, reason?: string) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setSuccessMessage(false);
+    };
+    const closeErrorMessage = (event?: React.SyntheticEvent, reason?: string) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setErrorMessage(false);
+    };
 
     // @ts-ignore
     const handleChange = e => {
@@ -38,6 +78,11 @@ function Tipka() {
             }
         };
         const response = await fetch("/api/messages/send", requestOptions);
+        if ((response.status) === 201 || (response.status / 10 >= 20 && response.status / 10 < 30)) {
+            successMessage();
+        } else {
+            errorMessage();
+        }
     }
 
     const handleClickOpen = () => {
@@ -55,6 +100,16 @@ function Tipka() {
     return(
         <>
             <button onClick={handleClickOpen}>Kontaktiraj Administratora</button>
+            <Snackbar open={success} autoHideDuration={2000} onClose={closeSuccessMessage}>
+                <Alert onClose={closeSuccessMessage} severity="success">
+                    Poruka je uspješno poslana.
+                </Alert>
+            </Snackbar>
+            <Snackbar open={error} autoHideDuration={2000} onClose={closeErrorMessage}>
+                <Alert onClose={closeErrorMessage} severity="error">
+                    Dogodila se pogreška prilikom slanja poruke. Pokušajte kasnije.
+                </Alert>
+            </Snackbar>
 
             <Formik initialValues={{
                 name: "",

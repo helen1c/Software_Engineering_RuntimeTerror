@@ -17,9 +17,9 @@ import {CreateEventPage} from "./components/createevent/CreateEventPage";
 import {FriendshipRequestList} from "./components/friendship-request-list/FriendshipRequestList";
 import {FriendshipRequestsNotification} from "./components/friendship-request-notification/FriendshipRequestsNotification";
 import {SearchUsers} from "./components/search-all-users/SearchUsers";
-import {CommunityEventsResults} from "./components/event/component/CommunityEventsResults";
 import {MountaineeringCommunity} from "./components/mountaineering-community/MountaineeringCommunity";
 import {MyCommunityEventsResults} from "./components/event/component/MyCommunityEventsResults";
+import {MessageSearchResult} from "./components/message_box/MessageSearchResult";
 
 export const Routes = () => {
 
@@ -28,28 +28,29 @@ export const Routes = () => {
 
             <Header/>
             <div className="body-page">
-            <Switch>
-                <Route path={"/"} exact={true}>
-                    <Redirect to={"home"}/>
-                </Route>
-                <Route path="/home" component={HomePage} exact={true}/>
-                <Route path="/aboutus" component={AboutUs} exact={true}/>
-                <Route path="/register" component={RegistrationForm} exact={true}/>
-                <Route path="/login" component={LoginForm} exact={true}/>
-                <Route path="/mountaineering-community/search" component={MountaineeringCommunitySearch} exact/>
-                <Route path="/mountain-lodge/search" component={MountainLodgeSearch} exact/>
-                <Route path="/mountain-path/search" component={MountainPathSearch} exact/>
-                <Route path="/profile/:id" component={MenuProfile} exact/>
-                <Route path="/mountain-path/create" component={MountainPathCreate} exact/>
-                <Route path="/mountain-lodge/create" component={MountainLodgeCreate} exact/>
-                <Route path="/friendship-requests" component={FriendshipRequestList} exact/>
-                <Route path="/events/create" component={CreateEventPage} exact/>
-                <Route path="/events" component={CommunityEventsResults} exact/>
-                <Route path="/users/search" component={SearchUsers} exact/>
-                <Route path="/notifications" component={FriendshipRequestsNotification} exact/>
-                <Route path="/my-events" component={MyCommunityEventsResults} exact/>
-                <Route path="/mountaineering-community" component={MountaineeringCommunity} exact/>
-            </Switch>
+                <Switch>
+                    <Route path={"/"} exact={true}>
+                        <Redirect to={"home"}/>
+                    </Route>
+                    <Route path="/home" component={HomePage} exact={true}/>
+                    <Route path="/aboutus" component={AboutUs} exact={true}/>
+                    <Route path="/register" component={RegistrationForm} exact={true}/>
+                    <Route path="/login" component={LoginForm} exact={true}/>
+                    <Route path="/mountaineering-community/search" component={MountaineeringCommunitySearch} exact/>
+                    <Route path="/mountain-lodge/search" component={MountainLodgeSearch} exact/>
+                    <Route path="/mountain-path/search" component={MountainPathSearch} exact/>
+                    <Route path="/profile/:id" component={MenuProfile} exact/>
+                    <Route path="/mountain-path/create" component={MountainPathCreate} exact/>
+                    <Route path="/mountain-lodge/create" component={MountainLodgeCreate} exact/>
+                    <Route path="/test" component={MessageSearchResult} exact/>
+                    <Route path="/friendship-requests" component={FriendshipRequestList} exact/>
+                    <Route path="/events/create" component={CreateEventPage} exact/>
+                    <Route path="/events" component={EventsResults} exact/>
+                    <Route path="/users/search" component={SearchUsers} exact/>
+                    <Route path="/notifications" component={FriendshipRequestsNotification} exact/>
+                    <Route path="/my-events" component={MyCommunityEventsResults} exact/>
+                    <Route path="/mountaineering-community" component={MountaineeringCommunity} exact/>
+                </Switch>
             </div>
             <Footer/>
         </div>
