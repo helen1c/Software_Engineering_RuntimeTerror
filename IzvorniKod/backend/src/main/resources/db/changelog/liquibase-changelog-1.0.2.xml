@@ -40,6 +40,9 @@
             <column name="author_id" type="BIGINT">
                 <constraints foreignKeyName="author_in_path_fkey" references="USER(ID)"/>
             </column>
+            <column name="difficulty" type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
         <createSequence sequenceName="mountain_path_id_seq" incrementBy="1" cycle="false" startValue="100" />
     </changeSet>

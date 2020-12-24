@@ -6,6 +6,8 @@ import hr.fer.pi.planinarskidnevnik.util.specification.BaseSpecification;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
+import java.sql.Time;
+
 import static org.springframework.data.jpa.domain.Specification.where;
 
 @Component
@@ -16,9 +18,8 @@ public class MountainPathSearchSpecification implements BaseSpecification<Mounta
 
         return ((root, query, cb) -> where(mountainPathNameContains(request.getName().trim().replaceAll("\\s+", " ")))
                 .and(mountainPathIsOnHill(request.getHillId()))
-                .and(mountainPathStartPointContains(request.getStartPoint().trim().replaceAll("\\s+", " ")))
-                .and(mountainPathEndPointContains(request.getEndPoint().trim().replaceAll("\\s+", " ")))
-                .and(mountainPathLengthLessOrEqualTo(request.getLength()))
+                .and(mountainPathAvgWalkTimeBetween(request.getAvgWalkTimeMinimum(), request.getAvgWalkTimeMaximum()))
+                .and(mountainPathDifficultyBetween(request.getDifficultyMinimum(), request.getDifficultyMaximum()))
                 .toPredicate(root, query, cb));
 
     }
@@ -33,33 +34,23 @@ public class MountainPathSearchSpecification implements BaseSpecification<Mounta
         };
     }
 
-    private Specification<MountainPath> mountainPathStartPointContains(String startPoint) {
-        return (root, query, criteriaBuilder) -> {
-            if (startPoint == null) {
+    private Specification<MountainPath> mountainPathDifficultyBetween(Short difficultyMinimum, Short difficultyMaximum){
+        return(root, query, criteriaBuilder) -> {
+            if(difficultyMinimum == null && difficultyMaximum == null){
                 return null;
             }
 
-            return criteriaBuilder.like(criteriaBuilder.lower(root.get("startPoint").as(String.class)), "%" + startPoint.toLowerCase() + "%");
+            return criteriaBuilder.between(root.get("difficulty"), difficultyMinimum, difficultyMaximum);
         };
     }
 
-    private Specification<MountainPath> mountainPathEndPointContains(String endPoint) {
-        return (root, query, criteriaBuilder) -> {
-            if (endPoint == null) {
+    private Specification<MountainPath> mountainPathAvgWalkTimeBetween(Time avgWalkTimeMinimum, Time avgWalkTimeMaximum){
+        return(root, query, criteriaBuilder) -> {
+            if(avgWalkTimeMaximum == null && avgWalkTimeMinimum == null){
                 return null;
             }
 
-            return criteriaBuilder.like(criteriaBuilder.lower(root.get("endPoint").as(String.class)), "%" + endPoint.toLowerCase() + "%");
-        };
-    }
-
-    private Specification<MountainPath> mountainPathLengthLessOrEqualTo(Long length) {
-        return (root, query, criteriaBuilder) -> {
-            if (length == null) {
-                return null;
-            }
-
-            return criteriaBuilder.le(root.get("length"), length);
+          return criteriaBuilder.between(root.get("avgWalkTime").as(Time.class), avgWalkTimeMinimum, avgWalkTimeMaximum);
         };
     }
 

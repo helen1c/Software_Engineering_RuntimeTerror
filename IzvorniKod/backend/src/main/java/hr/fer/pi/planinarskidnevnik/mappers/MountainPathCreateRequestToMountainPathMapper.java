@@ -18,7 +18,7 @@ public class MountainPathCreateRequestToMountainPathMapper implements DefaultMap
         mp.setName(from.getName());
         mp.setPrivate(from.isPrivate());
         mp.setSeaLevelDiff(from.getSeaLevelDiff());
-
+        mp.setDifficulty(from.getDifficulty());
 
         return mp;
     }

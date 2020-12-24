@@ -23,6 +23,8 @@ public class MountainPath {
 
     private String endPoint;
 
+    private Short difficulty;
+
     private Time avgWalkTime;
 
     private Long length;
@@ -125,6 +127,9 @@ public class MountainPath {
         this.author = author;
     }
 
+    public Short getDifficulty() {return difficulty;}
+
+    public void setDifficulty(Short difficulty) {this.difficulty = difficulty;}
 
 
     @Override

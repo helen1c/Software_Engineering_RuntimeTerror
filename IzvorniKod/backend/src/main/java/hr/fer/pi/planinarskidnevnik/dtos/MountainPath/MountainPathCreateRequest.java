@@ -2,9 +2,7 @@ package hr.fer.pi.planinarskidnevnik.dtos.MountainPath;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.sql.Date;
 import java.sql.Time;
 
@@ -38,6 +36,10 @@ public class MountainPathCreateRequest {
 
     @NotNull
     private boolean isPrivate;
+
+    @Min(1)
+    @Max(10)
+    private Short difficulty;
 
     public Long getHillId() {
         return hillId;
@@ -102,5 +104,9 @@ public class MountainPathCreateRequest {
     public void setPrivate(boolean aPrivate) {
         isPrivate = aPrivate;
     }
+
+    public Short getDifficulty() {return difficulty;}
+
+    public void setDifficulty(Short difficulty) {this.difficulty = difficulty;}
 
 }

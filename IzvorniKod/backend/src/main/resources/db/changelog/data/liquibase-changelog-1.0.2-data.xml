@@ -17,6 +17,7 @@
             <column name="date_created">2020-12-13</column>
             <column name="is_private">0</column>
             <column name="author_id">1</column>
+            <column name="difficulty">10</column>
         </insert>
 
         <insert tableName="mountain_path">
@@ -31,6 +32,7 @@
             <column name="date_created">2020-12-13</column>
             <column name="is_private">0</column>
             <column name="author_id">1</column>
+            <column name="difficulty">9</column>
         </insert>
 
         <insert tableName="mountain_path">
@@ -45,6 +47,7 @@
             <column name="date_created">2020-12-13</column>
             <column name="is_private">0</column>
             <column name="author_id">1</column>
+            <column name="difficulty">8</column>
         </insert>
 
         <insert tableName="mountain_path">
@@ -59,6 +62,7 @@
             <column name="date_created">2020-12-13</column>
             <column name="is_private">0</column>
             <column name="author_id">1</column>
+            <column name="difficulty">7</column>
         </insert>
     </changeSet>
 </databaseChangeLog>

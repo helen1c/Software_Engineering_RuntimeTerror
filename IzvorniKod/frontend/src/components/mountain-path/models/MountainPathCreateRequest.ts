@@ -7,4 +7,5 @@ export interface MountainPathCreateRequest {
     seaLevelDiff: number |null,
     isPrivate: boolean,
     hillId: number |null,
+    difficulty: number | null
 }

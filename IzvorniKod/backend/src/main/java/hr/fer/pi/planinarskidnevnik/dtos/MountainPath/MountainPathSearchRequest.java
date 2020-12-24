@@ -5,11 +5,11 @@ import java.sql.Time;
 public class MountainPathSearchRequest {
 
     private String name;
-    private String startPoint;
-    private String endPoint;
-    private Time avgWalkTime;
-    private Long length;
+    private Time avgWalkTimeMinimum;
+    private Time avgWalkTimeMaximum;
     private Long hillId;
+    private Short difficultyMinimum;
+    private Short difficultyMaximum;
 
     public Long getHillId() {
         return hillId;
@@ -19,6 +19,13 @@ public class MountainPathSearchRequest {
         this.hillId = hillId;
     }
 
+    public Short getDifficultyMaximum() {return difficultyMaximum;}
+
+    public void setDifficultyMaximum(Short difficultyMaximum) {this.difficultyMaximum = difficultyMaximum;}
+
+    public Short getDifficultyMinimum() {return difficultyMinimum;}
+
+    public void setDifficultyMinimum(Short difficultyMinimum) {this.difficultyMinimum = difficultyMinimum;}
 
     public String getName() {
         return name;
@@ -28,35 +35,15 @@ public class MountainPathSearchRequest {
         this.name = name;
     }
 
-    public String getStartPoint() {
-        return startPoint;
+    public Time getAvgWalkTimeMinimum() {
+        return avgWalkTimeMinimum;
     }
 
-    public void setStartPoint(String startPoint) {
-        this.startPoint = startPoint;
+    public void setAvgWalkTimeMinimum(Time avgWalkTimeMinimum) {
+        this.avgWalkTimeMinimum = avgWalkTimeMinimum;
     }
 
-    public String getEndPoint() {
-        return endPoint;
-    }
+    public Time getAvgWalkTimeMaximum() {return avgWalkTimeMaximum;}
 
-    public void setEndPoint(String endPoint) {
-        this.endPoint = endPoint;
-    }
-
-    public Time getAvgWalkTime() {
-        return avgWalkTime;
-    }
-
-    public void setAvgWalkTime(Time avgWalkTime) {
-        this.avgWalkTime = avgWalkTime;
-    }
-
-    public Long getLength() {
-        return length;
-    }
-
-    public void setLength(Long length) {
-        this.length = length;
-    }
+    public void setAvgWalkTimeMaximum(Time avgWalkTimeMaximum) {this.avgWalkTimeMaximum = avgWalkTimeMaximum;}
 }

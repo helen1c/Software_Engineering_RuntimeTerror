@@ -93,7 +93,8 @@ export default function MountainPathCreate() {
             endPoint: request.endPoint,
             length: request.length,
             seaLevelDiff: request.seaLevelDiff,
-            isPrivate: request.isPrivate
+            isPrivate: request.isPrivate,
+            difficulty: request.difficulty
         };
 
         const requestOptions = {
@@ -141,6 +142,7 @@ export default function MountainPathCreate() {
         endPoint: Yup.string().required("Molimo Vas završnu točku planinarske staze"),
         length: Yup.number().typeError("Duljina staze mora biti broj.").positive("Duljina staze mora biti pozitivan broj.").required("Molimo unesite duljinu staze."),
         seaLevelDiff: Yup.number().typeError("Visinska razlika mora biti broj.").positive("Visinska razlika mora biti pozitivan broj."),
+        difficulty: Yup.number().typeError("Težina staze mora biti broj."),
     })
 
     return (
@@ -167,6 +169,7 @@ export default function MountainPathCreate() {
                 seaLevelDiff: null,
                 isPrivate: false,
                 hillId: null,
+                difficulty:null
             } as MountainPathCreateRequest
             } onSubmit={create} onReset={handleClose}
                     validateOnBlur={false}
@@ -206,13 +209,14 @@ export default function MountainPathCreate() {
                                         <Field  type="number" className={"input-number"} placeholder={"Visinska razlika u metrima.."}
                                                name={"seaLevelDiff"} id={"seaLevelDiff"}/>
                                         {errors.seaLevelDiff && touched.seaLevelDiff ? <div className="errorText">{errors.seaLevelDiff}</div> : <></>}
-
                                         <Field type="number" className={"input-number"}
                                                placeholder={"Duljina staze u metrima .."}
                                                name={"length"} id={"length"}/>
                                         {errors.length && touched.length ? <div className="errorText">{errors.length}</div> : <></>}
-
-
+                                        <Field type="number" className={"input-number"}
+                                               placeholder={"Težina prelaska staze od 1 do 10 .."}
+                                               name={"difficulty"} id={"difficulty"}/>
+                                        {errors.difficulty && touched.difficulty ? <div className="errorText">{errors.difficulty}</div> : <></>}
 
                                         <div className="checkbox__cnt">
                                         <label htmlFor="isPrivate" className="checkbox-label">Želite da staza bude privatna?</label>
