@@ -107,6 +107,7 @@ export default function MountainLodgeCreate() {
             method: "POST",
             body: JSON.stringify(sRequest),
             headers: {
+                authorization: sessionStorage.getItem("key") || "",
                 Accept: "application/json",
                 "Content-Type": "application/json"
             }

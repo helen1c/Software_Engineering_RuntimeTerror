@@ -67,9 +67,16 @@
 .lodge-description-cnt {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     color: #406cba;
 }
+
+.right-cnt {
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+}
+
 .results-container:hover > .mountain-lodge-cnt{
     opacity: 0.5;
 }

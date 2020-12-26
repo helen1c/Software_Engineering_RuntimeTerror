@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {MountainLodgeResult} from "../../models/MountainLodgeResult";
 import "./MountainLodgeSearchResult.css"
+import {Button} from "@material-ui/core";
+import {ArchiveOutlined} from "@material-ui/icons";
 
 interface Props {
     result: MountainLodgeResult
@@ -11,6 +13,10 @@ export const MountainLodgeSearchResult = (prop: Props) => {
     const [image, setImage] = useState("");
     const [loading, setLoading] = useState(true);
     const [defImage] = useState(require('../../../../assets/default-ml2.jpg'));
+
+    const archiveLodge = async () => {
+
+    }
 
     useEffect(() => {
         setLoading(true);
@@ -40,9 +46,19 @@ export const MountainLodgeSearchResult = (prop: Props) => {
                         </div>
                         }
                     </div>
+                    <div className="right-cnt">
                     <div className="lodge-description-cnt">
                         <span className="mountain-lodge-elevation">Visina: {prop.result.elevation}m</span>
                         <span className="mountain-lodge-hill">Planina: {prop.result.hillName}</span>
+                    </div>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            size="large"
+                            className="archive-button"
+                        onClick={archiveLodge}>
+                            Arhiviraj
+                        </Button>
                     </div>
                 </div>}
         </>

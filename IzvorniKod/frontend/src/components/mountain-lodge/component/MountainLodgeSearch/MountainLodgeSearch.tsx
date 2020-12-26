@@ -72,7 +72,6 @@ export const MountainLodgeSearch = () => {
             } onSubmit={search}>
                 {({setFieldValue}) => {
                     return (<Form className="search-lodges-form">
-
                             <div className={"search-hill"}>
                                 <button className="search-button" type="submit">&#8981;</button>
                                 <Field className={"input-search"} placeholder={"Pretražite planinarske domove..."}
