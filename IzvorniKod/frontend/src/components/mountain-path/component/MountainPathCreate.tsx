@@ -118,6 +118,7 @@ export default function MountainPathCreate() {
                 setAlreadyExists(true);
             } else {
                 setAlreadyExists(false);
+                resetForm();
                 setOpen(false);
                 errorMessage();
             }
@@ -142,7 +143,7 @@ export default function MountainPathCreate() {
         endPoint: Yup.string().required("Molimo Vas završnu točku planinarske staze"),
         length: Yup.number().typeError("Duljina staze mora biti broj.").positive("Duljina staze mora biti pozitivan broj.").required("Molimo unesite duljinu staze."),
         seaLevelDiff: Yup.number().typeError("Visinska razlika mora biti broj.").positive("Visinska razlika mora biti pozitivan broj."),
-        difficulty: Yup.number().typeError("Težina staze mora biti broj."),
+        difficulty: Yup.number().typeError("Težina staze mora biti broj.").min(1, "Najmanja zahtjevnost staze je 1.").max(10, "Najveća zahtjevnost staze je 10."),
     })
 
     return (
@@ -178,8 +179,6 @@ export default function MountainPathCreate() {
                     validationSchema={validationSchema}>
                 {({setFieldValue, handleReset, errors, touched, handleChange}) => {
                     // @ts-ignore
-                    // @ts-ignore
-                    // @ts-ignore
                     return (
                         <Dialog open={open} onClose={() => {
                             handleClose();
@@ -214,7 +213,7 @@ export default function MountainPathCreate() {
                                                name={"length"} id={"length"}/>
                                         {errors.length && touched.length ? <div className="errorText">{errors.length}</div> : <></>}
                                         <Field type="number" className={"input-number"}
-                                               placeholder={"Težina prelaska staze od 1 do 10 .."}
+                                               placeholder={"Zahtjevnost staze 1-10"}
                                                name={"difficulty"} id={"difficulty"}/>
                                         {errors.difficulty && touched.difficulty ? <div className="errorText">{errors.difficulty}</div> : <></>}
 
