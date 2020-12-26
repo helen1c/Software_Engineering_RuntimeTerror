@@ -7,10 +7,34 @@
     border: 2px solid green;
     align-items: center;
     width: 60vw;
+    cursor: pointer;
 }
 
 @media all and (max-width: 600px) {
     .mountain-path-cnt {
         width: 95vw;
     }
+}
+
+.mountain-path-main-info {
+    display: flex;
+    flex-direction: row;
+    height: 80px;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.mountain-path-cnt-expand {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid green;
+    border-radius: 10px;
+}
+
+.mountain-path-extend-info {
+    display: flex;
+    flex-direction: row;
+    height: 80px;
+    align-items: center;
+    justify-content: space-evenly;
 }
