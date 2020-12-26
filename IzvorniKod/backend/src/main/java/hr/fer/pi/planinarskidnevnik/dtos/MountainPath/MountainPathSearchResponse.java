@@ -16,6 +16,15 @@ public class MountainPathSearchResponse {
     private Long seaLevelDiff;
     private Date dateCreated;
     private boolean isPrivate;
+    private Short difficulty;
+
+    public Short getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Short difficulty) {
+        this.difficulty = difficulty;
+    }
 
     public Long getId() {
         return id;

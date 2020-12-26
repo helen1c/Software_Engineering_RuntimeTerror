@@ -71,11 +71,15 @@ public class MountainPathSearchSpecification implements BaseSpecification<Mounta
 
     private Specification<MountainPath> mountainPathAvgWalkTimeBetween(Time avgWalkTimeMinimum, Time avgWalkTimeMaximum) {
         return (root, query, criteriaBuilder) -> {
-            if (avgWalkTimeMaximum == null || avgWalkTimeMinimum == null) {
+            if (avgWalkTimeMaximum == null && avgWalkTimeMinimum == null) {
                 return null;
+            } else if(avgWalkTimeMaximum == null) {
+                return criteriaBuilder.between(root.get("avgWalkTime").as(Time.class), avgWalkTimeMinimum, Time.valueOf("23:59:59"));
+            } else if(avgWalkTimeMinimum == null) {
+                return criteriaBuilder.between(root.get("avgWalkTime").as(Time.class), Time.valueOf("00:00:00"), avgWalkTimeMaximum);
+            } else {
+                return criteriaBuilder.between(root.get("avgWalkTime").as(Time.class), avgWalkTimeMinimum, avgWalkTimeMaximum);
             }
-
-            return criteriaBuilder.between(root.get("avgWalkTime").as(Time.class), avgWalkTimeMinimum, avgWalkTimeMaximum);
         };
     }
 

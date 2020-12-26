@@ -5,9 +5,9 @@ import java.sql.Time;
 public class MountainPathSearchRequest {
 
     private String name;
+    private Long hillId;
     private Time avgWalkTimeMinimum;
     private Time avgWalkTimeMaximum;
-    private Long hillId;
     private Short difficultyMinimum;
     private Short difficultyMaximum;
     private Short lengthMin;

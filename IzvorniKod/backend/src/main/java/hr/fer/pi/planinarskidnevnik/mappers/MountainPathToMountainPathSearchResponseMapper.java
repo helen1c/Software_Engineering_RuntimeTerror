@@ -24,6 +24,7 @@ public class MountainPathToMountainPathSearchResponseMapper implements DefaultMa
         response.setAvgWalkTime(from.getAvgWalkTime());
         response.setLength(from.getLength());
         response.setSeaLevelDiff(from.getSeaLevelDiff());
+        response.setDifficulty(from.getDifficulty());
 
         return response;
     }
