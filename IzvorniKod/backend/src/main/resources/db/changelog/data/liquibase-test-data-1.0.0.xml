@@ -54,4 +54,19 @@
 
     </changeSet>
 
+    <changeSet id="20201224-01" author="josipak">
+
+        <insert tableName="user">
+            <column name="id">4</column>
+            <column name="name">Josipa Kaselj</column>
+            <column name="email">josipa.kaselj7@gmail.com</column>
+            <column name="password">$2a$10$/LD7BmbKvKqw7hXTtT/Uz.RkjArjHBeSy.W3XVBDXnHuv3wZv9lZy</column>
+            <column name="place_of_residence">Virovitica</column>
+            <column name="date_of_birth">2000-3-2</column>
+            <column name="description">Bok ja sam Josipa.</column>
+            <column name="role_id">2</column>
+        </insert>
+
+    </changeSet>
+
 </databaseChangeLog>

@@ -2,6 +2,7 @@ package hr.fer.pi.planinarskidnevnik.services.impl;
 
 import hr.fer.pi.planinarskidnevnik.dtos.MountainLodgeArchive.MountainLodgeArchiveResponse;
 import hr.fer.pi.planinarskidnevnik.dtos.MountainPathArchiveResponse;
+import hr.fer.pi.planinarskidnevnik.dtos.Badge.BadgeDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserCreateDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserHeaderDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserProfilePageDto;
@@ -13,6 +14,7 @@ import hr.fer.pi.planinarskidnevnik.mappers.MountainPathUserArchiveToMountainPat
 import hr.fer.pi.planinarskidnevnik.models.Role;
 import hr.fer.pi.planinarskidnevnik.models.User;
 import hr.fer.pi.planinarskidnevnik.repositories.MountainLodgeRepository;
+import hr.fer.pi.planinarskidnevnik.models.UserBadge;
 import hr.fer.pi.planinarskidnevnik.repositories.RoleRepository;
 import hr.fer.pi.planinarskidnevnik.repositories.UserRepository;
 import org.slf4j.Logger;
@@ -207,12 +209,31 @@ public class UserService {
                 user.getDescription(),
                 user.getImage() == null ? getImage(user.getEmail()) : user.getImage(),
                 isOwner(profileId, principal.getName()),
-                getRole(principal.getName()).equals("ADMIN"));
+                getRole(principal.getName()).equals("ADMIN"),
+                convertToBadgeDto(user.getUserBadgeList()));
     }
 
     public UserHeaderDto getHeaderInformation(Principal principal) {
         User user = getCurrentUser(principal);
         return new UserHeaderDto(user.getId(), getImage(user.getEmail()));
+    }
+
+    private List<BadgeDto> convertToBadgeDto(List<UserBadge> userBadgeList) {
+        List<BadgeDto> badges = new ArrayList<>();
+        for (UserBadge userBadge : userBadgeList) {
+            BadgeDto badge = new BadgeDto();
+            badge.setId(userBadge.getBadge().getId());
+            badge.setName(userBadge.getBadge().getName());
+            badge.setDescription(userBadge.getBadge().getDescription());
+            badge.setDateReceived(userBadge.getDateReceived());
+            badge.setImageURL(getBadgeImageURL(userBadge));
+            badges.add(badge);
+        }
+        return badges;
+    }
+
+    private String getBadgeImageURL(UserBadge userBadge) {
+        return "/api/images/" + userBadge.getBadge().getName() + ".png";
     }
 
     public List<MountainLodgeArchiveResponse> getArchivedLodges(Principal principal) {

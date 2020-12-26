@@ -51,6 +51,9 @@ public class User {
     private Role role;
 
     @OneToMany(mappedBy = "user")
+    private List<UserBadge> userBadgeList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
     private List<MountainLodgeUserArchive> mountainLodgeUserArchive = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
@@ -173,6 +176,10 @@ public class User {
     public void setRole(Role role) {
         this.role = role;
     }
+
+    public List<UserBadge> getUserBadgeList() { return userBadgeList; }
+
+    public void setUserBadgeList(List<UserBadge> userBadgeList) { this.userBadgeList = userBadgeList; }
 
     @Override
     public String toString() {

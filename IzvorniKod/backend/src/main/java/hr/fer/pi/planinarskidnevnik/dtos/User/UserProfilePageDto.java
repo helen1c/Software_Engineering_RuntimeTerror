@@ -1,11 +1,13 @@
 package hr.fer.pi.planinarskidnevnik.dtos.User;
 
+import hr.fer.pi.planinarskidnevnik.dtos.Badge.BadgeDto;
 import hr.fer.pi.planinarskidnevnik.validation.email.UniqueEmail;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.sql.Date;
+import java.util.List;
 
 public class UserProfilePageDto {
 
@@ -25,7 +27,13 @@ public class UserProfilePageDto {
 
     private byte[] image;
 
-    public UserProfilePageDto(String name, String email, String placeOfResidence, Date dateOfBirth, String description, byte[] image, boolean isOwner, boolean isAdmin) {
+    private List<BadgeDto> badges;
+
+    public List<BadgeDto> getBadges() {
+        return badges;
+    }
+
+    public UserProfilePageDto(String name, String email, String placeOfResidence, Date dateOfBirth, String description, byte[] image, boolean isOwner, boolean isAdmin, List<BadgeDto> badges) {
         this.name = name;
         this.email = email;
         this.placeOfResidence = placeOfResidence;
@@ -34,6 +42,7 @@ public class UserProfilePageDto {
         this.image = image;
         this.isOwner = isOwner;
         this.isAdmin = isAdmin;
+        this.badges = badges;
     }
 
     public String getName() {
