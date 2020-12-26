@@ -1,0 +1,16 @@
+.mountain-path-cnt {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    height: 80px;
+    border-radius: 10px;
+    border: 2px solid green;
+    align-items: center;
+    width: 60vw;
+}
+
+@media all and (max-width: 600px) {
+    .mountain-path-cnt {
+        width: 95vw;
+    }
+}
