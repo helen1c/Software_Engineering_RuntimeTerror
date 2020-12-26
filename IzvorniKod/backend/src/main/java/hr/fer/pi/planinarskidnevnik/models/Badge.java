@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "BADGE")
-
 public class Badge {
 
     @Id
