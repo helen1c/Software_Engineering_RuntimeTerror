@@ -10,6 +10,24 @@ public class MountainPathSearchRequest {
     private Long hillId;
     private Short difficultyMinimum;
     private Short difficultyMaximum;
+    private Short lengthMin;
+    private Short lengthMax;
+
+    public Short getLengthMax() {
+        return lengthMax;
+    }
+
+    public Short getLengthMin() {
+        return lengthMin;
+    }
+
+    public void setLengthMax(Short lengthMax) {
+        this.lengthMax = lengthMax;
+    }
+
+    public void setLengthMin(Short lengthMin) {
+        this.lengthMin = lengthMin;
+    }
 
     public Long getHillId() {
         return hillId;

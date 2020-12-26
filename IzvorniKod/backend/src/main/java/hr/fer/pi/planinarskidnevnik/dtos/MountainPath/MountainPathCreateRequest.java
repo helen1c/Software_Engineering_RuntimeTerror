@@ -1,6 +1,7 @@
 package hr.fer.pi.planinarskidnevnik.dtos.MountainPath;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.*;
 import java.sql.Date;
@@ -35,11 +36,20 @@ public class MountainPathCreateRequest {
     private Date dateCreated;
 
     @NotNull
-    private boolean isPrivate;
+    @JsonProperty("isPrivate")
+    private Boolean isPrivate;
 
     @Min(1)
     @Max(10)
     private Short difficulty;
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
 
     public Long getHillId() {
         return hillId;
@@ -97,11 +107,11 @@ public class MountainPathCreateRequest {
         this.seaLevelDiff = seaLevelDiff;
     }
 
-    public boolean isPrivate() {
+    public Boolean isPrivate() {
         return isPrivate;
     }
 
-    public void setPrivate(boolean aPrivate) {
+    public void setPrivate(Boolean aPrivate) {
         isPrivate = aPrivate;
     }
 

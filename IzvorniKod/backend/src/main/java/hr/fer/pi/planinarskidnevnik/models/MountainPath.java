@@ -1,6 +1,9 @@
 package hr.fer.pi.planinarskidnevnik.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.sql.Time;
 import java.sql.Date;
 import java.util.Objects;
@@ -17,23 +20,31 @@ public class MountainPath {
     @JoinColumn(nullable = false)
     private Hill hill;
 
+    @NotNull
     private String name;
 
+    @NotNull
     private String startPoint;
 
+    @NotNull
     private String endPoint;
 
+    @NotNull
     private Short difficulty;
 
+    @NotNull
     private Time avgWalkTime;
 
+    @NotNull
     private Long length;
 
     private Long seaLevelDiff;
 
+    @NotNull
     private Date dateCreated;
 
-    private boolean isPrivate;
+    @JsonProperty("isPrivate")
+    private Boolean isPrivate;
 
     @ManyToOne
     @JoinColumn(nullable = false)

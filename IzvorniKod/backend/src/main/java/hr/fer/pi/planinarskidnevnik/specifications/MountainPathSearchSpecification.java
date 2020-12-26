@@ -7,6 +7,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import java.sql.Time;
+import java.util.Objects;
 
 import static org.springframework.data.jpa.domain.Specification.where;
 
@@ -16,11 +17,24 @@ public class MountainPathSearchSpecification implements BaseSpecification<Mounta
     @Override
     public Specification<MountainPath> getFilter(MountainPathSearchRequest request) {
 
-        return ((root, query, cb) -> where(mountainPathNameContains(request.getName().trim().replaceAll("\\s+", " ")))
-                .and(mountainPathIsOnHill(request.getHillId()))
+        if(request.getName()== null) {
+            request.setName("");
+        }
+
+
+        return ((root, query, cb) -> Objects.requireNonNull(where(mountainPathNameContains(request.getName().trim().replaceAll("\\s+", " ")))
+                .and(mountainPathIsOnHill(request.getHillId())))
                 .and(mountainPathAvgWalkTimeBetween(request.getAvgWalkTimeMinimum(), request.getAvgWalkTimeMaximum()))
                 .and(mountainPathDifficultyBetween(request.getDifficultyMinimum(), request.getDifficultyMaximum()))
+                .and(mountainPathLengthBetween(request.getLengthMin(), request.getLengthMax()))
+                .and(notPrivate())
                 .toPredicate(root, query, cb));
+
+    }
+
+    private Specification<MountainPath> notPrivate() {
+
+        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("isPrivate").as(Boolean.class), Boolean.FALSE);
 
     }
 
@@ -34,9 +48,9 @@ public class MountainPathSearchSpecification implements BaseSpecification<Mounta
         };
     }
 
-    private Specification<MountainPath> mountainPathDifficultyBetween(Short difficultyMinimum, Short difficultyMaximum){
-        return(root, query, criteriaBuilder) -> {
-            if(difficultyMinimum == null && difficultyMaximum == null){
+    private Specification<MountainPath> mountainPathDifficultyBetween(Short difficultyMinimum, Short difficultyMaximum) {
+        return (root, query, criteriaBuilder) -> {
+            if (difficultyMinimum == null || difficultyMaximum == null) {
                 return null;
             }
 
@@ -44,13 +58,24 @@ public class MountainPathSearchSpecification implements BaseSpecification<Mounta
         };
     }
 
-    private Specification<MountainPath> mountainPathAvgWalkTimeBetween(Time avgWalkTimeMinimum, Time avgWalkTimeMaximum){
-        return(root, query, criteriaBuilder) -> {
-            if(avgWalkTimeMaximum == null && avgWalkTimeMinimum == null){
+    private Specification<MountainPath> mountainPathLengthBetween(Short lengthMin, Short lengthMax) {
+        return (root, query, criteriaBuilder) -> {
+            if (lengthMax == null || lengthMin == null) {
                 return null;
             }
 
-          return criteriaBuilder.between(root.get("avgWalkTime").as(Time.class), avgWalkTimeMinimum, avgWalkTimeMaximum);
+            return criteriaBuilder.between(root.get("length"), lengthMin, lengthMax);
+        };
+
+    }
+
+    private Specification<MountainPath> mountainPathAvgWalkTimeBetween(Time avgWalkTimeMinimum, Time avgWalkTimeMaximum) {
+        return (root, query, criteriaBuilder) -> {
+            if (avgWalkTimeMaximum == null || avgWalkTimeMinimum == null) {
+                return null;
+            }
+
+            return criteriaBuilder.between(root.get("avgWalkTime").as(Time.class), avgWalkTimeMinimum, avgWalkTimeMaximum);
         };
     }
 
