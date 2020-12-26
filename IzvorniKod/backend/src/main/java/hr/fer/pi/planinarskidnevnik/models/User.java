@@ -7,6 +7,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.sql.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -45,6 +46,22 @@ public class User {
     @JoinColumn(nullable = false)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Role role;
+
+    @ManyToMany
+    @JoinTable(
+            name = "mountain_lodge_user_archive",
+            joinColumns = @JoinColumn(name = "id"),
+            inverseJoinColumns = @JoinColumn(name = "lodge_id")
+    )
+    private List<MountainLodge> mountainLodgesArchive;
+
+    public List<MountainLodge> getMountainLodgesArchive() {
+        return mountainLodgesArchive;
+    }
+
+    public void setMountainLodgesArchive(List<MountainLodge> mountainLodgesArchive) {
+        this.mountainLodgesArchive = mountainLodgesArchive;
+    }
 
     public User() {
     }

@@ -4,7 +4,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet id="11012020-01" author="imartinovic">
+    <changeSet id="01-11-2020/01" author="imartinovic">
         <createSequence sequenceName="mountain_lodge_id_seq" incrementBy="1" cycle="false" startValue="100"/>
         <createSequence sequenceName="utility_id_seq" incrementBy="1" cycle="false" startValue="100"/>
         <createSequence sequenceName="hill_id_seq" incrementBy="1" cycle="false" startValue="100"/>
@@ -48,5 +48,25 @@
                 <constraints foreignKeyName="UTILITY_ID" references="UTILITY(UTILITY_ID)"/>
             </column>
         </createTable>
+    </changeSet>
+    <changeSet id="26-12-2020/02" author="imartinovic">
+        <createTable tableName="mountain_lodge_user_archive">
+            <column name="user_id" type="BIGINT"/>
+            <column name="lodge_id" type="BIGINT"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="mountain_lodge_user_archive"
+                                 baseColumnNames="user_id"
+                                 constraintName="fkey_user_archive_lodges"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+        <addForeignKeyConstraint baseTableName="mountain_lodge_user_archive"
+                                 baseColumnNames="lodge_id"
+                                 constraintName="fkey_lodge_archive_lodges"
+                                 referencedTableName="mountain_lodge"
+                                 referencedColumnNames="lodge_id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
     </changeSet>
 </databaseChangeLog>

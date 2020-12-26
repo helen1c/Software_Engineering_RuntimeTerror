@@ -101,4 +101,11 @@ public class UserController {
         final User user = userService.editCurrentUser(userCreateDto, principal);
         return ResponseEntity.ok(new UserCreateDto(user.getName(), user.getPassword(), user.getEmail(), user.getPlaceOfResidence(), user.getDateOfBirth(), user.getDescription(), null));
     }
+
+    @RequestMapping(value = "/archive-lodge/{lodge_id}", method = RequestMethod.PUT)
+    public ResponseEntity<?> archiveMountainLodge(@PathVariable("lodge_id") final Long lodgeId, Principal principal) {
+      userService.archiveMountainLodge(lodgeId, principal);
+      return ResponseEntity.ok("Dom uspjesno spremljen.");
+    };
+
 }

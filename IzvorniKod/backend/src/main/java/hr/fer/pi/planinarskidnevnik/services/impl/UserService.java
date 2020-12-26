@@ -8,8 +8,10 @@ import hr.fer.pi.planinarskidnevnik.exceptions.IllegalAccessException;
 import hr.fer.pi.planinarskidnevnik.exceptions.NoImageException;
 import hr.fer.pi.planinarskidnevnik.exceptions.ResourceNotFoundException;
 import hr.fer.pi.planinarskidnevnik.exceptions.UserWithEmailExistsException;
+import hr.fer.pi.planinarskidnevnik.models.MountainLodge;
 import hr.fer.pi.planinarskidnevnik.models.Role;
 import hr.fer.pi.planinarskidnevnik.models.User;
+import hr.fer.pi.planinarskidnevnik.repositories.MountainLodgeRepository;
 import hr.fer.pi.planinarskidnevnik.repositories.RoleRepository;
 import hr.fer.pi.planinarskidnevnik.repositories.UserRepository;
 import org.slf4j.Logger;
@@ -33,11 +35,13 @@ public class UserService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder encoder;
     private final String DEFAULT_PROFILE_IMAGE = "/images/planinar.jpeg";
+    private final MountainLodgeRepository mountainLodgeRepository;
 
-    public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder encoder) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder encoder, MountainLodgeRepository mountainLodgeRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.encoder = encoder;
+        this.mountainLodgeRepository = mountainLodgeRepository;
     }
 
     public Optional<User> findByEmail(String email) {
@@ -130,7 +134,7 @@ public class UserService {
         User currentUser = getCurrentUser(principal);
         User userForRemoval = getUserById(userId);
 
-        if (currentUser.getId() == userForRemoval.getId() || getRole(currentUser.getEmail()).equals("ADMIN")) {
+        if (currentUser.getId().equals(userForRemoval.getId()) || getRole(currentUser.getEmail()).equals("ADMIN")) {
             userRepository.delete(userForRemoval);
         } else {
             LOGGER.error("Not allowed to delete user");
@@ -204,5 +208,27 @@ public class UserService {
     public UserHeaderDto getHeaderInformation(Principal principal) {
         User user = getCurrentUser(principal);
         return new UserHeaderDto(user.getId(), getImage(user.getEmail()));
+    }
+
+    public void archiveMountainLodge(Long lodgeId, Principal principal) {
+
+        if(lodgeId == null) {
+            throw new IllegalArgumentException("Lodge id is null.");
+        }
+        Optional<MountainLodge> lodge = mountainLodgeRepository.findById(lodgeId);
+        if(lodge.isEmpty()) {
+            throw new IllegalArgumentException("Ne postoji dom s id: " + lodgeId);
+        }
+        if(principal == null) {
+            throw new IllegalArgumentException("Nemate ovlasti..");
+        }
+
+
+        System.out.println(lodgeId + "  " + lodge.get());
+
+        User currUser = getCurrentUser(principal);
+        currUser.getMountainLodgesArchive().add(lodge.get());
+
+        userRepository.save(currUser);
     }
 }

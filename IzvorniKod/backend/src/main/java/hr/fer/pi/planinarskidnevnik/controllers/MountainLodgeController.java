@@ -7,6 +7,7 @@ import hr.fer.pi.planinarskidnevnik.dtos.MountainLodge.MountainLodgeSearchRespon
 import hr.fer.pi.planinarskidnevnik.mappers.MountainLodgeToMountainLodgeSearchResponseMapper;
 import hr.fer.pi.planinarskidnevnik.models.MountainLodge;
 import hr.fer.pi.planinarskidnevnik.services.MountainLodgeQueryService;
+import hr.fer.pi.planinarskidnevnik.services.impl.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -23,12 +25,14 @@ public class MountainLodgeController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MountainLodgeController.class);
 
+    private final UserService userService;
     private final MountainLodgeQueryService service;
     private final MountainLodgeToMountainLodgeSearchResponseMapper mountainLodgeMapper;
 
 
     @Autowired
-    public MountainLodgeController(MountainLodgeQueryService service, MountainLodgeToMountainLodgeSearchResponseMapper mountainLodgeToMountainLodgeSearchResponseMapper) {
+    public MountainLodgeController(UserService userService, MountainLodgeQueryService service, MountainLodgeToMountainLodgeSearchResponseMapper mountainLodgeToMountainLodgeSearchResponseMapper) {
+        this.userService = userService;
         this.service = service;
         this.mountainLodgeMapper = mountainLodgeToMountainLodgeSearchResponseMapper;
     }
@@ -42,8 +46,11 @@ public class MountainLodgeController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<MountainLodgeCreateResponse> createMountainLodge(@Valid @RequestBody final MountainLodgeCreateRequest createRequest) {
+    public ResponseEntity<?> createMountainLodge(@Valid @RequestBody final MountainLodgeCreateRequest createRequest, Principal principal) {
         LOGGER.info("Creating new Mountain Lodge with name: " + createRequest.getName());
+        if(principal == null || !userService.getRole(principal.getName()).equals("ADMIN")) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Nemate ovlasti.");
+        }
 
         MountainLodge ml = service.createMountainLodge(createRequest);
         MountainLodgeCreateResponse response = new MountainLodgeCreateResponse();
