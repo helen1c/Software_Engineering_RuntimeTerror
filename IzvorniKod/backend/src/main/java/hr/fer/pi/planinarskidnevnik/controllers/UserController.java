@@ -96,12 +96,11 @@ public class UserController {
     }
 
     @PostMapping("/friend-request-accept/{id}")
-    public ResponseEntity<?> acceptFriendRequest(Principal principal, @PathVariable("id") final Long receiverId) {
-        userService.acceptFriendRequest(principal.getName(), receiverId);
+    public ResponseEntity<?> acceptFriendRequest(Principal principal, @PathVariable("id") final Long senderId) {
+        userService.acceptFriendRequest(principal, senderId);
         return ResponseEntity.ok().build();
     }
 
-    @RequestMapping(value = "{id}",method=RequestMethod.DELETE)
     @GetMapping(value = "/image/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<byte[]> getImageById(@PathVariable("id") final Long id) {
         return ResponseEntity.ok(userService.getImage(userService.getUserById(id).getEmail()));

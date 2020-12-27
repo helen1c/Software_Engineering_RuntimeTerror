@@ -14,7 +14,7 @@ public class FriendshipRequest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
 
     @ManyToOne()
     @JoinColumn(name = "sender")
@@ -24,7 +24,7 @@ public class FriendshipRequest {
     @JoinColumn(name = "receiver")
     private User targetUser;
 
-    public FriendshipRequest(String id, User sourceUser, User targetUser) {
+    public FriendshipRequest(Long id, User sourceUser, User targetUser) {
         this.id = id;
         this.sourceUser = sourceUser;
         this.targetUser = targetUser;
@@ -38,11 +38,11 @@ public class FriendshipRequest {
     public FriendshipRequest() {
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

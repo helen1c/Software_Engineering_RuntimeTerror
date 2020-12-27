@@ -12,6 +12,7 @@ import hr.fer.pi.planinarskidnevnik.dtos.User.UserProfilePageDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserSearchDto;
 import hr.fer.pi.planinarskidnevnik.exceptions.*;
 import hr.fer.pi.planinarskidnevnik.exceptions.IllegalAccessException;
+import hr.fer.pi.planinarskidnevnik.exceptions.*;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainLodgeArchiveToMountainLodgeArchiveResponseMapper;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainPathGradeToMountainPathGradeResponseMapper;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainPathUserArchiveToMountainPathArchiveResponseMapper;
@@ -21,13 +22,13 @@ import hr.fer.pi.planinarskidnevnik.exceptions.ResourceNotFoundException;
 import hr.fer.pi.planinarskidnevnik.exceptions.UserWithEmailExistsException;
 import hr.fer.pi.planinarskidnevnik.exceptions.IllegalAccessException;
 import hr.fer.pi.planinarskidnevnik.models.FriendshipRequest;
-import hr.fer.pi.planinarskidnevnik.models.Role;
+import hr.fer.pi.planinarskidnevnik.models.Friendships;
 import hr.fer.pi.planinarskidnevnik.models.Role;
 import hr.fer.pi.planinarskidnevnik.models.User;
 import hr.fer.pi.planinarskidnevnik.repositories.MountainLodgeRepository;
 import hr.fer.pi.planinarskidnevnik.models.UserBadge.UserBadge;
 import hr.fer.pi.planinarskidnevnik.repositories.FriendshipRequestRepository;
-import hr.fer.pi.planinarskidnevnik.repositories.RoleRepository;
+import hr.fer.pi.planinarskidnevnik.repositories.FriendshipsRepository;
 import hr.fer.pi.planinarskidnevnik.repositories.RoleRepository;
 import hr.fer.pi.planinarskidnevnik.repositories.UserRepository;
 import org.slf4j.Logger;
@@ -40,11 +41,8 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,6 +52,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final FriendshipRequestRepository friendshipRequestRepository;
+    private final FriendshipsRepository friendshipsRepository;
     private final PasswordEncoder encoder;
     private final String DEFAULT_PROFILE_IMAGE = "/images/planinar.jpeg";
     private final MountainLodgeArchiveToMountainLodgeArchiveResponseMapper lodgeArchiveResponseMapper;
@@ -65,6 +64,7 @@ public class UserService {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.friendshipRequestRepository = friendshipRequestRepository;
+        this.friendshipsRepository = friendshipsRepository;
         this.encoder = encoder;
         this.lodgeArchiveResponseMapper = lodgeArchiveResponseMapper;
         this.pathArchiveResponseMapper = pathArchiveResponseMapper;
@@ -289,5 +289,26 @@ public class UserService {
         User user = findByEmail(email).orElseThrow(() -> new ResourceNotFoundException(email));
         List<FriendshipRequest> req = friendshipRequestRepository.getAllByTargetUser(user);
         return req;
+    }
+
+    public void acceptFriendRequest(Principal principal, Long senderId) {
+        User sender = getUserById(senderId);
+        User receiver = getCurrentUser(principal);
+
+        Optional<FriendshipRequest> optionalFriendshipRequest = friendshipRequestRepository.getBySourceUserAndTargetUser(sender, receiver);
+
+        if (optionalFriendshipRequest.isEmpty()) {
+            throw new ResourceNotFoundException("Zahtjev za prijatljstvo ne postoji");
+        }
+
+        FriendshipRequest friendshipRequest = optionalFriendshipRequest.get();
+
+        Friendships friendshipReceiver = new Friendships(sender, receiver);
+        Friendships friendshipSender = new Friendships(receiver, sender);
+
+        friendshipsRepository.save(friendshipReceiver);
+        friendshipsRepository.save(friendshipSender);
+
+        friendshipRequestRepository.delete(friendshipRequest);
     }
 }

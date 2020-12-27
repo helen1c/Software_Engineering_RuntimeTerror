@@ -63,15 +63,15 @@
     </changeSet>
 
     <changeSet id="20201227284200" author="lravenscak">
-        <createTable tableName="user_friends">
+        <createTable tableName="friendships">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="sender" type="BIGINT">
-                <constraints foreignKeyName="user_id" references="user(id)"/>
+            <column name="current_user_id" type="BIGINT">
+                <constraints foreignKeyName="current_user_fk" references="user(id)"/>
             </column>
-            <column name="receiver" type="BIGINT">
-                <constraints foreignKeyName="friend_id" references="user(id)"/>
+            <column name="friend_id" type="BIGINT">
+                <constraints foreignKeyName="friend_fk" references="user(id)"/>
             </column>
         </createTable>
     </changeSet>
