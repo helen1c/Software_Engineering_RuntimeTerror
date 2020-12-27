@@ -47,7 +47,7 @@ public class User {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Role role;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "mountain_lodge_user_archive",
             joinColumns = @JoinColumn(name = "id"),

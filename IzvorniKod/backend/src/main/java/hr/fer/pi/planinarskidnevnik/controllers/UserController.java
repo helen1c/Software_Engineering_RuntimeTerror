@@ -5,6 +5,7 @@ import hr.fer.pi.planinarskidnevnik.dtos.User.UserHeaderDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserProfilePageDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserSearchDto;
 import hr.fer.pi.planinarskidnevnik.exceptions.LodgeAlreadyArchivedException;
+import hr.fer.pi.planinarskidnevnik.models.MountainLodge;
 import hr.fer.pi.planinarskidnevnik.models.User;
 import hr.fer.pi.planinarskidnevnik.services.impl.UserService;
 import org.slf4j.Logger;
@@ -113,6 +114,12 @@ public class UserController {
     public final ResponseEntity<?> constraintsViolations(final Exception ex) {
         LOGGER.error("Constraint exception. " + ex.getMessage());
         return ResponseEntity.badRequest().body(ex.getMessage());
+    }
+
+    @GetMapping(value = "/archived-lodges/all")
+    public final ResponseEntity<List<MountainLodge>> getArchivedLodges(Principal principal) {
+        List<MountainLodge> lodges = userService.getArchivedLodges(principal);
+        return ResponseEntity.status(200).body(lodges);
     }
 
 }

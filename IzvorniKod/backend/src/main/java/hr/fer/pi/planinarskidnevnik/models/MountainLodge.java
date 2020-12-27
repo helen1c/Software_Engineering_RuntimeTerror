@@ -10,7 +10,7 @@ public class MountainLodge {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "mountain_lodge_id_gen")
     @SequenceGenerator(name = "mountain_lodge_id_gen", sequenceName = "mountain_lodge_id_seq", allocationSize = 1)
     @Column(name = "LODGE_ID")
-    private Long id;
+    private Long lodge_id;
 
     private String name;
 
@@ -55,7 +55,7 @@ public class MountainLodge {
     }
 
     public java.lang.Long getId() {
-        return id;
+        return lodge_id;
     }
 
     public byte[] getImage() {
@@ -71,7 +71,7 @@ public class MountainLodge {
     }
 
     public void setId(java.lang.Long id) {
-        this.id = id;
+        this.lodge_id = id;
     }
 
     public void setName(String name) {

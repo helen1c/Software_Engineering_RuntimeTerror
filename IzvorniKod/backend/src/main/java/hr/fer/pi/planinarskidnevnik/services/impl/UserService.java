@@ -230,4 +230,9 @@ public class UserService {
         }
 
     }
+
+    public List<MountainLodge> getArchivedLodges(Principal principal) {
+        return getCurrentUser(principal).getMountainLodgesArchive();
+    }
+
 }

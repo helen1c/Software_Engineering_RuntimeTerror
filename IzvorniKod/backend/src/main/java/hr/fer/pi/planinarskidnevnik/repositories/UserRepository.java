@@ -1,5 +1,6 @@
 package hr.fer.pi.planinarskidnevnik.repositories;
 
+import hr.fer.pi.planinarskidnevnik.models.MountainLodge;
 import hr.fer.pi.planinarskidnevnik.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
