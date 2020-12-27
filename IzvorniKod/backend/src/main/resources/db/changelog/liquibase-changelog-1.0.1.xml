@@ -51,8 +51,12 @@
     </changeSet>
     <changeSet id="26-12-2020/02" author="imartinovic">
         <createTable tableName="mountain_lodge_user_archive">
-            <column name="user_id" type="BIGINT"/>
-            <column name="lodge_id" type="BIGINT"/>
+            <column name="user_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="lodge_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
         </createTable>
         <addForeignKeyConstraint baseTableName="mountain_lodge_user_archive"
                                  baseColumnNames="user_id"

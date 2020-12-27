@@ -4,6 +4,7 @@ import hr.fer.pi.planinarskidnevnik.dtos.User.UserCreateDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserHeaderDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserProfilePageDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserSearchDto;
+import hr.fer.pi.planinarskidnevnik.exceptions.LodgeAlreadyArchivedException;
 import hr.fer.pi.planinarskidnevnik.models.User;
 import hr.fer.pi.planinarskidnevnik.services.impl.UserService;
 import org.slf4j.Logger;
@@ -107,5 +108,11 @@ public class UserController {
       userService.archiveMountainLodge(lodgeId, principal);
       return ResponseEntity.ok("Dom uspjesno spremljen.");
     };
+
+    @ExceptionHandler(LodgeAlreadyArchivedException.class)
+    public final ResponseEntity<?> constraintsViolations(final Exception ex) {
+        LOGGER.error("Constraint exception. " + ex.getMessage());
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
 
 }

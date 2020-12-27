@@ -1,10 +1,13 @@
 package hr.fer.pi.planinarskidnevnik.controllers;
 
+import com.auth0.jwt.exceptions.SignatureVerificationException;
 import hr.fer.pi.planinarskidnevnik.exceptions.IllegalAccessException;
 import hr.fer.pi.planinarskidnevnik.exceptions.MountainPathAlreadyExistsException;
+import hr.fer.pi.planinarskidnevnik.exceptions.LodgeAlreadyArchivedException;
 import hr.fer.pi.planinarskidnevnik.exceptions.ResourceNotFoundException;
 import hr.fer.pi.planinarskidnevnik.exceptions.UserWithEmailExistsException;
 import hr.fer.pi.planinarskidnevnik.exceptions.dtos.ConstraintViolationDto;
+import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import javax.servlet.ServletException;
 import java.util.LinkedList;
 import java.util.List;
 

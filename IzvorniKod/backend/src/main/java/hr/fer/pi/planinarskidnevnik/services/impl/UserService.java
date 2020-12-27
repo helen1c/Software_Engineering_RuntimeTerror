@@ -4,10 +4,8 @@ import hr.fer.pi.planinarskidnevnik.dtos.User.UserCreateDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserHeaderDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserProfilePageDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserSearchDto;
+import hr.fer.pi.planinarskidnevnik.exceptions.*;
 import hr.fer.pi.planinarskidnevnik.exceptions.IllegalAccessException;
-import hr.fer.pi.planinarskidnevnik.exceptions.NoImageException;
-import hr.fer.pi.planinarskidnevnik.exceptions.ResourceNotFoundException;
-import hr.fer.pi.planinarskidnevnik.exceptions.UserWithEmailExistsException;
 import hr.fer.pi.planinarskidnevnik.models.MountainLodge;
 import hr.fer.pi.planinarskidnevnik.models.Role;
 import hr.fer.pi.planinarskidnevnik.models.User;
@@ -20,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
+import javax.validation.ConstraintViolationException;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -223,12 +222,12 @@ public class UserService {
             throw new IllegalArgumentException("Nemate ovlasti..");
         }
 
-
-        System.out.println(lodgeId + "  " + lodge.get());
-
         User currUser = getCurrentUser(principal);
-        currUser.getMountainLodgesArchive().add(lodge.get());
+        try {
+            userRepository.archiveMountainLodge(currUser.getId(), lodgeId);
+        } catch (Exception ex) {
+            throw new LodgeAlreadyArchivedException("U arhivi korisnika e-maila: " + principal.getName() + " već postoji planinarski dom: " + lodge.get().getName());
+        }
 
-        userRepository.save(currUser);
     }
 }
