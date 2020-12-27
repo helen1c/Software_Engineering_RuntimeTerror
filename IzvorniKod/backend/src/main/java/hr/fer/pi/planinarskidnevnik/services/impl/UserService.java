@@ -4,6 +4,8 @@ import hr.fer.pi.planinarskidnevnik.dtos.MountainLodgeArchive.MountainLodgeArchi
 import hr.fer.pi.planinarskidnevnik.dtos.MountainPath.MountainPathGradeResponse;
 import hr.fer.pi.planinarskidnevnik.dtos.MountainPathArchiveResponse;
 import hr.fer.pi.planinarskidnevnik.dtos.Badge.BadgeDto;
+import hr.fer.pi.planinarskidnevnik.dtos.UserCreateDto;
+import hr.fer.pi.planinarskidnevnik.exceptions.*;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserCreateDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserHeaderDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserProfilePageDto;
@@ -276,6 +278,10 @@ public class UserService {
         User sender = findByEmail(email).orElseThrow(() -> new ResourceNotFoundException(email));
         User receiver = userRepository.getOne(friendId);
         FriendshipRequest friendshipRequest = new FriendshipRequest(sender, receiver);
+        if (friendshipRequestRepository.existsBySourceUserAndTargetUser(sender, receiver)) {
+            throw new FriendshipRequestExistsException("Zahtjev za prijateljstvo je već poslan!");
+        }
+
         friendshipRequestRepository.save(friendshipRequest);
     }
 

@@ -61,6 +61,10 @@ public class User {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Role role;
 
+    @OneToMany(cascade=CascadeType.ALL)
+    @JoinTable(name="user_friends")
+    List<User> friends = new ArrayList<>();
+
     @OneToMany(mappedBy = "user")
     private List<MountainPathGrade> mountainPathGradeList = new ArrayList<>();
 
@@ -216,6 +220,14 @@ public class User {
             friendRequests = new ArrayList<>();
         }
         friendRequests.add(sender);
+    }
+
+    public List<User> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<User> friends) {
+        this.friends = friends;
     }
 
     @Override

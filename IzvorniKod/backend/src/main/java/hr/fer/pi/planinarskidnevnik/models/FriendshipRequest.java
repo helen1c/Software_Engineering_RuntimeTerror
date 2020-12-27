@@ -18,12 +18,10 @@ public class FriendshipRequest {
 
     @ManyToOne()
     @JoinColumn(name = "sender")
-    //@Column(name = "sender")
     private User sourceUser;
 
     @ManyToOne()
     @JoinColumn(name = "receiver")
-    //@Column(name = "receiver")
     private User targetUser;
 
     public FriendshipRequest(String id, User sourceUser, User targetUser) {

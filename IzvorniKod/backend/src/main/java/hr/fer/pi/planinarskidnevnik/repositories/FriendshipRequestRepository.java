@@ -9,4 +9,6 @@ import java.util.List;
 public interface FriendshipRequestRepository extends JpaRepository<FriendshipRequest, Long> {
 
     List<FriendshipRequest> getAllByTargetUser(User targetUser);
+
+    boolean existsBySourceUserAndTargetUser(User sourceUser, User targetUser);
 }
