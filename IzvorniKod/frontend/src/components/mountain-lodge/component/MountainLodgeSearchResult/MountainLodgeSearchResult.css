@@ -80,6 +80,7 @@
 .results-container:hover > .mountain-lodge-cnt{
     opacity: 0.5;
 }
+
 .results-container .mountain-lodge-cnt:hover {
     background-color: #fcf1f4;
     opacity: 100%;
@@ -111,6 +112,7 @@
     border-radius: 20px;
     margin-right: 5px;
 }
+
 .mountain-lodge-hill{
     background: #406cba;
     color: white;

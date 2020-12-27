@@ -3,6 +3,7 @@ import {MountainLodgeResult} from "../../models/MountainLodgeResult";
 import "./MountainLodgeSearchResult.css"
 import {Button} from "@material-ui/core";
 import {ArchiveOutlined} from "@material-ui/icons";
+import {HttpCodesUtil} from "../../../../errors/HttpCodesUtil";
 
 interface Props {
     result: MountainLodgeResult
@@ -15,6 +16,24 @@ export const MountainLodgeSearchResult = (prop: Props) => {
     const [defImage] = useState(require('../../../../assets/default-ml2.jpg'));
 
     const archiveLodge = async () => {
+
+        const requestOptions = {
+            method: "PUT",
+            headers: {
+                authorization: sessionStorage.getItem("key") || "",
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            }
+        };
+        const response = await fetch("/api/users/archive-lodge/" + prop.result.id, requestOptions);
+
+        if(response.status === HttpCodesUtil.SUCCESS) {
+            console.log("Sve uspjesno arhivirano")
+        } else if(response.status === HttpCodesUtil.FORBIDDEN) {
+            console.log("Neispravan token");
+        } else if(response.status === HttpCodesUtil.BAD_REQUEST) {
+            console.log("Već postoji u vašoj arhivi.")
+        }
 
     }
 
