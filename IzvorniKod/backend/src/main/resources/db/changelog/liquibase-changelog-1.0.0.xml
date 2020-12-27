@@ -46,6 +46,9 @@
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
+            <column name="user_id" type="BIGINT">
+                <constraints foreignKeyName="message_sender_id_fk" references="user(id)"/>
+            </column>
             <column name="message_name" type="VARCHAR(100)">
                 <constraints nullable="false"/>
             </column>

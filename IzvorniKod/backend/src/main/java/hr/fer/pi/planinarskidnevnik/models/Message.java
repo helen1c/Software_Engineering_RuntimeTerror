@@ -15,9 +15,9 @@ public class Message {
     @Column(name="message_content")
     private String content;
 
-//    @ManyToOne
-//    @JoinColumn(nullable = false)
-//    private User user;
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private User user;
 
     public Long getId() {
         return id;
@@ -42,12 +42,12 @@ public class Message {
     public void setContent(String content) {
         this.content = content;
     }
-//
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

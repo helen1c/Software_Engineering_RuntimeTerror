@@ -24,24 +24,24 @@ public class MessageController {
     private static final Logger LOGGER = LoggerFactory.getLogger(MessageController.class);
 
     private final MessageQueryService messageService;
+    private final UserService userService;
     private final MessageToMessageResponseMapper messageResponseMapper;
 
-    public MessageController(MessageQueryService messageService, MessageToMessageResponseMapper messageResponseMapper) {
+    public MessageController(MessageQueryService messageService, UserService userService, MessageToMessageResponseMapper messageResponseMapper) {
         this.messageService = messageService;
+        this.userService = userService;
         this.messageResponseMapper = messageResponseMapper;
     }
 
 
     @PostMapping("/send")
-    public ResponseEntity<MessageCreateRequest> newMessage(@Valid @RequestBody final MessageCreateRequest recivedMessage) {
+    public ResponseEntity<MessageCreateRequest> newMessage(@Valid @RequestBody final MessageCreateRequest recivedMessage,Principal principal) {
         LOGGER.info("Creating new message with name: " + recivedMessage.getName());
 
-        Message message = messageService.createMessage(recivedMessage);
+        Message message = messageService.createMessage(recivedMessage,principal);
         MessageCreateRequest messageDto = new MessageCreateRequest();
         messageDto.setName(message.getName());
         messageDto.setContent(message.getContent());
-
-
 
         return ResponseEntity.status(HttpStatus.CREATED).body(messageDto);
     }

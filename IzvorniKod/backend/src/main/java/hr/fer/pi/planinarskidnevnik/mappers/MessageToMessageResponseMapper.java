@@ -13,6 +13,8 @@ public class MessageToMessageResponseMapper implements DefaultMapper<Message, Me
         response.setId(from.getId());
         response.setName(from.getName());
         response.setContent(from.getContent());
+        response.setUserName(from.getUser().getName());
+        response.setUserId(from.getUser().getId());
 
         return response;
     }

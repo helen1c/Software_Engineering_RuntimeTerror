@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.List;
 @Service
 public class MessageQueryServiceImpl implements MessageQueryService {
@@ -16,18 +17,21 @@ public class MessageQueryServiceImpl implements MessageQueryService {
     private static final Logger LOGGER = LoggerFactory.getLogger(MessageQueryServiceImpl.class);
 
     private final MessageRepository messageRepository;
+    private final UserService userService;
 
     @Autowired
-    public MessageQueryServiceImpl(MessageRepository messageRepository) {
+    public MessageQueryServiceImpl(MessageRepository messageRepository, UserService userService) {
         this.messageRepository = messageRepository;
+        this.userService = userService;
     }
 
     @Override
-    public Message createMessage(MessageCreateRequest dto){
+    public Message createMessage(MessageCreateRequest dto, Principal principal){
 
         Message message = new Message();
         message.setName(dto.getName());
         message.setContent(dto.getContent());
+        message.setUser(userService.getCurrentUser(principal));
 
         return messageRepository.save(message);
     }

@@ -1,0 +1,13 @@
+.result-box{
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #211648;
+    border-radius: 10px;
+    min-height: 4rem;
+    margin: 20px;
+}
+.result-column{
+    font-family: cursive;
+    text-align: center;
+    margin-top: 15px;
+}

@@ -1,28 +1,22 @@
 package hr.fer.pi.planinarskidnevnik.dtos.message;
 
+import hr.fer.pi.planinarskidnevnik.models.User;
+
 import java.util.Objects;
 
 public class MessageCreateRequest {
 
     private String name;
     private String content;
-    private Long userId;
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
 
     public MessageCreateRequest(){
 
     }
-    public MessageCreateRequest(String name, String content,Long userId){
+    public MessageCreateRequest(String name, String content){
         this.name = name;
         this.content = content;
-        this.userId = userId;
+//        this.userId = userId;
     }
 
     public String getName() {

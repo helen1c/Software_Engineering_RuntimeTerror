@@ -198,6 +198,14 @@ public class UserService {
 
         return currentUser;
     }
+    public User getCurrentUser(Principal principal) {
+        Optional<User> optionalCurrentUser = userRepository.findByEmail(principal.getName());
+        if (optionalCurrentUser.isEmpty()) {
+            LOGGER.error("User {} doesn't exist", principal.getName());
+            throw new ResourceNotFoundException(String.format("Korisnik %s ne postoji", principal.getName()));
+        }
+        return optionalCurrentUser.get();
+    }
 
     public List<UserSearchDto> getUserCommunity(Principal principal) {
         User currentUser = getCurrentUser(principal);
