@@ -1,13 +1,14 @@
 package hr.fer.pi.planinarskidnevnik.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import hr.fer.pi.planinarskidnevnik.models.MountainLodgeUserArchive.MountainLodgeUserArchive;
 import hr.fer.pi.planinarskidnevnik.models.MountainPathUserArchive.MountainPathUserArchive;
 import hr.fer.pi.planinarskidnevnik.models.UserBadge.UserBadge;
+import hr.fer.pi.planinarskidnevnik.models.friendships.FriendshipRequest;
+import hr.fer.pi.planinarskidnevnik.models.friendships.Friendships;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -60,6 +61,18 @@ public class User {
     @JoinColumn(nullable = false)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Role role;
+
+//    @OneToMany(mappedBy = "user")
+//    @JoinColumn(name = "sender")
+//    private List<FriendshipRequest> friendshipRequests = new ArrayList<>();
+
+//    @OneToMany(mappedBy="currentUser")
+//    private List<User> friendships;
+//
+//    @ManyToOne(cascade=CascadeType.ALL)
+//    @JoinColumn(name="current_user_id")
+//    @JsonBackReference
+//    private User currentUser;
 
     @OneToMany(cascade=CascadeType.ALL)
     @JoinTable(name="user_friends")
@@ -194,6 +207,23 @@ public class User {
     public void setRole(Role role) {
         this.role = role;
     }
+
+//    public List<Friendships> getFriendships() {
+//        return friendships;
+//    }
+//
+//    public void setFriendships(List<Friendships> friendships) {
+//        this.friendships = friendships;
+//    }
+
+
+//    public List<FriendshipRequest> getFriendshipRequests() {
+//        return friendshipRequests;
+//    }
+//
+//    public void setFriendshipRequests(List<FriendshipRequest> friendshipRequests) {
+//        this.friendshipRequests = friendshipRequests;
+//    }
 
     public List<MountainPathGrade> getMountainPathGradeList() {
         return mountainPathGradeList;

@@ -45,6 +45,7 @@
             <column name="role_id" type="BIGINT" defaultValue="2">
                 <constraints foreignKeyName="role_id" references="roles(id)"/>
             </column>
+            <column name="current_user_id" type="BIGINT"/>
         </addColumn>
     </changeSet>
 

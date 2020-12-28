@@ -1,36 +1,32 @@
-package hr.fer.pi.planinarskidnevnik.models;
+package hr.fer.pi.planinarskidnevnik.models.friendships;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import hr.fer.pi.planinarskidnevnik.models.User;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+@Entity(name = "friendship_request")
 @Table(name = "friendship_request")
-@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class FriendshipRequest {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @EmbeddedId
+    private FriendshipRequestId id;
 
     @ManyToOne()
+    @MapsId("sourceUserId")
     @JoinColumn(name = "sender")
     private User sourceUser;
 
     @ManyToOne()
+    @MapsId("targetUserId")
     @JoinColumn(name = "receiver")
     private User targetUser;
 
-    public FriendshipRequest(Long id, User sourceUser, User targetUser) {
-        this.id = id;
-        this.sourceUser = sourceUser;
-        this.targetUser = targetUser;
-    }
-
-    public FriendshipRequest(User sourceUser, User targetUser) {
+    public FriendshipRequest( User sourceUser, User targetUser) {
+        id = new FriendshipRequestId(sourceUser.getId(), targetUser.getId());
         this.sourceUser = sourceUser;
         this.targetUser = targetUser;
     }
@@ -38,11 +34,11 @@ public class FriendshipRequest {
     public FriendshipRequest() {
     }
 
-    public Long getId() {
+    public FriendshipRequestId getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(FriendshipRequestId id) {
         this.id = id;
     }
 

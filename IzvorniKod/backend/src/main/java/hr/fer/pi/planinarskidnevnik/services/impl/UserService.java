@@ -23,6 +23,7 @@ import hr.fer.pi.planinarskidnevnik.exceptions.UserWithEmailExistsException;
 import hr.fer.pi.planinarskidnevnik.exceptions.IllegalAccessException;
 import hr.fer.pi.planinarskidnevnik.models.FriendshipRequest;
 import hr.fer.pi.planinarskidnevnik.models.Friendships;
+import hr.fer.pi.planinarskidnevnik.models.friendships.FriendshipRequest;
 import hr.fer.pi.planinarskidnevnik.models.Role;
 import hr.fer.pi.planinarskidnevnik.models.User;
 import hr.fer.pi.planinarskidnevnik.repositories.MountainLodgeRepository;
@@ -303,11 +304,12 @@ public class UserService {
 
         FriendshipRequest friendshipRequest = optionalFriendshipRequest.get();
 
-        Friendships friendshipReceiver = new Friendships(sender, receiver);
-        Friendships friendshipSender = new Friendships(receiver, sender);
+//        Friendships friendshipReceiver = new Friendships(sender, receiver);
+//        Friendships friendshipSender = new Friendships(receiver, sender);
+//
+//        receiver.getFriendships().add(friendshipSender);
+//        sender.getFriendships().add(friendshipReceiver);
 
-        friendshipsRepository.save(friendshipReceiver);
-        friendshipsRepository.save(friendshipSender);
 
         friendshipRequestRepository.delete(friendshipRequest);
     }

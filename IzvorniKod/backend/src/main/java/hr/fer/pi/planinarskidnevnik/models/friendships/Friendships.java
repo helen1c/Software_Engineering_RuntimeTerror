@@ -1,24 +1,25 @@
-package hr.fer.pi.planinarskidnevnik.models;
+package hr.fer.pi.planinarskidnevnik.models.friendships;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import hr.fer.pi.planinarskidnevnik.models.User;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "Friendships")
 @Table(name = "friendships")
-@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Friendships {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @EmbeddedId
+    private FriendshipsId id;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("currentUserId")
     @JoinColumn(name = "current_user_id")
     private User currentUser;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("friendId")
     @JoinColumn(name = "friend_id")
     private User friend;
 
@@ -26,21 +27,16 @@ public class Friendships {
     }
 
     public Friendships(User currentUser, User friend) {
+        this.id = new FriendshipsId(currentUser.getId(), friend.getId());
         this.currentUser = currentUser;
         this.friend = friend;
     }
 
-    public Friendships(Long id, User currentUser, User friend) {
-        this.id = id;
-        this.currentUser = currentUser;
-        this.friend = friend;
-    }
-
-    public Long getId() {
+    public FriendshipsId getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(FriendshipsId id) {
         this.id = id;
     }
 
