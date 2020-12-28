@@ -9,7 +9,7 @@ import {MountainPathResult} from "../../models/MountainPathResult";
 import {MountainPathSearchRequest} from "../../models/MountainPathSearchRequest";
 import {MountainPathSearchResult} from "../MountainPathSearchResult/MountainPathSearchResult";
 import "./MountainPathSearch.css"
-import {Slider, Typography} from "@material-ui/core";
+import {Slider} from "@material-ui/core";
 import {difficultyMarks, walkTimeMarks} from "./MountainPathSearchUtil";
 
 export const MountainPathSearch = () => {
@@ -18,7 +18,7 @@ export const MountainPathSearch = () => {
     const [searchResults, setSearchResults] = useState<MountainPathResult[]>([]);
     const [difficulty, setDifficulty] = useState([1, 10]);
     const [walkTime, setWalkTime] = useState([0, 24])
-    const [selected, setSelected] = useState(true);
+    const [selected] = useState(true);
 
     const search = async (request: MountainPathSearchRequest) => {
 
