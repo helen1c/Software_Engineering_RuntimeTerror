@@ -49,6 +49,9 @@
             <column name="user_id" type="BIGINT">
                 <constraints foreignKeyName="message_sender_id_fk" references="user(id)"/>
             </column>
+            <column name="status" type="VARCHAR(50)">
+
+            </column>
             <column name="message_name" type="VARCHAR(100)">
                 <constraints nullable="false"/>
             </column>

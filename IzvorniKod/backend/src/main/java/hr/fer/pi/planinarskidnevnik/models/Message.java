@@ -15,6 +15,17 @@ public class Message {
     @Column(name="message_content")
     private String content;
 
+    @Enumerated(EnumType.STRING)
+    private MessageStatus status;
+
+    public MessageStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(MessageStatus status) {
+        this.status = status;
+    }
+
     @ManyToOne
     @JoinColumn(nullable = false)
     private User user;

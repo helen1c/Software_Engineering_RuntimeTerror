@@ -67,6 +67,7 @@ function Tipka() {
         const sRequest = {
             name: request.name,
             content: request.content,
+            status: "PENDING"
         };
         const requestOptions = {
             method: "POST",

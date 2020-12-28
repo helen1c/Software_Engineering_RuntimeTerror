@@ -2,6 +2,7 @@ package hr.fer.pi.planinarskidnevnik.services.impl;
 
 import hr.fer.pi.planinarskidnevnik.dtos.message.MessageCreateRequest;
 import hr.fer.pi.planinarskidnevnik.models.Message;
+import hr.fer.pi.planinarskidnevnik.models.MessageStatus;
 import hr.fer.pi.planinarskidnevnik.repositories.MessageRepository;
 import hr.fer.pi.planinarskidnevnik.services.MessageQueryService;
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 @Service
 public class MessageQueryServiceImpl implements MessageQueryService {
@@ -32,6 +34,7 @@ public class MessageQueryServiceImpl implements MessageQueryService {
         message.setName(dto.getName());
         message.setContent(dto.getContent());
         message.setUser(userService.getCurrentUser(principal));
+        message.setStatus(dto.getStatus());
 
         return messageRepository.save(message);
     }
@@ -40,6 +43,23 @@ public class MessageQueryServiceImpl implements MessageQueryService {
     public List<Message> getAllMessages(){
         LOGGER.info("Getting all messages.");
         return messageRepository.findAllByOrderByNameAsc();
+    }
+
+    @Override
+    public Message updateStatus(Long id, MessageStatus status){
+        List<Long> ids = new ArrayList<>();
+        ids.add(id);
+        List<Message> messages = messageRepository.findAllById(ids);
+        Message message = messages.get(0);
+        if(status == MessageStatus.PENDING){
+            message.setStatus(MessageStatus.RESOLVED);
+        }else if(status == MessageStatus.RESOLVED){
+            message.setStatus(MessageStatus.PENDING);
+        }
+
+
+        return messageRepository.save(message);
+
     }
 
 }

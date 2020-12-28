@@ -1,5 +1,6 @@
 package hr.fer.pi.planinarskidnevnik.dtos.message;
 
+import hr.fer.pi.planinarskidnevnik.models.MessageStatus;
 import hr.fer.pi.planinarskidnevnik.models.User;
 
 import java.util.Objects;
@@ -8,7 +9,21 @@ public class MessageCreateRequest {
 
     private String name;
     private String content;
+    private MessageStatus status;
 
+    public MessageStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(MessageStatus status) {
+        this.status = status;
+    }
+
+    public MessageCreateRequest(String name, String content, MessageStatus status) {
+        this.name = name;
+        this.content = content;
+        this.status = status;
+    }
 
     public MessageCreateRequest(){
 

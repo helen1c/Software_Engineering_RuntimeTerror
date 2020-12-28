@@ -11,3 +11,9 @@
     text-align: center;
     margin-top: 15px;
 }
+.solved-icon{
+    color:green!important;
+}
+.unsolved-icon{
+    color: red!important;
+}

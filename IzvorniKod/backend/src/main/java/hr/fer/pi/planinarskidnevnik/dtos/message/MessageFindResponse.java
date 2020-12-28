@@ -1,5 +1,7 @@
 package hr.fer.pi.planinarskidnevnik.dtos.message;
 
+import hr.fer.pi.planinarskidnevnik.models.MessageStatus;
+
 public class MessageFindResponse {
 
     private Long id;
@@ -7,6 +9,15 @@ public class MessageFindResponse {
     private String content;
     private String userName;
     private Long userId;
+    private MessageStatus status;
+
+    public MessageStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(MessageStatus status) {
+        this.status = status;
+    }
 
     public Long getUserId() {
         return userId;
