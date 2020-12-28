@@ -46,6 +46,5 @@ export const MountainLodgeSearchResult = (prop: Props) => {
                     </div>
                 </div>}
         </>
-
     );
 };

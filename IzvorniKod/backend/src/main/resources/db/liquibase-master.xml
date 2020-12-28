@@ -8,5 +8,7 @@
     <include file="changelog/data/liquibase-test-data-1.0.0.xml" relativeToChangelogFile="true"/>
     <include file="changelog/liquibase-changelog-1.0.1.xml" relativeToChangelogFile="true"/>
     <include file="changelog/data/liquibase-changelog-1.0.1-data.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/liquibase-changelog-1.0.2.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/data/liquibase-changelog-1.0.2-data.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>
