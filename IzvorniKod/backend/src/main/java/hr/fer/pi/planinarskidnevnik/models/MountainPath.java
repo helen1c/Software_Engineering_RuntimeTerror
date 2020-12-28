@@ -1,11 +1,15 @@
 package hr.fer.pi.planinarskidnevnik.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import hr.fer.pi.planinarskidnevnik.models.MountainLodgeUserArchive.MountainLodgeUserArchive;
+import hr.fer.pi.planinarskidnevnik.models.MountainPathUserArchive.MountainPathUserArchive;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Time;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity(name = "MOUNTAIN_PATH")
@@ -49,6 +53,17 @@ public class MountainPath {
     @ManyToOne
     @JoinColumn(nullable = false)
     private User author;
+
+    @OneToMany(mappedBy = "mountainPath")
+    private List<MountainPathUserArchive> mountainPathUserArchive = new ArrayList<>();
+
+    public List<MountainPathUserArchive> getMountainPathUserArchive() {
+        return mountainPathUserArchive;
+    }
+
+    public void setMountainPathUserArchive(List<MountainPathUserArchive> mountainPathUserArchive) {
+        this.mountainPathUserArchive = mountainPathUserArchive;
+    }
 
     public Long getId() {
         return id;

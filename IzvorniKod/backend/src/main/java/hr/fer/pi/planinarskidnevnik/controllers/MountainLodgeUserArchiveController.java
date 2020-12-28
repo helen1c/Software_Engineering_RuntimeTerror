@@ -27,6 +27,4 @@ public class MountainLodgeUserArchiveController {
         return ResponseEntity.ok("Dom uspjesno spremljen.");
     }
 
-    ;
-
 }

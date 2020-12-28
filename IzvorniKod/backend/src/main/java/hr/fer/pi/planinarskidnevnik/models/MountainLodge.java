@@ -34,9 +34,7 @@ public class MountainLodge {
     private Long elevation;
 
     @OneToMany(mappedBy = "mountainLodge")
-    private List<MountainLodgeUserArchive> mountainLodgeUserArchive;
-
-
+    private List<MountainLodgeUserArchive> mountainLodgeUserArchive = new ArrayList<>();
 
     public List<MountainLodgeUserArchive> getMountainLodgeUserArchive() {
         return mountainLodgeUserArchive;

@@ -1,6 +1,7 @@
 package hr.fer.pi.planinarskidnevnik.services.impl;
 
 import hr.fer.pi.planinarskidnevnik.dtos.MountainLodgeArchive.MountainLodgeArchiveResponse;
+import hr.fer.pi.planinarskidnevnik.dtos.MountainPathArchiveResponse;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserCreateDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserHeaderDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserProfilePageDto;
@@ -8,6 +9,7 @@ import hr.fer.pi.planinarskidnevnik.dtos.User.UserSearchDto;
 import hr.fer.pi.planinarskidnevnik.exceptions.*;
 import hr.fer.pi.planinarskidnevnik.exceptions.IllegalAccessException;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainLodgeArchiveToMountainLodgeArchiveResponseMapper;
+import hr.fer.pi.planinarskidnevnik.mappers.MountainPathUserArchiveToMountainPathArchiveResponseMapper;
 import hr.fer.pi.planinarskidnevnik.models.Role;
 import hr.fer.pi.planinarskidnevnik.models.User;
 import hr.fer.pi.planinarskidnevnik.repositories.MountainLodgeRepository;
@@ -36,13 +38,15 @@ public class UserService {
     private final PasswordEncoder encoder;
     private final String DEFAULT_PROFILE_IMAGE = "/images/planinar.jpeg";
     private final MountainLodgeArchiveToMountainLodgeArchiveResponseMapper lodgeArchiveResponseMapper;
+    private final MountainPathUserArchiveToMountainPathArchiveResponseMapper pathArchiveResponseMapper;
 
     @Autowired
-    public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder encoder, MountainLodgeRepository mountainLodgeRepository, MountainLodgeArchiveToMountainLodgeArchiveResponseMapper lodgeArchiveResponseMapper) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder encoder, MountainLodgeRepository mountainLodgeRepository, MountainLodgeArchiveToMountainLodgeArchiveResponseMapper lodgeArchiveResponseMapper, MountainPathUserArchiveToMountainPathArchiveResponseMapper pathArchiveResponseMapper) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.encoder = encoder;
         this.lodgeArchiveResponseMapper = lodgeArchiveResponseMapper;
+        this.pathArchiveResponseMapper = pathArchiveResponseMapper;
     }
 
     public Optional<User> findByEmail(String email) {
@@ -216,4 +220,11 @@ public class UserService {
 
         return lodgeArchiveResponseMapper.mapToList(currUser.getMountainLodgeUserArchive());
     }
+
+    public List<MountainPathArchiveResponse> getArchivedPaths(Principal principal) {
+        User currUser = getCurrentUser(principal);
+
+        return pathArchiveResponseMapper.mapToList(currUser.getMountainPathUserArchive());
+    }
+
 }
