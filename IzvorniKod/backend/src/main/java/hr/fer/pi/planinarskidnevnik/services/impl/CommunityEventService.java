@@ -13,16 +13,21 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.Optional;
 
 @Service
 public class CommunityEventService {
     private static final Logger LOGGER = LoggerFactory.getLogger(CommunityEventService.class);
     private final CommunityEventRepository eventRepository;
+    private final UserService userService ;
 
-    public CommunityEventService(CommunityEventRepository eventRepository) {
-        this.eventRepository = eventRepository;
-    }
+    //public CommunityEventService(CommunityEventRepository eventRepository) {
+    public CommunityEventService(CommunityEventRepository eventRepository, UserService userService) {
+            this.eventRepository = eventRepository;
+            this.userService = userService;
+        }
+
 
     public CommunityEvent getEventById(Long eventId) {
         LOGGER.info("Fetching of user with id {}", eventId);
@@ -35,8 +40,9 @@ public class CommunityEventService {
     }
 
 
-    public CommunityEvent createEvent(CommunityEventDto eventCreateDto) {
+    public CommunityEvent createEvent(CommunityEventDto eventCreateDto, Principal principal) {
         final CommunityEvent event = new CommunityEvent(eventCreateDto.getName(), eventCreateDto.getDescription(), eventCreateDto.getDateCreated(), eventCreateDto.getStartDate(), eventCreateDto.getEndDate());
+        event.setUser(userService.getCurrentUser(principal));
         eventRepository.save(event);
         LOGGER.info("New event {} created", event);
         return event;

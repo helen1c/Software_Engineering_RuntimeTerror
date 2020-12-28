@@ -56,6 +56,16 @@ public class UserService {
         this.pathGradeResponseMapper = pathGradeResponseMapper;
     }
 
+    public User getCurrentUser(Principal principal) {
+        Optional<User> optionalCurrentUser = userRepository.findByEmail(principal.getName());
+        if (optionalCurrentUser.isEmpty()) {
+            LOGGER.error("User {} doesn't exist", principal.getName());
+            throw new ResourceNotFoundException(String.format("Korisnik %s ne postoji", principal.getName()));
+        }
+        return optionalCurrentUser.get();
+    }
+
+
     public Optional<User> findByEmail(String email) {
         Optional<User> optionalUser = userRepository.findByEmail(email);
 

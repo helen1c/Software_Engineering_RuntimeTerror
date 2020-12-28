@@ -17,6 +17,17 @@ public class CommunityEvent {
     @Column(name = "event_id")
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
     private String name;
 
     private String description;
@@ -27,6 +38,10 @@ public class CommunityEvent {
 
     private Date end_date;
 
+
+
+
+
     public CommunityEvent(){}
 
     public CommunityEvent(String name, String description, Date date_created, Date start_date, Date end_date){
@@ -35,7 +50,6 @@ public class CommunityEvent {
         this.date_created=date_created;
         this.start_date=start_date;
         this.end_date=end_date;
-
     }
 
     public Long getId() {

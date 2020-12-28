@@ -13,15 +13,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @RestController
 @RequestMapping("event")
 public class CommunityEventController {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
     private final CommunityEventService eventService;
+    private final UserService userService;
 
-    public CommunityEventController(CommunityEventService eventService) {
+    public CommunityEventController(CommunityEventService eventService, UserService userService) {
         this.eventService = eventService;
+        this.userService = userService;
     }
 
     @GetMapping("{id}")
@@ -32,9 +35,9 @@ public class CommunityEventController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createEvent(@Valid @RequestBody final CommunityEventDto dto) {
+    public ResponseEntity<?> createEvent(@Valid @RequestBody final CommunityEventDto dto, Principal principal) {
         LOGGER.info("Event creating");
-        return ResponseEntity.status(HttpStatus.CREATED).body(eventService.createEvent(dto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(eventService.createEvent(dto, principal));
     }
 
 }

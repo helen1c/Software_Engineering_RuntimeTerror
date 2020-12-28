@@ -7,6 +7,9 @@ import javax.validation.constraints.Size;
 import java.sql.Date;
 
 public class CommunityEventDto {
+    private Long userId;
+
+    private String userName;
 
     @Size(max = 50, message = "Ime smije sadržavati najviše 50 znakova.")
     @NotBlank(message = "Ime je obavezno.")
@@ -35,6 +38,15 @@ public class CommunityEventDto {
         this.start_date=start_date;
         this.end_date=end_date;
     }
+
+    public Long getUserId() { return userId; }
+
+    public void setUserId(Long userId) { this.userId = userId; }
+
+    public String getUserName() { return userName; }
+
+    public void setUserName(String userName) { this.userName = userName; }
+
 
     public String getName() {
         return name;
