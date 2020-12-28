@@ -10,6 +10,15 @@ public class MessageFindResponse {
     private String userName;
     private Long userId;
     private MessageStatus status;
+    private String error;
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
 
     public MessageStatus getStatus() {
         return status;

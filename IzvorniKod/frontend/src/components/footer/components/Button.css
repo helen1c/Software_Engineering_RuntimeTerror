@@ -32,3 +32,11 @@
     font-family: none!important;
     font-size: 2rem!important;
 }
+.error-button{
+    font-family: Roboto, sans-serif;
+    border-radius: 7px;
+    outline: none;
+    color: #1e2501;
+    background-color: #fc7a17;
+    cursor: pointer;
+}

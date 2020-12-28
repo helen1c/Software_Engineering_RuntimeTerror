@@ -16,6 +16,7 @@ public class MessageToMessageResponseMapper implements DefaultMapper<Message, Me
         response.setUserName(from.getUser().getName());
         response.setUserId(from.getUser().getId());
         response.setStatus(from.getStatus());
+        response.setError(from.getError());
 
         return response;
     }

@@ -52,6 +52,9 @@
             <column name="status" type="VARCHAR(50)">
 
             </column>
+            <column name="error" type="VARCHAR(50)">
+
+            </column>
             <column name="message_name" type="VARCHAR(100)">
                 <constraints nullable="false"/>
             </column>

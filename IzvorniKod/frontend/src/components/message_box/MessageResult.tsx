@@ -47,6 +47,7 @@ export const MessageResult = (prop : Props) => {
         <div className="result-box">
             <span className="result-column"><p>Korisnik:</p><a onClick={e => window.location.href = "/profile/" + prop.result.userId}>{prop.result.userName}</a></span>
             <span className="result-column"><p>NASLOV PORUKE:</p>{prop.result.name}</span>
+            <span className="result-column"><p>GRESKA NASTALA:</p>{prop.result.error}</span>
             <text className="result-column"><p>SADRZAJ:</p>{prop.result.content}</text>
             <span className="result-column"><p>STATUS:</p>{prop.result.status == "PENDING" ?
                 <Tooltip open={open} onClose={handleClose} onOpen={handleOpen} title="Unsolved">

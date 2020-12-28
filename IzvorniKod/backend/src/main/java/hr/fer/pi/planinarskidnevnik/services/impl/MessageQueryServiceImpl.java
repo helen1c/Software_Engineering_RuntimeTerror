@@ -32,6 +32,7 @@ public class MessageQueryServiceImpl implements MessageQueryService {
 
         Message message = new Message();
         message.setName(dto.getName());
+        message.setError(dto.getError());
         message.setContent(dto.getContent());
         message.setUser(userService.getCurrentUser(principal));
         message.setStatus(dto.getStatus());

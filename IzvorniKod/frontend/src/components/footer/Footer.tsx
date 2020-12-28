@@ -3,6 +3,7 @@ import "./Footer.css";
 import logo from "../../assets/logo.jpg";
 import {useHistory} from "react-router";
 import Button from "./components/Button";
+import Tipka from "./components/Button";
 
 function Footer() {
     const history = useHistory();
@@ -44,7 +45,7 @@ function Footer() {
                                 <li>dfgdfgfdgd</li>
                                 <li>dfgfdgfdg</li>
                                 <li>dgdgdfgdfgdf</li>
-                                <Button/>
+                                <Tipka result={"Neodredeno"}/>
                             </ul>
                         </div>
                     </div>

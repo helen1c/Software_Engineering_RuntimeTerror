@@ -4,5 +4,6 @@ export interface MessageFindResult{
     userId:number,
     userName: string,
     status: string,
-    content:string
+    content:string,
+    error:string
 }

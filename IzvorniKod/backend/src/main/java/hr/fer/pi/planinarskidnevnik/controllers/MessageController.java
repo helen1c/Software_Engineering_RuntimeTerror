@@ -46,6 +46,7 @@ public class MessageController {
         messageDto.setName(message.getName());
         messageDto.setContent(message.getContent());
         messageDto.setStatus(message.getStatus());
+        messageDto.setError(message.getError());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(messageDto);
     }

@@ -11,9 +11,13 @@ import {MessageForm} from "../models/MessageForm";
 import MuiAlert, {AlertProps} from "@material-ui/lab/Alert";
 import {makeStyles, Theme} from "@material-ui/core/styles";
 import Snackbar from "@material-ui/core/Snackbar";
+import {MessageFindResult} from "../../message_box/models/MessageFindResult";
 
 function Alert(props: AlertProps) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+interface Props {
+    result: String;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -25,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
-function Tipka() {
+export const Tipka = (prop : Props) =>{
 
     const [open, setOpen] = useState(false);
 
@@ -67,7 +71,8 @@ function Tipka() {
         const sRequest = {
             name: request.name,
             content: request.content,
-            status: "PENDING"
+            status: "PENDING",
+            error: prop.result
         };
         const requestOptions = {
             method: "POST",
@@ -100,7 +105,7 @@ function Tipka() {
 
     return(
         <>
-            <button onClick={handleClickOpen}>Kontaktiraj Administratora</button>
+            <button className="error-button" onClick={handleClickOpen}>PRIJAVI GRESKU</button>
             <Snackbar open={success} autoHideDuration={2000} onClose={closeSuccessMessage}>
                 <Alert onClose={closeSuccessMessage} severity="success">
                     Poruka je uspješno poslana.

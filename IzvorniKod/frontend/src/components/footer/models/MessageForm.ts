@@ -1,4 +1,5 @@
 export interface MessageForm {
     name: string,
-    content : string
+    content : string,
+    error : string;
 }

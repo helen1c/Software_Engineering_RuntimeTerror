@@ -10,6 +10,15 @@ public class MessageCreateRequest {
     private String name;
     private String content;
     private MessageStatus status;
+    private String error;
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
 
     public MessageStatus getStatus() {
         return status;
