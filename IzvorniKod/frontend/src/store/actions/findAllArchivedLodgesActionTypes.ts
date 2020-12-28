@@ -1,3 +1,5 @@
+import {MountainLodgeUserArchive} from "../../components/mountain-lodge/models/MountainLodgeUserArchive";
+
 export const FIND_ALL_ARCHIVED_LODGES = "FIND_ALL_ARCHIVED_LODGES";
 export const FIND_ALL_ARCHIVED_LODGES_SUCCESS = "FIND_ALL_ARCHIVED_LODGES_SUCCESS";
 export const FIND_ALL_ARCHIVED_LODGES_ERROR = "FIND_ALL_ARCHIVED_LODGES_ERROR";
@@ -9,7 +11,7 @@ interface findAllArchivedLodges {
 
 interface findAllArchivedLodgesSuccess {
     type: typeof FIND_ALL_ARCHIVED_LODGES_SUCCESS,
-    payload: undefined
+    payload: MountainLodgeUserArchive[]
 }
 
 interface findAllArchivedLodgesError {

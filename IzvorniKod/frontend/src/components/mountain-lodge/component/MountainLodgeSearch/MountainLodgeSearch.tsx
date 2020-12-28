@@ -10,6 +10,7 @@ import {findHills} from "../../../../store/actions/findAllHillsActions";
 import {findUtilities} from "../../../../store/actions/findAllUtilitiesActions";
 import {MountainLodgeSearchResult} from "../MountainLodgeSearchResult/MountainLodgeSearchResult";
 import {MountainLodgeResult} from "../../models/MountainLodgeResult";
+import {findArchivedLodges} from "../../../../store/actions/findAllArchivedLodgesActions";
 
 export const MountainLodgeSearch = () => {
 
@@ -45,8 +46,26 @@ export const MountainLodgeSearch = () => {
 
     }
 
+    const [loggedIn, setLoggedIn] = useState(true);
+
+    useEffect(() => {
+        if(!sessionStorage.getItem("key")) {
+            setLoggedIn(false);
+            return;
+        } else {
+            setLoggedIn(true);
+            return;
+        }
+    }, []);
+
     const {results: hillResults} = useSelector((state: MainReducer) => state.findAllHillsReducer);
     const {results: utilityResults} = useSelector((state: MainReducer) => state.findAllUtilitiesReducer);
+    const {lodges: archivedLodges} = useSelector((state : MainReducer) => state.findAllArchivedLodges);
+
+    const checkId = (id: number) => {
+        const p = archivedLodges.find(value => value.id === id);
+        return p !== undefined;
+    }
 
     useEffect(() => {
         if (hillResults === undefined || hillResults.length === 0) {
@@ -62,6 +81,9 @@ export const MountainLodgeSearch = () => {
         }
     }, [dispatcher, utilityResults]);
 
+    useEffect(() => {
+            dispatcher(findArchivedLodges());
+    }, [dispatcher]);
 
     return (
         <>
@@ -108,7 +130,7 @@ export const MountainLodgeSearch = () => {
         </div>
         <div className="results-container">
             {searchResults.length > 0 && searchResults.map(result =>
-                <MountainLodgeSearchResult result={result} key={result.id}/>) }
+                <MountainLodgeSearchResult result={result} key={result.id} archived={checkId(result.id)} loggedIn={loggedIn}/>) }
         </div>
     </>
     );

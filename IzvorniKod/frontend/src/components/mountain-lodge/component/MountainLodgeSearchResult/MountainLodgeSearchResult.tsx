@@ -6,7 +6,9 @@ import {ArchiveOutlined} from "@material-ui/icons";
 import {HttpCodesUtil} from "../../../../errors/HttpCodesUtil";
 
 interface Props {
-    result: MountainLodgeResult
+    result: MountainLodgeResult,
+    loggedIn: boolean,
+    archived: boolean
 }
 
 export const MountainLodgeSearchResult = (prop: Props) => {
@@ -14,6 +16,7 @@ export const MountainLodgeSearchResult = (prop: Props) => {
     const [image, setImage] = useState("");
     const [loading, setLoading] = useState(true);
     const [defImage] = useState(require('../../../../assets/default-ml2.jpg'));
+    const [archivedS, setArchivedS] = useState(prop.archived);
 
     const archiveLodge = async () => {
 
@@ -25,10 +28,11 @@ export const MountainLodgeSearchResult = (prop: Props) => {
                 "Content-Type": "application/json"
             }
         };
-        const response = await fetch("/api/users/archive-lodge/" + prop.result.id, requestOptions);
+        const response = await fetch("/api/archive-lodge/user/" + prop.result.id, requestOptions);
 
         if(response.status === HttpCodesUtil.SUCCESS) {
             console.log("Sve uspjesno arhivirano")
+            setArchivedS(true);
         } else if(response.status === HttpCodesUtil.FORBIDDEN) {
             console.log("Neispravan token");
         } else if(response.status === HttpCodesUtil.BAD_REQUEST) {
@@ -70,14 +74,15 @@ export const MountainLodgeSearchResult = (prop: Props) => {
                         <span className="mountain-lodge-elevation">Visina: {prop.result.elevation}m</span>
                         <span className="mountain-lodge-hill">Planina: {prop.result.hillName}</span>
                     </div>
-                        <Button
+                        {prop.loggedIn && <Button
                             variant="contained"
                             color="primary"
                             size="large"
                             className="archive-button"
-                        onClick={archiveLodge}>
-                            Arhiviraj
-                        </Button>
+                            onClick={archiveLodge}
+                            disabled={archivedS}>
+                            {archivedS ? "Arhivirano" : "Arhiviraj"}
+                        </Button>}
                     </div>
                 </div>}
         </>
