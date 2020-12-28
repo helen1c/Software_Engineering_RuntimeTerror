@@ -121,3 +121,13 @@
 
 
 }
+
+.archive-button-lodge {
+    background-color: #406cba !important;
+    color: white !important;
+}
+
+.archive-button-lodge:disabled {
+    background-color: #8d8d8d !important;
+    color: white !important;
+}

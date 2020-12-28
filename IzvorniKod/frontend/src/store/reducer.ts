@@ -1,11 +1,12 @@
 import {combineReducers} from "redux";
 import findAllHillsReducer from "./reducers/findAllHillsReducer";
 import findAllUtilitiesReducer from "./reducers/findAllUtilitiesReducer";
-import findAllArchivedLodges from "./reducers/findAllArchivedLodges";
+import findAllArchivedLodgesReducer from "./reducers/findAllArchivedLodgesReducer";
+import findAllArchivedPathsReducer from "./reducers/findAllArchivedPathsReducer";
 
 export const mainReducer = combineReducers(
     {
-        findAllUtilitiesReducer, findAllHillsReducer, findAllArchivedLodges
+        findAllUtilitiesReducer, findAllHillsReducer, findAllArchivedLodgesReducer, findAllArchivedPathsReducer
     }
 );
 

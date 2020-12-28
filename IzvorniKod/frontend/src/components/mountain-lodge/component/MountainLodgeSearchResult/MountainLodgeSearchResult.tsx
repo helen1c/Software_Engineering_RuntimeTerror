@@ -77,8 +77,8 @@ export const MountainLodgeSearchResult = (prop: Props) => {
                         {prop.loggedIn && <Button
                             variant="contained"
                             color="primary"
-                            size="large"
-                            className="archive-button"
+                            size="medium"
+                            className="archive-button-lodge"
                             onClick={archiveLodge}
                             disabled={archivedS}>
                             {archivedS ? "Arhivirano" : "Arhiviraj"}

@@ -46,7 +46,7 @@ export const MountainLodgeSearch = () => {
 
     }
 
-    const [loggedIn, setLoggedIn] = useState(true);
+    const [loggedIn, setLoggedIn] = useState(false);
 
     useEffect(() => {
         if(!sessionStorage.getItem("key")) {
@@ -60,11 +60,13 @@ export const MountainLodgeSearch = () => {
 
     const {results: hillResults} = useSelector((state: MainReducer) => state.findAllHillsReducer);
     const {results: utilityResults} = useSelector((state: MainReducer) => state.findAllUtilitiesReducer);
-    const {lodges: archivedLodges} = useSelector((state : MainReducer) => state.findAllArchivedLodges);
+    const {lodges: archivedLodges} = useSelector((state : MainReducer) => state.findAllArchivedLodgesReducer);
 
     const checkId = (id: number) => {
-        const p = archivedLodges.find(value => value.id === id);
-        return p !== undefined;
+        if(loggedIn) {
+            return archivedLodges.find((v) => v.id === id) !== undefined;
+        }
+        return false;
     }
 
     useEffect(() => {
@@ -82,8 +84,9 @@ export const MountainLodgeSearch = () => {
     }, [dispatcher, utilityResults]);
 
     useEffect(() => {
+            if(sessionStorage.getItem("key"))
             dispatcher(findArchivedLodges());
-    }, [dispatcher]);
+    }, [dispatcher, loggedIn]);
 
     return (
         <>
