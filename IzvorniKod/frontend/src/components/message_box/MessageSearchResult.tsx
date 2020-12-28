@@ -27,7 +27,9 @@ export const MessageSearchResult = () =>{
 
     return(
         <>{
+            results.length>0 ?
             results.map(r => <MessageResult result={r} key={r.id}/>)
+                : <h1 className="message-notification">Nema poruka!</h1>
           }
             </>
     );

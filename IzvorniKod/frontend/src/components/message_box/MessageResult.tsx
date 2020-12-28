@@ -4,6 +4,7 @@ import "./MessageResult.css";
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
 import Tooltip from '@material-ui/core/Tooltip';
+import {MountainLodgeCreateRequest} from "../mountain-lodge/models/MountainLodgeCreateRequest";
 
 interface Props {
     result: MessageFindResult;
@@ -42,10 +43,9 @@ export const MessageResult = (prop : Props) => {
 
     }
 
-
     return (
         <div className="result-box">
-            <span className="result-column"><p>Korisnik:</p>{prop.result.userName}</span>
+            <span className="result-column"><p>Korisnik:</p><a onClick={e => window.location.href = "/profile/" + prop.result.userId}>{prop.result.userName}</a></span>
             <span className="result-column"><p>NASLOV PORUKE:</p>{prop.result.name}</span>
             <text className="result-column"><p>SADRZAJ:</p>{prop.result.content}</text>
             <span className="result-column"><p>STATUS:</p>{prop.result.status == "PENDING" ?
