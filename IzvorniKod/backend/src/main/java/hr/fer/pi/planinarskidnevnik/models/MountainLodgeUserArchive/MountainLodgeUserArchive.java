@@ -1,4 +1,7 @@
-package hr.fer.pi.planinarskidnevnik.models;
+package hr.fer.pi.planinarskidnevnik.models.MountainLodgeUserArchive;
+
+import hr.fer.pi.planinarskidnevnik.models.MountainLodge;
+import hr.fer.pi.planinarskidnevnik.models.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

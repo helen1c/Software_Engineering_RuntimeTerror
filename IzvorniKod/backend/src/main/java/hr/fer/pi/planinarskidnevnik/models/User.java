@@ -1,6 +1,7 @@
 package hr.fer.pi.planinarskidnevnik.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import hr.fer.pi.planinarskidnevnik.models.MountainLodgeUserArchive.MountainLodgeUserArchive;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;

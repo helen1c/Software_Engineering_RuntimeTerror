@@ -1,7 +1,7 @@
 package hr.fer.pi.planinarskidnevnik.mappers;
 
 import hr.fer.pi.planinarskidnevnik.dtos.MountainLodgeArchive.MountainLodgeArchiveResponse;
-import hr.fer.pi.planinarskidnevnik.models.MountainLodgeUserArchive;
+import hr.fer.pi.planinarskidnevnik.models.MountainLodgeUserArchive.MountainLodgeUserArchive;
 import hr.fer.pi.planinarskidnevnik.util.mapper.DefaultMapper;
 import org.springframework.stereotype.Component;
 

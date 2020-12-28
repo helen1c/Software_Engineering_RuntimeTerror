@@ -1,7 +1,7 @@
 package hr.fer.pi.planinarskidnevnik.services.impl;
 
 import hr.fer.pi.planinarskidnevnik.models.MountainLodge;
-import hr.fer.pi.planinarskidnevnik.models.MountainLodgeUserArchive;
+import hr.fer.pi.planinarskidnevnik.models.MountainLodgeUserArchive.MountainLodgeUserArchive;
 import hr.fer.pi.planinarskidnevnik.models.User;
 import hr.fer.pi.planinarskidnevnik.repositories.MountainLodgeRepository;
 import hr.fer.pi.planinarskidnevnik.repositories.MountainLodgeUserArchiveRepository;
@@ -36,11 +36,6 @@ public class MountainLodgeUserArchiveServiceImpl implements MountainLodgeUserArc
 
         MountainLodgeUserArchive archive = new MountainLodgeUserArchive(user, lodge, new Date(System.currentTimeMillis()));
         return lodgeUserArchiveRepository.save(archive);
-    }
-
-    @Override
-    public List<MountainLodgeUserArchive> getAllForUser(Principal principal) {
-        return lodgeUserArchiveRepository.findByUser_Id(userService.getCurrentUser(principal).getId());
     }
 
 

@@ -1,7 +1,7 @@
 package hr.fer.pi.planinarskidnevnik.repositories;
 
-import hr.fer.pi.planinarskidnevnik.models.MountainLodgeUserArchive;
-import hr.fer.pi.planinarskidnevnik.models.MountainLodgeUserArchiveId;
+import hr.fer.pi.planinarskidnevnik.models.MountainLodgeUserArchive.MountainLodgeUserArchive;
+import hr.fer.pi.planinarskidnevnik.models.MountainLodgeUserArchive.MountainLodgeUserArchiveId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
