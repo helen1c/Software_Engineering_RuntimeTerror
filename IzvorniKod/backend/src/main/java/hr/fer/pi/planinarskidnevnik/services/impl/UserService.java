@@ -205,15 +205,6 @@ public class UserService {
         return currentUser.getId().equals(id);
     }
 
-    public User getCurrentUser(Principal principal) {
-        Optional<User> optionalCurrentUser = userRepository.findByEmail(principal.getName());
-        if (optionalCurrentUser.isEmpty()) {
-            LOGGER.error("User {} doesn't exist", principal.getName());
-            throw new ResourceNotFoundException(String.format("Korisnik %s ne postoji", principal.getName()));
-        }
-        return optionalCurrentUser.get();
-    }
-
     public UserProfilePageDto getProfilePageInfo(Long profileId, Principal principal) {
         User user = getUserById(profileId);
 

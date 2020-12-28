@@ -1,9 +1,7 @@
 package hr.fer.pi.planinarskidnevnik.controllers;
 
 import hr.fer.pi.planinarskidnevnik.dtos.CommunityEventDto;
-import hr.fer.pi.planinarskidnevnik.dtos.UserCreateDto;
 import hr.fer.pi.planinarskidnevnik.models.CommunityEvent;
-import hr.fer.pi.planinarskidnevnik.models.User;
 import hr.fer.pi.planinarskidnevnik.services.impl.CommunityEventService;
 import hr.fer.pi.planinarskidnevnik.services.impl.UserService;
 import org.slf4j.Logger;

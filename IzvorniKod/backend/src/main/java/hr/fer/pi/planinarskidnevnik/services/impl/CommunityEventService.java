@@ -1,16 +1,11 @@
 package hr.fer.pi.planinarskidnevnik.services.impl;
 
 import hr.fer.pi.planinarskidnevnik.dtos.CommunityEventDto;
-import hr.fer.pi.planinarskidnevnik.dtos.UserCreateDto;
 import hr.fer.pi.planinarskidnevnik.exceptions.ResourceNotFoundException;
-import hr.fer.pi.planinarskidnevnik.exceptions.UserWithEmailExistsException;
 import hr.fer.pi.planinarskidnevnik.models.CommunityEvent;
-import hr.fer.pi.planinarskidnevnik.models.User;
 import hr.fer.pi.planinarskidnevnik.repositories.CommunityEventRepository;
-import hr.fer.pi.planinarskidnevnik.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
@@ -20,13 +15,13 @@ import java.util.Optional;
 public class CommunityEventService {
     private static final Logger LOGGER = LoggerFactory.getLogger(CommunityEventService.class);
     private final CommunityEventRepository eventRepository;
-    private final UserService userService ;
+    private final UserService userService;
 
     //public CommunityEventService(CommunityEventRepository eventRepository) {
     public CommunityEventService(CommunityEventRepository eventRepository, UserService userService) {
-            this.eventRepository = eventRepository;
-            this.userService = userService;
-        }
+        this.eventRepository = eventRepository;
+        this.userService = userService;
+    }
 
 
     public CommunityEvent getEventById(Long eventId) {
@@ -47,7 +42,6 @@ public class CommunityEventService {
         LOGGER.info("New event {} created", event);
         return event;
     }
-
 
 
 }
