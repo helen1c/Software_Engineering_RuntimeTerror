@@ -18,11 +18,24 @@
     padding: 3px 10px 0 10px;
     border: 2px solid #211648;
     border-radius: 10px;
-    margin: 2px;
+    display: none;
+    position: absolute;
 }
-
+.slider-dropdown:hover .slider-difficulty__cnt{
+    display: block;
+}
+.slider-dropdown:hover .slider-walktime__cnt{
+    display: block;
+}
+.slider-dropdown{
+    height: min-content;
+    position: relative;
+}
 .sliders-container {
 margin-left: 2rem;
+    flex-direction: row;
+    display: flex;
+
 }
 
 .slider-walktime__cnt {
@@ -31,7 +44,8 @@ margin-left: 2rem;
     padding: 3px 10px 0 10px;
     border: 2px solid #211648;
     border-radius: 10px;
-    margin: 2px;
+    display: none;
+    position: absolute;
 }
 
 .input-select {
@@ -162,7 +176,7 @@ margin-left: 2rem;
     border-radius: 10px;
     border-color: #211648 !important;
     outline: none !important;
-    border-width: 2px;
+    border-width: 2px !important;
     font-size: 1.1rem;
     user-select: none !important;
     margin-left: 10px;
@@ -192,7 +206,7 @@ margin-left: 2rem;
 
 }
 
-@media screen and (max-width: 600px ) {
+@media screen and (max-width: 680px ) {
     .selects{
         display: flex;
         flex-direction: column;
@@ -201,6 +215,18 @@ margin-left: 2rem;
         min-width: 250px;
     }
     .hill-select{
+    }
+   .mountain-path-walktime , .mountain-path-difficulty , .mountain-path-difficulty-expand ,.mountain-path-walktime-expand{
+        display: none;
+    }
+   .sliders-container{
+       display: none;
+   }
+   .mountain-path-cnt-title{
+       min-width: 95vw;
+   }
+    .mountain-path-name, .mountain-path-name-expand{
+        min-width: 45%;
     }
 }
 
@@ -224,4 +250,44 @@ margin-left: 2rem;
 
 .css-12jo7m5 {
     color: white !important;
+}
+.mountain-path-cnt-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    height: 50px;
+    border-radius: 50px;
+    border: 2px solid green;
+    align-items: center;
+    width: 60vw;
+    cursor: pointer;
+    color: black;
+    background-color: #287334;
+
+    filter: drop-shadow(0px 10px 10px rgba(0, 0, 0, 0.35));
+}
+
+
+.MuiSlider-root {
+    color: green !important;
+
+}
+
+.mountain-path-name, .mountain-path-name-expand{
+    width: 30%;
+}
+
+.mountain-path-hillname ,.mountain-path-walktime , .mountain-path-difficulty , .mountain-path-difficulty-expand, .mountain-path-hillname-expand ,.mountain-path-walktime-expand{
+    width: 13%;
+}
+
+.slider-button{
+    border: none;
+    background-color: white;
+    color: green;
+    font-family: Roboto,sans-serif !important;
+    padding: 0.5rem;
+    width: 200px;
+    filter: drop-shadow(0px 10px 10px rgba(0, 0, 0, 0.35));
+    margin-right: 1rem;
 }

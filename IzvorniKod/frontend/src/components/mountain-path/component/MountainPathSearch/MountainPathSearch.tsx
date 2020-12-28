@@ -98,10 +98,11 @@ export const MountainPathSearch = () => {
                                         options={hillResults}>
                                     </Select>
                                     {selected ? <div className={"sliders-container"}>
+                                        <div className="slider-dropdown">
+                                            <button className="slider-button">ZAHTJEVNOST</button>
                                         <div className={"slider-difficulty__cnt"}>
-                                            <Typography id="range-slider" gutterBottom>
-                                                Zahtjevnost
-                                            </Typography>
+
+
                                             <Slider
                                                 min={1}
                                                 max={10}
@@ -111,11 +112,12 @@ export const MountainPathSearch = () => {
                                                 aria-labelledby="range-slider"
                                                 marks={difficultyMarks}
                                             />
+                                            </div>
                                         </div>
+                                        <div className="slider-dropdown">
+                                        <button className="slider-button">PROSJECNO VRIJEME</button>
                                         <div className={"slider-walktime__cnt"}>
-                                            <Typography id="range-slider" gutterBottom>
-                                                Prosječno trajanje
-                                            </Typography>
+
                                             <Slider
                                                 min={0}
                                                 max={24}
@@ -125,6 +127,7 @@ export const MountainPathSearch = () => {
                                                 aria-labelledby="range-slider"
                                                 marks={walkTimeMarks}
                                             />
+                                        </div>
                                         </div>
                                     </div> : <></>}
 
@@ -138,6 +141,12 @@ export const MountainPathSearch = () => {
                 </Formik>
             </div>
             <div className="path-results-container">
+                { searchResults.length > 0 && <div className="mountain-path-cnt-title">
+                    <span className="mountain-path-name">Naziv</span>
+                    <span className="mountain-path-hillname">Visočje</span>
+                    <span className="mountain-path-walktime">Prosječno trajanje</span>
+                    <span className="mountain-path-difficulty">Zahtjevnost </span>
+                </div>}
                 {searchResults.length > 0 && searchResults.map(result =>
                     <MountainPathSearchResult result={result} key={result.id}/>)}
             </div>
