@@ -229,6 +229,10 @@ public class UserService {
         return currentUser.getId().equals(id);
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> e921c13... [#45] fixed css and made rebase
     public UserProfilePageDto getProfilePageInfo(Long profileId, Principal principal) {
         User user = getUserById(profileId);
 

@@ -10,6 +10,7 @@
  }
 .col{
     width: 25%;
+    margin-top: 20px;
 }
 .col-sm{
     margin-left: 20px;
@@ -28,7 +29,7 @@
     flex-direction: column;
     height: 70px;
     margin-left: 2rem;
-    margin-top: 2em;
+    margin-top: 10px;
     align-items: center;
     align-content: center;
 }
