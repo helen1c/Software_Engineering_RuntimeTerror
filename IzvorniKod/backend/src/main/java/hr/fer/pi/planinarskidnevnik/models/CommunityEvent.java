@@ -1,11 +1,15 @@
 package hr.fer.pi.planinarskidnevnik.models;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.*;
+import hr.fer.pi.planinarskidnevnik.models.User;
+import hr.fer.pi.planinarskidnevnik.models.UserEvent.CommunityEventMountainPath;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "event")
@@ -21,13 +25,6 @@ public class CommunityEvent {
     @JoinColumn(nullable = false)
     private User user;
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
     private String name;
 
     private String description;
@@ -38,9 +35,8 @@ public class CommunityEvent {
 
     private Date end_date;
 
-
-
-
+    @OneToMany(mappedBy = "event")
+    private List<CommunityEventMountainPath> paths = new ArrayList<>();
 
     public CommunityEvent(){}
 
@@ -50,6 +46,14 @@ public class CommunityEvent {
         this.date_created=date_created;
         this.start_date=start_date;
         this.end_date=end_date;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Long getId() {
@@ -96,5 +100,26 @@ public class CommunityEvent {
 
     public void setEndDate(Date end_date) {
         this.end_date = end_date;
+    }
+
+    public List<CommunityEventMountainPath> getPaths() {
+        return paths;
+    }
+
+    public void setPaths(List<CommunityEventMountainPath> paths) {
+        this.paths = paths;
+    }
+
+    @Override
+    public String toString() {
+        return "CommunityEvent{" +
+                "id=" + id +
+                ", user=" + user +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", date_created=" + date_created +
+                ", start_date=" + start_date +
+                ", end_date=" + end_date +
+                '}';
     }
 }

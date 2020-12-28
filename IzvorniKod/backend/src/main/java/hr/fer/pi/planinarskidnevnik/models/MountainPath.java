@@ -3,6 +3,8 @@ package hr.fer.pi.planinarskidnevnik.models;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import hr.fer.pi.planinarskidnevnik.models.MountainLodgeUserArchive.MountainLodgeUserArchive;
 import hr.fer.pi.planinarskidnevnik.models.MountainPathUserArchive.MountainPathUserArchive;
+import com.fasterxml.jackson.annotation.*;
+import hr.fer.pi.planinarskidnevnik.models.UserEvent.CommunityEventMountainPath;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -51,6 +53,7 @@ public class MountainPath {
     private Boolean isPrivate;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private User author;
 
     @OneToMany(mappedBy = "mountainPath")
@@ -66,6 +69,18 @@ public class MountainPath {
 
     @OneToMany(mappedBy = "path")
     private List<MountainPathGrade> mountainPathGradeList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "path")
+    @JsonIgnore
+    private List<CommunityEventMountainPath> communityEventMountainPathList = new ArrayList<>();
+
+    public List<CommunityEventMountainPath> getCommunityEventMountainPathList() {
+        return communityEventMountainPathList;
+    }
+
+    public void setCommunityEventMountainPathList(List<CommunityEventMountainPath> communityEventMountainPathList) {
+        this.communityEventMountainPathList = communityEventMountainPathList;
+    }
 
     public Long getId() {
         return id;

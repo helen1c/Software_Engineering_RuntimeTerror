@@ -1,6 +1,7 @@
 package hr.fer.pi.planinarskidnevnik.controllers;
 
-import hr.fer.pi.planinarskidnevnik.dtos.CommunityEventDto;
+import hr.fer.pi.planinarskidnevnik.dtos.CommunityEvent.CommunityEventDto;
+import hr.fer.pi.planinarskidnevnik.dtos.CommunityEvent.PreviewCommunityEventDto;
 import hr.fer.pi.planinarskidnevnik.models.CommunityEvent;
 import hr.fer.pi.planinarskidnevnik.services.impl.CommunityEventService;
 import hr.fer.pi.planinarskidnevnik.services.impl.UserService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping("event")
@@ -36,6 +38,12 @@ public class CommunityEventController {
     public ResponseEntity<?> createEvent(@Valid @RequestBody final CommunityEventDto dto, Principal principal) {
         LOGGER.info("Event creating");
         return ResponseEntity.status(HttpStatus.CREATED).body(eventService.createEvent(dto, principal));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<PreviewCommunityEventDto>> getAllEvents(Principal principal) {
+        LOGGER.info("Fetching all events");
+        return ResponseEntity.ok(eventService.getAllEvents(principal));
     }
 
 }

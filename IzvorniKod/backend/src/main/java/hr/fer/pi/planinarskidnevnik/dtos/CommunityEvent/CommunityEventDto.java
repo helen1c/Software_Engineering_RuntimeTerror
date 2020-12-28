@@ -1,4 +1,4 @@
-package hr.fer.pi.planinarskidnevnik.dtos;
+package hr.fer.pi.planinarskidnevnik.dtos.CommunityEvent;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 

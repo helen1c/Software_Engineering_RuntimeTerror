@@ -145,4 +145,33 @@
         </createTable>
         <createSequence sequenceName="event_id_seq" incrementBy="1" cycle="false" startValue="100" />
     </changeSet>
+
+    <changeSet id="20201228220200" author="lravenscak">
+        <createTable tableName="community_event_mountain_path">
+            <column name="event_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="path_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="date_traveled" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="community_event_mountain_path"
+                                 baseColumnNames="event_id"
+                                 constraintName="fkey_event"
+                                 referencedTableName="event"
+                                 referencedColumnNames="event_id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+        <addForeignKeyConstraint baseTableName="community_event_mountain_path"
+                                 baseColumnNames="path_id"
+                                 constraintName="fkey_path"
+                                 referencedTableName="mountain_path"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+    </changeSet>
+
 </databaseChangeLog>
