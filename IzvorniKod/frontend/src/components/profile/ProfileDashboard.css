@@ -10,6 +10,7 @@
     top: 110px;
     min-width: 120px;
     background-image: linear-gradient(to top, rgba(0,0,255,0), rgb(130, 203, 245));
+    z-index: 100;
 }
 
 .sidebar .selected {
@@ -110,4 +111,29 @@ button {
     .admin-layout{
         padding-left: 0;
     }
+}
+
+.admin-layout-mini{
+    margin: 4rem;
+    padding: 1.5rem;
+    margin-top: 2rem;
+    box-shadow: 5px 10px 18px #888888;
+    border-radius: 20px;
+    width: 80vw;
+}
+
+@media only screen and (max-width: 660px) {
+    .admin-layout-mini{
+
+        margin: 0.5rem;
+        box-shadow: none;
+        padding: 0.1rem;
+    }
+    .admin-layout{
+        padding-left: 0;
+    }
+
+}
+@media only screen and (min-width: 661px) and (max-width: 1070px) {
+
 }

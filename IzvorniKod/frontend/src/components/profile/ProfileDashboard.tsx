@@ -100,10 +100,14 @@ export const ProfileDashboard = ({ user, setUser }: Props) => {
           <ProfileUserInfo user={user} setUser={setUser} />
         )}
         {option === ARCHIVE_LODGE && (
+            <div className="admin-layout-mini">
             <ArchivedMountainLodgeList/>
+            </div>
         )}
           {option === ARCHIVE_PATH && (
+              <div className="admin-layout-mini">
               <ArchivedMountainPathList/>
+              </div>
           )}
       </div>
     </div>
