@@ -7,6 +7,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -47,20 +48,15 @@ public class User {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Role role;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "mountain_lodge_user_archive",
-            joinColumns = @JoinColumn(name = "id"),
-            inverseJoinColumns = @JoinColumn(name = "lodge_id")
-    )
-    private List<MountainLodge> mountainLodgesArchive;
+    @OneToMany(mappedBy = "user")
+    private List<MountainLodgeUserArchive> mountainLodgeUserArchive = new ArrayList<>();
 
-    public List<MountainLodge> getMountainLodgesArchive() {
-        return mountainLodgesArchive;
+    public List<MountainLodgeUserArchive> getMountainLodgeUserArchive() {
+        return mountainLodgeUserArchive;
     }
 
-    public void setMountainLodgesArchive(List<MountainLodge> mountainLodgesArchive) {
-        this.mountainLodgesArchive = mountainLodgesArchive;
+    public void setMountainLodgeUserArchive(List<MountainLodgeUserArchive> mountainLodgeUserArchive) {
+        this.mountainLodgeUserArchive = mountainLodgeUserArchive;
     }
 
     public User() {

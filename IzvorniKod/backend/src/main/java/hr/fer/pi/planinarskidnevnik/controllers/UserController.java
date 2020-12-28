@@ -1,5 +1,6 @@
 package hr.fer.pi.planinarskidnevnik.controllers;
 
+import hr.fer.pi.planinarskidnevnik.dtos.MountainLodgeArchive.MountainLodgeArchiveResponse;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserCreateDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserHeaderDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserProfilePageDto;
@@ -104,12 +105,6 @@ public class UserController {
         return ResponseEntity.ok(new UserCreateDto(user.getName(), user.getPassword(), user.getEmail(), user.getPlaceOfResidence(), user.getDateOfBirth(), user.getDescription(), null));
     }
 
-    @RequestMapping(value = "/archive-lodge/{lodge_id}", method = RequestMethod.PUT)
-    public ResponseEntity<?> archiveMountainLodge(@PathVariable("lodge_id") final Long lodgeId, Principal principal) {
-      userService.archiveMountainLodge(lodgeId, principal);
-      return ResponseEntity.ok("Dom uspjesno spremljen.");
-    };
-
     @ExceptionHandler(LodgeAlreadyArchivedException.class)
     public final ResponseEntity<?> constraintsViolations(final Exception ex) {
         LOGGER.error("Constraint exception. " + ex.getMessage());
@@ -117,8 +112,8 @@ public class UserController {
     }
 
     @GetMapping(value = "/archived-lodges/all")
-    public final ResponseEntity<List<MountainLodge>> getArchivedLodges(Principal principal) {
-        List<MountainLodge> lodges = userService.getArchivedLodges(principal);
+    public final ResponseEntity<List<MountainLodgeArchiveResponse>> getArchivedLodges(Principal principal) {
+        List<MountainLodgeArchiveResponse> lodges = userService.getArchivedLodges(principal);
         return ResponseEntity.status(200).body(lodges);
     }
 

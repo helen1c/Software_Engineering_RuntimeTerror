@@ -1,6 +1,7 @@
 package hr.fer.pi.planinarskidnevnik.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "MOUNTAIN_LODGE")
@@ -26,11 +27,22 @@ public class MountainLodge {
             joinColumns = @JoinColumn(name = "LODGE_ID"),
             inverseJoinColumns = @JoinColumn(name = "UTILITY_ID")
     )
-
     private List<Utility> utilities;
 
-    private java.lang.Long elevation;
+    private Long elevation;
 
+    @OneToMany(mappedBy = "mountainLodge")
+    private List<MountainLodgeUserArchive> mountainLodgeUserArchive;
+
+
+
+    public List<MountainLodgeUserArchive> getMountainLodgeUserArchive() {
+        return mountainLodgeUserArchive;
+    }
+
+    public void setMountainLodgeUserArchive(List<MountainLodgeUserArchive> mountainLodgeUserArchive) {
+        this.mountainLodgeUserArchive = mountainLodgeUserArchive;
+    }
 
     public MountainLodge(){
 
@@ -41,6 +53,7 @@ public class MountainLodge {
         this.hill = hillName;
         this.utilities = utilities;
         this.image = image;
+        this.mountainLodgeUserArchive = new ArrayList<>();
     }
     public java.lang.Long getElevation() {
         return elevation;

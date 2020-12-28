@@ -1,12 +1,14 @@
 package hr.fer.pi.planinarskidnevnik.services.impl;
 
+import hr.fer.pi.planinarskidnevnik.dtos.MountainLodgeArchive.MountainLodgeArchiveResponse;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserCreateDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserHeaderDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserProfilePageDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserSearchDto;
 import hr.fer.pi.planinarskidnevnik.exceptions.*;
 import hr.fer.pi.planinarskidnevnik.exceptions.IllegalAccessException;
-import hr.fer.pi.planinarskidnevnik.models.MountainLodge;
+import hr.fer.pi.planinarskidnevnik.mappers.MountainLodgeArchiveToMountainLodgeArchiveResponseMapper;
+import hr.fer.pi.planinarskidnevnik.models.MountainLodgeUserArchive;
 import hr.fer.pi.planinarskidnevnik.models.Role;
 import hr.fer.pi.planinarskidnevnik.models.User;
 import hr.fer.pi.planinarskidnevnik.repositories.MountainLodgeRepository;
@@ -14,11 +16,11 @@ import hr.fer.pi.planinarskidnevnik.repositories.RoleRepository;
 import hr.fer.pi.planinarskidnevnik.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
-import javax.validation.ConstraintViolationException;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -34,13 +36,14 @@ public class UserService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder encoder;
     private final String DEFAULT_PROFILE_IMAGE = "/images/planinar.jpeg";
-    private final MountainLodgeRepository mountainLodgeRepository;
+    private final MountainLodgeArchiveToMountainLodgeArchiveResponseMapper lodgeArchiveResponseMapper;
 
-    public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder encoder, MountainLodgeRepository mountainLodgeRepository) {
+    @Autowired
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder encoder, MountainLodgeRepository mountainLodgeRepository, MountainLodgeArchiveToMountainLodgeArchiveResponseMapper lodgeArchiveResponseMapper) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.encoder = encoder;
-        this.mountainLodgeRepository = mountainLodgeRepository;
+        this.lodgeArchiveResponseMapper = lodgeArchiveResponseMapper;
     }
 
     public Optional<User> findByEmail(String email) {
@@ -209,30 +212,9 @@ public class UserService {
         return new UserHeaderDto(user.getId(), getImage(user.getEmail()));
     }
 
-    public void archiveMountainLodge(Long lodgeId, Principal principal) {
-
-        if(lodgeId == null) {
-            throw new IllegalArgumentException("Lodge id is null.");
-        }
-        Optional<MountainLodge> lodge = mountainLodgeRepository.findById(lodgeId);
-        if(lodge.isEmpty()) {
-            throw new IllegalArgumentException("Ne postoji dom s id: " + lodgeId);
-        }
-        if(principal == null) {
-            throw new IllegalArgumentException("Nemate ovlasti..");
-        }
-
+    public List<MountainLodgeArchiveResponse> getArchivedLodges(Principal principal) {
         User currUser = getCurrentUser(principal);
-        try {
-            userRepository.archiveMountainLodge(currUser.getId(), lodgeId);
-        } catch (Exception ex) {
-            throw new LodgeAlreadyArchivedException("U arhivi korisnika e-maila: " + principal.getName() + " već postoji planinarski dom: " + lodge.get().getName());
-        }
 
+        return lodgeArchiveResponseMapper.mapToList(currUser.getMountainLodgeUserArchive());
     }
-
-    public List<MountainLodge> getArchivedLodges(Principal principal) {
-        return getCurrentUser(principal).getMountainLodgesArchive();
-    }
-
 }

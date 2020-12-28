@@ -42,12 +42,26 @@
         </createTable>
         <createTable tableName="MOUNTAIN_LODGE_UTILITY">
             <column name="LODGE_ID" type="BIGINT">
-                <constraints foreignKeyName="LODGE_ID" references="MOUNTAIN_LODGE(LODGE_ID)"/>
+                <constraints primaryKey="true"/>
             </column>
             <column name="UTILITY_ID" type="BIGINT">
-                <constraints foreignKeyName="UTILITY_ID" references="UTILITY(UTILITY_ID)"/>
+                <constraints primaryKey="true"/>
             </column>
         </createTable>
+        <addForeignKeyConstraint baseTableName="mountain_lodge_utility"
+                                 baseColumnNames="lodge_id"
+                                 constraintName="fkey_lodge_utility_l"
+                                 referencedTableName="mountain_lodge"
+                                 referencedColumnNames="lodge_id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+        <addForeignKeyConstraint baseTableName="mountain_lodge_utility"
+                                 baseColumnNames="utility_id"
+                                 constraintName="fkey_lodge_utlity_u"
+                                 referencedTableName="utility"
+                                 referencedColumnNames="utility_id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
     </changeSet>
     <changeSet id="26-12-2020/02" author="imartinovic">
         <createTable tableName="mountain_lodge_user_archive">
@@ -56,6 +70,9 @@
             </column>
             <column name="lodge_id" type="BIGINT">
                 <constraints primaryKey="true"/>
+            </column>
+            <column name="date_Archived" type="DATE">
+                <constraints nullable="false"/>
             </column>
         </createTable>
         <addForeignKeyConstraint baseTableName="mountain_lodge_user_archive"
