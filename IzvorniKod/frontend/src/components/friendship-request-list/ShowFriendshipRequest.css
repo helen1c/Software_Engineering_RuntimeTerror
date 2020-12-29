@@ -1,0 +1,13 @@
+.user-photo{
+    display:inline;
+    border-radius: 50%;
+    height: 80px;
+    width: 80px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+.users-container{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
