@@ -5,6 +5,7 @@ import {Button} from "@material-ui/core";
 import {HttpCodesUtil} from "../../../../errors/HttpCodesUtil";
 import Snackbar from "@material-ui/core/Snackbar";
 import {Alert} from "@material-ui/lab";
+import Tipka from "../../../footer/components/Button";
 
 interface Props {
     result: MountainLodgeResult,

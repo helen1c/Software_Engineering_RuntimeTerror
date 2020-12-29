@@ -48,8 +48,12 @@ export const Routes = () => {
                     <Route path="/events" component={EventsResults} exact/>
                     <Route path="/users/search" component={SearchUsers} exact/>
                     <Route path="/notifications" component={FriendshipRequestsNotification} exact/>
+<<<<<<< HEAD
                     <Route path="/my-events" component={MyCommunityEventsResults} exact/>
                     <Route path="/mountaineering-community" component={MountaineeringCommunity} exact/>
+=======
+                    <Route path="/admin/message-box" component={MessageSearchResult} exact/>
+>>>>>>> df2d3fc ([#45] fixed footer and message inbox)
                 </Switch>
             </div>
             <Footer/>

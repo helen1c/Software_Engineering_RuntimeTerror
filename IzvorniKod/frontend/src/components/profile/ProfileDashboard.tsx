@@ -6,6 +6,7 @@ import {ViewProfileInfo} from "./models/ViewProfileInfo";
 import {ArchivedMountainLodgeList} from "../mountain-lodge/component/ArchivedMountainLodge/ArchivedMountainLodgeList";
 import {ArchivedMountainPathList} from "../mountain-path/component/ArchivedMountainPath/ArchivedMountainPathList";
 import {MyMountainPaths} from "../mountain-path/component/MyMountainPaths/MyMountainPaths";
+import {MessageSearchResult} from "../message_box/MessageSearchResult";
 import {MyCommunityEventsResults} from "../event/component/MyCommunityEventsResults";
 
 const PROFILE = "PROFILE";
@@ -13,6 +14,7 @@ const MY_PATHS = "MY_PATHS";
 const ARCHIVE_LODGE = "ARCHIVE_LODGE";
 const ARCHIVE_PATH = "ARCHIVE_PATH";
 const EVENTS = "EVENTS"
+const MESSAGES = "MESSAGES"
 
 interface Props {
     user: ViewProfileInfo;
@@ -94,6 +96,19 @@ export const ProfileDashboard = ({ user, setUser }: Props) => {
               alt=""
             />
           </button>
+            <button
+                className={
+                    option === EVENTS ? "sidebar__item selected" : "sidebar__item"
+                }
+                onClick={() => setOption(MESSAGES)}
+            >
+                <p className="sidebar__item__description">Poruke korsnika</p>
+                <img
+                    className="sidebar__image"
+                    src={require("../../assets/message.jpg")}
+                    alt=""
+                />
+            </button>
         </div>
       </div>
 
@@ -120,6 +135,9 @@ export const ProfileDashboard = ({ user, setUser }: Props) => {
               <div className="admin-layout-mini">
                   <MyCommunityEventsResults/>
               </div>
+          )}
+          {option === MESSAGES &&(
+              <MessageSearchResult/>
           )}
       </div>
     </div>

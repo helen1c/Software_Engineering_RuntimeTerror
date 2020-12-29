@@ -43,7 +43,14 @@ public class MessageQueryServiceImpl implements MessageQueryService {
     @Override
     public List<Message> getAllMessages(){
         LOGGER.info("Getting all messages.");
-        return messageRepository.findAllByOrderByNameAsc();
+        List<Message> messages = messageRepository.findAllByOrderByNameAsc();
+        List<Message> result = new ArrayList<>();
+        for(int i=0;i<messages.size();i++){
+            if(messages.get(i).getStatus() == MessageStatus.PENDING){
+                result.add(messages.get(i));
+            }
+        }
+        return result;
     }
 
     @Override
