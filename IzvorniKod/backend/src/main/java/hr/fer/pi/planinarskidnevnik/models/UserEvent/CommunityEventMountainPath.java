@@ -1,5 +1,6 @@
 package hr.fer.pi.planinarskidnevnik.models.UserEvent;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import hr.fer.pi.planinarskidnevnik.models.CommunityEvent;
 import hr.fer.pi.planinarskidnevnik.models.MountainPath;
 
@@ -15,14 +16,16 @@ public class CommunityEventMountainPath {
     @EmbeddedId
     private CommunityEventMountainPathId id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @MapsId("eventId")
     @JoinColumn(name = "event_id")
+    @JsonBackReference
     private CommunityEvent event;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @MapsId("pathId")
     @JoinColumn(name = "path_id")
+    @JsonBackReference
     private MountainPath path;
 
     @Column(name = "date_traveled")

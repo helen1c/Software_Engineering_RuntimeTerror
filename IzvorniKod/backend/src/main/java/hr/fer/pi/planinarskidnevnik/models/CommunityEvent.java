@@ -36,6 +36,7 @@ public class CommunityEvent {
     private Date end_date;
 
     @OneToMany(mappedBy = "event")
+    @JsonManagedReference
     private List<CommunityEventMountainPath> paths = new ArrayList<>();
 
     public CommunityEvent(){}

@@ -71,7 +71,7 @@ public class MountainPath {
     private List<MountainPathGrade> mountainPathGradeList = new ArrayList<>();
 
     @OneToMany(mappedBy = "path")
-    @JsonIgnore
+    @JsonManagedReference
     private List<CommunityEventMountainPath> communityEventMountainPathList = new ArrayList<>();
 
     public List<CommunityEventMountainPath> getCommunityEventMountainPathList() {

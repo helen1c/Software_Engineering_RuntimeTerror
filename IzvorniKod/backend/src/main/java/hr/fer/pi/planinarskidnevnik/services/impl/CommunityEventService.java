@@ -76,7 +76,7 @@ public class CommunityEventService {
             }
 
             communityEventDto.setName(event.getName());
-            communityEventDto.setUser(new UserSearchDto(user.getId(), userService.getImage(user.getEmail()), user.getName()));
+            communityEventDto.setUser(new UserSearchDto(user.getId(), null, user.getName()));//userService.getImage(user.getEmail())
             communityEventDto.setDescription(event.getDescription());
             communityEventDto.setDate_created(event.getDateCreated());
             communityEventDto.setEnd_date(event.getEndDate());
