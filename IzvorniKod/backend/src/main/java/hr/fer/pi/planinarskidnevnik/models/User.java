@@ -7,6 +7,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -45,6 +47,9 @@ public class User {
     @JoinColumn(nullable = false)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Role role;
+
+    @OneToMany(mappedBy = "user")
+    private List<MountainPathGrade> mountainPathGradeList = new ArrayList<>();
 
     public User() {
     }
@@ -146,6 +151,14 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public List<MountainPathGrade> getMountainPathGradeList() {
+        return mountainPathGradeList;
+    }
+
+    public void setMountainPathGradeList(List<MountainPathGrade> mountainPathGradeList) {
+        this.mountainPathGradeList = mountainPathGradeList;
     }
 
     @Override

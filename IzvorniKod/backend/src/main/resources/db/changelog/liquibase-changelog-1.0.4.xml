@@ -1,0 +1,34 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="29-12-2020" author="josipak">
+        <createTable tableName="mountain_path_grade">
+            <column name="user_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="path_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="grade" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="mountain_path_grade"
+                                 baseColumnNames="user_id"
+                                 constraintName="fkey_mountain_path_grade"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+        <addForeignKeyConstraint baseTableName="mountain_path_grade"
+                                 baseColumnNames="path_id"
+                                 constraintName="fkey_mountain_path_grade2"
+                                 referencedTableName="mountain_path"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+    </changeSet>
+</databaseChangeLog>
