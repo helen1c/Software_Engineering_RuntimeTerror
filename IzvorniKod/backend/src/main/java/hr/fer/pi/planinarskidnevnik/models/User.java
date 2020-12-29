@@ -52,6 +52,9 @@ public class User {
     private Role role;
 
     @OneToMany(mappedBy = "user")
+    private List<MountainPathGrade> mountainPathGradeList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
     private List<UserBadge> userBadgeList = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
@@ -176,6 +179,14 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public List<MountainPathGrade> getMountainPathGradeList() {
+        return mountainPathGradeList;
+    }
+
+    public void setMountainPathGradeList(List<MountainPathGrade> mountainPathGradeList) {
+        this.mountainPathGradeList = mountainPathGradeList;
     }
 
     public List<UserBadge> getUserBadgeList() { return userBadgeList; }
