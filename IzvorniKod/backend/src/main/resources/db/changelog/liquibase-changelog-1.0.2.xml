@@ -77,28 +77,42 @@
 
     <changeSet id="20201224-01" author="josipak">
         <createSequence sequenceName="badge_id_seq" incrementBy="1" cycle="false" startValue="100"/>
-        <createTable tableName="BADGE">
-            <column name="ID" type="BIGINT" autoIncrement="true">
+        <createTable tableName="badge">
+            <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="NAME" type="VARCHAR(128)">
+            <column name="name" type="VARCHAR(128)">
                 <constraints nullable="false" unique="true"/>
             </column>
-            <column name="DESCRIPTION" type="VARCHAR(256)">
+            <column name="description" type="VARCHAR(256)">
                 <constraints nullable="false"/>
             </column>
         </createTable>
-        <createTable tableName="USER_BADGE">
-            <column name="USER_ID" type="BIGINT">
-                <constraints foreignKeyName="USER_ID" references="USER(ID)"/>
+        <createTable tableName="user_badge">
+            <column name="user_id" type="BIGINT">
+                <constraints primaryKey="true"/>
             </column>
-            <column name="BADGE_ID" type="BIGINT">
-                <constraints foreignKeyName="BADGE_ID" references="BADGE(ID)"/>
+            <column name="badge_id" type="BIGINT">
+                <constraints primaryKey="true"/>
             </column>
-            <column name="DATE_RECEIVED" type="DATE">
+            <column name="date_received" type="DATE">
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <addForeignKeyConstraint baseTableName="user_badge"
+                                 baseColumnNames="user_id"
+                                 constraintName="fkey_user_badge"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+        <addForeignKeyConstraint baseTableName="user_badge"
+                                 baseColumnNames="badge_id"
+                                 constraintName="fkey_user_badge2"
+                                 referencedTableName="badge"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
     </changeSet>
 </databaseChangeLog>
 >>>>>>> ca27f42... [#48] Database and backend logic for fetching users' badges

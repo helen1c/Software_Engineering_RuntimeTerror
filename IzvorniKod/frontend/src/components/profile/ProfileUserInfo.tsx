@@ -8,6 +8,8 @@ import spremi from "../../assets/save-icon.png";
 import { getEmptyProfile, ViewProfileInfo } from "./models/ViewProfileInfo";
 import Compress from "react-image-file-resizer";
 import {MountaineeringCommunitySearch} from "../mountaineering-community/MountaineeringCommunitySearch";
+import friend from"../../assets/friend.png";
+import {Badges} from "../badges/Badges";
 
 interface Props {
   user: ViewProfileInfo;
@@ -255,6 +257,9 @@ export const ProfileUserInfo = ({ user, setUser }: Props) => {
                 </>
               )}
             </div>
+          </div>
+          <div className="badges-wrap">
+            <Badges badges={user.badges || []}/>
           </div>
           <div className="profile-image-wrap">
             <img

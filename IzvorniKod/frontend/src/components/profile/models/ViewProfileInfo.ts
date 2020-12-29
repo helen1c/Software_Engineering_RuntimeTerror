@@ -1,3 +1,5 @@
+import {Badge} from "../../badges/models/Badge";
+
 export interface ViewProfileInfo {
     name: string;
     email: string;
@@ -7,6 +9,7 @@ export interface ViewProfileInfo {
     isOwner: boolean;
     isAdmin: boolean;
     image: string;
+    badges?: Badge[];
 }
 
 export const getEmptyProfile = (): ViewProfileInfo => {
@@ -18,6 +21,7 @@ export const getEmptyProfile = (): ViewProfileInfo => {
         dateOfBirth: "",
         isOwner: false,
         isAdmin: false,
-        image: ""
+        image: "",
+        badges: []
     };
 };

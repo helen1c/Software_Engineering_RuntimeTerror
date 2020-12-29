@@ -49,6 +49,11 @@ h1.profile-info-title {
     font-family: Roboto,sans-serif;
 }
 
+.badges-wrap {
+    margin-top: 30px;
+    margin-right: 3rem;
+}
+
 .profile-image-wrap {
     margin-right: 1rem;
 }
