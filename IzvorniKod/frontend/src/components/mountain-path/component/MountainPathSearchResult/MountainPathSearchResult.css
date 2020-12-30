@@ -24,6 +24,10 @@
     color: white;
 }
 
+.mountain-path-main-info {
+    cursor: pointer;
+}
+
 @media all and (max-width: 680px) {
     .mountain-path-cnt {
         width: 95vw;
@@ -126,4 +130,3 @@ fieldset {
 .mountain-path-name{
     width: 30%;
 }
-

@@ -1,0 +1,48 @@
+.path-archive-cnt {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    height: 70px;
+    border-radius: 50px;
+    border: 2px solid #287334;
+    align-items: center;
+    width: 70vw;
+    cursor: pointer;
+    color: #287334;
+    margin: auto;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    filter: drop-shadow(0px 10px 10px rgba(0, 0, 0, 0.35));
+}
+.path-archive-cnt:hover{
+    color: white;
+    background-color: #287334;
+}
+.path-archive-title{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    height: 50px;
+    border-radius: 50px;
+    border: 2px solid green;
+    align-items: center;
+    width: 70vw;
+    cursor: pointer;
+    color: black;
+    background-color: #287334;
+    margin: auto;
+    filter: drop-shadow(0px 10px 10px rgba(0, 0, 0, 0.35));
+}
+
+.archive-path-name{
+    width: 15%;
+}
+.archive-path-name-first{
+    color: #287334;
+}
+
+@media screen and (max-width:660px) {
+    .path-archive-title, .path-archive-cnt {
+        width: 95vw;
+    }
+}

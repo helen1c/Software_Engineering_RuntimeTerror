@@ -1,6 +1,9 @@
 package hr.fer.pi.planinarskidnevnik.models;
 
+import hr.fer.pi.planinarskidnevnik.models.MountainLodgeUserArchive.MountainLodgeUserArchive;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "MOUNTAIN_LODGE")
@@ -10,7 +13,7 @@ public class MountainLodge {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "mountain_lodge_id_gen")
     @SequenceGenerator(name = "mountain_lodge_id_gen", sequenceName = "mountain_lodge_id_seq", allocationSize = 1)
     @Column(name = "LODGE_ID")
-    private Long id;
+    private Long lodge_id;
 
     private String name;
 
@@ -26,11 +29,20 @@ public class MountainLodge {
             joinColumns = @JoinColumn(name = "LODGE_ID"),
             inverseJoinColumns = @JoinColumn(name = "UTILITY_ID")
     )
-
     private List<Utility> utilities;
 
-    private java.lang.Long elevation;
+    private Long elevation;
 
+    @OneToMany(mappedBy = "mountainLodge")
+    private List<MountainLodgeUserArchive> mountainLodgeUserArchive = new ArrayList<>();
+
+    public List<MountainLodgeUserArchive> getMountainLodgeUserArchive() {
+        return mountainLodgeUserArchive;
+    }
+
+    public void setMountainLodgeUserArchive(List<MountainLodgeUserArchive> mountainLodgeUserArchive) {
+        this.mountainLodgeUserArchive = mountainLodgeUserArchive;
+    }
 
     public MountainLodge(){
 
@@ -41,6 +53,7 @@ public class MountainLodge {
         this.hill = hillName;
         this.utilities = utilities;
         this.image = image;
+        this.mountainLodgeUserArchive = new ArrayList<>();
     }
     public java.lang.Long getElevation() {
         return elevation;
@@ -55,7 +68,7 @@ public class MountainLodge {
     }
 
     public java.lang.Long getId() {
-        return id;
+        return lodge_id;
     }
 
     public byte[] getImage() {
@@ -71,7 +84,7 @@ public class MountainLodge {
     }
 
     public void setId(java.lang.Long id) {
-        this.id = id;
+        this.lodge_id = id;
     }
 
     public void setName(String name) {

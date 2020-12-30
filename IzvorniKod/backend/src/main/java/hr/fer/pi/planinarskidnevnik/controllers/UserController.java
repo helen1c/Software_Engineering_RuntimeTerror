@@ -1,9 +1,12 @@
 package hr.fer.pi.planinarskidnevnik.controllers;
 
+import hr.fer.pi.planinarskidnevnik.dtos.MountainLodgeArchive.MountainLodgeArchiveResponse;
+import hr.fer.pi.planinarskidnevnik.dtos.MountainPathArchiveResponse;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserCreateDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserHeaderDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserProfilePageDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserSearchDto;
+import hr.fer.pi.planinarskidnevnik.exceptions.LodgeAlreadyArchivedException;
 import hr.fer.pi.planinarskidnevnik.models.User;
 import hr.fer.pi.planinarskidnevnik.services.impl.UserService;
 import org.slf4j.Logger;
@@ -101,4 +104,23 @@ public class UserController {
         final User user = userService.editCurrentUser(userCreateDto, principal);
         return ResponseEntity.ok(new UserCreateDto(user.getName(), user.getPassword(), user.getEmail(), user.getPlaceOfResidence(), user.getDateOfBirth(), user.getDescription(), null));
     }
+
+    @ExceptionHandler(LodgeAlreadyArchivedException.class)
+    public final ResponseEntity<?> constraintsViolations(final Exception ex) {
+        LOGGER.error("Constraint exception. " + ex.getMessage());
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
+
+    @GetMapping(value = "/archived-lodges/all")
+    public final ResponseEntity<List<MountainLodgeArchiveResponse>> getArchivedLodges(Principal principal) {
+        List<MountainLodgeArchiveResponse> lodges = userService.getArchivedLodges(principal);
+        return ResponseEntity.status(200).body(lodges);
+    }
+
+    @GetMapping(value = "/archived-paths/all")
+    public final ResponseEntity<List<MountainPathArchiveResponse>> getArchivedPaths(Principal principal) {
+        return ResponseEntity.status(200).body(userService.getArchivedPaths(principal));
+    }
+
+
 }

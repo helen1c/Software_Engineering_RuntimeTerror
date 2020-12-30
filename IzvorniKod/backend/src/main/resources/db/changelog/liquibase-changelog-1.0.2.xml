@@ -46,4 +46,33 @@
         </createTable>
         <createSequence sequenceName="mountain_path_id_seq" incrementBy="1" cycle="false" startValue="100" />
     </changeSet>
+
+        <changeSet id="28-12-2020-02" author="imartinovic">
+        <createTable tableName="mountain_path_user_archive">
+            <column name="user_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="path_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="date_Archived" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="mountain_path_user_archive"
+                                 baseColumnNames="user_id"
+                                 constraintName="fkey_user_archive_paths"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+        <addForeignKeyConstraint baseTableName="mountain_path_user_archive"
+                                 baseColumnNames="path_id"
+                                 constraintName="fkey_path_archive_paths"
+                                 referencedTableName="mountain_path"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+        </changeSet>
+
 </databaseChangeLog>

@@ -1,12 +1,16 @@
 package hr.fer.pi.planinarskidnevnik.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import hr.fer.pi.planinarskidnevnik.models.MountainLodgeUserArchive.MountainLodgeUserArchive;
+import hr.fer.pi.planinarskidnevnik.models.MountainPathUserArchive.MountainPathUserArchive;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -45,6 +49,28 @@ public class User {
     @JoinColumn(nullable = false)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Role role;
+
+    @OneToMany(mappedBy = "user")
+    private List<MountainLodgeUserArchive> mountainLodgeUserArchive = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<MountainPathUserArchive> mountainPathUserArchive = new ArrayList<>();
+
+    public List<MountainPathUserArchive> getMountainPathUserArchive() {
+        return mountainPathUserArchive;
+    }
+
+    public void setMountainPathUserArchive(List<MountainPathUserArchive> mountainPathUserArchive) {
+        this.mountainPathUserArchive = mountainPathUserArchive;
+    }
+
+    public List<MountainLodgeUserArchive> getMountainLodgeUserArchive() {
+        return mountainLodgeUserArchive;
+    }
+
+    public void setMountainLodgeUserArchive(List<MountainLodgeUserArchive> mountainLodgeUserArchive) {
+        this.mountainLodgeUserArchive = mountainLodgeUserArchive;
+    }
 
     public User() {
     }

@@ -1,9 +1,7 @@
 package hr.fer.pi.planinarskidnevnik.controllers;
 
 import hr.fer.pi.planinarskidnevnik.exceptions.IllegalAccessException;
-import hr.fer.pi.planinarskidnevnik.exceptions.MountainPathAlreadyExistsException;
-import hr.fer.pi.planinarskidnevnik.exceptions.ResourceNotFoundException;
-import hr.fer.pi.planinarskidnevnik.exceptions.UserWithEmailExistsException;
+import hr.fer.pi.planinarskidnevnik.exceptions.*;
 import hr.fer.pi.planinarskidnevnik.exceptions.dtos.ConstraintViolationDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,6 +61,16 @@ public class ExceptionHandlerControllerAdvice {
     @ExceptionHandler({MountainPathAlreadyExistsException.class})
     public ResponseEntity<String> handleException(final Exception exception) {
         return ResponseEntity.badRequest().body(exception.getMessage());
+    }
+
+    @ExceptionHandler({MountainLodgeDoesNotExist.class, MountainPathDoesNotExist.class})
+    public ResponseEntity<String> handlePathLodgeDoesNotExist(final Exception exception) {
+        return ResponseEntity.badRequest().body(exception.getMessage());
+    }
+
+    @ExceptionHandler({AuthorizationException.class})
+    public ResponseEntity<String> handleAuthException(final Exception exception) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(exception.getMessage());
     }
 
 }

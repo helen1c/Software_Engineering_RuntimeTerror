@@ -10,6 +10,7 @@ import {findHills} from "../../../../store/actions/findAllHillsActions";
 import {findUtilities} from "../../../../store/actions/findAllUtilitiesActions";
 import {MountainLodgeSearchResult} from "../MountainLodgeSearchResult/MountainLodgeSearchResult";
 import {MountainLodgeResult} from "../../models/MountainLodgeResult";
+import {findArchivedLodges} from "../../../../store/actions/findAllArchivedLodgesActions";
 
 export const MountainLodgeSearch = () => {
 
@@ -45,8 +46,28 @@ export const MountainLodgeSearch = () => {
 
     }
 
+    const [loggedIn, setLoggedIn] = useState(false);
+
+    useEffect(() => {
+        if(!sessionStorage.getItem("key")) {
+            setLoggedIn(false);
+            return;
+        } else {
+            setLoggedIn(true);
+            return;
+        }
+    }, []);
+
     const {results: hillResults} = useSelector((state: MainReducer) => state.findAllHillsReducer);
     const {results: utilityResults} = useSelector((state: MainReducer) => state.findAllUtilitiesReducer);
+    const {lodges: archivedLodges} = useSelector((state : MainReducer) => state.findAllArchivedLodgesReducer);
+
+    const checkId = (id: number) => {
+        if(loggedIn) {
+            return archivedLodges.find((v) => v.id === id) !== undefined;
+        }
+        return false;
+    }
 
     useEffect(() => {
         if (hillResults === undefined || hillResults.length === 0) {
@@ -62,6 +83,10 @@ export const MountainLodgeSearch = () => {
         }
     }, [dispatcher, utilityResults]);
 
+    useEffect(() => {
+            if(sessionStorage.getItem("key"))
+            dispatcher(findArchivedLodges());
+    }, [dispatcher, loggedIn]);
 
     return (
         <>
@@ -72,7 +97,6 @@ export const MountainLodgeSearch = () => {
             } onSubmit={search}>
                 {({setFieldValue}) => {
                     return (<Form className="search-lodges-form">
-
                             <div className={"search-hill"}>
                                 <button className="search-button" type="submit">&#8981;</button>
                                 <Field className={"input-search"} placeholder={"Pretražite planinarske domove..."}
@@ -109,7 +133,7 @@ export const MountainLodgeSearch = () => {
         </div>
         <div className="results-container">
             {searchResults.length > 0 && searchResults.map(result =>
-                <MountainLodgeSearchResult result={result} key={result.id}/>) }
+                <MountainLodgeSearchResult result={result} key={result.id} archived={checkId(result.id)} loggedIn={loggedIn}/>) }
         </div>
     </>
     );

@@ -3,10 +3,13 @@ import {ProfileUserInfo} from "./ProfileUserInfo";
 import "./ProfileDashboard.css"
 import menu from "../../assets/menu-bar.jpg";
 import {ViewProfileInfo} from "./models/ViewProfileInfo";
+import {ArchivedMountainLodgeList} from "../mountain-lodge/component/ArchivedMountainLodge/ArchivedMountainLodgeList";
+import {ArchivedMountainPathList} from "../mountain-path/component/ArchivedMountainPath/ArchivedMountainPathList";
 
 const PROFILE = "PROFILE";
 const PATHS = "PATHS";
-const ARCHIVE = "ARCHIVE";
+const ARCHIVE_LODGE = "ARCHIVE_LODGE";
+const ARCHIVE_PATH = "ARCHIVE_PATH";
 const EVENTS = "EVENTS"
 
 interface Props {
@@ -52,17 +55,30 @@ export const ProfileDashboard = ({ user, setUser }: Props) => {
           </button>
           <button
             className={
-              option === ARCHIVE ? "sidebar__item selected" : "sidebar__item"
+              option === ARCHIVE_LODGE ? "sidebar__item selected" : "sidebar__item"
             }
-            onClick={() => setOption(ARCHIVE)}
+            onClick={() => setOption(ARCHIVE_LODGE)}
           >
-            <p className="sidebar__item__description">Moja arhiva</p>
+            <p className="sidebar__item__description">Posjećeni domovi</p>
             <img
               className="sidebar__image"
               src={require("../../assets/archive.png")}
               alt=""
             />
           </button>
+            <button
+                className={
+                    option === ARCHIVE_PATH ? "sidebar__item selected" : "sidebar__item"
+                }
+                onClick={() => setOption(ARCHIVE_PATH)}
+            >
+                <p className="sidebar__item__description">Posjećene staze</p>
+                <img
+                    className="sidebar__image"
+                    src={require("../../assets/archive.png")}
+                    alt=""
+                />
+            </button>
           <button
             className={
               option === EVENTS ? "sidebar__item selected" : "sidebar__item"
@@ -83,6 +99,16 @@ export const ProfileDashboard = ({ user, setUser }: Props) => {
         {option === PROFILE && (
           <ProfileUserInfo user={user} setUser={setUser} />
         )}
+        {option === ARCHIVE_LODGE && (
+            <div className="admin-layout-mini">
+            <ArchivedMountainLodgeList/>
+            </div>
+        )}
+          {option === ARCHIVE_PATH && (
+              <div className="admin-layout-mini">
+              <ArchivedMountainPathList/>
+              </div>
+          )}
       </div>
     </div>
   );

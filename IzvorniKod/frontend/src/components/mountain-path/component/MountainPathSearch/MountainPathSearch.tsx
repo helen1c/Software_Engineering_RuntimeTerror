@@ -11,6 +11,7 @@ import {MountainPathSearchResult} from "../MountainPathSearchResult/MountainPath
 import "./MountainPathSearch.css"
 import {Slider} from "@material-ui/core";
 import {difficultyMarks, walkTimeMarks} from "./MountainPathSearchUtil";
+import {findArchivedPaths} from "../../../../store/actions/findAllArchivedPathsActions";
 
 export const MountainPathSearch = () => {
 
@@ -59,9 +60,35 @@ export const MountainPathSearch = () => {
         setWalkTime(newValue);
     }
 
-    const difficultyHandleChange = (event:any, newValue: any) => {
+    const difficultyHandleChange = (event: any, newValue: any) => {
         setDifficulty(newValue);
     }
+
+    const [loggedIn, setLoggedIn] = useState(false);
+
+    useEffect(() => {
+        if (!sessionStorage.getItem("key")) {
+            setLoggedIn(false);
+            return;
+        } else {
+            setLoggedIn(true);
+            return;
+        }
+    }, []);
+
+    const {archivedPaths} = useSelector((state: MainReducer) => state.findAllArchivedPathsReducer);
+
+    const checkId = (id: number) => {
+        if (loggedIn) {
+            return archivedPaths.find((v) => v.id === id) !== undefined;
+        }
+        return false;
+    }
+
+    useEffect(() => {
+        if (sessionStorage.getItem("key"))
+            dispatcher(findArchivedPaths());
+    }, [dispatcher, loggedIn]);
 
     useEffect(() => {
         if (hillResults === undefined || hillResults.length === 0) {
@@ -100,40 +127,38 @@ export const MountainPathSearch = () => {
                                     {selected ? <div className={"sliders-container"}>
                                         <div className="slider-dropdown">
                                             <button className="slider-button">ZAHTJEVNOST</button>
-                                        <div className={"slider-difficulty__cnt"}>
+                                            <div className={"slider-difficulty__cnt"}>
 
 
-                                            <Slider
-                                                min={1}
-                                                max={10}
-                                                value={difficulty}
-                                                onChange={difficultyHandleChange}
-                                                valueLabelDisplay="auto"
-                                                aria-labelledby="range-slider"
-                                                marks={difficultyMarks}
-                                            />
+                                                <Slider
+                                                    min={1}
+                                                    max={10}
+                                                    value={difficulty}
+                                                    onChange={difficultyHandleChange}
+                                                    valueLabelDisplay="auto"
+                                                    aria-labelledby="range-slider"
+                                                    marks={difficultyMarks}
+                                                />
                                             </div>
                                         </div>
                                         <div className="slider-dropdown">
-                                        <button className="slider-button">PROSJECNO VRIJEME</button>
-                                        <div className={"slider-walktime__cnt"}>
+                                            <button className="slider-button">PROSJECNO VRIJEME</button>
+                                            <div className={"slider-walktime__cnt"}>
 
-                                            <Slider
-                                                min={0}
-                                                max={24}
-                                                value={walkTime}
-                                                onChange={walkTimeHandleChange}
-                                                valueLabelDisplay="auto"
-                                                aria-labelledby="range-slider"
-                                                marks={walkTimeMarks}
-                                            />
-                                        </div>
+                                                <Slider
+                                                    min={0}
+                                                    max={24}
+                                                    value={walkTime}
+                                                    onChange={walkTimeHandleChange}
+                                                    valueLabelDisplay="auto"
+                                                    aria-labelledby="range-slider"
+                                                    marks={walkTimeMarks}
+                                                />
+                                            </div>
                                         </div>
                                     </div> : <></>}
 
                                 </div>
-
-
                             </Form>
 
                         );
@@ -141,14 +166,14 @@ export const MountainPathSearch = () => {
                 </Formik>
             </div>
             <div className="path-results-container">
-                { searchResults.length > 0 && <div className="mountain-path-cnt-title">
+                {searchResults.length > 0 && <div className="mountain-path-cnt-title">
                     <span className="mountain-path-name">Naziv</span>
                     <span className="mountain-path-hillname">Visočje</span>
                     <span className="mountain-path-walktime">Prosječno trajanje</span>
                     <span className="mountain-path-difficulty">Zahtjevnost </span>
                 </div>}
                 {searchResults.length > 0 && searchResults.map(result =>
-                    <MountainPathSearchResult result={result} key={result.id}/>)}
+                    <MountainPathSearchResult result={result} key={result.id} loggedIn={loggedIn} archived={checkId(result.id)}/>)}
             </div>
         </>
     );
