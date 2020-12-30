@@ -10,6 +10,8 @@ import {HttpCodesUtil} from "../../../../errors/HttpCodesUtil";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import green from "@material-ui/core/colors/green";
 import {ThemeProvider} from "@material-ui/core/styles"
+import Snackbar from "@material-ui/core/Snackbar";
+import {Alert} from "@material-ui/lab";
 
 interface Props {
     result: MountainPathResult,
@@ -46,15 +48,19 @@ export const MountainPathSearchResult = (prop: Props) => {
         const response = await fetch("/api/archive-path/user/" + prop.result.id, requestOptions);
 
         if(response.status === HttpCodesUtil.SUCCESS) {
-            console.log("Sve uspjesno arhivirano")
             setArchivedS(true);
+            setSuccess(true);
         } else if(response.status === HttpCodesUtil.FORBIDDEN) {
             console.log("Neispravan token");
+            setError(true);
         } else if(response.status === HttpCodesUtil.BAD_REQUEST) {
-            console.log("Već postoji u vašoj arhivi.")
+            setError(true);
         }
 
     }
+
+    const [error, setError] = useState(false);
+    const [success, setSuccess] = useState(false);
 
     const theme = createMuiTheme({
         palette: {
@@ -62,8 +68,32 @@ export const MountainPathSearchResult = (prop: Props) => {
         },
     });
 
+    const handleSuccessMessageClosing = (event?: React.SyntheticEvent, reason?: string) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setSuccess(false);
+    };
+
+    const handleErrorMessageClosing = (event?: React.SyntheticEvent, reason?: string) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setError(false);
+    };
+
     return (
         <>
+            <Snackbar open={success} autoHideDuration={1000000} onClose={handleSuccessMessageClosing}>
+                <Alert onClose={handleSuccessMessageClosing} severity="success">
+                    Planinarska staza je uspješno arhivirana.
+                </Alert>
+            </Snackbar>
+            <Snackbar open={error} autoHideDuration={1500} onClose={handleErrorMessageClosing}>
+                <Alert onClose={handleErrorMessageClosing} severity="error">
+                    Dogodila se pogreška prilikom stvaranja planinarskog doma. Pokušajte kasnije.
+                </Alert>
+            </Snackbar>
             {!expand ?
             <div onClick={() => setExpand(true)} className="mountain-path-cnt">
                     <span className="mountain-path-name">{prop.result.name}</span>
