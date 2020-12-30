@@ -7,18 +7,33 @@ interface Props {
     user: UserInfo;
 }
 
-export const ShowFriendshipRequest= ({ user }: Props) => {
+export const ShowFriendshipRequest= ({ user}: Props) => {
     const history = useHistory();
     const [isConfirmed, setIsConfirmed] = useState<boolean>(false);
     const [isRefused, setIsRefused] = useState<boolean>(false);
+    const [allUsers, setAllUsers] = useState();
 
     function confirm() {
         setIsConfirmed(true);
         //staviti u listu prijatelja
     }
-    function refuse() {
+
+    const handleDeleteOnClick = () => {
         setIsRefused(true);
-    }
+        fetch("/api/users/" + user.id, {
+            method: "DELETE",
+            headers: new Headers({
+                authorization: sessionStorage.getItem("key") || "",
+                "Content-Type": "application/json",
+            }),
+        }).then((response) => {
+            if (response.status === 200) {
+                sessionStorage.clear();
+                window.location.href = "/friendship-request-list";
+            }
+        });
+    };
+
 
     return (
 
@@ -37,7 +52,7 @@ export const ShowFriendshipRequest= ({ user }: Props) => {
                 <button type="submit" className="submitButton" onClick={() => confirm()}>
                     Prihvati
                 </button>
-                <button type="submit" className="submitButton" onClick={() => refuse()}>
+                <button type="submit" className="submitButton" onClick={handleDeleteOnClick}>
                     Odbij
                 </button>
             </div>
