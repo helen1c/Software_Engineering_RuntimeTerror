@@ -50,23 +50,20 @@ export const MountainPathSearchResult = (prop: Props) => {
         if(response.status === HttpCodesUtil.SUCCESS) {
             setArchivedS(true);
             setSuccess(true);
-        } else if(response.status === HttpCodesUtil.FORBIDDEN) {
-            console.log("Neispravan token");
-            setError(true);
-        } else if(response.status === HttpCodesUtil.BAD_REQUEST) {
+        } else {
             setError(true);
         }
 
     }
-
-    const [error, setError] = useState(false);
-    const [success, setSuccess] = useState(false);
 
     const theme = createMuiTheme({
         palette: {
             primary: green,
         },
     });
+
+    const [error, setError] = useState(false);
+    const [success, setSuccess] = useState(false);
 
     const handleSuccessMessageClosing = (event?: React.SyntheticEvent, reason?: string) => {
         if (reason === 'clickaway') {
@@ -84,14 +81,14 @@ export const MountainPathSearchResult = (prop: Props) => {
 
     return (
         <>
-            <Snackbar open={success} autoHideDuration={1000000} onClose={handleSuccessMessageClosing}>
+            <Snackbar open={success} autoHideDuration={1500} onClose={handleSuccessMessageClosing}>
                 <Alert onClose={handleSuccessMessageClosing} severity="success">
                     Planinarska staza je uspješno arhivirana.
                 </Alert>
             </Snackbar>
-            <Snackbar open={error} autoHideDuration={1500} onClose={handleErrorMessageClosing}>
+            <Snackbar open={error} autoHideDuration={2000} onClose={handleErrorMessageClosing}>
                 <Alert onClose={handleErrorMessageClosing} severity="error">
-                    Dogodila se pogreška prilikom stvaranja planinarskog doma. Pokušajte kasnije.
+                    Dogodila se pogreška prilikom arhiviranje planinarske staze. Pokušajte kasnije.
                 </Alert>
             </Snackbar>
             {!expand ?
