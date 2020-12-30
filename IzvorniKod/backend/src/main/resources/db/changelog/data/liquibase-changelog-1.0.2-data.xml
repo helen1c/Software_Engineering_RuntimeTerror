@@ -65,4 +65,47 @@
             <column name="difficulty">7</column>
         </insert>
     </changeSet>
+    <changeSet id="26-12-2020-02" author="josipak">
+        <insert tableName="badge">
+            <column name="name">path_bronze</column>
+            <column name="description">Imam barem 1 prijeđenu planinarsku stazu!</column>
+        </insert>
+        <insert tableName="badge">
+            <column name="name">path_silver</column>
+            <column name="description">Imam više od 5 prijeđenih planinarskih staza!</column>
+        </insert>
+        <insert tableName="badge">
+            <column name="name">path_gold</column>
+            <column name="description">Imam više od 10 prijeđenih planinarskih staza!</column>
+        </insert>
+        <insert tableName="badge">
+            <column name="name">lodge_bronze</column>
+            <column name="description">Imam barem 1 posjećen planinarski dom!</column>
+        </insert>
+        <insert tableName="badge">
+            <column name="name">lodge_silver</column>
+            <column name="description">Imam više od 5 posjećenih planinarskih domova!</column>
+        </insert>
+        <insert tableName="badge">
+            <column name="name">lodge_gold</column>
+            <column name="description">Imam više od 10 posjećenih planinarskih domova!</column>
+        </insert>
+    </changeSet>
+    <changeSet id="26-12-2020-03" author="josipak">
+    <insert tableName="user_badge">
+        <column name="user_id">4</column>
+        <column name="badge_id">1</column>
+        <column name="date_received">2020-12-25</column>
+    </insert>
+    <insert tableName="user_badge">
+        <column name="user_id">4</column>
+        <column name="badge_id">2</column>
+        <column name="date_received">2020-12-26</column>
+    </insert>
+    <insert tableName="user_badge">
+        <column name="user_id">4</column>
+        <column name="badge_id">4</column>
+        <column name="date_received">2020-12-30</column>
+    </insert>
+    </changeSet>
 </databaseChangeLog>

@@ -37,13 +37,18 @@
             <column name="is_private" type="BOOLEAN">
                 <constraints nullable="false"/>
             </column>
-            <column name="author_id" type="BIGINT">
-                <constraints foreignKeyName="author_in_path_fkey" references="USER(ID)"/>
-            </column>
+            <column name="author_id" type="BIGINT"/>
             <column name="difficulty" type="SMALLINT">
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <addForeignKeyConstraint baseTableName="mountain_path"
+                                 baseColumnNames="author_id"
+                                 constraintName="author_in_path_fkey"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"
+                                 onDelete="SET NULL"
+                                 onUpdate="CASCADE"/>
         <createSequence sequenceName="mountain_path_id_seq" incrementBy="1" cycle="false" startValue="100" />
     </changeSet>
 
@@ -75,4 +80,44 @@
                                  onUpdate="CASCADE"/>
         </changeSet>
 
+    <changeSet id="20201224-01" author="josipak">
+        <createSequence sequenceName="badge_id_seq" incrementBy="1" cycle="false" startValue="100"/>
+        <createTable tableName="badge">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(128)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="description" type="VARCHAR(256)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="user_badge">
+            <column name="user_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="badge_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="date_received" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="user_badge"
+                                 baseColumnNames="user_id"
+                                 constraintName="fkey_user_badge"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+        <addForeignKeyConstraint baseTableName="user_badge"
+                                 baseColumnNames="badge_id"
+                                 constraintName="fkey_user_badge2"
+                                 referencedTableName="badge"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+    </changeSet>
 </databaseChangeLog>
+

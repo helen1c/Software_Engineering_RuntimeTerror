@@ -31,6 +31,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/hills/**").permitAll()
                 .antMatchers("/utilities/**").permitAll()
                 .antMatchers("/mountain-paths/search").permitAll()
+                .antMatchers("/images/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))

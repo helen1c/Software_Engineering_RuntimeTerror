@@ -3,6 +3,7 @@ package hr.fer.pi.planinarskidnevnik.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import hr.fer.pi.planinarskidnevnik.models.MountainLodgeUserArchive.MountainLodgeUserArchive;
 import hr.fer.pi.planinarskidnevnik.models.MountainPathUserArchive.MountainPathUserArchive;
+import hr.fer.pi.planinarskidnevnik.models.UserBadge.UserBadge;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -49,6 +50,9 @@ public class User {
     @JoinColumn(nullable = false)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Role role;
+
+    @OneToMany(mappedBy = "user")
+    private List<UserBadge> userBadgeList = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     private List<MountainLodgeUserArchive> mountainLodgeUserArchive = new ArrayList<>();
@@ -173,6 +177,10 @@ public class User {
     public void setRole(Role role) {
         this.role = role;
     }
+
+    public List<UserBadge> getUserBadgeList() { return userBadgeList; }
+
+    public void setUserBadgeList(List<UserBadge> userBadgeList) { this.userBadgeList = userBadgeList; }
 
     @Override
     public String toString() {
