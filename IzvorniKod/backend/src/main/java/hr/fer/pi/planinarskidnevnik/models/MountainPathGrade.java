@@ -24,9 +24,10 @@ public class MountainPathGrade {
 
     }
 
-    public MountainPathGrade(User user, MountainPath path) {
+    public MountainPathGrade(User user, MountainPath path, Integer grade) {
         this.user = user;
         this.path = path;
+        this.grade = grade;
         this.id = new MountainPathGradeId(user.getId(), path.getId());
     }
 

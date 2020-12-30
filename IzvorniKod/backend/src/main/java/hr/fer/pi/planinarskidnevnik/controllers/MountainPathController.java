@@ -1,13 +1,11 @@
 package hr.fer.pi.planinarskidnevnik.controllers;
 
 
-import hr.fer.pi.planinarskidnevnik.dtos.MountainPath.MountainPathCreateRequest;
-import hr.fer.pi.planinarskidnevnik.dtos.MountainPath.MountainPathCreateResponse;
-import hr.fer.pi.planinarskidnevnik.dtos.MountainPath.MountainPathSearchRequest;
-import hr.fer.pi.planinarskidnevnik.dtos.MountainPath.MountainPathSearchResponse;
+import hr.fer.pi.planinarskidnevnik.dtos.MountainPath.*;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainPathToMountainPathResponseMapper;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainPathToMountainPathSearchResponseMapper;
 import hr.fer.pi.planinarskidnevnik.models.MountainPath;
+import hr.fer.pi.planinarskidnevnik.models.MountainPathGrade;
 import hr.fer.pi.planinarskidnevnik.services.MountainPathQueryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,6 +62,16 @@ public class MountainPathController {
         List<MountainPathSearchResponse> responses = mountainPathToMountainPathSearchResponseMapper.mapToList(service.findAllMountainPathBySearchCriteria(request));
 
         return ResponseEntity.ok(responses);
+    }
+
+    @PostMapping("/grade")
+    public ResponseEntity<?> gradeMountainPath(@Valid @RequestBody final MountainPathGradeRequest gradeRequest, Principal principal) {
+        LOGGER.info("Grading Mountain Path with ID: " + gradeRequest.getMountainPathId());
+        MountainPathGrade mountainPathGrade = service.gradeMountainPath(gradeRequest, principal);
+
+        MountainPathGradeResponse response = new MountainPathGradeResponse();
+        response.setGrade(mountainPathGrade.getGrade());
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
 }

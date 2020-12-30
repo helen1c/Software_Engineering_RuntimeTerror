@@ -13,4 +13,6 @@ public interface MountainPathRepository extends JpaRepository<MountainPath, Long
     List<MountainPath> findAllByOrderByNameAsc();
 
     Optional<MountainPath> findByName(String name);
+
+    Optional<MountainPath> findById(Long id);
 }
