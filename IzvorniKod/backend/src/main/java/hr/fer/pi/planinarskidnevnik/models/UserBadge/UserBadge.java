@@ -1,4 +1,7 @@
-package hr.fer.pi.planinarskidnevnik.models;
+package hr.fer.pi.planinarskidnevnik.models.UserBadge;
+
+import hr.fer.pi.planinarskidnevnik.models.Badge;
+import hr.fer.pi.planinarskidnevnik.models.User;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -19,11 +22,12 @@ public class UserBadge {
     private Badge badge;
 
     @Column(name = "DATE_RECEIVED")
-    private Date dateReceived = new Date();
+    private java.sql.Date dateReceived;
 
     public UserBadge(User user, Badge badge) {
         this.user = user;
         this.badge = badge;
+        this.dateReceived = new java.sql.Date(System.currentTimeMillis());
         this.id = new UserBadgeId(user.getId(), badge.getId());
     }
 

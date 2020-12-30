@@ -51,7 +51,6 @@ public class MountainPath {
     private Boolean isPrivate;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
     private User author;
 
     @OneToMany(mappedBy = "mountainPath")

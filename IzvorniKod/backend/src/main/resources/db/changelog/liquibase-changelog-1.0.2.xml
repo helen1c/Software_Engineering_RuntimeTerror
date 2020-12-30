@@ -37,13 +37,18 @@
             <column name="is_private" type="BOOLEAN">
                 <constraints nullable="false"/>
             </column>
-            <column name="author_id" type="BIGINT">
-                <constraints foreignKeyName="author_in_path_fkey" references="USER(ID)"/>
-            </column>
+            <column name="author_id" type="BIGINT"/>
             <column name="difficulty" type="SMALLINT">
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <addForeignKeyConstraint baseTableName="mountain_path"
+                                 baseColumnNames="author_id"
+                                 constraintName="author_in_path_fkey"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"
+                                 onDelete="SET NULL"
+                                 onUpdate="CASCADE"/>
         <createSequence sequenceName="mountain_path_id_seq" incrementBy="1" cycle="false" startValue="100" />
     </changeSet>
 
@@ -115,4 +120,4 @@
                                  onUpdate="CASCADE"/>
     </changeSet>
 </databaseChangeLog>
->>>>>>> ca27f42... [#48] Database and backend logic for fetching users' badges
+

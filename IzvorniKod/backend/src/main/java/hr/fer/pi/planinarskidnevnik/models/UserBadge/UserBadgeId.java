@@ -1,4 +1,4 @@
-package hr.fer.pi.planinarskidnevnik.models;
+package hr.fer.pi.planinarskidnevnik.models.UserBadge;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;

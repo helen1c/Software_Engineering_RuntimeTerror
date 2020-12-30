@@ -20,14 +20,14 @@ export const ArchivedMountainPathList = () => {
 
     return (
         <>
+            {archivedPaths.length > 0 ?
             <div className="path-archive-title">
                 <span className="archive-path-name">Visočje</span>
                 <span className="archive-path-name">Naziv staze</span>
                 <span className="archive-path-name">Datum  </span>
                 <span className="archive-path-name-first">slika</span>
-
-            </div>
+            </div> : <div>Nemate arhiviranih planinarskih staza.</div>}
             {archivedPaths.map(path => <ArchivedMountainPath path={path} key={path.id}/>)}
-        </>);
+            </>);
 }
 

@@ -3,6 +3,7 @@ package hr.fer.pi.planinarskidnevnik.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import hr.fer.pi.planinarskidnevnik.models.MountainLodgeUserArchive.MountainLodgeUserArchive;
 import hr.fer.pi.planinarskidnevnik.models.MountainPathUserArchive.MountainPathUserArchive;
+import hr.fer.pi.planinarskidnevnik.models.UserBadge.UserBadge;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;

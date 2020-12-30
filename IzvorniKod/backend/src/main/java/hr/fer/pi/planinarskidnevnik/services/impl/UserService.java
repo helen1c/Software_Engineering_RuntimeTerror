@@ -14,7 +14,7 @@ import hr.fer.pi.planinarskidnevnik.mappers.MountainPathUserArchiveToMountainPat
 import hr.fer.pi.planinarskidnevnik.models.Role;
 import hr.fer.pi.planinarskidnevnik.models.User;
 import hr.fer.pi.planinarskidnevnik.repositories.MountainLodgeRepository;
-import hr.fer.pi.planinarskidnevnik.models.UserBadge;
+import hr.fer.pi.planinarskidnevnik.models.UserBadge.UserBadge;
 import hr.fer.pi.planinarskidnevnik.repositories.RoleRepository;
 import hr.fer.pi.planinarskidnevnik.repositories.UserRepository;
 import org.slf4j.Logger;

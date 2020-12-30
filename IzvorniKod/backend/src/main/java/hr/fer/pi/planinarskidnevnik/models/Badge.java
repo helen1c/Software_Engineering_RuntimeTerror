@@ -1,5 +1,7 @@
 package hr.fer.pi.planinarskidnevnik.models;
 
+import hr.fer.pi.planinarskidnevnik.models.UserBadge.UserBadge;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;

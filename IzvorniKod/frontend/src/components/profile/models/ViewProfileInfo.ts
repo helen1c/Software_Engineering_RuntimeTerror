@@ -9,7 +9,7 @@ export interface ViewProfileInfo {
     isOwner: boolean;
     isAdmin: boolean;
     image: string;
-    badges?: Badge[];
+    badges: Badge[];
 }
 
 export const getEmptyProfile = (): ViewProfileInfo => {
