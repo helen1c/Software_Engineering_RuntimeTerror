@@ -2,6 +2,7 @@ package hr.fer.pi.planinarskidnevnik.services.impl;
 
 import hr.fer.pi.planinarskidnevnik.dtos.CommunityEvent.CommunityEventDto;
 import hr.fer.pi.planinarskidnevnik.dtos.CommunityEvent.PathDate;
+import hr.fer.pi.planinarskidnevnik.dtos.CommunityEvent.PathDateIdDto;
 import hr.fer.pi.planinarskidnevnik.dtos.CommunityEvent.PreviewCommunityEventDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserSearchDto;
 import hr.fer.pi.planinarskidnevnik.exceptions.ResourceNotFoundException;
@@ -55,7 +56,9 @@ public class CommunityEventService {
         final CommunityEvent event = new CommunityEvent(eventCreateDto.getName(), eventCreateDto.getDescription(), eventCreateDto.getDateCreated(), eventCreateDto.getStartDate(), eventCreateDto.getEndDate());
         event.setUser(userService.getCurrentUser(principal));
         eventRepository.save(event);
-        communityEventMountainPathRepository.save(new CommunityEventMountainPath(event, mountainPathRepository.getOne(1L), Date.valueOf("1997-03-10")));
+        for (PathDateIdDto path: eventCreateDto.getPaths()) {
+            communityEventMountainPathRepository.save(new CommunityEventMountainPath(event, mountainPathRepository.getOne(path.getPathId()), path.getDate()));
+        }
         LOGGER.info("New event {} created", event);
         return event;
     }
@@ -78,7 +81,7 @@ public class CommunityEventService {
             communityEventDto.setName(event.getName());
             communityEventDto.setUser(new UserSearchDto(user.getId(), null, user.getName()));//userService.getImage(user.getEmail())
             communityEventDto.setDescription(event.getDescription());
-            communityEventDto.setDate_created(event.getDateCreated());
+            communityEventDto.setDate_created(new Date(System.currentTimeMillis()));
             communityEventDto.setEnd_date(event.getEndDate());
             communityEventDto.setStart_date(event.getStartDate());
             communityEventDto.setPaths(pathDates);

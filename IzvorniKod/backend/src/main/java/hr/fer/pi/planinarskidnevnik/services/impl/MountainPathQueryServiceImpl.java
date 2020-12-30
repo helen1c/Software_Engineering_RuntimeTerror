@@ -96,4 +96,10 @@ public class MountainPathQueryServiceImpl implements MountainPathQueryService {
     public MountainPath getMountainPathById(Long id) {
         return mountainPathRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Cannot find mountain path with id: " + id));
     }
+
+    @Override
+    public List<MountainPath> getAllPublicMountainPaths() {
+        LOGGER.info("Getting all public mountain paths.");
+        return mountainPathRepository.getAllByIsPrivateFalseOrderByNameAsc();
+    }
 }

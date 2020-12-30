@@ -2,11 +2,9 @@ package hr.fer.pi.planinarskidnevnik.models;
 
 
 import com.fasterxml.jackson.annotation.*;
-import hr.fer.pi.planinarskidnevnik.models.User;
 import hr.fer.pi.planinarskidnevnik.models.UserEvent.CommunityEventMountainPath;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,11 +27,11 @@ public class CommunityEvent {
 
     private String description;
 
-    private Date date_created;
+    private Date dateCreated;
 
-    private Date start_date;
+    private Date startDate;
 
-    private Date end_date;
+    private Date endDate;
 
     @OneToMany(mappedBy = "event")
     @JsonManagedReference
@@ -41,12 +39,33 @@ public class CommunityEvent {
 
     public CommunityEvent(){}
 
-    public CommunityEvent(String name, String description, Date date_created, Date start_date, Date end_date){
+    public CommunityEvent(String name, String description, Date dateCreated, Date startDate, Date endDate){
         this.name=name;
         this.description=description;
-        this.date_created=date_created;
-        this.start_date=start_date;
-        this.end_date=end_date;
+        this.dateCreated = dateCreated;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
+    public CommunityEvent(Long id, User user, String name, String description, Date dateCreated, Date startDate, Date endDate, List<CommunityEventMountainPath> paths) {
+        this.id = id;
+        this.user = user;
+        this.name = name;
+        this.description = description;
+        this.dateCreated = dateCreated;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.paths = paths;
+    }
+
+    public CommunityEvent(Long id, User user, String name, String description, Date dateCreated, Date startDate, Date endDate) {
+        this.id = id;
+        this.user = user;
+        this.name = name;
+        this.description = description;
+        this.dateCreated = dateCreated;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
     public User getUser() {
@@ -68,15 +87,15 @@ public class CommunityEvent {
     }
 
     public Date getDateCreated() {
-        return date_created;
+        return dateCreated;
     }
 
     public Date getStartDate() {
-        return start_date;
+        return startDate;
     }
 
     public Date getEndDate() {
-        return end_date;
+        return endDate;
     }
 
     public void setName(String name) {
@@ -92,15 +111,15 @@ public class CommunityEvent {
     }
 
     public void setDateCreated(Date date_created) {
-        this.date_created = date_created;
+        this.dateCreated = date_created;
     }
 
     public void setStartDate(Date start_date) {
-        this.start_date = start_date;
+        this.startDate = start_date;
     }
 
     public void setEndDate(Date end_date) {
-        this.end_date = end_date;
+        this.endDate = end_date;
     }
 
     public List<CommunityEventMountainPath> getPaths() {
@@ -118,9 +137,9 @@ public class CommunityEvent {
                 ", user=" + user +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", date_created=" + date_created +
-                ", start_date=" + start_date +
-                ", end_date=" + end_date +
+                ", date_created=" + dateCreated +
+                ", start_date=" + startDate +
+                ", end_date=" + endDate +
                 '}';
     }
 }

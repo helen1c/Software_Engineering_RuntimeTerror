@@ -1,3 +1,3 @@
 export interface EventInfo {
-  date: Number;
+  date: String;
 }

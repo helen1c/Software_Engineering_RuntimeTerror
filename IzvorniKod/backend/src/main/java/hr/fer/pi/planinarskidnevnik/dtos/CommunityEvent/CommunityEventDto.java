@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.sql.Date;
+import java.util.List;
 
 public class CommunityEventDto {
     private Long userId;
@@ -19,24 +20,26 @@ public class CommunityEventDto {
     private String description;
 
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
-    private Date date_created;
+    private Date dateCreated;
 
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
-    private Date start_date;
+    private Date startDate;
 
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
-    private Date end_date;
+    private Date endDate;
+
+    private List<PathDateIdDto> paths;
 
     public CommunityEventDto() {
     }
 
 
-    public CommunityEventDto(String name, String description,  Date date_created, Date start_date, Date end_date) {
+    public CommunityEventDto(String name, String description, Date dateCreated, Date startDate, Date endDate) {
         this.name=name;
         this.description=description;
-        this.date_created=date_created;
-        this.start_date=start_date;
-        this.end_date=end_date;
+        this.dateCreated = dateCreated;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
     public Long getUserId() { return userId; }
@@ -65,28 +68,34 @@ public class CommunityEventDto {
     }
 
     public Date getDateCreated() {
-        return date_created;
+        return dateCreated;
     }
 
-    public void setDateCreated(Date date_created) {
-        this.date_created = date_created;
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
     }
 
     public Date getStartDate() {
-        return start_date;
+        return startDate;
     }
 
-    public void setStartDate(Date start_date) {
-        this.start_date = start_date;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
     public Date getEndDate() {
-        return end_date;
+        return endDate;
     }
 
-    public void setEndDate(Date end_date) {
-        this.end_date = end_date;
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
+    public List<PathDateIdDto> getPaths() {
+        return paths;
+    }
 
+    public void setPaths(List<PathDateIdDto> paths) {
+        this.paths = paths;
+    }
 }

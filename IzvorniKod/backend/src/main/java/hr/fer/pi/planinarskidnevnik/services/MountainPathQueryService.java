@@ -21,4 +21,7 @@ public interface MountainPathQueryService {
     List<MountainPath> findAllMountainPathBySearchCriteria(MountainPathSearchRequest request);
 
     MountainPathGrade gradeMountainPath(MountainPathGradeRequest gradeRequest, Principal principal);
+
+    List<MountainPath> getAllPublicMountainPaths();
+
 }

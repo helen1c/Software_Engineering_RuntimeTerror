@@ -32,6 +32,7 @@ export const Routes = () => {
                 <Route path="/profile/:id" component={MenuProfile} exact/>
                 <Route path="/mountain-path/create" component={MountainPathCreate} exact/>
                 <Route path="/mountain-lodge/create" component={MountainLodgeCreate} exact/>
+                <Route path="/events/create" component={CreateEventPage} exact/>
             </Switch>
         </div>
     );

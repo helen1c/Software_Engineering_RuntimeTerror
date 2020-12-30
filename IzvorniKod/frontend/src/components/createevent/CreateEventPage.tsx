@@ -20,7 +20,6 @@ export const CreateEventPage = () => {
       path: "",
       endDate: "",
       startDate: "",
-      dateCreated: "",
       description: "",
     },
 
@@ -55,7 +54,14 @@ export const CreateEventPage = () => {
     var admission = moment(date1, "DD-MM-YYYY");
     var discharge = moment(date2, "DD-MM-YYYY")
 
-    initializeCards(admission.diff(discharge, "days"));
+    let cards: EventInfo[] = [];
+    for (let i = 0; i <= admission.diff(discharge, "days").valueOf(); i++) {
+      const card: EventInfo = { date: date1.getFullYear() + "-" + date1.getMonth() + "-" + date1.getDate()};
+      date1 = new Date(date1.getTime() + i * 86400000 );
+      cards.push(card);
+    }
+    setEventDays(cards);
+    alert(cards?.pop()?.date)
 
     setIsSubmit(true);
     setIsFalseDate(false);
@@ -65,15 +71,6 @@ export const CreateEventPage = () => {
     }
 
   }
-
-  const initializeCards = (differenceInDays: Number) => {
-    let cards: EventInfo[] = [];
-    for (let i = 1; i <= differenceInDays.valueOf()+1; i++) {
-      const card: EventInfo = { date: i };
-      cards.push(card);
-    }
-    setEventDays(cards);
-  };
 
   return (
     <main className="main">
@@ -113,17 +110,6 @@ export const CreateEventPage = () => {
                 </p>
               </div>
               <div className="eventComponent">
-                <p className={"inputLabel"}>Datum stvaranja događaja:</p>
-                <input
-                  className={"event-input"}
-                  id="dateCreated"
-                  type="date"
-                  max={moment().format("YYYY-MM-DD")}
-                  value={formik.values.dateCreated}
-                  onChange={formik.handleChange}
-                />
-              </div>
-              <div className="eventComponent">
                 <p className={"inputLabel"}>Datum početka:</p>
                 <input
                   className={"event-input"}
@@ -157,7 +143,6 @@ export const CreateEventPage = () => {
             ) : (
                 <EventDays cardsToRender={eventDays}/>
             )}
-
           </div>
         </form>
       </div>

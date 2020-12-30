@@ -2,6 +2,7 @@ package hr.fer.pi.planinarskidnevnik.controllers;
 
 
 import hr.fer.pi.planinarskidnevnik.dtos.MountainPath.*;
+import hr.fer.pi.planinarskidnevnik.mappers.MountainPathToMountainPathEventSearchRequestMapper;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainPathToMountainPathResponseMapper;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainPathToMountainPathSearchResponseMapper;
 import hr.fer.pi.planinarskidnevnik.models.MountainPath;
@@ -24,13 +25,17 @@ public class MountainPathController {
     private static final Logger LOGGER = LoggerFactory.getLogger(MountainPathController.class);
 
     private final MountainPathQueryService service;
+    private final MountainPathToMountainPathResponseMapper mountainPathToMountainPathResponseMapper;
     private final MountainPathToMountainPathSearchResponseMapper mountainPathToMountainPathSearchResponseMapper;
+    private final MountainPathToMountainPathEventSearchRequestMapper mountainPathToMountainPathEventSearchRequestMapper;
 
     public MountainPathController(MountainPathQueryService service,
                                   MountainPathToMountainPathResponseMapper mountainPathToMountainPathResponseMapper,
-                                  MountainPathToMountainPathSearchResponseMapper mountainPathToMountainPathSearchResponseMapper) {
+                                  MountainPathToMountainPathSearchResponseMapper mountainPathToMountainPathSearchResponseMapper, MountainPathToMountainPathEventSearchRequestMapper mountainPathToMountainPathEventSearchRequestMapper) {
         this.service = service;
+        this.mountainPathToMountainPathResponseMapper = mountainPathToMountainPathResponseMapper;
         this.mountainPathToMountainPathSearchResponseMapper = mountainPathToMountainPathSearchResponseMapper;
+        this.mountainPathToMountainPathEventSearchRequestMapper = mountainPathToMountainPathEventSearchRequestMapper;
     }
 
     @GetMapping("/{id}")
@@ -77,6 +82,14 @@ public class MountainPathController {
         response.setMountainPathId(mountainPathGrade.getPath().getId());
         response.setGrade(mountainPathGrade.getGrade());
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @GetMapping("/all-public")
+    public ResponseEntity<List<MountainPathEventSearchRequest>> getAllPublicPaths() {
+        LOGGER.info("Fetching all public paths");
+        List<MountainPath> modelsResponse = service.getAllPublicMountainPaths();
+        List<MountainPathEventSearchRequest> response = mountainPathToMountainPathEventSearchRequestMapper.mapToList(modelsResponse);
+        return ResponseEntity.ok(response);
     }
 
 }
