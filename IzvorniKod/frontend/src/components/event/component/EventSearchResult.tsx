@@ -20,7 +20,7 @@ export const EventSearchResult = () =>{
                     "Content-Type": "application/json"
                 }
             };
-            const response = await fetch("/api/event", requestOptions);
+            const response = await fetch("/api/event/all", requestOptions);
             const json = await response.json();
             setSearchResults(json);
         }
