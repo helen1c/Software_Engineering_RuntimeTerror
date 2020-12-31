@@ -61,7 +61,7 @@ public class CommunityEventService {
         event.setEndDate(eventCreateDto.getEndDate());
         event.setDateCreated(new Date(System.currentTimeMillis()));
         event.setUser(userService.getCurrentUser(principal));
-        eventRepository.save(event);
+        CommunityEvent evRet = eventRepository.save(event);
         for (PathDateIdDto path: eventCreateDto.getPaths()) {
             communityEventMountainPathRepository.save(new CommunityEventMountainPath(event, mountainPathRepository.getOne(path.getPathId()), path.getDate()));
         }

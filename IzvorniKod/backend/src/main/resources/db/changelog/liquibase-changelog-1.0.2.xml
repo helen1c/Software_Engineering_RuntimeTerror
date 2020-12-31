@@ -124,14 +124,12 @@
             <column name="event_id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="user_id" type="BIGINT">
-                <constraints foreignKeyName="event_creator_id_fk" references="user(id)"/>
-            </column>
+            <column name="user_id" type="BIGINT"/>
             <column name="name" type="VARCHAR(50)">
                 <constraints nullable="false"/>
             </column>
             <column name="description" type="VARCHAR(450)">
-                <constraints nullable="true" unique="true"/>
+                <constraints nullable="true"/>
             </column>
             <column name="date_created" type="DATE">
                 <constraints nullable="true"/>
@@ -143,6 +141,13 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <addForeignKeyConstraint baseTableName="event"
+                                 baseColumnNames="user_id"
+                                 constraintName="event_creator_id_fk"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
         <createSequence sequenceName="event_id_seq" incrementBy="1" cycle="false" startValue="100" />
     </changeSet>
 

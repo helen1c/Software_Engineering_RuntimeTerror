@@ -111,6 +111,7 @@
     <changeSet id="11012020-01" author="nkusurin">
         <insert tableName="event">
             <column name="event_id">1</column>
+            <column name="user_id">1</column>
             <column name="name">dogadaj1</column>
             <column name="description">Stvaram dogadaj 1</column>
             <column name="date_created">2020-12-24</column>
@@ -119,6 +120,7 @@
         </insert>
         <insert tableName="event">
             <column name="event_id">2</column>
+            <column name="user_id">1</column>
             <column name="name">dogadaj2</column>
             <column name="description">Stvaram dogadaj 2</column>
             <column name="date_created">2020-12-20</column>
@@ -127,6 +129,7 @@
         </insert>
         <insert tableName="event">
             <column name="event_id">3</column>
+            <column name="user_id">1</column>
             <column name="name">dogadaj3</column>
             <column name="description">Stvaram dogadaj 3</column>
             <column name="date_created">2020-12-23</column>

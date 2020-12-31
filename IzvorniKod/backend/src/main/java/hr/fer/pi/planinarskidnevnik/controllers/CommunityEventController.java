@@ -41,12 +41,9 @@ public class CommunityEventController {
         return ResponseEntity.status(HttpStatus.CREATED).body(eventService.createEvent(dto, principal));
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<PreviewCommunityEventDto>> getAllEvents(Principal principal) {
         LOGGER.info("Fetching all events");
         return ResponseEntity.ok(eventService.getAllEvents(principal));
     }
-
-
-
 }
