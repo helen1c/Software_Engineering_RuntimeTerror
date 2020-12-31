@@ -12,6 +12,8 @@ import java.util.List;
 
 public interface MountainPathQueryService {
 
+    MountainPath getMountainPathById(Long id);
+
     List<MountainPath> getAllMountainPaths();
 
     MountainPath createMountainPath(MountainPathCreateRequest createRequest, Principal principal);

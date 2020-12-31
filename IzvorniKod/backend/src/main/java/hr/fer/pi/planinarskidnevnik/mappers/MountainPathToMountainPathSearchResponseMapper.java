@@ -25,8 +25,10 @@ public class MountainPathToMountainPathSearchResponseMapper implements DefaultMa
         response.setLength(from.getLength());
         response.setSeaLevelDiff(from.getSeaLevelDiff());
         response.setDifficulty(from.getDifficulty());
-        response.setAverageGrade(from.getMountainPathGradeList().stream()
-                .mapToInt(mountainPathGrade -> mountainPathGrade.getGrade()).average().orElse(0));
+        if (!from.getMountainPathGradeList().isEmpty()) {
+            response.setAverageGrade(from.getMountainPathGradeList().stream()
+                    .mapToInt(mountainPathGrade -> mountainPathGrade.getGrade()).average().orElse(0));
+        }
 
         return response;
     }

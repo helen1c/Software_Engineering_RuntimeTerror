@@ -9,5 +9,6 @@ export interface MountainPathResult {
     dateCreated: Date,
     avgWalkTime: string,
     isPrivate: boolean,
-    seaLevelDiff: number
+    seaLevelDiff: number,
+    averageGrade: number|null,
 }

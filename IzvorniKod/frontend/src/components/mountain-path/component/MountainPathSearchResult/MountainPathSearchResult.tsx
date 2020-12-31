@@ -17,12 +17,14 @@ import {Alert} from "@material-ui/lab";
 interface Props {
     result: MountainPathResult,
     loggedIn: boolean,
-    archived: boolean
+    archived: boolean,
+    grade: number|null,
 }
 
 export const MountainPathSearchResult = (prop: Props) => {
 
     const [expand, setExpand] = useState<boolean>(false);
+    const [averageGrade, setAverageGrade] = useState<number|null>(prop.result.averageGrade);
 
     const mapdiff = () => {
         if(prop.result.difficulty <= 3) {
@@ -80,6 +82,22 @@ export const MountainPathSearchResult = (prop: Props) => {
         setError(false);
     };
 
+    const handleGradeValueChanged = async (newValue: number|null) => {
+        const requestOptions = {
+            method: "GET",
+            headers: {
+                authorization: sessionStorage.getItem("key") || "",
+            }
+        };
+        const response = await fetch("/api/mountain-paths/" + prop.result.id, requestOptions);
+
+        if(response.status === HttpCodesUtil.SUCCESS) {
+            response.json().then(mountainPath => {
+                setAverageGrade(mountainPath.averageGrade);
+            });
+        }
+    };
+
     return (
         <>
             <Snackbar open={success} autoHideDuration={1500} onClose={handleSuccessMessageClosing}>
@@ -98,6 +116,7 @@ export const MountainPathSearchResult = (prop: Props) => {
                 <span className="mountain-path-hillname"> {prop.result.hill}</span>
                 <span className="mountain-path-walktime"> {prop.result.avgWalkTime}</span>
                 <span className="mountain-path-difficulty"> {mapdiff()}</span>
+                <span className="mountain-path-avg-grade">{averageGrade?.toPrecision(2)}</span>
             </div>
             :
             <div className="mountain-path-cnt-expand">
@@ -106,6 +125,7 @@ export const MountainPathSearchResult = (prop: Props) => {
                     <span className="mountain-path-hillname-expand"> {prop.result.hill}</span>
                     <span className="mountain-path-walktime-expand"> {prop.result.avgWalkTime}</span>
                     <span className="mountain-path-difficulty-expand"> {mapdiff()}</span>
+                    <span className="mountain-path-avg-grade-expand">{averageGrade?.toPrecision(2)}</span>
                 </div>
                 <div className="mountain-path-extend-info">
                     <div className="mountain-path-cnt-mini">
@@ -124,10 +144,10 @@ export const MountainPathSearchResult = (prop: Props) => {
                     </div>
                     <div className="archive-cnt">
                     <div>
-                        {sessionStorage.getItem("key") &&
+                        {prop.loggedIn &&
                             <div className="mountain-path-cnt-mini">
                                 <span>Ocijeni stazu:</span>
-                                <MountainPathRating mountainPathId={prop.result.id}/>
+                                <MountainPathRating mountainPathId={prop.result.id} initialValue={prop.grade} onValueChange={handleGradeValueChanged}/>
                             </div>}
                         <div className="mountain-path-cnt-mini">
                             <span className="mountain-path-datecreated">Datum stvaranja: {prop.result.dateCreated}</span>
@@ -152,4 +172,4 @@ export const MountainPathSearchResult = (prop: Props) => {
         }</>
 
     );
-};
+}

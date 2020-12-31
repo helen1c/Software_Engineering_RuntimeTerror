@@ -24,22 +24,26 @@ public class MountainPathController {
     private static final Logger LOGGER = LoggerFactory.getLogger(MountainPathController.class);
 
     private final MountainPathQueryService service;
-    private final MountainPathToMountainPathResponseMapper mountainPathToMountainPathResponseMapper;
     private final MountainPathToMountainPathSearchResponseMapper mountainPathToMountainPathSearchResponseMapper;
 
     public MountainPathController(MountainPathQueryService service,
                                   MountainPathToMountainPathResponseMapper mountainPathToMountainPathResponseMapper,
                                   MountainPathToMountainPathSearchResponseMapper mountainPathToMountainPathSearchResponseMapper) {
         this.service = service;
-        this.mountainPathToMountainPathResponseMapper = mountainPathToMountainPathResponseMapper;
         this.mountainPathToMountainPathSearchResponseMapper = mountainPathToMountainPathSearchResponseMapper;
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<MountainPathSearchResponse> findMountainPathById(@PathVariable("id") final Long id) {
+        MountainPath mountainPath = service.getMountainPathById(id);
+        return ResponseEntity.ok(mountainPathToMountainPathSearchResponseMapper.map(mountainPath));
     }
 
     @GetMapping("/all")
     public ResponseEntity<List<MountainPathSearchResponse>> findAllMountainPathsOrderedByName() {
 
         List<MountainPath> modelsResponse = service.getAllMountainPaths();
-        List<MountainPathSearchResponse> response = mountainPathToMountainPathResponseMapper.mapToList(modelsResponse);
+        List<MountainPathSearchResponse> response = mountainPathToMountainPathSearchResponseMapper.mapToList(modelsResponse);
 
         return ResponseEntity.ok(response);
     }
@@ -70,6 +74,7 @@ public class MountainPathController {
         MountainPathGrade mountainPathGrade = service.gradeMountainPath(gradeRequest, principal);
 
         MountainPathGradeResponse response = new MountainPathGradeResponse();
+        response.setMountainPathId(mountainPathGrade.getPath().getId());
         response.setGrade(mountainPathGrade.getGrade());
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }

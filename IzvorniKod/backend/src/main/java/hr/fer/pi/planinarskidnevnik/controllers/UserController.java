@@ -1,6 +1,7 @@
 package hr.fer.pi.planinarskidnevnik.controllers;
 
 import hr.fer.pi.planinarskidnevnik.dtos.MountainLodgeArchive.MountainLodgeArchiveResponse;
+import hr.fer.pi.planinarskidnevnik.dtos.MountainPath.MountainPathGradeResponse;
 import hr.fer.pi.planinarskidnevnik.dtos.MountainPathArchiveResponse;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserCreateDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserHeaderDto;
@@ -120,6 +121,11 @@ public class UserController {
     @GetMapping(value = "/archived-paths/all")
     public final ResponseEntity<List<MountainPathArchiveResponse>> getArchivedPaths(Principal principal) {
         return ResponseEntity.status(200).body(userService.getArchivedPaths(principal));
+    }
+
+    @GetMapping(value = "/graded-paths/all")
+    public final ResponseEntity<List<MountainPathGradeResponse>> getGradedPaths(Principal principal) {
+        return ResponseEntity.status(200).body(userService.getGradedPaths(principal));
     }
 
 
