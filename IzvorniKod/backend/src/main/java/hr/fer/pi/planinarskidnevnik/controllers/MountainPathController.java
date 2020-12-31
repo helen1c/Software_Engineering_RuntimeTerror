@@ -1,6 +1,11 @@
 package hr.fer.pi.planinarskidnevnik.controllers;
 
 
+import hr.fer.pi.planinarskidnevnik.dtos.MountainPath.MountainPathCreateRequest;
+import hr.fer.pi.planinarskidnevnik.dtos.MountainPath.MountainPathCreateResponse;
+import hr.fer.pi.planinarskidnevnik.dtos.MountainPath.MountainPathSearchRequest;
+import hr.fer.pi.planinarskidnevnik.dtos.MountainPath.MountainPathSearchResponse;
+import hr.fer.pi.planinarskidnevnik.mappers.MountainPathToMountainPathByAuthorMapper;
 import hr.fer.pi.planinarskidnevnik.dtos.MountainPath.*;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainPathToMountainPathEventSearchRequestMapper;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainPathToMountainPathResponseMapper;
@@ -27,14 +32,17 @@ public class MountainPathController {
     private final MountainPathQueryService service;
     private final MountainPathToMountainPathResponseMapper mountainPathToMountainPathResponseMapper;
     private final MountainPathToMountainPathSearchResponseMapper mountainPathToMountainPathSearchResponseMapper;
+    private final MountainPathToMountainPathByAuthorMapper mountainPathToMountainPathByAuthorMapper;
     private final MountainPathToMountainPathEventSearchRequestMapper mountainPathToMountainPathEventSearchRequestMapper;
 
     public MountainPathController(MountainPathQueryService service,
                                   MountainPathToMountainPathResponseMapper mountainPathToMountainPathResponseMapper,
+                                  MountainPathToMountainPathSearchResponseMapper mountainPathToMountainPathSearchResponseMapper, MountainPathToMountainPathByAuthorMapper mountainPathToMountainPathByAuthorMapper) {
                                   MountainPathToMountainPathSearchResponseMapper mountainPathToMountainPathSearchResponseMapper, MountainPathToMountainPathEventSearchRequestMapper mountainPathToMountainPathEventSearchRequestMapper) {
         this.service = service;
         this.mountainPathToMountainPathResponseMapper = mountainPathToMountainPathResponseMapper;
         this.mountainPathToMountainPathSearchResponseMapper = mountainPathToMountainPathSearchResponseMapper;
+        this.mountainPathToMountainPathByAuthorMapper = mountainPathToMountainPathByAuthorMapper;
         this.mountainPathToMountainPathEventSearchRequestMapper = mountainPathToMountainPathEventSearchRequestMapper;
     }
 
@@ -71,6 +79,27 @@ public class MountainPathController {
         List<MountainPathSearchResponse> responses = mountainPathToMountainPathSearchResponseMapper.mapToList(service.findAllMountainPathBySearchCriteria(request));
 
         return ResponseEntity.ok(responses);
+    }
+
+    @GetMapping("/by-user")
+    public ResponseEntity<?> getAllMountainPathsByAuthor(Principal principal) {
+        var list = service.findAllMountainPathsByAuthor(principal);
+        LOGGER.info("Getting all paths from author: " + principal.getName());
+        var responses = mountainPathToMountainPathByAuthorMapper.mapToList(list);
+        return ResponseEntity.ok(responses);
+    }
+
+    @PatchMapping("/update-private/{path_id}")
+    public ResponseEntity<?> makePathNonPrivate(@PathVariable("path_id") Long pathId, Principal principal) {
+        var p = service.makeMountainPathNonPrivate(principal, pathId);
+        LOGGER.info("Staza " + p.getName() + " je sada javna.");
+        return ResponseEntity.ok("Uspješno ste učinili stazu: " + p.getName() + " javnom.");
+    }
+
+    @DeleteMapping("/{path_id}")
+    public ResponseEntity<?> deleteMountainPath(Principal principal, @PathVariable Long path_id) {
+        service.deleteMountainPath(principal, path_id);
+        return ResponseEntity.ok("Uspješno ste obrisali planinarsku stazu.");
     }
 
     @PostMapping("/grade")

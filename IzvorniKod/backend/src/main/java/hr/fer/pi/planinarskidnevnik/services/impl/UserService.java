@@ -16,9 +16,13 @@ import hr.fer.pi.planinarskidnevnik.mappers.MountainLodgeArchiveToMountainLodgeA
 import hr.fer.pi.planinarskidnevnik.mappers.MountainPathGradeToMountainPathGradeResponseMapper;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainPathUserArchiveToMountainPathArchiveResponseMapper;
 import hr.fer.pi.planinarskidnevnik.models.MountainPathGrade;
+import hr.fer.pi.planinarskidnevnik.models.MountainPath;
 import hr.fer.pi.planinarskidnevnik.models.Role;
 import hr.fer.pi.planinarskidnevnik.models.User;
 import hr.fer.pi.planinarskidnevnik.models.UserBadge.UserBadge;
+import hr.fer.pi.planinarskidnevnik.repositories.MountainPathRepository;
+import hr.fer.pi.planinarskidnevnik.repositories.RoleRepository;
+import hr.fer.pi.planinarskidnevnik.repositories.UserRepository;
 import hr.fer.pi.planinarskidnevnik.models.friendships.FriendshipRequest;
 import hr.fer.pi.planinarskidnevnik.repositories.*;
 import org.slf4j.Logger;
@@ -28,6 +32,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
+import javax.swing.text.html.Option;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -47,10 +52,19 @@ public class UserService {
     private final String DEFAULT_PROFILE_IMAGE = "/images/planinar.jpeg";
     private final MountainLodgeArchiveToMountainLodgeArchiveResponseMapper lodgeArchiveResponseMapper;
     private final MountainPathUserArchiveToMountainPathArchiveResponseMapper pathArchiveResponseMapper;
+    private final MountainPathRepository mountainPathRepository;
     private final MountainPathGradeToMountainPathGradeResponseMapper pathGradeResponseMapper;
 
     @Autowired
-    public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder encoder, FriendshipsRepository friendshipsRepository, FriendshipRequestRepository friendshipRequestRepository, MountainLodgeRepository mountainLodgeRepository, MountainLodgeArchiveToMountainLodgeArchiveResponseMapper lodgeArchiveResponseMapper, MountainPathUserArchiveToMountainPathArchiveResponseMapper pathArchiveResponseMapper, MountainPathGradeToMountainPathGradeResponseMapper pathGradeResponseMapper) {
+    public UserService(UserRepository userRepository,
+                       RoleRepository roleRepository,
+                       PasswordEncoder encoder,
+                       FriendshipsRepository friendshipsRepository,
+                       FriendshipRequestRepository friendshipRequestRepository,
+                       MountainLodgeRepository mountainLodgeRepository,
+                       MountainLodgeArchiveToMountainLodgeArchiveResponseMapper lodgeArchiveResponseMapper,
+                       MountainPathUserArchiveToMountainPathArchiveResponseMapper pathArchiveResponseMapper,
+                       MountainPathGradeToMountainPathGradeResponseMapper pathGradeResponseMapper) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.friendshipRequestRepository = friendshipRequestRepository;
@@ -58,6 +72,7 @@ public class UserService {
         this.encoder = encoder;
         this.lodgeArchiveResponseMapper = lodgeArchiveResponseMapper;
         this.pathArchiveResponseMapper = pathArchiveResponseMapper;
+        this.mountainPathRepository = mountainPathRepository;
         this.pathGradeResponseMapper = pathGradeResponseMapper;
     }
 
@@ -335,4 +350,82 @@ public class UserService {
         friendshipRequests.remove(sender);
         userRepository.save(receiver);
     }
+    /**
+     * Metoda koja dodaje stazu na popis zelja korisnika.
+     * @param principal credentialsi korisnika
+     * @param pathId jedinstevni identifikator staze
+     * @return spremljenu stazu
+     */
+    public MountainPath addPathToWishList(Principal principal, Long pathId) {
+
+        User currUser = checkPrincipal(principal);
+        MountainPath path = getPath(pathId);
+
+        currUser.getPathsWishlist().add(path);
+        userRepository.save(currUser);
+
+        return path;
+    }
+
+    public MountainPath deletePathFromWishlist(Principal principal, Long pathId) {
+
+        User currUser = checkPrincipal(principal);
+        MountainPath optPath = getPath(pathId);
+
+        currUser.getPathsWishlist().removeIf(v -> v.getId().equals(pathId));
+        userRepository.save(currUser);
+
+        return optPath;
+    }
+
+    /**
+     * Pomocna metoda koja dohvaca planinarsku stazu nekog ID-a.
+     * @param pathId
+     * @return
+     *
+     * @throws MountainPathDoesNotExist ako post
+     */
+    private MountainPath getPath(Long pathId) {
+        if(pathId == null) {
+            throw new MountainPathDoesNotExist("Dogodila se pogreška prilikom dohvaćanja planinarske staze.");
+        }
+        Optional<MountainPath> optPath = mountainPathRepository.findById(pathId);
+        if(optPath.isEmpty()) {
+            throw new MountainPathDoesNotExist("Ne postoji planinarska staza id-a: " + pathId);
+        }
+
+        return optPath.get();
+    }
+
+    /**
+     * Metoda koja dohvaca sve staze s popisa zelja.
+     * @param principal - credentialsi
+     * @return sve staze s popisa želja korisnika, tj. favorite korisnika
+     */
+    public List<MountainPath> getPathWishlistForUser(Principal principal) {
+        User currUser = checkPrincipal(principal);
+        return currUser.getPathsWishlist();
+    }
+
+    /**
+     * Pomocna metoda koja provjerava je li sve u redu s credentialisima
+     * @param principal
+     * @return trenutnog korisnika
+     */
+    private User checkPrincipal(Principal principal) {
+
+        if(principal == null) {
+            throw new AuthorizationException("Dogodila se pogreška prilikom autorizacije.");
+        }
+
+        User currUser = getCurrentUser(principal);
+
+        if(currUser == null) {
+            throw new AuthorizationException("Dogodila se pogreška prilikom autorizacije.");
+        }
+
+        return currUser;
+
+    }
+
 }

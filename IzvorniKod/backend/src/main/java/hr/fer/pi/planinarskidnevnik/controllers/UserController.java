@@ -7,10 +7,14 @@ import hr.fer.pi.planinarskidnevnik.dtos.User.UserCreateDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserHeaderDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserProfilePageDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserSearchDto;
+import hr.fer.pi.planinarskidnevnik.exceptions.LodgeAlreadyArchivedException;
+import hr.fer.pi.planinarskidnevnik.exceptions.MountainPathAlreadyAddedAsFavouriteException;
+import hr.fer.pi.planinarskidnevnik.models.MountainPath;
 import hr.fer.pi.planinarskidnevnik.models.User;
 import hr.fer.pi.planinarskidnevnik.services.impl.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("users")
@@ -141,6 +146,12 @@ public class UserController {
         return ResponseEntity.ok(new UserCreateDto(user.getName(), user.getPassword(), user.getEmail(), user.getPlaceOfResidence(), user.getDateOfBirth(), user.getDescription(), null));
     }
 
+    @ExceptionHandler(LodgeAlreadyArchivedException.class)
+    public final ResponseEntity<?> constraintsViolations(final Exception ex) {
+        LOGGER.error("Constraint exception. " + ex.getMessage());
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
+
     @GetMapping(value = "/archived-lodges/all")
     public final ResponseEntity<List<MountainLodgeArchiveResponse>> getArchivedLodges(Principal principal) {
         List<MountainLodgeArchiveResponse> lodges = userService.getArchivedLodges(principal);
@@ -152,10 +163,30 @@ public class UserController {
         return ResponseEntity.status(200).body(userService.getArchivedPaths(principal));
     }
 
+    @PatchMapping(value="/add/path-wish/{path_id}")
+    public final ResponseEntity<String> addPathToWishList(@PathVariable("path_id") Long pathId, Principal principal) {
+        try {
+            var s = userService.addPathToWishList(principal, pathId);
+            return ResponseEntity.ok("Staza: " + s.getName() + " uspješno dodana u favorite korisnika: " + principal.getName());
+        } catch (DataIntegrityViolationException ex) {
+            throw new MountainPathAlreadyAddedAsFavouriteException("Već ste dodali planinarsku stazu identifikatora: " + pathId + " u svoje favorite.");
+        }
+
+    }
     @GetMapping(value = "/graded-paths/all")
     public final ResponseEntity<List<MountainPathGradeResponse>> getGradedPaths(Principal principal) {
         return ResponseEntity.status(200).body(userService.getGradedPaths(principal));
     }
 
 
+    @DeleteMapping(value="/delete/path-wish/{path_id}")
+    public final ResponseEntity<String> deletePathFromWishList(@PathVariable("path_id") Long pathId, Principal principal) {
+        var s = userService.deletePathFromWishlist(principal, pathId);
+        return ResponseEntity.ok("Uspješno ste uklonili stazu: " + s.getName() + " s Vašega popisa želja.");
+    }
+
+    @GetMapping(value="/path-wishlist")
+    public final ResponseEntity<List<Long>> getPathWishlist(Principal principal) {
+        return ResponseEntity.ok(userService.getPathWishlistForUser(principal).stream().map(MountainPath::getId).collect(Collectors.toList()));
+    }
 }
