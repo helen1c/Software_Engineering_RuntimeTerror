@@ -5,6 +5,7 @@ import goimg from "../../../../assets/go.png";
 import finish from "../../../../assets/finish_flag-512.png"
 import dots from "../../../../assets/dots.png";
 import elevation from "../../../../assets/Snowy_Mountain_Transparent_PNG_Clip_Art_Image.png";
+import MountainPathRating from "../MountainPathRating/MountainPathRating";
 import {Button} from "@material-ui/core";
 import {HttpCodesUtil} from "../../../../errors/HttpCodesUtil";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
@@ -92,19 +93,19 @@ export const MountainPathSearchResult = (prop: Props) => {
                 </Alert>
             </Snackbar>
             {!expand ?
-            <div onClick={() => setExpand(true)} className="mountain-path-cnt">
-                    <span className="mountain-path-name">{prop.result.name}</span>
+            <div onClick={() => setExpand(!expand)} className="mountain-path-cnt">
+                <span className="mountain-path-name">{prop.result.name}</span>
                 <span className="mountain-path-hillname"> {prop.result.hill}</span>
                 <span className="mountain-path-walktime"> {prop.result.avgWalkTime}</span>
                 <span className="mountain-path-difficulty"> {mapdiff()}</span>
             </div>
             :
             <div className="mountain-path-cnt-expand">
-                <div className="mountain-path-main-info" onClick={() =>setExpand(false)}>
-                <span className="mountain-path-name-expand">{prop.result.name}</span>
-                <span className="mountain-path-hillname-expand"> {prop.result.hill}</span>
-                <span className="mountain-path-walktime-expand"> {prop.result.avgWalkTime}</span>
-                <span className="mountain-path-difficulty-expand"> {mapdiff()}</span>
+                <div onClick={() => setExpand(!expand)} className="mountain-path-cnt mountain-path-main-info">
+                    <span className="mountain-path-name-expand">{prop.result.name}</span>
+                    <span className="mountain-path-hillname-expand"> {prop.result.hill}</span>
+                    <span className="mountain-path-walktime-expand"> {prop.result.avgWalkTime}</span>
+                    <span className="mountain-path-difficulty-expand"> {mapdiff()}</span>
                 </div>
                 <div className="mountain-path-extend-info">
                     <div className="mountain-path-cnt-mini">
@@ -122,8 +123,15 @@ export const MountainPathSearchResult = (prop: Props) => {
                         </fieldset>
                     </div>
                     <div className="archive-cnt">
-                    <div className="mountain-path-cnt-mini">
-                        <span className="mountain-path-datecreated">Datum stvaranja: {prop.result.dateCreated}</span>
+                    <div>
+                        {sessionStorage.getItem("key") &&
+                            <div className="mountain-path-cnt-mini">
+                                <span>Ocijeni stazu:</span>
+                                <MountainPathRating mountainPathId={prop.result.id}/>
+                            </div>}
+                        <div className="mountain-path-cnt-mini">
+                            <span className="mountain-path-datecreated">Datum stvaranja: {prop.result.dateCreated}</span>
+                        </div>
                     </div>
                     {prop.loggedIn &&
                     <ThemeProvider theme={theme}>

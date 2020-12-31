@@ -106,7 +106,6 @@ export const MountainPathSearch = () => {
                 } onSubmit={search}>
                     {({setFieldValue}) => {
                         return (<Form className="search-paths-form">
-
                                 <div className={"search-hill"}>
                                     <button className="search-button" type="submit">&#8981;</button>
                                     <Field className={"input-search"} placeholder={"Pretražite planinarske staze..."}
@@ -159,6 +158,8 @@ export const MountainPathSearch = () => {
                                     </div> : <></>}
 
                                 </div>
+
+
                             </Form>
 
                         );
@@ -177,5 +178,4 @@ export const MountainPathSearch = () => {
             </div>
         </>
     );
-
 }
