@@ -7,8 +7,6 @@ import moment from "moment";
 import {EventDays} from "./EventDays";
 import {EventInfo} from "./EventInfo";
 import {Paths} from "./models/Paths";
-import {Simulate} from "react-dom/test-utils";
-
 
 export const CreateEventPage = () => {
     const [isSubmit, setIsSubmit] = useState<boolean>(false);
