@@ -3,16 +3,17 @@ import {ShowFriendshipRequest} from "./ShowFriendshipRequest";
 import React from "react";
 
 interface Props {
-    users: UserInfo[];
+    allUsers: UserInfo[];
+    setAllUsers: (users: UserInfo[]) => void;
 }
 
-export const ShowFriendshipRequestList = ({ users }: Props) => {
+export const ShowFriendshipRequestList = ({ allUsers, setAllUsers }: Props) => {
     return (
         <div style={{ margin: "5px" }}>
             <div className="users-container">
-                {users.map((user) => (
+                {allUsers.map((user) => (
                     <div key={user.id}>
-                        <ShowFriendshipRequest user={user} />
+                        <ShowFriendshipRequest user={user} allUsers ={allUsers} setAllUsers={setAllUsers} />
                     </div>
                 ))}
             </div>

@@ -5,20 +5,36 @@ import {useHistory} from "react-router";
 
 interface Props {
     user: UserInfo;
+    allUsers: UserInfo[];
+    setAllUsers: (users: UserInfo[]) => void;
 }
 
-export const ShowFriendshipRequest= ({ user}: Props) => {
+export const ShowFriendshipRequest= ({ user, allUsers, setAllUsers}: Props) => {
     const history = useHistory();
     const [isConfirmed, setIsConfirmed] = useState<boolean>(false);
     const [isRefused, setIsRefused] = useState<boolean>(false);
-    const [allUsers, setAllUsers] = useState();
+    const [index, setIndex] = useState();
 
     function confirm() {
         setIsConfirmed(true);
-        //staviti u listu prijatelja
     }
 
-    const handleDeleteOnClick = () => {
+    function refuse(){
+        setIsRefused(true);
+
+        allUsers.filter(function(u){
+            if(u.id==user.id){
+                setIndex(allUsers.indexOf(u))
+            }
+        })
+
+        allUsers.splice(index,1)
+
+       // months.splice(0, 1);
+        // removes 1 element at index 0
+    }
+
+    /*const handleDeleteOnClick = () => {
         setIsRefused(true);
         fetch("/api/users/" + user.id, {
             method: "DELETE",
@@ -32,12 +48,13 @@ export const ShowFriendshipRequest= ({ user}: Props) => {
                 window.location.href = "/friendship-request-list";
             }
         });
-    };
+    };*/
 
 
     return (
 
         <div className="users-container">
+
             {!isConfirmed && !isRefused?(
             <div>
                  <img
@@ -52,11 +69,20 @@ export const ShowFriendshipRequest= ({ user}: Props) => {
                 <button type="submit" className="submitButton" onClick={() => confirm()}>
                     Prihvati
                 </button>
-                <button type="submit" className="submitButton" onClick={handleDeleteOnClick}>
+                <button type="submit" className="submitButton" onClick={() => refuse()}>
                     Odbij
                 </button>
             </div>
-            ):(<div> </div>)}
+            ):(
+
+                <div>Brisem usera na indexu: {index}, useri koji su ostali:
+
+                    {allUsers.map((user) => (
+                        <div key={user.id}>
+                            {user.name}
+                        </div>
+                    ))} </div>
+            )}
         </div>
 
     );

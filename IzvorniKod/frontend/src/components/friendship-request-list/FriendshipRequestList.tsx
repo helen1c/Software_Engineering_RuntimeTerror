@@ -25,7 +25,7 @@ export const FriendshipRequestList = () => {
                 allUsers.filter((user) => user.name.toLowerCase())
             }
         });
-    });
+    }, []);
 
     return (
         <div>
@@ -35,7 +35,7 @@ export const FriendshipRequestList = () => {
                     Ne postoji niti jedan zahtjev za prijateljstvo.
                 </div>
             ) : (
-                <ShowFriendshipRequestList users={allUsers} />
+                <ShowFriendshipRequestList allUsers={allUsers} setAllUsers={setAllUsers} />
             )}
         </div>
     );
