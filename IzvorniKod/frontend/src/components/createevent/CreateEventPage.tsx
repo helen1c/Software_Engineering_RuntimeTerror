@@ -7,18 +7,17 @@ import moment from "moment";
 import {EventDays} from "./EventDays";
 import {EventInfo} from "./EventInfo";
 import {Paths} from "./models/Paths";
+import {useHistory} from "react-router";
 
 export const CreateEventPage = () => {
-    const [isSubmit, setIsSubmit] = useState<boolean>(false);
+    const history = useHistory();
     const [eventDays, setEventDays] = useState<EventInfo[]>([]);
     const [falseDate, setIsFalseDate] = useState<boolean>(false);
     const [paths, setPaths] = useState<Paths[]>();
 
-// {isSubmit  &&<EventDays cardsToRender={eventDays} />}
     const formik = useFormik({
         initialValues: {
             name: "",
-            path: "",
             endDate: "",
             startDate: "",
             description: "",
@@ -29,8 +28,6 @@ export const CreateEventPage = () => {
         validateOnBlur: false,
         validationSchema: Yup.object({
             name: Yup.string().required("Obavezan unos!"),
-
-            path: Yup.string().required("Obavezan unos!"),
             startDate: Yup.date().required("Obavezan unos!"),
             endDate: Yup.date().min(Yup.ref("startDate")).required("Obavezan unos!"),
         }),
@@ -39,7 +36,6 @@ export const CreateEventPage = () => {
             let newEvent = {
                 userId: 1,
                 name: values.name,
-                path: values.path,
                 endDate: values.endDate,
                 startDate: values.startDate,
                 description: values.description,
@@ -50,19 +46,20 @@ export const CreateEventPage = () => {
                 method: "POST",
                 body: JSON.stringify(newEvent),
                 headers: new Headers({
+                    "Content-Type": "application/json",
                     authorization: sessionStorage.getItem("key") || "",
                 }),
             }).then(function (response) {
-                if (response.status === 200) {
-                    alert("yay")
+                if (response.status === 201) {
+                    history.push('/home')   //promijeniti poslije
                 } else {
-                    alert("buu")
+                    //nadodat isto kao na izradi doma
                 }
             });
         },
     });
 
-    function a() {
+    function calculateDayDifference() {
         var date1 = new Date(formik.values.endDate);
         var date2 = new Date(formik.values.startDate);
 
@@ -71,7 +68,6 @@ export const CreateEventPage = () => {
 
         initializeCards(admission.diff(discharge, "days"));
 
-        setIsSubmit(true);
         setIsFalseDate(false);
 
         if (date1 < date2) {
@@ -80,11 +76,19 @@ export const CreateEventPage = () => {
 
     }
 
-    const initializeCards = (differenceInDays: Number) => {
+    const initializeCards = (differenceInDays: number) => {
         let cards: EventInfo[] = [];
-        for (let i = 1; i <= differenceInDays.valueOf() + 1; i++) {
-            const card: EventInfo = {date: i};
-            cards.push(card);
+
+        for (let i = 1; i <= differenceInDays + 1; i++) {
+            if (formik.values.startDate !== null) {
+                const cardDate = new Date(
+                    moment(formik.values.startDate)
+                        .add(i, "days")
+                        .toDate()
+                );
+                const card: EventInfo = { date: cardDate.toISOString().slice(0,10)};
+                cards.push(card);
+            }
         }
         setEventDays(cards);
     };
@@ -151,14 +155,14 @@ export const CreateEventPage = () => {
                         </div>
                     </div>
                     <div>
-                        <button className="submitButton" onClick={() => a()}>
+                        <button className="submitButton" onClick={() => calculateDayDifference()} type="button">
                             Unesi detalje po danima
                         </button>
 
                         {falseDate ? (
                             <div className="event-input">Datum početka mora biti prije datuma završetka</div>
                         ) : (
-                            <EventDays cardsToRender={eventDays} startDate={formik.values.startDate} paths={paths || []}
+                            <EventDays cardsToRender={eventDays} paths={paths || []}
                                        setPaths={setPaths}/>
                         )}
                     </div>
