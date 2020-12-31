@@ -1,0 +1,130 @@
+.mountain-path-cnt {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    height: 70px;
+    border-radius: 50px;
+    border: 2px solid green;
+    align-items: center;
+    width: 75vw;
+    cursor: pointer;
+    color: green;
+
+    filter: drop-shadow(0px 10px 10px rgba(0, 0, 0, 0.35));
+}
+.mountain-path-main-info{
+    background-color: #86e786;;
+    color: white;
+//border: 2px solid green;
+    border-radius: 10px;
+}
+
+.mountain-path-cnt:hover{
+    background-color: #287334;
+    color: white;
+}
+
+@media all and (max-width: 680px) {
+    .mountain-path-cnt {
+        width: 95vw;
+    }
+    .mountain-path-cnt-expand {
+        width: 95vw;
+    }
+    .mini-image,.mini-image-2{
+        display: none;
+    }
+    .mountain-path-extend-info {
+        flex-direction: column;
+        padding: 0.5rem;
+        height: 300px;
+    }
+}
+@media only screen and (min-width: 681px) and (max-width: 1150px) {
+    .mountain-path-cnt-expand{
+        width: 60vw;
+    }
+    .mini-image,.mini-image-2{
+        display: none;
+    }
+    .mountain-path-extend-info {
+        flex-direction: column;
+    }
+}
+
+.mountain-path-main-info {
+    display: flex;
+    flex-direction: row;
+    height: 50px;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.mountain-path-cnt-expand {
+    display: flex;
+    flex-direction: column;
+    box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+    font-family: Roboto,sans-serif;
+    width: 75vw;
+}
+
+.mountain-path-extend-info {
+    display: flex;
+    height: 250px;
+    align-items: center;
+    justify-content: space-evenly;
+    background-image: linear-gradient(to top, rgba(0,255 ,7 , 0), rgb(213 255 206));
+
+}
+.mountain-path-cnt-mini{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0.8rem;
+    margin-bottom: 0.8rem;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    padding: 0.7rem;
+    border-radius: 10px;
+    background-color: white;
+}
+.mountain-path-cnt-mini:hover{
+    transform: scale(1.03);
+}
+.mountain-path-datecreated{
+    color: #798599;
+}
+
+.mini-image{
+    height: 40px;
+    width: 40px;
+}
+.mini-image-2{
+    height: 70px;
+    width: auto;
+}
+fieldset {
+    padding: .35em .75em .625em;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    border-color: white;
+}
+
+
+.mountain-path-length:before , .mountain-path-elevation:before{
+    background: #afafaf;
+    width: 7px;
+    height: 7px;
+    content: "";
+    display: inline-block;
+    border-radius: 20px;
+    margin-right: 5px;
+}
+
+.mountain-path-name{
+    width: 30%;
+}
+

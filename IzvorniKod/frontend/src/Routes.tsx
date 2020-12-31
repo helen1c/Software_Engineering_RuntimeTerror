@@ -11,6 +11,7 @@ import MountainPathCreate from "./components/mountain-path/component/MountainPat
 import MountainLodgeCreate from "./components/mountain-lodge/component/MountainLodgeCreate/MountainLodgeCreate";
 import {MountainLodgeSearch} from "./components/mountain-lodge/component/MountainLodgeSearch/MountainLodgeSearch";
 import {MountainPathSearch} from "./components/mountain-path/component/MountainPathSearch/MountainPathSearch";
+import {EventSearchResult} from "./components/event/component/EventSearchResult";
 import {CreateEventPage} from "./components/createevent/CreateEventPage";
 import {FriendshipRequestList} from "./components/friendship-request-list/FriendshipRequestList";
 import {SearchUsers} from "./components/search-all-users/SearchUsers";
@@ -37,6 +38,7 @@ export const Routes = () => {
                 <Route path="/friendship-request-list" component={FriendshipRequestList} exact/>
                 <Route path="/events/create" component={CreateEventPage} exact/>
                 <Route path="/users/search" component={SearchUsers} exact/>
+                <Route path="/events" component={EventSearchResult} exact/>
             </Switch>
         </div>
     );
