@@ -10,8 +10,6 @@ import java.util.List;
 public class CommunityEventDto {
     private Long userId;
 
-    private String userName;
-
     @Size(max = 50, message = "Ime smije sadržavati najviše 50 znakova.")
     @NotBlank(message = "Ime je obavezno.")
     private String name;
@@ -45,11 +43,6 @@ public class CommunityEventDto {
     public Long getUserId() { return userId; }
 
     public void setUserId(Long userId) { this.userId = userId; }
-
-    public String getUserName() { return userName; }
-
-    public void setUserName(String userName) { this.userName = userName; }
-
 
     public String getName() {
         return name;

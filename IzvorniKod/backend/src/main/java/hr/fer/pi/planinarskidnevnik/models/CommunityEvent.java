@@ -9,7 +9,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+@Entity(name = "event")
 @Table(name = "event")
 public class CommunityEvent {
 

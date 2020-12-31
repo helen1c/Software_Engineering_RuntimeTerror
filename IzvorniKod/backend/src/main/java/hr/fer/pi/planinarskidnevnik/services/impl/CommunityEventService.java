@@ -53,7 +53,13 @@ public class CommunityEventService {
 
 
     public CommunityEvent createEvent(CommunityEventDto eventCreateDto, Principal principal) {
-        final CommunityEvent event = new CommunityEvent(eventCreateDto.getName(), eventCreateDto.getDescription(), eventCreateDto.getDateCreated(), eventCreateDto.getStartDate(), eventCreateDto.getEndDate());
+        final CommunityEvent event = new CommunityEvent();
+        event.setName(eventCreateDto.getName());
+        event.setDescription(eventCreateDto.getDescription());
+        event.setDateCreated(eventCreateDto.getDateCreated());
+        event.setStartDate(eventCreateDto.getStartDate());
+        event.setEndDate(eventCreateDto.getEndDate());
+        event.setDateCreated(new Date(System.currentTimeMillis()));
         event.setUser(userService.getCurrentUser(principal));
         eventRepository.save(event);
         for (PathDateIdDto path: eventCreateDto.getPaths()) {
@@ -81,7 +87,7 @@ public class CommunityEventService {
             communityEventDto.setName(event.getName());
             communityEventDto.setUser(new UserSearchDto(user.getId(), null, user.getName()));//userService.getImage(user.getEmail())
             communityEventDto.setDescription(event.getDescription());
-            communityEventDto.setDate_created(new Date(System.currentTimeMillis()));
+            communityEventDto.setDate_created(event.getDateCreated());
             communityEventDto.setEnd_date(event.getEndDate());
             communityEventDto.setStart_date(event.getStartDate());
             communityEventDto.setPaths(pathDates);
