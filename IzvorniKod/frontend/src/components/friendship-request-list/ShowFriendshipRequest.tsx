@@ -2,6 +2,7 @@ import {UserInfo} from "../mountain-lodge/models/UserInfo";
 import "./ShowFriendshipRequest.css"
 import React, {useState} from "react";
 import {useHistory} from "react-router";
+import {ShowFriendshipRequestList} from "./ShowFriendshipRequestList";
 
 interface Props {
     user: UserInfo;
@@ -13,22 +14,34 @@ export const ShowFriendshipRequest= ({ user, allUsers, setAllUsers}: Props) => {
     const history = useHistory();
     const [isConfirmed, setIsConfirmed] = useState<boolean>(false);
     const [isRefused, setIsRefused] = useState<boolean>(false);
-    const [index, setIndex] = useState();
+    const [index, setIndex] = useState<number>(-1);
 
     function confirm() {
         setIsConfirmed(true);
     }
 
     function refuse(){
+
         setIsRefused(true);
 
-        allUsers.filter(function(u){
-            if(u.id==user.id){
+        /*allUsers.filter(function(u){
+
+            if(u.id===user.id){
                 setIndex(allUsers.indexOf(u))
             }
-        })
+        })*/
+        allUsers.forEach(function (item) {
 
-        allUsers.splice(index,1)
+            if( item.id === user.id){
+                setIndex(allUsers.indexOf(item))
+            };
+        });
+
+            allUsers.splice(index, 1)
+
+      //allUsers.splice(index, 1)
+        //allUsers.splice(index.valueOf(),1)
+       // setAllUsers(allUsers)
 
        // months.splice(0, 1);
         // removes 1 element at index 0
@@ -75,13 +88,40 @@ export const ShowFriendshipRequest= ({ user, allUsers, setAllUsers}: Props) => {
             </div>
             ):(
 
-                <div>Brisem usera na indexu: {index}, useri koji su ostali:
+                <div>
 
-                    {allUsers.map((user) => (
-                        <div key={user.id}>
-                            {user.name}
+                    {!allUsers.length ? (
+
+                            <div>
+
+                                Brisem usera na indexu: {index}, useri koji su ostali:
+
+                                {allUsers.map((user) => (
+                                    <div key={user.id}>
+                                        {user.name}
+                                    </div>
+                                ))}
+
+                            Ne postoji niti jedan zahtjev za prijateljstvo.
                         </div>
-                    ))} </div>
+                    ) : (
+
+
+                        <div>
+                            Brisem usera na indexu: {index}, useri koji su ostali:
+
+                            {allUsers.map((user) => (
+                                <div key={user.id}>
+                                    {user.name}
+                                </div>
+                            ))}
+
+                        </div>
+
+
+                    )}
+
+                </div>
             )}
         </div>
 
