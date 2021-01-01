@@ -14,7 +14,7 @@ export const ShowFriendshipRequest= ({ user, allUsers, setAllUsers}: Props) => {
     const history = useHistory();
     const [isConfirmed, setIsConfirmed] = useState<boolean>(false);
     const [isRefused, setIsRefused] = useState<boolean>(false);
-    const [index, setIndex] = useState<number>(-1);
+    let allUsersTemp= allUsers;
 
     function confirm() {
         setIsConfirmed(true);
@@ -23,28 +23,17 @@ export const ShowFriendshipRequest= ({ user, allUsers, setAllUsers}: Props) => {
     function refuse(){
 
         setIsRefused(true);
+        let position=-1;
 
-        /*allUsers.filter(function(u){
-
-            if(u.id===user.id){
-                setIndex(allUsers.indexOf(u))
+        allUsersTemp.map((u, index) => {
+            if (u.id === user.id) {
+               position = index;
             }
-        })*/
-        allUsers.forEach(function (item) {
-
-            if( item.id === user.id){
-                setIndex(allUsers.indexOf(item))
-            };
         });
 
-            allUsers.splice(index, 1)
+        allUsersTemp.splice(position, 1);
+        setAllUsers(allUsersTemp);
 
-      //allUsers.splice(index, 1)
-        //allUsers.splice(index.valueOf(),1)
-       // setAllUsers(allUsers)
-
-       // months.splice(0, 1);
-        // removes 1 element at index 0
     }
 
     /*const handleDeleteOnClick = () => {
@@ -87,40 +76,12 @@ export const ShowFriendshipRequest= ({ user, allUsers, setAllUsers}: Props) => {
                 </button>
             </div>
             ):(
-
                 <div>
-
                     {!allUsers.length ? (
-
-                            <div>
-
-                                Brisem usera na indexu: {index}, useri koji su ostali:
-
-                                {allUsers.map((user) => (
-                                    <div key={user.id}>
-                                        {user.name}
-                                    </div>
-                                ))}
-
-                            Ne postoji niti jedan zahtjev za prijateljstvo.
-                        </div>
+                        <div>Nemate prihvaćenih zahtjeva za prijateljstvo.</div>
                     ) : (
-
-
-                        <div>
-                            Brisem usera na indexu: {index}, useri koji su ostali:
-
-                            {allUsers.map((user) => (
-                                <div key={user.id}>
-                                    {user.name}
-                                </div>
-                            ))}
-
-                        </div>
-
-
+                        <div> </div>
                     )}
-
                 </div>
             )}
         </div>
