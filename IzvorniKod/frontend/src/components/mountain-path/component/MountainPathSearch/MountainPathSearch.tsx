@@ -12,6 +12,7 @@ import "./MountainPathSearch.css"
 import {Slider} from "@material-ui/core";
 import {difficultyMarks, walkTimeMarks} from "./MountainPathSearchUtil";
 import {findArchivedPaths} from "../../../../store/actions/findAllArchivedPathsActions";
+import {findGradedPaths} from "../../../../store/actions/findAllGradedPathsActions";
 
 export const MountainPathSearch = () => {
 
@@ -86,9 +87,28 @@ export const MountainPathSearch = () => {
     }
 
     useEffect(() => {
-        if (sessionStorage.getItem("key"))
+        if (sessionStorage.getItem("key")) {
             dispatcher(findArchivedPaths());
+        }
     }, [dispatcher, loggedIn]);
+
+    const {gradedPaths} = useSelector((state: MainReducer) => state.findAllGradedPathsReducer);
+
+    useEffect(() => {
+        if (sessionStorage.getItem("key")) {
+            dispatcher(findGradedPaths());
+        }
+    }, [dispatcher, loggedIn]);
+
+    const getPathGrade = (pathId: number): number|null => {
+        if (loggedIn) {
+            const path = gradedPaths.find((gradedPath) => gradedPath.mountainPathId === pathId);
+            if (path) {
+                return path.grade;
+            }
+        }
+        return null;
+    }
 
     useEffect(() => {
         if (hillResults === undefined || hillResults.length === 0) {
@@ -106,7 +126,6 @@ export const MountainPathSearch = () => {
                 } onSubmit={search}>
                     {({setFieldValue}) => {
                         return (<Form className="search-paths-form">
-
                                 <div className={"search-hill"}>
                                     <button className="search-button" type="submit">&#8981;</button>
                                     <Field className={"input-search"} placeholder={"Pretražite planinarske staze..."}
@@ -159,6 +178,8 @@ export const MountainPathSearch = () => {
                                     </div> : <></>}
 
                                 </div>
+
+
                             </Form>
 
                         );
@@ -173,9 +194,8 @@ export const MountainPathSearch = () => {
                     <span className="mountain-path-difficulty">Zahtjevnost </span>
                 </div>}
                 {searchResults.length > 0 && searchResults.map(result =>
-                    <MountainPathSearchResult result={result} key={result.id} loggedIn={loggedIn} archived={checkId(result.id)}/>)}
+                    <MountainPathSearchResult result={result} key={result.id} loggedIn={loggedIn} archived={checkId(result.id)} grade={getPathGrade(result.id)}/>)}
             </div>
         </>
     );
-
 }

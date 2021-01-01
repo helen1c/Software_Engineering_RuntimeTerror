@@ -64,6 +64,9 @@ public class MountainPath {
         this.mountainPathUserArchive = mountainPathUserArchive;
     }
 
+    @OneToMany(mappedBy = "path")
+    private List<MountainPathGrade> mountainPathGradeList = new ArrayList<>();
+
     public Long getId() {
         return id;
     }
@@ -156,6 +159,13 @@ public class MountainPath {
 
     public void setDifficulty(Short difficulty) {this.difficulty = difficulty;}
 
+    public List<MountainPathGrade> getMountainPathGradeList() {
+        return mountainPathGradeList;
+    }
+
+    public void setMountainPathGradeList(List<MountainPathGrade> mountainPathGradeList) {
+        this.mountainPathGradeList = mountainPathGradeList;
+    }
 
     @Override
     public boolean equals(Object o) {

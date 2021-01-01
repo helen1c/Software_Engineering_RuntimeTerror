@@ -1,14 +1,17 @@
 package hr.fer.pi.planinarskidnevnik.services.impl;
 
 import hr.fer.pi.planinarskidnevnik.dtos.MountainPath.MountainPathCreateRequest;
+import hr.fer.pi.planinarskidnevnik.dtos.MountainPath.MountainPathGradeRequest;
 import hr.fer.pi.planinarskidnevnik.dtos.MountainPath.MountainPathSearchRequest;
 import hr.fer.pi.planinarskidnevnik.exceptions.MountainPathAlreadyExistsException;
 import hr.fer.pi.planinarskidnevnik.exceptions.ResourceNotFoundException;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainPathCreateRequestToMountainPathMapper;
 import hr.fer.pi.planinarskidnevnik.models.Hill;
 import hr.fer.pi.planinarskidnevnik.models.MountainPath;
+import hr.fer.pi.planinarskidnevnik.models.MountainPathGrade;
 import hr.fer.pi.planinarskidnevnik.models.User;
 import hr.fer.pi.planinarskidnevnik.repositories.HillRepository;
+import hr.fer.pi.planinarskidnevnik.repositories.MountainPathGradeRepository;
 import hr.fer.pi.planinarskidnevnik.repositories.MountainPathRepository;
 import hr.fer.pi.planinarskidnevnik.repositories.UserRepository;
 import hr.fer.pi.planinarskidnevnik.services.MountainPathQueryService;
@@ -32,16 +35,18 @@ public class MountainPathQueryServiceImpl implements MountainPathQueryService {
     private final UserRepository userRepository;
     private final MountainPathCreateRequestToMountainPathMapper createRequestToMountainPathMapper;
     private final MountainPathSearchSpecification specification;
+    private final MountainPathGradeRepository mountainPathGradeRepository;
 
     @Autowired
     public MountainPathQueryServiceImpl(MountainPathRepository mountainPathRepository, HillRepository hillRepository,
                                         UserRepository userRepository, MountainPathCreateRequestToMountainPathMapper createRequestToMountainPathMapper,
-                                        MountainPathSearchSpecification specification){
+                                        MountainPathSearchSpecification specification, MountainPathGradeRepository mountainPathGradeRepository){
         this.mountainPathRepository = mountainPathRepository;
         this.hillRepository = hillRepository;
         this.userRepository = userRepository;
         this.createRequestToMountainPathMapper = createRequestToMountainPathMapper;
         this.specification = specification;
+        this.mountainPathGradeRepository = mountainPathGradeRepository;
     }
 
     @Override
@@ -76,5 +81,19 @@ public class MountainPathQueryServiceImpl implements MountainPathQueryService {
         LOGGER.info("Find all mountain lodges when searchText equals: {} and hill id equals {}", request.getName(), request.getHillId());
 
         return mountainPathRepository.findAll(specification.getFilter(request));
+    }
+
+    @Override
+    public MountainPathGrade gradeMountainPath(MountainPathGradeRequest gradeRequest, Principal principal) {
+        User author = userRepository.findByEmail(principal.getName()).orElseThrow(() -> new ResourceNotFoundException("Cannot find user with email: " + principal.getName()));
+        MountainPath mountainPath = mountainPathRepository.findById(gradeRequest.getMountainPathId()).orElseThrow(() -> new ResourceNotFoundException("Cannot find mountain path with id: " + gradeRequest.getMountainPathId()));
+
+        MountainPathGrade mountainPathGrade = new MountainPathGrade(author, mountainPath, gradeRequest.getGrade());
+        return mountainPathGradeRepository.save(mountainPathGrade);
+    }
+
+    @Override
+    public MountainPath getMountainPathById(Long id) {
+        return mountainPathRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Cannot find mountain path with id: " + id));
     }
 }

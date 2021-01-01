@@ -1,6 +1,7 @@
 package hr.fer.pi.planinarskidnevnik.services.impl;
 
 import hr.fer.pi.planinarskidnevnik.dtos.MountainLodgeArchive.MountainLodgeArchiveResponse;
+import hr.fer.pi.planinarskidnevnik.dtos.MountainPath.MountainPathGradeResponse;
 import hr.fer.pi.planinarskidnevnik.dtos.MountainPathArchiveResponse;
 import hr.fer.pi.planinarskidnevnik.dtos.Badge.BadgeDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserCreateDto;
@@ -10,7 +11,9 @@ import hr.fer.pi.planinarskidnevnik.dtos.User.UserSearchDto;
 import hr.fer.pi.planinarskidnevnik.exceptions.*;
 import hr.fer.pi.planinarskidnevnik.exceptions.IllegalAccessException;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainLodgeArchiveToMountainLodgeArchiveResponseMapper;
+import hr.fer.pi.planinarskidnevnik.mappers.MountainPathGradeToMountainPathGradeResponseMapper;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainPathUserArchiveToMountainPathArchiveResponseMapper;
+import hr.fer.pi.planinarskidnevnik.models.MountainPathGrade;
 import hr.fer.pi.planinarskidnevnik.models.Role;
 import hr.fer.pi.planinarskidnevnik.models.User;
 import hr.fer.pi.planinarskidnevnik.repositories.MountainLodgeRepository;
@@ -41,14 +44,16 @@ public class UserService {
     private final String DEFAULT_PROFILE_IMAGE = "/images/planinar.jpeg";
     private final MountainLodgeArchiveToMountainLodgeArchiveResponseMapper lodgeArchiveResponseMapper;
     private final MountainPathUserArchiveToMountainPathArchiveResponseMapper pathArchiveResponseMapper;
+    private final MountainPathGradeToMountainPathGradeResponseMapper pathGradeResponseMapper;
 
     @Autowired
-    public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder encoder, MountainLodgeRepository mountainLodgeRepository, MountainLodgeArchiveToMountainLodgeArchiveResponseMapper lodgeArchiveResponseMapper, MountainPathUserArchiveToMountainPathArchiveResponseMapper pathArchiveResponseMapper) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder encoder, MountainLodgeRepository mountainLodgeRepository, MountainLodgeArchiveToMountainLodgeArchiveResponseMapper lodgeArchiveResponseMapper, MountainPathUserArchiveToMountainPathArchiveResponseMapper pathArchiveResponseMapper, MountainPathGradeToMountainPathGradeResponseMapper pathGradeResponseMapper) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.encoder = encoder;
         this.lodgeArchiveResponseMapper = lodgeArchiveResponseMapper;
         this.pathArchiveResponseMapper = pathArchiveResponseMapper;
+        this.pathGradeResponseMapper = pathGradeResponseMapper;
     }
 
     public Optional<User> findByEmail(String email) {
@@ -244,8 +249,12 @@ public class UserService {
 
     public List<MountainPathArchiveResponse> getArchivedPaths(Principal principal) {
         User currUser = getCurrentUser(principal);
-
         return pathArchiveResponseMapper.mapToList(currUser.getMountainPathUserArchive());
     }
 
+    public List<MountainPathGradeResponse> getGradedPaths(Principal principal) {
+        User currUser = getCurrentUser(principal);
+        List<MountainPathGrade> mountainPathGradeList = currUser.getMountainPathGradeList();
+        return pathGradeResponseMapper.mapToList(mountainPathGradeList);
+    }
 }

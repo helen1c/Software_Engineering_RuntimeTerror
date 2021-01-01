@@ -17,6 +17,7 @@ public class MountainPathSearchResponse {
     private Date dateCreated;
     private boolean isPrivate;
     private Short difficulty;
+    private Double averageGrade;
 
     public Short getDifficulty() {
         return difficulty;
@@ -104,5 +105,13 @@ public class MountainPathSearchResponse {
 
     public void setPrivate(boolean aPrivate) {
         isPrivate = aPrivate;
+    }
+
+    public Double getAverageGrade() {
+        return averageGrade;
+    }
+
+    public void setAverageGrade(Double averageGrade) {
+        this.averageGrade = averageGrade;
     }
 }
