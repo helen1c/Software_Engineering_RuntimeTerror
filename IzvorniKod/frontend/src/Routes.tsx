@@ -11,6 +11,7 @@ import MountainPathCreate from "./components/mountain-path/component/MountainPat
 import MountainLodgeCreate from "./components/mountain-lodge/component/MountainLodgeCreate/MountainLodgeCreate";
 import {MountainLodgeSearch} from "./components/mountain-lodge/component/MountainLodgeSearch/MountainLodgeSearch";
 import {MountainPathSearch} from "./components/mountain-path/component/MountainPathSearch/MountainPathSearch";
+import {CreateEventPage} from "./components/createevent/CreateEventPage";
 
 export const Routes = () => {
 
@@ -31,6 +32,7 @@ export const Routes = () => {
                 <Route path="/profile/:id" component={MenuProfile} exact/>
                 <Route path="/mountain-path/create" component={MountainPathCreate} exact/>
                 <Route path="/mountain-lodge/create" component={MountainLodgeCreate} exact/>
+                <Route path="/events/create" component={CreateEventPage} exact/>
             </Switch>
         </div>
     );

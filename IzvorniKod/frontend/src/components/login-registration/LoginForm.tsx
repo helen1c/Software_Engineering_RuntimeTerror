@@ -17,7 +17,8 @@ export const LoginForm = () => {
     );
     sessionStorage.removeItem("successfulRegistration");
   }, []);
-  const handleClose2 = (event?: React.SyntheticEvent, reason?: string) => {
+
+  const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
     if (reason === "clickaway") {
       return;
     }
@@ -68,8 +69,8 @@ export const LoginForm = () => {
 
   return (
     <div className="loginForm">
-      <Snackbar open={success} autoHideDuration={3000} onClose={handleClose2}>
-        <Alert onClose={handleClose2} severity="success">
+      <Snackbar open={success} autoHideDuration={3000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success">
           Uspješno ste se registrirali.
         </Alert>
       </Snackbar>
