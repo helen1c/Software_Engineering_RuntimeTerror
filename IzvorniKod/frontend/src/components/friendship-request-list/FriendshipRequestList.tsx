@@ -7,7 +7,7 @@ export const FriendshipRequestList = () => {
     const [allUsers, setAllUsers] = useState<UserInfo[]>([]);
 
     useEffect(() => {
-        fetch("/api/users/community?name=", {
+        fetch("/api/users/friend-requests-received", {
             method: "GET",
             headers: new Headers({
                 authorization: sessionStorage.getItem("key") || "",

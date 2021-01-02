@@ -277,9 +277,14 @@ public class UserService {
         userRepository.save(receiver);
     }
 
-    public List<User> checkFriendRequests(String email) {
+    public List<UserSearchDto> checkFriendRequests(String email) {
         User user = findByEmail(email).orElseThrow(() -> new ResourceNotFoundException(email));
-        return user.getFriendRequests();
+        List<UserSearchDto> allRequests = new ArrayList<>();
+
+        for (User u : user.getFriendRequests()) {
+            allRequests.add(new UserSearchDto(u.getId(), getImage(u.getEmail()), u.getName()));
+        }
+        return allRequests;
     }
 
     public void acceptFriendRequest(Principal principal, Long senderId) {
@@ -320,5 +325,14 @@ public class UserService {
         }
 
         return searchResult;
+    }
+
+    public void friendRequestDecline(Principal principal, Long senderId) {
+        User sender = getUserById(senderId);
+        User receiver = getCurrentUser(principal);
+
+        List<User> friendshipRequests = receiver.getFriendRequests();
+        friendshipRequests.remove(sender);
+        userRepository.save(receiver);
     }
 }

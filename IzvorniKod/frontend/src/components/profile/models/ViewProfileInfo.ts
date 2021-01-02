@@ -9,6 +9,7 @@ export interface ViewProfileInfo {
     friend: boolean;
     isOwner: boolean;
     isAdmin: boolean;
+    sentFriendRequest: boolean;
     image: string;
     badges: Badge[];
 }
@@ -23,6 +24,7 @@ export const getEmptyProfile = (): ViewProfileInfo => {
         friend: false,
         isOwner: false,
         isAdmin: false,
+        sentFriendRequest: false,
         image: "",
         badges: []
     };

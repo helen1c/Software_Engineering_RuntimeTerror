@@ -100,7 +100,7 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/friend-requests-revieved")
+    @GetMapping("/friend-requests-received")
     public ResponseEntity<?> checkFriendRequests(Principal principal) {
         return ResponseEntity.ok(userService.checkFriendRequests(principal.getName()));
     }
@@ -108,6 +108,12 @@ public class UserController {
     @PostMapping("/friend-request-accept/{id}")
     public ResponseEntity<?> acceptFriendRequest(Principal principal, @PathVariable("id") final Long senderId) {
         userService.acceptFriendRequest(principal, senderId);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/friend-request-decline/{id}")
+    public ResponseEntity<?> friendRequestDecline(Principal principal, @PathVariable("id") final Long senderId) {
+        userService.friendRequestDecline(principal, senderId);
         return ResponseEntity.ok().build();
     }
 
