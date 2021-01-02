@@ -34,8 +34,6 @@ export const findEvents = () => (dispatch: Dispatch<findAllEventsTypes>) => {
 }
 
 const getAllEvents = async (): Promise<EventResult[]> => {
-    // let result = await fetch("/api/event/all");
-    // return result.json();
     const response = await fetch("/api/event/all");
     const json = await response.json();
     return json;

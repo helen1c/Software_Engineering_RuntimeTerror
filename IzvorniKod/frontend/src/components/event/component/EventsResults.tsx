@@ -4,13 +4,15 @@ import {useDispatch, useSelector} from "react-redux";
 import {findEvents} from "../../../store/actions/findAllEventsAction";
 import {MainReducer} from "../../../store/reducer";
 
-export const EventSearchResult = () =>{
+export const EventsResults = () =>{
 
     const dispatcher = useDispatch();
     const {results: eventsResults,status} = useSelector((state: MainReducer) => state.findAllEvents);
+    const [read,setRead] = useState(true);
 
     useEffect(() => {
-        if (eventsResults === undefined || eventsResults.length === 0) {
+        if (eventsResults === undefined || read) {
+            setRead(false);
             console.log("Get all Events...");
             dispatcher(findEvents());
         }
