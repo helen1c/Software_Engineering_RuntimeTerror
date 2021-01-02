@@ -29,14 +29,14 @@ export const MountainPath = (prop: Props) => {
     return (
         <>
             {!expand ?
-                <div onClick={() => setExpand(true)} className="mountain-path-cnt">
+                <div onClick={() => setExpand(true)} className="mountain-path-cnt2">
                     <span className="mountain-path-name">{prop.result.name}</span>
                     <span className="mountain-path-hillname"> {prop.result.hill.name}</span>
                     <span className="mountain-path-walktime">Trajanje: {prop.result.avgWalkTime}</span>
                     <span className="mountain-path-difficulty"> {mapdiff()}</span>
                 </div>
                 :
-                <div className="mountain-path-cnt-expand" onClick={() =>setExpand(false)}>
+                <div className="mountain-path-cnt-expand2" onClick={() =>setExpand(false)}>
                     <div className="mountain-path-main-info">
                         <span className="mountain-path-name-expand">{prop.result.name}</span>
                         <span className="mountain-path-hillname-expand"> {prop.result.hill.name}</span>

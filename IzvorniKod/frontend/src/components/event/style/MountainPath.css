@@ -1,4 +1,4 @@
-.mountain-path-cnt {
+.mountain-path-cnt2 {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -60,7 +60,7 @@
     justify-content: space-evenly;
 }
 
-.mountain-path-cnt-expand {
+.mountain-path-cnt-expand2 {
     display: flex;
     flex-direction: column;
     box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.25);

@@ -1,36 +1,33 @@
 import React, {useEffect, useState} from "react";
-import {EventResult} from "../models/EventResult";
 import {Event} from "./Event";
-import {Paths} from "../models/Paths";
-import {Day} from "./Day";
-
-
+import {useDispatch, useSelector} from "react-redux";
+import {findEvents} from "../../../store/actions/findAllEventsAction";
+import {MainReducer} from "../../../store/reducer";
 
 export const EventSearchResult = () =>{
 
-    const [searchResults, setSearchResults] = useState<EventResult[]>([]);
+    const dispatcher = useDispatch();
+    const {results: eventsResults,status} = useSelector((state: MainReducer) => state.findAllEvents);
 
     useEffect(() => {
-        async function find() {
-            const requestOptions = {
-                method: "GET",
-                headers: {
-                    Accept: "application/json",
-                    authorization: sessionStorage.getItem("key") || "",
-                    "Content-Type": "application/json"
-                }
-            };
-            const response = await fetch("/api/event/all", requestOptions);
-            const json = await response.json();
-            setSearchResults(json);
+        if (eventsResults === undefined || eventsResults.length === 0) {
+            console.log("Get all Events...");
+            dispatcher(findEvents());
         }
-        find()
-    }, [])
+    }, [dispatcher, eventsResults]);
 
     return(
         <div>
-            {/*{searchResults.map(searchResults => searchResults.user.image )}*/}
-            {searchResults.map(result => <Event result={result}/>)}
+            {status === "error" ? <h1>Dogodila se pogreška!</h1> :
+                <div>
+                    {eventsResults.length === 0 && status ==="success"?
+                        <h1> Nema rezultata!</h1> :
+                        <div>
+                            {eventsResults.map(result => <Event result={result}/>)}
+                        </div>
+                    }
+                </div>
+            }
         </div>
     );
 }
