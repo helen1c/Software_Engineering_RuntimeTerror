@@ -84,7 +84,7 @@ public class UserController {
         return ResponseEntity.ok(userService.getImage(principal.getName()));
     }
 
-    @PostMapping("/friend-request/{id}")
+    @PostMapping("/add-friend/{id}")
     public ResponseEntity<?> sendFriendRequest(Principal principal, @PathVariable("id") final Long receiverId) {
         userService.sendFriendRequest(principal.getName(), receiverId);
         return ResponseEntity.ok().build();

@@ -1,37 +1,26 @@
 package hr.fer.pi.planinarskidnevnik.services.impl;
 
+import hr.fer.pi.planinarskidnevnik.dtos.Badge.BadgeDto;
 import hr.fer.pi.planinarskidnevnik.dtos.MountainLodgeArchive.MountainLodgeArchiveResponse;
 import hr.fer.pi.planinarskidnevnik.dtos.MountainPath.MountainPathGradeResponse;
 import hr.fer.pi.planinarskidnevnik.dtos.MountainPathArchiveResponse;
-import hr.fer.pi.planinarskidnevnik.dtos.Badge.BadgeDto;
-import hr.fer.pi.planinarskidnevnik.dtos.UserCreateDto;
-import hr.fer.pi.planinarskidnevnik.exceptions.*;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserCreateDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserHeaderDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserProfilePageDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserSearchDto;
-import hr.fer.pi.planinarskidnevnik.exceptions.*;
 import hr.fer.pi.planinarskidnevnik.exceptions.IllegalAccessException;
-import hr.fer.pi.planinarskidnevnik.exceptions.*;
+import hr.fer.pi.planinarskidnevnik.exceptions.NoImageException;
+import hr.fer.pi.planinarskidnevnik.exceptions.ResourceNotFoundException;
+import hr.fer.pi.planinarskidnevnik.exceptions.UserWithEmailExistsException;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainLodgeArchiveToMountainLodgeArchiveResponseMapper;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainPathGradeToMountainPathGradeResponseMapper;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainPathUserArchiveToMountainPathArchiveResponseMapper;
 import hr.fer.pi.planinarskidnevnik.models.MountainPathGrade;
-import hr.fer.pi.planinarskidnevnik.exceptions.NoImageException;
-import hr.fer.pi.planinarskidnevnik.exceptions.ResourceNotFoundException;
-import hr.fer.pi.planinarskidnevnik.exceptions.UserWithEmailExistsException;
-import hr.fer.pi.planinarskidnevnik.exceptions.IllegalAccessException;
-import hr.fer.pi.planinarskidnevnik.models.FriendshipRequest;
-import hr.fer.pi.planinarskidnevnik.models.Friendships;
-import hr.fer.pi.planinarskidnevnik.models.friendships.FriendshipRequest;
 import hr.fer.pi.planinarskidnevnik.models.Role;
 import hr.fer.pi.planinarskidnevnik.models.User;
-import hr.fer.pi.planinarskidnevnik.repositories.MountainLodgeRepository;
 import hr.fer.pi.planinarskidnevnik.models.UserBadge.UserBadge;
-import hr.fer.pi.planinarskidnevnik.repositories.FriendshipRequestRepository;
-import hr.fer.pi.planinarskidnevnik.repositories.FriendshipsRepository;
-import hr.fer.pi.planinarskidnevnik.repositories.RoleRepository;
-import hr.fer.pi.planinarskidnevnik.repositories.UserRepository;
+import hr.fer.pi.planinarskidnevnik.models.friendships.FriendshipRequest;
+import hr.fer.pi.planinarskidnevnik.repositories.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +50,7 @@ public class UserService {
     private final MountainPathGradeToMountainPathGradeResponseMapper pathGradeResponseMapper;
 
     @Autowired
-    public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder encoder, FriendshipRequestRepository friendshipRequestRepository,MountainLodgeRepository mountainLodgeRepository, MountainLodgeArchiveToMountainLodgeArchiveResponseMapper lodgeArchiveResponseMapper, MountainPathUserArchiveToMountainPathArchiveResponseMapper pathArchiveResponseMapper, MountainPathGradeToMountainPathGradeResponseMapper pathGradeResponseMapper) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder encoder, FriendshipsRepository friendshipsRepository, FriendshipRequestRepository friendshipRequestRepository, MountainLodgeRepository mountainLodgeRepository, MountainLodgeArchiveToMountainLodgeArchiveResponseMapper lodgeArchiveResponseMapper, MountainPathUserArchiveToMountainPathArchiveResponseMapper pathArchiveResponseMapper, MountainPathGradeToMountainPathGradeResponseMapper pathGradeResponseMapper) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.friendshipRequestRepository = friendshipRequestRepository;
@@ -278,39 +267,27 @@ public class UserService {
     public void sendFriendRequest(String email, Long friendId) {
         User sender = findByEmail(email).orElseThrow(() -> new ResourceNotFoundException(email));
         User receiver = userRepository.getOne(friendId);
-        FriendshipRequest friendshipRequest = new FriendshipRequest(sender, receiver);
-        if (friendshipRequestRepository.existsBySourceUserAndTargetUser(sender, receiver)) {
-            throw new FriendshipRequestExistsException("Zahtjev za prijateljstvo je već poslan!");
-        }
-
-        friendshipRequestRepository.save(friendshipRequest);
+        receiver.getFriendRequests().add(sender);
+        userRepository.save(receiver);
     }
 
-    public List<FriendshipRequest> checkFriendRequests(String email) {
+    public List<User> checkFriendRequests(String email) {
         User user = findByEmail(email).orElseThrow(() -> new ResourceNotFoundException(email));
-        List<FriendshipRequest> req = friendshipRequestRepository.getAllByTargetUser(user);
-        return req;
+        return user.getFriendRequests();
     }
 
     public void acceptFriendRequest(Principal principal, Long senderId) {
         User sender = getUserById(senderId);
         User receiver = getCurrentUser(principal);
 
-        Optional<FriendshipRequest> optionalFriendshipRequest = friendshipRequestRepository.getBySourceUserAndTargetUser(sender, receiver);
-
-        if (optionalFriendshipRequest.isEmpty()) {
-            throw new ResourceNotFoundException("Zahtjev za prijatljstvo ne postoji");
+        List<User> friendshipRequests = receiver.getFriendRequests();
+        if (friendshipRequests.contains(sender)) {
+            friendshipRequests.remove(sender);
+            sender.getFriends().add(receiver);
+            receiver.getFriends().add(sender);
+            sender.getFriendRequestsNotifications().add(receiver);
         }
-
-        FriendshipRequest friendshipRequest = optionalFriendshipRequest.get();
-
-//        Friendships friendshipReceiver = new Friendships(sender, receiver);
-//        Friendships friendshipSender = new Friendships(receiver, sender);
-//
-//        receiver.getFriendships().add(friendshipSender);
-//        sender.getFriendships().add(friendshipReceiver);
-
-
-        friendshipRequestRepository.delete(friendshipRequest);
+        userRepository.save(sender);
+        userRepository.save(receiver);
     }
 }

@@ -1,9 +1,7 @@
 package hr.fer.pi.planinarskidnevnik.controllers;
 
-import hr.fer.pi.planinarskidnevnik.exceptions.FriendshipRequestExistsException;
+import hr.fer.pi.planinarskidnevnik.exceptions.*;
 import hr.fer.pi.planinarskidnevnik.exceptions.IllegalAccessException;
-import hr.fer.pi.planinarskidnevnik.exceptions.ResourceNotFoundException;
-import hr.fer.pi.planinarskidnevnik.exceptions.UserWithEmailExistsException;
 import hr.fer.pi.planinarskidnevnik.exceptions.dtos.ConstraintViolationDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

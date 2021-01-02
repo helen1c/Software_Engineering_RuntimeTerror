@@ -52,31 +52,34 @@ public class User {
 
     private byte[] image;
 
-    @OneToMany
-    @JoinColumn(referencedColumnName = "id")
-    @JsonBackReference
-    private List<User> friendRequests;
-
     @ManyToOne
     @JoinColumn(nullable = false)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Role role;
 
-//    @OneToMany(mappedBy = "user")
-//    @JoinColumn(name = "sender")
-//    private List<FriendshipRequest> friendshipRequests = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(
+            name = "friendships",
+            joinColumns = @JoinColumn(name = "current_user_id"),
+            inverseJoinColumns = @JoinColumn(name = "friend_id")
+    )
+    private List<User> friends;
 
-//    @OneToMany(mappedBy="currentUser")
-//    private List<User> friendships;
-//
-//    @ManyToOne(cascade=CascadeType.ALL)
-//    @JoinColumn(name="current_user_id")
-//    @JsonBackReference
-//    private User currentUser;
+    @ManyToMany
+    @JoinTable(
+            name = "friendship_request",
+            joinColumns = @JoinColumn(name = "sender"),
+            inverseJoinColumns = @JoinColumn(name = "receiver")
+    )
+    private List<User> friendRequests;
 
-    @OneToMany(cascade=CascadeType.ALL)
-    @JoinTable(name="user_friends")
-    List<User> friends = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(
+            name = "friendships_notifications",
+            joinColumns = @JoinColumn(name = "friendship_request_sender"),
+            inverseJoinColumns = @JoinColumn(name = "friendship_request_receiver")
+    )
+    private List<User> friendRequestsNotifications;
 
     @OneToMany(mappedBy = "user")
     private List<MountainPathGrade> mountainPathGradeList = new ArrayList<>();
@@ -208,23 +211,6 @@ public class User {
         this.role = role;
     }
 
-//    public List<Friendships> getFriendships() {
-//        return friendships;
-//    }
-//
-//    public void setFriendships(List<Friendships> friendships) {
-//        this.friendships = friendships;
-//    }
-
-
-//    public List<FriendshipRequest> getFriendshipRequests() {
-//        return friendshipRequests;
-//    }
-//
-//    public void setFriendshipRequests(List<FriendshipRequest> friendshipRequests) {
-//        this.friendshipRequests = friendshipRequests;
-//    }
-
     public List<MountainPathGrade> getMountainPathGradeList() {
         return mountainPathGradeList;
     }
@@ -245,19 +231,20 @@ public class User {
         this.friendRequests = friendRequest;
     }
 
-    public void addFriendRequest(User sender) {
-        if (friendRequests == null) {
-            friendRequests = new ArrayList<>();
-        }
-        friendRequests.add(sender);
-    }
-
     public List<User> getFriends() {
         return friends;
     }
 
     public void setFriends(List<User> friends) {
         this.friends = friends;
+    }
+
+    public List<User> getFriendRequestsNotifications() {
+        return friendRequestsNotifications;
+    }
+
+    public void setFriendRequestsNotifications(List<User> friendRequestsNotifications) {
+        this.friendRequestsNotifications = friendRequestsNotifications;
     }
 
     @Override

@@ -51,30 +51,75 @@
 
     <changeSet id="20201207221641" author="lravenscak">
         <createTable tableName="friendship_request">
-            <column name="id" type="BIGINT" autoIncrement="true">
+            <column name="sender" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="sender" type="BIGINT">
-                <constraints foreignKeyName="user_sender_id" references="user(id)"/>
-            </column>
             <column name="receiver" type="BIGINT">
-                <constraints foreignKeyName="user_receiver_id" references="user(id)"/>
+                <constraints primaryKey="true"/>
             </column>
         </createTable>
+        <addForeignKeyConstraint baseTableName="friendship_request"
+                                 baseColumnNames="sender"
+                                 constraintName="friendship_request_sender_id_fk"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+        <addForeignKeyConstraint baseTableName="friendship_request"
+                                 baseColumnNames="receiver"
+                                 constraintName="friendship_request_receiver_fk"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
     </changeSet>
 
     <changeSet id="20201227284200" author="lravenscak">
         <createTable tableName="friendships">
-            <column name="id" type="BIGINT" autoIncrement="true">
+            <column name="current_user_id" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="current_user_id" type="BIGINT">
-                <constraints foreignKeyName="current_user_fk" references="user(id)"/>
-            </column>
             <column name="friend_id" type="BIGINT">
-                <constraints foreignKeyName="friend_fk" references="user(id)"/>
+                <constraints primaryKey="true"/>
             </column>
         </createTable>
+        <addForeignKeyConstraint baseTableName="friendships"
+                                 baseColumnNames="current_user_id"
+                                 constraintName="friendships_current_user_id_fk"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+        <addForeignKeyConstraint baseTableName="friendships"
+                                 baseColumnNames="friend_id"
+                                 constraintName="friendships_friend_id_fk"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+
+        <createTable tableName="friendships_notifications">
+            <column name="friendship_request_sender" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="friendship_request_receiver" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="friendships_notifications"
+                                 baseColumnNames="friendship_request_sender"
+                                 constraintName="friendship_request_notification_sender_id_fk"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+        <addForeignKeyConstraint baseTableName="friendships_notifications"
+                                 baseColumnNames="friendship_request_receiver"
+                                 constraintName="friendship_request_notification_receiver_id_fk"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
     </changeSet>
 
 </databaseChangeLog>
