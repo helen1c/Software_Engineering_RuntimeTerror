@@ -31,9 +31,7 @@ export const FriendshipRequestList = () => {
         <div>
 
             {!allUsers.length ? (
-                <div>
-                    Ne postoji niti jedan zahtjev za prijateljstvo.
-                </div>
+                <div> </div>
             ) : (
                 <ShowFriendshipRequestList allUsers={allUsers} setAllUsers={setAllUsers} />
             )}
