@@ -1,0 +1,37 @@
+.user-photo{
+    display:inline;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+.users-container{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+span {
+    padding: 0;
+    margin: 0;
+    font-size: 18px;
+}
+
+.user-name{
+    font-weight: bold;
+}
+
+.event-input{
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+    text-indent: 5px;
+    height: 2.5rem;
+    width: 20vw;
+    min-width: 15rem;
+    border: 2px solid #211648;
+    box-shadow: none !important;
+    outline: none !important;
+    font-family: Roboto, sans-serif;
+    font-size: 1rem;
+}
