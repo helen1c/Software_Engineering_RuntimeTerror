@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from "react";
-import {MessageFindResult} from "./models/MessageFindResult";
 import {MessageResult} from "./MessageResult";
 import "./MessageSearchResult.css";
 import {useDispatch, useSelector} from "react-redux";
 import {MainReducer} from "../../store/reducer";
 import {findMessages} from "../../store/actions/findAllMessagesAction";
+
 
 
 export const MessageSearchResult = () =>{

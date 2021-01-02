@@ -1,12 +1,6 @@
 import React, {useState} from "react";
 import {MessageFindResult} from "./models/MessageFindResult";
 import "./MessageResult.css";
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
-import Tooltip from '@material-ui/core/Tooltip';
-import {MountainLodgeCreateRequest} from "../mountain-lodge/models/MountainLodgeCreateRequest";
-import {Link} from "react-router-dom";
-import {MessageSearchResult} from "./MessageSearchResult";
 
 interface Props {
     result: MessageFindResult;

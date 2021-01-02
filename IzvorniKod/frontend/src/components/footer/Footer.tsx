@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 import "./Footer.css";
 import logo from "../../assets/logo.jpg";
 import {useHistory} from "react-router";
-import Button from "./components/Button";
 import Tipka from "./components/Button";
 import { Link } from "react-router-dom";
 

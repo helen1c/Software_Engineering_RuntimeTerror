@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import "./Button.css";
-import {Field, Form, Formik, useFormik} from "formik";
+import {Field, Form, Formik} from "formik";
 import * as Yup from "yup";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -11,7 +11,6 @@ import {MessageForm} from "../models/MessageForm";
 import MuiAlert, {AlertProps} from "@material-ui/lab/Alert";
 import {makeStyles, Theme} from "@material-ui/core/styles";
 import Snackbar from "@material-ui/core/Snackbar";
-import {MessageFindResult} from "../../message_box/models/MessageFindResult";
 
 function Alert(props: AlertProps) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;

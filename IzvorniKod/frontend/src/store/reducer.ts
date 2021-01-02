@@ -12,7 +12,7 @@ import findMyEventsReducer from "./reducers/findMyEventsReducer";
 
 export const mainReducer = combineReducers(
     {
-        findAllUtilitiesReducer, findAllHillsReducer,findAllMessagesReducer
+        findAllMessagesReducer,
         findAllUtilitiesReducer,
         findAllHillsReducer,
         findAllEventsAndAttendance,
