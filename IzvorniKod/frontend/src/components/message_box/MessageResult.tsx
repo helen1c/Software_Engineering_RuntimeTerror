@@ -5,6 +5,8 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
 import Tooltip from '@material-ui/core/Tooltip';
 import {MountainLodgeCreateRequest} from "../mountain-lodge/models/MountainLodgeCreateRequest";
+import {Link} from "react-router-dom";
+import {MessageSearchResult} from "./MessageSearchResult";
 
 interface Props {
     result: MessageFindResult;
@@ -41,6 +43,7 @@ export const MessageResult = (prop : Props) => {
         const response = await fetch("/api/messages/update", requestOptions);
         window.location.href="/admin/message-box"
 
+
     }
 
     return (
@@ -50,9 +53,7 @@ export const MessageResult = (prop : Props) => {
             <span className="result-column"><p>GRESKA NASTALA:</p>{prop.result.error}</span>
             <text className="result-column"><p>SADRZAJ:</p>{prop.result.content}</text>
             <span className="result-column">
-                <Tooltip open={open} onClose={handleClose} onOpen={handleOpen} title="Solved">
-                    <DoneOutlineIcon className="solved-icon" onClick={update}>RESOLVED</DoneOutlineIcon>
-                </Tooltip>
+                <button onClick={update}>RIJESENO</button>
             </span>
         </div>
     );
