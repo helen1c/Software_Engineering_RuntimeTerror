@@ -190,7 +190,7 @@ public class UserService {
 
     public List<UserSearchDto> getUserCommunity(Principal principal) {
         User currentUser = getCurrentUser(principal);
-        List<User> allUsers = userRepository.getAllByIdNot(currentUser.getId());
+        List<User> allUsers = currentUser.getFriends();
         List<UserSearchDto> searchResult = new ArrayList<>();
 
         for (User u : allUsers) {
@@ -221,7 +221,13 @@ public class UserService {
                 user.getImage() == null ? getImage(user.getEmail()) : user.getImage(),
                 isOwner(profileId, principal.getName()),
                 getRole(principal.getName()).equals("ADMIN"),
+                isFriend(user, principal),
                 convertToBadgeDto(user.getUserBadgeList()));
+    }
+
+    private boolean isFriend(User user, Principal principal) {
+        User currentUser = getCurrentUser(principal);
+        return currentUser.getFriends().contains(user);
     }
 
     public UserHeaderDto getHeaderInformation(Principal principal) {
@@ -289,5 +295,30 @@ public class UserService {
         }
         userRepository.save(sender);
         userRepository.save(receiver);
+    }
+
+    public void removeFriend(Principal principal, Long friendRemovedId) {
+        User sender = getUserById(friendRemovedId);
+        User currentUser = getCurrentUser(principal);
+
+        sender.getFriends().remove(currentUser);
+        sender.getFriendRequestsNotifications().remove(currentUser);
+        currentUser.getFriends().remove(sender);
+        currentUser.getFriendRequestsNotifications().remove(sender);
+
+        userRepository.save(sender);
+        userRepository.save(currentUser);
+    }
+
+    public List<UserSearchDto> getAllUsers(Principal principal) {
+        User currentUser = getCurrentUser(principal);
+        List<User> allUsers = userRepository.getAllByIdNot(currentUser.getId());
+        List<UserSearchDto> searchResult = new ArrayList<>();
+
+        for (User u : allUsers) {
+            searchResult.add(new UserSearchDto(u.getId(), getImage(u.getEmail()), u.getName()));
+        }
+
+        return searchResult;
     }
 }

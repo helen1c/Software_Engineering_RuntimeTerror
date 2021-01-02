@@ -79,4 +79,10 @@ public class ExceptionHandlerControllerAdvice {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(exception.getMessage());
     }
 
+    @ExceptionHandler(LodgeAlreadyArchivedException.class)
+    public final ResponseEntity<?> constraintsViolations(final Exception ex) {
+        LOGGER.error("Constraint exception. " + ex.getMessage());
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
+
 }

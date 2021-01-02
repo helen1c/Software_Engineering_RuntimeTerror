@@ -25,6 +25,8 @@ public class UserProfilePageDto {
 
     private Boolean isAdmin;
 
+    private Boolean isFriend;
+
     private byte[] image;
 
     private List<BadgeDto> badges;
@@ -33,7 +35,7 @@ public class UserProfilePageDto {
         return badges;
     }
 
-    public UserProfilePageDto(String name, String email, String placeOfResidence, Date dateOfBirth, String description, byte[] image, boolean isOwner, boolean isAdmin, List<BadgeDto> badges) {
+    public UserProfilePageDto(String name, String email, String placeOfResidence, Date dateOfBirth, String description, byte[] image, boolean isOwner, boolean isAdmin, boolean isFriend, List<BadgeDto> badges) {
         this.name = name;
         this.email = email;
         this.placeOfResidence = placeOfResidence;
@@ -42,6 +44,7 @@ public class UserProfilePageDto {
         this.image = image;
         this.isOwner = isOwner;
         this.isAdmin = isAdmin;
+        this.isFriend = isFriend;
         this.badges = badges;
     }
 
@@ -107,5 +110,33 @@ public class UserProfilePageDto {
 
     public void setIsAdmin(boolean admin) {
         isAdmin = admin;
+    }
+
+    public Boolean getOwner() {
+        return isOwner;
+    }
+
+    public void setOwner(Boolean owner) {
+        isOwner = owner;
+    }
+
+    public Boolean getAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        isAdmin = admin;
+    }
+
+    public Boolean getFriend() {
+        return isFriend;
+    }
+
+    public void setFriend(Boolean friend) {
+        isFriend = friend;
+    }
+
+    public void setBadges(List<BadgeDto> badges) {
+        this.badges = badges;
     }
 }
