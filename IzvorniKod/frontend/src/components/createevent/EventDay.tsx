@@ -5,6 +5,10 @@ import { MountainPathSearch } from "./models/MountainPathSearch";
 import Select, { ValueType } from "react-select";
 import { MountainPathSelect } from "./models/MountainPathSelect";
 import { Paths } from "./models/Paths";
+import "./EventDay.css";
+import goimg from "../../assets/go.png";
+import finish from "../../assets/finish_flag-512.png";
+import hill from "../../assets/mountains.png";
 
 interface Props {
   paths: Paths[];
@@ -62,8 +66,8 @@ export const EventDay = ({
 
   return (
     <div>
-      <div key={new Date(day.date).getTime()}>
-        <span className="eventComponent">{day.date}:</span>
+      <div  className="event-div" key={new Date(day.date).getTime()}>
+
         <Select
           className="utility-select"
           isClearable={true}
@@ -75,11 +79,21 @@ export const EventDay = ({
           }}
           options={selectValues}
         />
+
+        <div className="eventComponent-date">{day.date}:</div>
         {currentPath && (
-          <div>
-            <div>Početak staze: {currentPath.startPoint}</div>
-            <div>Kraj staze: {currentPath.endPoint}</div>
-            <div>Brdo: {currentPath.hill}</div>
+          <div className="event-details">
+            <div className="event-details-mini">
+              <img className="mini-image-hill" alt="GO" src={goimg}/>
+              <span>{currentPath.startPoint}</span>
+            </div>
+            <div className="event-details-mini">
+              <img className="mini-image-hill" alt="Finish" src={finish}/>
+              <span>{currentPath.endPoint} </span>
+            </div>
+            <div className="event-details-mini">
+              <img className="mini-image-hill" alt="Hill" src={hill}/>
+              <span> {currentPath.hill}</span></div>
           </div>
         )}
       </div>

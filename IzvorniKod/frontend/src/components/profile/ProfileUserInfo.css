@@ -57,6 +57,7 @@ h1.profile-info-title {
 .profile-image-wrap {
     order: 1;
     margin: auto;
+
 }
 
 .input-content , .input-content-name{
@@ -89,7 +90,6 @@ h1.profile-info-title {
     min-width: 10rem;
     box-shadow: none !important;
     outline: none !important;
-    border-radius: 10px;
     font-family: Roboto, sans-serif;
     font-size: 1rem;
     max-width: 25vw;
@@ -146,14 +146,16 @@ h1.profile-info-title {
     margin-left: 0.3rem;
 }
 .input-content-edit{
-    border: 1px solid #211648;
-    border-radius: 10px;
+    border: 2px solid #a1bdee;
     margin-left: 0.2rem;
 }
 
 label{
     font-weight: bold;
 
+}
+u{
+    text-decoration: none;
 }
 input[type='text'] {
     font-family: Roboto, sans-serif !important;
@@ -236,6 +238,9 @@ input[type="date" i] {
 
 .image-input{
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
 }
 
 .input-content-div-name{
