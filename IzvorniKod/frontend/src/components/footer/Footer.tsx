@@ -52,8 +52,6 @@ function Footer() {
                                 <li><Link className="footer-link" to="/home">HOME</Link></li>
                                 <li><Link className="footer-link" to="/mountain-lodge/search">PRETRAZI PLANINARSKE DOMOVE</Link></li>
                                 <li><Link className="footer-link" to="/mountain-path/search">PRETRAZI PLANINARSKE STAZE</Link></li>
-                                {role === "NEPRIJAVLJEN" ? <li><Link className="footer-link" to="/login">PRIJAVA</Link></li> : <li/>}
-                                {role === "NEPRIJAVLJEN" ? <li><Link className="footer-link" to="/register">REGISTRACIJA</Link></li> : <li/>}
                             </ul>
                         </div>
                         <div className="col">
@@ -63,12 +61,31 @@ function Footer() {
                                 <li>i avanturiste</li>
                             </ul>
                         </div>
-                        <div className="col">
-                            <h4 className="list-title">Kontaktirajte nas:</h4>
-                            <ul className="list-elements">
-                                <Tipka result={"Neodredeno"} css={1}/>
-                            </ul>
-                        </div>
+                        {role === "NEPRIJAVLJEN" ?
+                            <div className="col">
+                                <h4 className="list-title">Za više mogućnosti:</h4>
+                                <ul className="list-elements">
+                                    <li><Link className="footer-link" to="/login">PRIJAVA</Link></li>
+                                    <li><Link className="footer-link" to="/register">REGISTRACIJA</Link></li>
+                                </ul>
+                            </div> :
+                            <div className="col">
+                            {role === "PLANINAR" ?
+                                <div>
+                                    <h4 className="list-title">Kontaktirajte nas:</h4>
+                                    <ul className="list-elements">
+                                        <Tipka result={"Neodredeno"} css={1}/>
+                                    </ul>
+                                </div> :
+                                <div>
+                                    <ul className="list-elements">
+                                        <li><Link className="footer-link" to="/users/all">PRETRAŽI KORISNIKE</Link></li>
+                                        <li><Link className="footer-link" to="/admin/message-box">PORUKE KORISNIKA</Link></li>
+                                    </ul>
+                                </div>
+                              }
+                            </div>
+                            }
                     </div>
                     <hr />
                     <div className="row">

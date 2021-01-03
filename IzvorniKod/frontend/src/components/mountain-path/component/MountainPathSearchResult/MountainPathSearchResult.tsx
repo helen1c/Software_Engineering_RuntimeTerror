@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {MountainPathResult} from "../../models/MountainPathResult";
 import "./MountainPathSearchResult.css"
 import goimg from "../../../../assets/go.png";
@@ -30,6 +30,26 @@ export const MountainPathSearchResult = (prop: Props) => {
     const [expand, setExpand] = useState<boolean>(false);
     const [averageGrade, setAverageGrade] = useState<number|null>(prop.result.averageGrade);
     const [messageText, setMessageText] = useState("");
+    const [role,setRole] = useState("");
+
+    useEffect(() => {
+        if (sessionStorage.getItem("key") !== null) {
+            fetch("/api/users/user/role", {
+                method: "GET",
+                headers: new Headers({
+                    authorization: sessionStorage.getItem("key") || "",
+                }),
+            }).then(function (response) {
+                if (response.status === 200) {
+                    response.json().then((e) => {
+                        setRole(e.role);
+                    });
+                }
+            });
+        }else{
+            setRole("NEPRIJAVLJEN")
+        }
+    }, []);
 
     const mapdiff = () => {
         if(prop.result.difficulty <= 3) {
@@ -221,7 +241,10 @@ export const MountainPathSearchResult = (prop: Props) => {
                         {archivedS ? "Arhivirano" : "Arhiviraj"}
                     </Button>
                     </ThemeProvider>}
-                    <Tipka result={prop.result.name} css={2}/>
+                            {role ==="PLANINAR"?
+                                <Tipka result={prop.result.name} css={2}/> :
+                                <div/>
+                            }
                             </div>
                     <div className="buttons-ar-fav">
                         {prop.loggedIn &&
