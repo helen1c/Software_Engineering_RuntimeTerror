@@ -13,6 +13,7 @@ import {MountainLodgeSearch} from "./components/mountain-lodge/component/Mountai
 import {MountainPathSearch} from "./components/mountain-path/component/MountainPathSearch/MountainPathSearch";
 import {CreateEventPage} from "./components/createevent/CreateEventPage";
 import {FriendshipRequestList} from "./components/friendship-request-list/FriendshipRequestList";
+import {FriendshipRequestsNotification} from "./components/friendship-request-notification/FriendshipRequestsNotification";
 import {SearchUsers} from "./components/search-all-users/SearchUsers";
 import {EventsResults} from "./components/event/component/EventsResults";
 
@@ -39,6 +40,7 @@ export const Routes = () => {
                 <Route path="/events/create" component={CreateEventPage} exact/>
                 <Route path="/events" component={EventsResults} exact/>
                 <Route path="/users/search" component={SearchUsers} exact/>
+                <Route path="/friendship-requests-notification" component={FriendshipRequestsNotification} exact/>
             </Switch>
         </div>
     );
