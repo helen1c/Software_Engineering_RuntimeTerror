@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import "./Footer.css";
 import logo from "../../assets/logo.jpg";
 import {useHistory} from "react-router";
-import Tipka from "./components/Button";
+import Tipka from "./components/Tipka";
 import { Link } from "react-router-dom";
 
 function Footer() {
@@ -49,11 +49,11 @@ function Footer() {
                         <div className="col">
                             <h4 className="list-title">MENU:</h4>
                             <ul className="list-elements">
-                                <li><Link to="/home">HOME</Link></li>
-                                <li><Link to="/mountain-lodge/search">PRETRAZI PLANINARSKE DOMOVE</Link></li>
-                                <li><Link to="/mountain-path/search">PRETRAZI PLANINARSKE STAZE</Link></li>
-                                {role == "PLANINAR" ? <li/> : <li><Link to="/login">PRIJAVA</Link></li>}
-                                {role == "PLANINAR" ? <li/> : <li><Link to="/register">REGISTRACIJA</Link></li>}
+                                <li><Link className="footer-link" to="/home">HOME</Link></li>
+                                <li><Link className="footer-link" to="/mountain-lodge/search">PRETRAZI PLANINARSKE DOMOVE</Link></li>
+                                <li><Link className="footer-link" to="/mountain-path/search">PRETRAZI PLANINARSKE STAZE</Link></li>
+                                {role === "NEPRIJAVLJEN" ? <li><Link className="footer-link" to="/login">PRIJAVA</Link></li> : <li/>}
+                                {role === "NEPRIJAVLJEN" ? <li><Link className="footer-link" to="/register">REGISTRACIJA</Link></li> : <li/>}
                             </ul>
                         </div>
                         <div className="col">
@@ -66,7 +66,7 @@ function Footer() {
                         <div className="col">
                             <h4 className="list-title">Kontaktirajte nas:</h4>
                             <ul className="list-elements">
-                                <Tipka result={"Neodredeno"}/>
+                                <Tipka result={"Neodredeno"} css={1}/>
                             </ul>
                         </div>
                     </div>

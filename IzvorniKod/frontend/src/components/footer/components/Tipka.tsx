@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import "./Button.css";
+import "./Tipka.css";
 import {Field, Form, Formik} from "formik";
 import * as Yup from "yup";
 import Button from "@material-ui/core/Button";
@@ -17,6 +17,7 @@ function Alert(props: AlertProps) {
 }
 interface Props {
     result: String;
+    css: number;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -104,7 +105,10 @@ export const Tipka = (prop : Props) =>{
 
     return(
         <>
-            <button className="error-button" onClick={handleClickOpen}>PRIJAVI GRESKU</button>
+            {prop.css === 1 ?
+                <button className="button-mountain-lodge" onClick={handleClickOpen}>PRIJAVI GRESKU</button>
+                : <Button className="button-mountain-path" onClick={handleClickOpen}>PRIJAVI GRESKU</Button>
+            }
             <Snackbar open={success} autoHideDuration={2000} onClose={closeSuccessMessage}>
                 <Alert onClose={closeSuccessMessage} severity="success">
                     Poruka je uspješno poslana.
@@ -133,7 +137,7 @@ export const Tipka = (prop : Props) =>{
                         }} aria-labelledby="form-dialog-title">
                             <Form className={"form-dialog"}>
                                 <DialogTitle className={"dialog-title"} id="form-dialog-title">Kontaktirajte
-                                    administartora!</DialogTitle>
+                                    administratora!</DialogTitle>
                                 <DialogContent>
                                     <div className="create-column">
                                         <div className="box-title">Naziv poruke:</div>
@@ -156,7 +160,7 @@ export const Tipka = (prop : Props) =>{
                                         ODUSTANI
                                     </Button>
                                     <Button type="submit" color="primary">
-                                        POSALJI
+                                        POŠALJI
                                     </Button>
                                 </DialogActions>
                             </Form>

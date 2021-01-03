@@ -41,3 +41,9 @@
     font-size: 2rem;
     cursor: default;
 }
+.footer-link{
+    color: white!important;
+}
+.footer-link:hover{
+    color: #61dafb!important;
+}

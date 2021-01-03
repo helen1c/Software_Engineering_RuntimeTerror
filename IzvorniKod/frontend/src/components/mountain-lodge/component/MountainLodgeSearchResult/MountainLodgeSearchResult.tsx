@@ -5,7 +5,7 @@ import {Button} from "@material-ui/core";
 import {HttpCodesUtil} from "../../../../errors/HttpCodesUtil";
 import Snackbar from "@material-ui/core/Snackbar";
 import {Alert} from "@material-ui/lab";
-import Tipka from "../../../footer/components/Button";
+import Tipka from "../../../footer/components/Tipka";
 
 interface Props {
     result: MountainLodgeResult,
@@ -116,6 +116,7 @@ export const MountainLodgeSearchResult = (prop: Props) => {
                             disabled={archivedS}>
                             {archivedS ? "Arhivirano" : "Arhiviraj"}
                         </Button>}
+                        <Tipka result={prop.result.name} css={1}/>
                     </div>
                 </div>}
         </>

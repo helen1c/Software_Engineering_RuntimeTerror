@@ -15,6 +15,7 @@ import {ThemeProvider} from "@material-ui/core/styles"
 import Snackbar from "@material-ui/core/Snackbar";
 import {Alert} from "@material-ui/lab";
 import {FavoriteOutlined} from "@material-ui/icons";
+import Tipka from "../../../footer/components/Tipka";
 
 interface Props {
     result: MountainPathResult,
@@ -207,6 +208,21 @@ export const MountainPathSearchResult = (prop: Props) => {
                             <span className="mountain-path-datecreated">Datum stvaranja: {prop.result.dateCreated}</span>
                         </div>
                     </div>
+                        <div className="path-buttons">
+                    {prop.loggedIn &&
+                    <ThemeProvider theme={theme}>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        size="small"
+                        className="archive-button"
+                        onClick={archivePath}
+                        disabled={archivedS}>
+                        {archivedS ? "Arhivirano" : "Arhiviraj"}
+                    </Button>
+                    </ThemeProvider>}
+                    <Tipka result={prop.result.name} css={2}/>
+                            </div>
                     <div className="buttons-ar-fav">
                         {prop.loggedIn &&
                         <ThemeProvider theme={theme}>

@@ -167,3 +167,11 @@ fieldset {
     height: 25px!important;
     margin-left: 0.2rem;
 }
+.path-buttons{
+    display: flex;
+    flex-direction: row;
+}
+.archive-button{
+    background-color: #287334!important;
+    color: white!important;
+}
