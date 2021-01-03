@@ -5,6 +5,7 @@ import goimg from "../../../../assets/go.png";
 import finish from "../../../../assets/finish_flag-512.png"
 import dots from "../../../../assets/dots.png";
 import elevation from "../../../../assets/Snowy_Mountain_Transparent_PNG_Clip_Art_Image.png";
+import ribbon from "../../../../assets/ribbon.png";
 import MountainPathRating from "../MountainPathRating/MountainPathRating";
 import {Button} from "@material-ui/core";
 import {HttpCodesUtil} from "../../../../errors/HttpCodesUtil";
@@ -116,7 +117,7 @@ export const MountainPathSearchResult = (prop: Props) => {
                 <span className="mountain-path-hillname"> {prop.result.hill}</span>
                 <span className="mountain-path-walktime"> {prop.result.avgWalkTime}</span>
                 <span className="mountain-path-difficulty"> {mapdiff()}</span>
-                <span className="mountain-path-avg-grade">{averageGrade?.toPrecision(2)}</span>
+                <div className="mountain-path-avg-grade">{averageGrade? (<><span className="avg-grade-span"> {averageGrade.toPrecision(2)} </span><img className="mini-image" alt="Ribbon" src={ribbon}/></>): (<span className="without-grade">Nije ocjenjeno</span>) }</div>
             </div>
             :
             <div className="mountain-path-cnt-expand">
@@ -125,7 +126,7 @@ export const MountainPathSearchResult = (prop: Props) => {
                     <span className="mountain-path-hillname-expand"> {prop.result.hill}</span>
                     <span className="mountain-path-walktime-expand"> {prop.result.avgWalkTime}</span>
                     <span className="mountain-path-difficulty-expand"> {mapdiff()}</span>
-                    <span className="mountain-path-avg-grade-expand">{averageGrade?.toPrecision(2)}</span>
+                    <div className="mountain-path-avg-grade-expand">{averageGrade? (<><span className="avg-grade-span"> {averageGrade.toPrecision(2)} </span><img className="mini-image" alt="Ribbon" src={ribbon}/></>): (<span className="without-grade">Nije ocjenjeno</span>) }</div>
                 </div>
                 <div className="mountain-path-extend-info">
                     <div className="mountain-path-cnt-mini">
@@ -143,7 +144,7 @@ export const MountainPathSearchResult = (prop: Props) => {
                         </fieldset>
                     </div>
                     <div className="archive-cnt">
-                    <div>
+                    <div className="archive-cnt-mini">
                         {prop.loggedIn &&
                             <div className="mountain-path-cnt-mini">
                                 <span>Ocijeni stazu:</span>

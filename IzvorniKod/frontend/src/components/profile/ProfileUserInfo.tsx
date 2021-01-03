@@ -5,6 +5,10 @@ import uredi from "../../assets/paper-icon.png";
 import obrisi from "../../assets/delete-icon.png";
 import odustani from "../../assets/blue-x-png-1.png";
 import spremi from "../../assets/save-icon.png";
+import mail from "../../assets/mail-inbox-app.png";
+import cake from "../../assets/cake.png";
+import city from "../../assets/cityscape.png";
+import question from "../../assets/question.png";
 import {getEmptyProfile, ViewProfileInfo} from "./models/ViewProfileInfo";
 import Compress from "react-image-file-resizer";
 import {MountaineeringCommunitySearch} from "../mountaineering-community/MountaineeringCommunitySearch";
@@ -136,11 +140,11 @@ export const ProfileUserInfo = ({user, setUser}: Props) => {
                 <h1 className="profile-info-title">Korisnički podaci</h1>
                 <div className="profile-info-container profile-info-text">
                     <div className="profile-text-wrap">
-                        <div className="input-content-div">
-                            <label>Ime: </label>
+                        <div className="input-content-div-name">
+
                             {!edit ? (
                                 <input
-                                    className="input-content"
+                                    className="input-content-name"
                                     type="text"
                                     disabled
                                     value={user ? user.name : ""}
@@ -158,7 +162,14 @@ export const ProfileUserInfo = ({user, setUser}: Props) => {
                                 </>
                             )}
                         </div>
+                        <div className="input-content-div-all">
+                        <div className="input-content-div-data">
                         <div className="input-content-div">
+                            <img
+                                src={mail}
+                                alt={"Mail"}
+                                className="input-profile-img"
+                            />
                             <label>E-mail: </label>
                             <input
                                 className="input-content"
@@ -168,6 +179,11 @@ export const ProfileUserInfo = ({user, setUser}: Props) => {
                             />
                         </div>
                         <div className="input-content-div">
+                            <img
+                                src={city}
+                                alt={"City"}
+                                className="input-profile-img"
+                            />
                             {!edit ? (
                                 user.placeOfResidence && (
                                     <>
@@ -199,6 +215,11 @@ export const ProfileUserInfo = ({user, setUser}: Props) => {
                             )}
                         </div>
                         <div className="input-content-div">
+                            <img
+                                src={cake}
+                                alt={"Cake"}
+                                className="input-profile-img"
+                            />
                             {!edit ? (
                                 user.dateOfBirth && (
                                     <>
@@ -227,7 +248,12 @@ export const ProfileUserInfo = ({user, setUser}: Props) => {
                             )}
                         </div>
 
-                        <div className="input-content-div">
+                        <div className="input-content-div-text">
+                            <img
+                                src={question}
+                                alt={"Question"}
+                                className="input-profile-img"
+                            />
                             {!edit ? (
                                 user.description && (
                                     <>
@@ -257,10 +283,15 @@ export const ProfileUserInfo = ({user, setUser}: Props) => {
                                 </>
                             )}
                         </div>
+                        </div>
+                        <div className="input-content-badges">
+                            <div className="badges-wrap">
+                                <Badges badges={user.badges}/>
+                            </div>
+                        </div>
                     </div>
-                    <div className="badges-wrap">
-                        <Badges badges={user.badges}/>
                     </div>
+
                     <div className="profile-image-wrap">
                         <img
                             className="profil-info-image"

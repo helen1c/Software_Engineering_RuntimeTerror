@@ -6,7 +6,7 @@
     border-radius: 50px;
     border: 2px solid green;
     align-items: center;
-    width: 60vw;
+    width: 70vw;
     cursor: pointer;
     color: green;
 
@@ -27,12 +27,12 @@
     cursor: pointer;
 }
 
-@media all and (max-width: 680px) {
+@media all and (max-width: 660px) {
     .mountain-path-cnt {
-        width: 95vw;
+        width: 90vw;
     }
     .mountain-path-cnt-expand {
-        width: 95vw;
+        width: 90vw !important;
     }
     .mini-image,.mini-image-2{
         display: none;
@@ -41,17 +41,28 @@
         flex-direction: column;
         padding: 0.5rem;
         height: 300px;
+        width: 90vw;
+    }
+    .mountain-path-avg-grade-expand, .avg-grade-span , .without-grade{
+        display: none;
     }
 }
-@media only screen and (min-width: 681px) and (max-width: 1150px) {
+@media only screen and (min-width: 661px) and (max-width: 1150px) {
     .mountain-path-cnt-expand{
         width: 60vw;
     }
-    .mini-image,.mini-image-2{
+    .mini-image,.mini-image-2, .mountain-path-avg-grade-expand, .avg-grade-span , .without-grade{
         display: none;
     }
     .mountain-path-extend-info {
         flex-direction: column;
+        width: 70vw;
+    }
+    .archive-cnt-mini{
+        width: 250px;
+    }
+    label.MuiRating-label {
+        min-width: 42px !important;
     }
 }
 
@@ -69,14 +80,16 @@
     box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.25);
     border-radius: 15px;
     font-family: Roboto,sans-serif;
+    width: 70vw;
 }
 
 .mountain-path-extend-info {
     display: flex;
-    height: 250px;
+    height: min-content;
     align-items: center;
     justify-content: space-evenly;
     background-image: linear-gradient(to top, rgba(0,255 ,7 , 0), rgb(213 255 206));
+    padding: 1rem;
 
 }
 .mountain-path-cnt-mini{
@@ -128,4 +141,11 @@ fieldset {
 
 .mountain-path-name{
     width: 30%;
+}
+.mountain-path-avg-grade-expand , .mountain-path-avg-grade{
+    align-items: center;
+    display: inline-flex;
+}
+.avg-grade-span{
+    margin:1rem;
 }

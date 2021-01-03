@@ -203,10 +203,12 @@ margin-left: 2rem;
         min-width: 300px;
         font-size: 0.9rem;
     }
-
+    .sliders-container{
+        display: none;
+    }
 }
 
-@media screen and (max-width: 680px ) {
+@media screen and (max-width: 660px ) {
     .selects{
         display: flex;
         flex-direction: column;
@@ -216,17 +218,20 @@ margin-left: 2rem;
     }
     .hill-select{
     }
-   .mountain-path-walktime , .mountain-path-difficulty , .mountain-path-difficulty-expand ,.mountain-path-walktime-expand{
+   .mountain-path-walktime , .mountain-path-difficulty , .mountain-path-difficulty-expand ,.mountain-path-walktime-expand , .mountain-path-avg-grade{
         display: none;
     }
-   .sliders-container{
-       display: none;
-   }
+
    .mountain-path-cnt-title{
-       min-width: 95vw;
+       min-width: 90vw;
    }
     .mountain-path-name, .mountain-path-name-expand{
         min-width: 45%;
+    }
+}
+@media only screen and (min-width: 661px) and (max-width: 1150px) {
+    .mountain-path-avg-grade{
+        display: none;
     }
 }
 
@@ -259,7 +264,7 @@ margin-left: 2rem;
     border-radius: 50px;
     border: 2px solid green;
     align-items: center;
-    width: 60vw;
+    width: 70vw;
     cursor: pointer;
     color: black;
     background-color: #287334;

@@ -192,6 +192,7 @@ export const MountainPathSearch = () => {
                     <span className="mountain-path-hillname">Visočje</span>
                     <span className="mountain-path-walktime">Prosječno trajanje</span>
                     <span className="mountain-path-difficulty">Zahtjevnost </span>
+                    <span className="mountain-path-avg-grade">Prosjecna ocjena </span>
                 </div>}
                 {searchResults.length > 0 && searchResults.map(result =>
                     <MountainPathSearchResult result={result} key={result.id} loggedIn={loggedIn} archived={checkId(result.id)} grade={getPathGrade(result.id)}/>)}
