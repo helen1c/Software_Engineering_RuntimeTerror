@@ -28,7 +28,6 @@ public interface MountainPathQueryService {
 
     void deleteMountainPath(Principal principal, Long pathId);
 
-
     List<MountainPath> getAllPublicMountainPaths();
 
 }

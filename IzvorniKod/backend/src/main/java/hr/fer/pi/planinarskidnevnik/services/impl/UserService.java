@@ -9,17 +9,19 @@ import hr.fer.pi.planinarskidnevnik.dtos.User.UserHeaderDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserProfilePageDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserSearchDto;
 import hr.fer.pi.planinarskidnevnik.exceptions.IllegalAccessException;
+import hr.fer.pi.planinarskidnevnik.exceptions.*;
 import hr.fer.pi.planinarskidnevnik.exceptions.NoImageException;
 import hr.fer.pi.planinarskidnevnik.exceptions.ResourceNotFoundException;
 import hr.fer.pi.planinarskidnevnik.exceptions.UserWithEmailExistsException;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainLodgeArchiveToMountainLodgeArchiveResponseMapper;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainPathGradeToMountainPathGradeResponseMapper;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainPathUserArchiveToMountainPathArchiveResponseMapper;
-import hr.fer.pi.planinarskidnevnik.models.MountainPathGrade;
 import hr.fer.pi.planinarskidnevnik.models.MountainPath;
+import hr.fer.pi.planinarskidnevnik.models.MountainPathGrade;
 import hr.fer.pi.planinarskidnevnik.models.Role;
 import hr.fer.pi.planinarskidnevnik.models.User;
 import hr.fer.pi.planinarskidnevnik.models.UserBadge.UserBadge;
+import hr.fer.pi.planinarskidnevnik.repositories.MountainLodgeRepository;
 import hr.fer.pi.planinarskidnevnik.repositories.MountainPathRepository;
 import hr.fer.pi.planinarskidnevnik.repositories.RoleRepository;
 import hr.fer.pi.planinarskidnevnik.repositories.UserRepository;
@@ -32,7 +34,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
-import javax.swing.text.html.Option;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -427,5 +428,4 @@ public class UserService {
         return currUser;
 
     }
-
 }

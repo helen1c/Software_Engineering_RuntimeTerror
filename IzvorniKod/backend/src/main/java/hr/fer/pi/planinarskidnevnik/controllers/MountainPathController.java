@@ -37,8 +37,8 @@ public class MountainPathController {
 
     public MountainPathController(MountainPathQueryService service,
                                   MountainPathToMountainPathResponseMapper mountainPathToMountainPathResponseMapper,
-                                  MountainPathToMountainPathSearchResponseMapper mountainPathToMountainPathSearchResponseMapper, MountainPathToMountainPathByAuthorMapper mountainPathToMountainPathByAuthorMapper) {
-                                  MountainPathToMountainPathSearchResponseMapper mountainPathToMountainPathSearchResponseMapper, MountainPathToMountainPathEventSearchRequestMapper mountainPathToMountainPathEventSearchRequestMapper) {
+                                  MountainPathToMountainPathSearchResponseMapper mountainPathToMountainPathSearchResponseMapper, MountainPathToMountainPathByAuthorMapper mountainPathToMountainPathByAuthorMapper,
+                                  MountainPathToMountainPathEventSearchRequestMapper mountainPathToMountainPathEventSearchRequestMapper) {
         this.service = service;
         this.mountainPathToMountainPathResponseMapper = mountainPathToMountainPathResponseMapper;
         this.mountainPathToMountainPathSearchResponseMapper = mountainPathToMountainPathSearchResponseMapper;
