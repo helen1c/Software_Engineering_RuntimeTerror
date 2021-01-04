@@ -14,6 +14,7 @@ import green from "@material-ui/core/colors/green";
 import {ThemeProvider} from "@material-ui/core/styles"
 import Snackbar from "@material-ui/core/Snackbar";
 import {Alert} from "@material-ui/lab";
+import {FavoriteOutlined} from "@material-ui/icons";
 
 interface Props {
     result: MountainPathResult,
@@ -27,6 +28,7 @@ export const MountainPathSearchResult = (prop: Props) => {
 
     const [expand, setExpand] = useState<boolean>(false);
     const [averageGrade, setAverageGrade] = useState<number|null>(prop.result.averageGrade);
+    const [messageText, setMessageText] = useState("");
 
     const mapdiff = () => {
         if(prop.result.difficulty <= 3) {
@@ -55,15 +57,59 @@ export const MountainPathSearchResult = (prop: Props) => {
 
         if(response.status === HttpCodesUtil.SUCCESS) {
             setArchivedS(true);
+            setMessageText("Uspješno ste arhivirali planinarsku stazu: " + prop.result.name);
             setSuccess(true);
         } else {
+            setMessageText("Dogodila se pogreška prilikom arhiviranja staze: " + prop.result.name);
             setError(true);
         }
 
     }
 
-    const addToWishList = () => {
-        //TODO dodati u favorite...
+    const addToWishList = async () => {
+
+        const requestOptions = {
+            method: "PATCH",
+            headers: {
+                authorization: sessionStorage.getItem("key") || "",
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            }
+        };
+        const response = await fetch("/api/users/add/path-wish/" + prop.result.id, requestOptions);
+
+        if(response.status === HttpCodesUtil.SUCCESS) {
+            setFav(true);
+            setMessageText("Planinarska staza: '" + prop.result.name + "' je dodana u favorite.");
+            setSuccess(true);
+        } else {
+            setMessageText("Dodogila se pogreška prilikom dodavanja staze na popis favorita. Molimo pokušajte kasnije.");
+            setError(true);
+        }
+
+    }
+
+    const deleteFromWishList = async () => {
+
+        const requestOptions = {
+            method: "DELETE",
+            headers: {
+                authorization: sessionStorage.getItem("key") || "",
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            }
+        };
+        const response = await fetch("/api/users/delete/path-wish/" + prop.result.id, requestOptions);
+
+        if(response.status === HttpCodesUtil.SUCCESS) {
+            setFav(false);
+            setMessageText("Planinarska staza: '" + prop.result.name + "' je uklonjena iz favorita.");
+            setSuccess(true);
+        } else {
+            setMessageText("Dogodila se pogreška prilikom uklanjanja staze s popisa favorita. Molimo pokušajte kasnije.");
+            setError(true);
+        }
+
     }
 
     const theme = createMuiTheme({
@@ -107,18 +153,19 @@ export const MountainPathSearchResult = (prop: Props) => {
 
     return (
         <>
-            <Snackbar open={success} autoHideDuration={1500} onClose={handleSuccessMessageClosing}>
+            <Snackbar open={success} autoHideDuration={1500} onClose={handleSuccessMessageClosing} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
                 <Alert onClose={handleSuccessMessageClosing} severity="success">
-                    Planinarska staza je uspješno arhivirana.
+                    {messageText}
                 </Alert>
             </Snackbar>
             <Snackbar open={error} autoHideDuration={2000} onClose={handleErrorMessageClosing}>
                 <Alert onClose={handleErrorMessageClosing} severity="error">
-                    Dogodila se pogreška prilikom arhiviranje planinarske staze. Pokušajte kasnije.
+                    {messageText}
                 </Alert>
             </Snackbar>
             {!expand ?
             <div onClick={() => setExpand(!expand)} className="mountain-path-cnt">
+                {fav && <FavoriteOutlined/>}
                 <span className="mountain-path-name">{prop.result.name}</span>
                 <span className="mountain-path-hillname"> {prop.result.hill}</span>
                 <span className="mountain-path-walktime"> {prop.result.avgWalkTime}</span>
@@ -160,18 +207,41 @@ export const MountainPathSearchResult = (prop: Props) => {
                             <span className="mountain-path-datecreated">Datum stvaranja: {prop.result.dateCreated}</span>
                         </div>
                     </div>
-                    {prop.loggedIn &&
-                    <ThemeProvider theme={theme}>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        size="small"
-                        className="archive-button"
-                        onClick={archivePath}
-                        disabled={archivedS}>
-                        {archivedS ? "Arhivirano" : "Arhiviraj"}
-                    </Button>
-                    </ThemeProvider>}
+                    <div className="buttons-ar-fav">
+                        {prop.loggedIn &&
+                        <ThemeProvider theme={theme}>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                size="small"
+                                className="archive-button"
+                                onClick={archivePath}
+                                disabled={archivedS}>
+                                {archivedS ? "Arhivirano" : "Arhiviraj"}
+                            </Button>
+                        </ThemeProvider>
+                        }
+                        {prop.loggedIn &&
+                        <ThemeProvider theme={theme}>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                size="small"
+                                className="wishlist-button"
+                                onClick={() => {
+                                    if(fav) {
+                                        deleteFromWishList();
+                                    } else {
+                                        addToWishList();
+                                    }
+                                }}
+                                >
+                                {fav ? "Ukloni iz favorita" : "Dodaj u favorite"}
+                            </Button>
+                        </ThemeProvider>
+                        }
+                    </div>
+
                     </div>
 
                 </div>

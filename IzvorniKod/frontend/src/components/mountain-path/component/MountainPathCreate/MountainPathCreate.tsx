@@ -15,7 +15,6 @@ import {MountainPathCreateRequest} from "../../models/MountainPathCreateRequest"
 import * as Yup from "yup";
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
-import { makeStyles, Theme } from '@material-ui/core/styles';
 import 'semantic-ui-css/semantic.min.css'
 import TimePicker, {TimePickerValue} from "react-time-picker";
 import {HttpCodesUtil} from "../../../../errors/HttpCodesUtil";
@@ -23,15 +22,6 @@ import {HttpCodesUtil} from "../../../../errors/HttpCodesUtil";
 function Alert(props: AlertProps) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
-
-const useStyles = makeStyles((theme: Theme) => ({
-    root: {
-        width: '100%',
-        '& > * + *': {
-            marginTop: theme.spacing(2),
-        },
-    },
-}));
 
 export default function MountainPathCreate() {
 

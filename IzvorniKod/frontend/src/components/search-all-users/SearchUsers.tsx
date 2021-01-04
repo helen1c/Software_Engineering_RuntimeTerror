@@ -11,7 +11,7 @@ export const SearchUsers = () => {
         <div className="community-container">
             <h1>Pretraga korisnika</h1>
             <Search dataFunction={setUsers} stateFunction={setLoading} />
-            {!users.length && loading==false ? (
+            {!users.length && !loading ? (
                 <div className="community-info">
                     Ne postoji niti jedan korisnik koji odgovara pretrazi.
                 </div>

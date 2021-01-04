@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {MyMountainPathResult} from "../../models/MyMountainPathResult";
 import "./MyMountainPath.css"
-import {FormControlLabel} from "@material-ui/core";
+import {Button, Dialog, DialogActions, DialogTitle, FormControlLabel} from "@material-ui/core";
 import Switch from "@material-ui/core/Switch";
 import opened from "../../../../assets/open-lock.png"
 import {useDispatch} from "react-redux";
@@ -15,6 +15,7 @@ export const MyMountainPath = ({result}: Props) => {
 
     const [pathPrivate, setPathPrivate] = useState(result.isPrivate);
     const dispatch = useDispatch();
+    const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
     const deleteMountainPath = () => {
         dispatch(dispatchDeleteOwnMountainPath(result.id));
@@ -53,13 +54,31 @@ export const MyMountainPath = ({result}: Props) => {
             <span className="my-path-difficulty">{result.difficulty}</span>
             <FormControlLabel control={
                 <Switch color={"primary"} checked={!pathPrivate} disabled={!pathPrivate} onChange={makePathPublic}/>}
-                              label={<img className={"open-lock-picture"} src={opened}/>}/>
+                              label={<img alt={""} className={"open-lock-picture"} src={opened}/>}/>
 
 
             <button className="delete-mountain-path"
                     disabled={!pathPrivate}
-                    onClick={deleteMountainPath}>Obriši stazu
+                    onClick={() => setOpenDeleteModal(true)}>Obriši stazu
             </button>
+            <Dialog
+                open={openDeleteModal}
+                onClose={() => setOpenDeleteModal(false)}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    {"Jeste li sigurni da želite obrisati planinarsku stazu: '" + result.name + "'?\n Na taj način planinarska staza više neće biti vidljiva unutar aplikacije :("}
+                </DialogTitle>
+                <DialogActions>
+                    <Button onClick={() => setOpenDeleteModal(false)} color="primary">
+                        Odustani
+                    </Button>
+                    <Button onClick={deleteMountainPath} color="primary" autoFocus>
+                        Potvrdi
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </div>
     );
 

@@ -13,7 +13,7 @@ export const Badges = ({badges}: Props) => {
             {badges.map((badge) => (
                 <div key={badge.id}>
                     <div className="badge">
-                        <img src={badge.imageURL} title={badge.description} className="badge-image" />
+                        <img src={badge.imageURL} title={badge.description} alt={""} className="badge-image" />
                     </div>
                 </div>
             ))}

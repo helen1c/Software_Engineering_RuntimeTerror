@@ -20,20 +20,10 @@ import {MountainLodgeCreateRequest} from "../../models/MountainLodgeCreateReques
 import * as Yup from "yup";
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert, {AlertProps} from '@material-ui/lab/Alert';
-import {makeStyles, Theme} from '@material-ui/core/styles';
 
 function Alert(props: AlertProps) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
-
-const useStyles = makeStyles((theme: Theme) => ({
-    root: {
-        width: '100%',
-        '& > * + *': {
-            marginTop: theme.spacing(2),
-        },
-    },
-}));
 
 export default function MountainLodgeCreate() {
 
@@ -41,7 +31,6 @@ export default function MountainLodgeCreate() {
     const [open, setOpen] = useState(false);
     const [selectedOptions, setSelectedOptions] = useState([]);
 
-    const classes = useStyles();
     const [success, setSuccessMessage] = React.useState(false);
     const [error, setErrorMessage] = React.useState(false);
 
@@ -91,7 +80,7 @@ export default function MountainLodgeCreate() {
     }, [dispatcher, utilityResults]);
 
     // @ts-ignore
-    const create = async (request: MountainLodgeCreateRequest,  {resetForm }) => {
+    const create = async (request: MountainLodgeCreateRequest, {resetForm}) => {
 
         resetForm();
         setOpen(false);

@@ -173,6 +173,7 @@ public class UserController {
         }
 
     }
+
     @GetMapping(value = "/graded-paths/all")
     public final ResponseEntity<List<MountainPathGradeResponse>> getGradedPaths(Principal principal) {
         return ResponseEntity.status(200).body(userService.getGradedPaths(principal));
