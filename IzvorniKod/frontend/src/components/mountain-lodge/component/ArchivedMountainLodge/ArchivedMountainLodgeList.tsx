@@ -6,30 +6,25 @@ import {findArchivedLodges} from "../../../../store/actions/findAllArchivedLodge
 
 export const ArchivedMountainLodgeList = () => {
 
-    const {lodges} = useSelector((state: MainReducer) => state.findAllArchivedLodgesReducer);
+    const {lodges, status} = useSelector((state: MainReducer) => state.findAllArchivedLodgesReducer);
 
     const dispatcher = useDispatch();
 
     useEffect(() => {
-        if(!lodges)
-            dispatcher(findArchivedLodges());
-        if(lodges.length === 0) {
-            dispatcher(findArchivedLodges());
-        }
-    }, [dispatcher, lodges])
+        dispatcher(findArchivedLodges());
+    }, [dispatcher])
 
     return (
         <>
+            {status === "waiting" ? <label>Molimo pričekajte...</label> :<>
             {lodges.length > 0 ? <div className="lodge-archive-title">
                 <span className="archive-lodge-name">Visočje</span>
                 <span className="archive-lodge-name">Naziv doma</span>
                 <span className="archive-lodge-name">Datum  </span>
                 <span className="archive-lodge-name-first">slika</span>
-
-            </div> : <div>Nemate arhiviranih planinarskih domova.</div>}
+            </div> : (<label>Nemate arhiviranih planinarskih domova.</label>)}
             {lodges.map(lodge => <ArchivedMountainLodge key={lodge.id} lodge={lodge}/>)}
+            </>}
         </>);
-
-
 }
 

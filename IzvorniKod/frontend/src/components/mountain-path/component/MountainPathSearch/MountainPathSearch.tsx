@@ -13,6 +13,7 @@ import {Slider} from "@material-ui/core";
 import {difficultyMarks, walkTimeMarks} from "./MountainPathSearchUtil";
 import {findArchivedPaths} from "../../../../store/actions/findAllArchivedPathsActions";
 import {findGradedPaths} from "../../../../store/actions/findAllGradedPathsActions";
+import {findWishlist} from "../../../../store/actions/findFavouritePathsActions";
 
 export const MountainPathSearch = () => {
 
@@ -78,6 +79,24 @@ export const MountainPathSearch = () => {
     }, []);
 
     const {archivedPaths} = useSelector((state: MainReducer) => state.findAllArchivedPathsReducer);
+    const {gradedPaths} = useSelector((state: MainReducer) => state.findAllGradedPathsReducer);
+    const {favPaths} = useSelector((state: MainReducer) => state.findFavPathsReducer);
+
+    useEffect(() => {
+        if (sessionStorage.getItem("key")) {
+            dispatcher(findArchivedPaths());
+            dispatcher(findGradedPaths());
+            dispatcher(findWishlist());
+        }
+    }, [dispatcher]);
+
+    useEffect(() => {
+        if (hillResults === undefined || hillResults.length === 0) {
+            console.log("Get all Hills...");
+            dispatcher(findHills());
+        }
+    }, [dispatcher, hillResults]);
+
 
     const checkId = (id: number) => {
         if (loggedIn) {
@@ -86,19 +105,12 @@ export const MountainPathSearch = () => {
         return false;
     }
 
-    useEffect(() => {
-        if (sessionStorage.getItem("key")) {
-            dispatcher(findArchivedPaths());
+    const checkFav = (id: number) => {
+        if (loggedIn) {
+            return favPaths.find((v) => v === id) !== undefined;
         }
-    }, [dispatcher, loggedIn]);
-
-    const {gradedPaths} = useSelector((state: MainReducer) => state.findAllGradedPathsReducer);
-
-    useEffect(() => {
-        if (sessionStorage.getItem("key")) {
-            dispatcher(findGradedPaths());
-        }
-    }, [dispatcher, loggedIn]);
+        return false;
+    }
 
     const getPathGrade = (pathId: number): number|null => {
         if (loggedIn) {
@@ -109,13 +121,6 @@ export const MountainPathSearch = () => {
         }
         return null;
     }
-
-    useEffect(() => {
-        if (hillResults === undefined || hillResults.length === 0) {
-            console.log("Get all Hills...");
-            dispatcher(findHills());
-        }
-    }, [dispatcher, hillResults]);
 
     return (
         <>
@@ -192,10 +197,10 @@ export const MountainPathSearch = () => {
                     <span className="mountain-path-hillname">Visočje</span>
                     <span className="mountain-path-walktime">Prosječno trajanje</span>
                     <span className="mountain-path-difficulty">Zahtjevnost </span>
-                    <span className="mountain-path-avg-grade">Prosjecna ocjena </span>
+                    <span className="mountain-path-avg-grade">Prosječna ocjena </span>
                 </div>}
                 {searchResults.length > 0 && searchResults.map(result =>
-                    <MountainPathSearchResult result={result} key={result.id} loggedIn={loggedIn} archived={checkId(result.id)} grade={getPathGrade(result.id)}/>)}
+                    <MountainPathSearchResult result={result} key={result.id} loggedIn={loggedIn} fav={checkFav(result.id)} archived={checkId(result.id)} grade={getPathGrade(result.id)}/>)}
             </div>
         </>
     );

@@ -2,7 +2,6 @@ import {UserInfo} from "../mountain-lodge/models/UserInfo";
 import "./ShowFriendshipRequest.css"
 import React, {useState} from "react";
 import {useHistory} from "react-router";
-import {ShowFriendshipRequestList} from "./ShowFriendshipRequestList";
 
 interface Props {
     user: UserInfo;

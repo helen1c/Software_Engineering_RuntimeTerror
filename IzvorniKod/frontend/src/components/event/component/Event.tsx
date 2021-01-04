@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {EventResult} from "../models/EventResult";
-import {Paths} from "../models/Paths";
 import {Day} from "./Day";
 import "../style/Event.css"
 
@@ -10,14 +9,6 @@ interface Props {
 
 export const Event = (prop : Props) => {
 
-    const [paths,setPaths] = useState<Paths[]>([]);
-
-    useEffect(() =>{
-        async function set(){
-            setPaths(prop.result.paths);
-        }
-        set();
-    },[]);
     return(
       <div className="event-box">
           <h1 className="event-title">{prop.result.name}</h1>
@@ -32,7 +23,7 @@ export const Event = (prop : Props) => {
                 <textarea className="event-description" disabled value={prop.result.description}/>
         </div>
        </div>
-          {paths.map(paths => <Day result={paths}/>)}
+          {prop.result.paths.map(paths => <Day result={paths}/>)}
       </div>
 
     );

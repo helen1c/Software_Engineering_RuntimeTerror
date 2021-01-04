@@ -93,6 +93,21 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<MountainPathUserArchive> mountainPathUserArchive = new ArrayList<>();
 
+    @ManyToMany
+    @JoinTable(
+            name = "path_user_wishlist",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "path_id"))
+    List<MountainPath> pathsWishlist = new ArrayList<>();
+
+    public List<MountainPath> getPathsWishlist() {
+        return pathsWishlist;
+    }
+
+    public void setPathsWishlist(List<MountainPath> pathsWishlist) {
+        this.pathsWishlist = pathsWishlist;
+    }
+
     public List<MountainPathUserArchive> getMountainPathUserArchive() {
         return mountainPathUserArchive;
     }

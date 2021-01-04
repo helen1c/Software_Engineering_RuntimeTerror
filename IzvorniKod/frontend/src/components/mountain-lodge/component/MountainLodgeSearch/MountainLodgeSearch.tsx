@@ -86,7 +86,7 @@ export const MountainLodgeSearch = () => {
     useEffect(() => {
             if(sessionStorage.getItem("key"))
             dispatcher(findArchivedLodges());
-    }, [dispatcher, loggedIn]);
+    }, [dispatcher]);
 
     return (
         <>

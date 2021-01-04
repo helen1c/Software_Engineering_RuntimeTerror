@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -69,14 +70,25 @@ public class ExceptionHandlerControllerAdvice {
         return ResponseEntity.badRequest().body(exception.getMessage());
     }
 
-    @ExceptionHandler({MountainLodgeDoesNotExist.class, MountainPathDoesNotExist.class})
+    @ExceptionHandler({
+            MountainLodgeDoesNotExist.class,
+            MountainPathDoesNotExist.class,
+            MountainPathAlreadyAddedAsFavouriteException.class,
+            PathAlreadyNonPrivateException.class})
     public ResponseEntity<String> handlePathLodgeDoesNotExist(final Exception exception) {
         return ResponseEntity.badRequest().body(exception.getMessage());
     }
 
-    @ExceptionHandler({AuthorizationException.class})
+    @ExceptionHandler({
+            AuthorizationException.class,
+            MountainPathPermissionException.class})
     public ResponseEntity<String> handleAuthException(final Exception exception) {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(exception.getMessage());
+    }
+
+    @ExceptionHandler({DataIntegrityViolationException.class})
+    public ResponseEntity<String> handleIntegritiyException(final Exception exception) {
+        return ResponseEntity.status(400).body("Dogodila se pogreška prilikom povezivanja s bazom podataka.");
     }
 
     @ExceptionHandler(LodgeAlreadyArchivedException.class)
