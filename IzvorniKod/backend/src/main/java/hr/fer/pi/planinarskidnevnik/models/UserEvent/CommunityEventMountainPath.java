@@ -13,38 +13,39 @@ import java.util.Objects;
 @Table(name = "community_event_mountain_path")
 public class CommunityEventMountainPath {
 
-    @EmbeddedId
-    private CommunityEventMountainPathId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "community_event_mountain_path_id_gen")
+    @SequenceGenerator(name = "community_event_mountain_path_id_gen", sequenceName = "community_event_mountain_path_id_seq", allocationSize = 1)
+    private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @MapsId("eventId")
     @JoinColumn(name = "event_id")
     @JsonBackReference
     private CommunityEvent event;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @MapsId("pathId")
     @JoinColumn(name = "path_id")
     @JsonBackReference
     private MountainPath path;
 
+    @MapsId("dateArchivedId")
     @Column(name = "date_traveled")
-    @NotNull
     private Date dateArchived;
 
-    public CommunityEventMountainPath(CommunityEvent event, MountainPath path, @NotNull Date dateArchived) {
+    public CommunityEventMountainPath(Long id, CommunityEvent event, MountainPath path, Date dateArchived) {
+        this.id = id;
         this.event = event;
         this.path = path;
         this.dateArchived = dateArchived;
+    }
 
-        this.id = new CommunityEventMountainPathId(event.getId(), path.getId());
+    public CommunityEventMountainPath(CommunityEvent event, MountainPath path, Date dateArchived) {
+        this.event = event;
+        this.path = path;
+        this.dateArchived = dateArchived;
     }
 
     public CommunityEventMountainPath() {
-    }
-
-    public CommunityEventMountainPathId getId() {
-        return id;
     }
 
     public CommunityEvent getEvent() {
@@ -57,6 +58,10 @@ public class CommunityEventMountainPath {
 
     public Date getDateArchived() {
         return dateArchived;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override
