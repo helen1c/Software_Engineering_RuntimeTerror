@@ -153,16 +153,20 @@
 
     <changeSet id="20201228220200" author="lravenscak">
         <createTable tableName="community_event_mountain_path">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
             <column name="event_id" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
             <column name="path_id" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="date_traveled" type="DATE">
-                <constraints nullable="false"/>
+            <column name="date_traveled" type="VARCHAR(450)">
+                <constraints primaryKey="true"/>
             </column>
         </createTable>
+        <createSequence sequenceName="community_event_mountain_path_id_seq" incrementBy="1" cycle="false" startValue="100" />
         <addForeignKeyConstraint baseTableName="community_event_mountain_path"
                                  baseColumnNames="event_id"
                                  constraintName="fkey_event"

@@ -14,6 +14,7 @@ import {MountainPathSearch} from "./components/mountain-path/component/MountainP
 import {CreateEventPage} from "./components/createevent/CreateEventPage";
 import {FriendshipRequestList} from "./components/friendship-request-list/FriendshipRequestList";
 import {SearchUsers} from "./components/search-all-users/SearchUsers";
+import {EventsResults} from "./components/event/component/EventsResults";
 
 export const Routes = () => {
 
@@ -36,6 +37,7 @@ export const Routes = () => {
                 <Route path="/mountain-lodge/create" component={MountainLodgeCreate} exact/>
                 <Route path="/friendship-request-list" component={FriendshipRequestList} exact/>
                 <Route path="/events/create" component={CreateEventPage} exact/>
+                <Route path="/events" component={EventsResults} exact/>
                 <Route path="/users/search" component={SearchUsers} exact/>
             </Switch>
         </div>
