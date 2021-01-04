@@ -11,10 +11,10 @@ import MountainPathCreate from "./components/mountain-path/component/MountainPat
 import MountainLodgeCreate from "./components/mountain-lodge/component/MountainLodgeCreate/MountainLodgeCreate";
 import {MountainLodgeSearch} from "./components/mountain-lodge/component/MountainLodgeSearch/MountainLodgeSearch";
 import {MountainPathSearch} from "./components/mountain-path/component/MountainPathSearch/MountainPathSearch";
-import {EventsResults} from "./components/event/component/EventsResults";
 import {CreateEventPage} from "./components/createevent/CreateEventPage";
 import {FriendshipRequestList} from "./components/friendship-request-list/FriendshipRequestList";
 import {SearchUsers} from "./components/search-all-users/SearchUsers";
+import {EventsResults} from "./components/event/component/EventsResults";
 
 export const Routes = () => {
 
