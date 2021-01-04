@@ -62,7 +62,7 @@ public class UserService {
                        PasswordEncoder encoder,
                        FriendshipsRepository friendshipsRepository,
                        FriendshipRequestRepository friendshipRequestRepository,
-                       MountainLodgeRepository mountainLodgeRepository,
+                       MountainPathRepository mountainPathRepository,
                        MountainLodgeArchiveToMountainLodgeArchiveResponseMapper lodgeArchiveResponseMapper,
                        MountainPathUserArchiveToMountainPathArchiveResponseMapper pathArchiveResponseMapper,
                        MountainPathGradeToMountainPathGradeResponseMapper pathGradeResponseMapper) {

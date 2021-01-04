@@ -20,6 +20,7 @@ interface Props {
     loggedIn: boolean,
     archived: boolean,
     grade: number|null,
+    fav: boolean
 }
 
 export const MountainPathSearchResult = (prop: Props) => {
@@ -38,6 +39,7 @@ export const MountainPathSearchResult = (prop: Props) => {
     }
 
     const [archivedS, setArchivedS] = useState(prop.archived);
+    const [fav, setFav] = useState(prop.fav);
 
     const archivePath = async () => {
 
@@ -58,6 +60,10 @@ export const MountainPathSearchResult = (prop: Props) => {
             setError(true);
         }
 
+    }
+
+    const addToWishList = () => {
+        //TODO dodati u favorite...
     }
 
     const theme = createMuiTheme({

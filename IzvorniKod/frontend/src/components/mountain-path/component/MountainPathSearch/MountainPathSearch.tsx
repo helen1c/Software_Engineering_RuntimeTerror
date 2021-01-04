@@ -13,6 +13,7 @@ import {Slider} from "@material-ui/core";
 import {difficultyMarks, walkTimeMarks} from "./MountainPathSearchUtil";
 import {findArchivedPaths} from "../../../../store/actions/findAllArchivedPathsActions";
 import {findGradedPaths} from "../../../../store/actions/findAllGradedPathsActions";
+import {findWishlist} from "../../../../store/actions/findFavouritePathsActions";
 
 export const MountainPathSearch = () => {
 
@@ -79,11 +80,13 @@ export const MountainPathSearch = () => {
 
     const {archivedPaths} = useSelector((state: MainReducer) => state.findAllArchivedPathsReducer);
     const {gradedPaths} = useSelector((state: MainReducer) => state.findAllGradedPathsReducer);
+    const {favPaths} = useSelector((state: MainReducer) => state.findFavPathsReducer);
 
     useEffect(() => {
         if (sessionStorage.getItem("key")) {
             dispatcher(findArchivedPaths());
             dispatcher(findGradedPaths());
+            dispatcher(findWishlist());
         }
     }, [dispatcher]);
 
@@ -98,6 +101,13 @@ export const MountainPathSearch = () => {
     const checkId = (id: number) => {
         if (loggedIn) {
             return archivedPaths.find((v) => v.id === id) !== undefined;
+        }
+        return false;
+    }
+
+    const checkFav = (id: number) => {
+        if (loggedIn) {
+            return favPaths.find((v) => v === id) !== undefined;
         }
         return false;
     }
@@ -187,10 +197,10 @@ export const MountainPathSearch = () => {
                     <span className="mountain-path-hillname">Visočje</span>
                     <span className="mountain-path-walktime">Prosječno trajanje</span>
                     <span className="mountain-path-difficulty">Zahtjevnost </span>
-                    <span className="mountain-path-avg-grade">Prosjecna ocjena </span>
+                    <span className="mountain-path-avg-grade">Prosječna ocjena </span>
                 </div>}
                 {searchResults.length > 0 && searchResults.map(result =>
-                    <MountainPathSearchResult result={result} key={result.id} loggedIn={loggedIn} archived={checkId(result.id)} grade={getPathGrade(result.id)}/>)}
+                    <MountainPathSearchResult result={result} key={result.id} loggedIn={loggedIn} fav={checkFav(result.id)} archived={checkId(result.id)} grade={getPathGrade(result.id)}/>)}
             </div>
         </>
     );

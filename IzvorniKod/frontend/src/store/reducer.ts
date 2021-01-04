@@ -6,6 +6,7 @@ import findAllArchivedPathsReducer from "./reducers/findAllArchivedPathsReducer"
 import findAllGradedPathsReducer from "./reducers/findAllGradedPathsReducer";
 import getOwnMountainPathsReducer from "./reducers/getOwnMountainPathsReducer";
 import findAllEvents from "./reducers/findAllEvents";
+import findFavPathsReducer from "./reducers/findFavPathsReducer";
 
 export const mainReducer = combineReducers(
     {
@@ -15,7 +16,8 @@ export const mainReducer = combineReducers(
         findAllArchivedLodgesReducer,
         findAllArchivedPathsReducer,
         getOwnMountainPathsReducer,
-        findAllGradedPathsReducer
+        findAllGradedPathsReducer,
+        findFavPathsReducer
     }
 );
 

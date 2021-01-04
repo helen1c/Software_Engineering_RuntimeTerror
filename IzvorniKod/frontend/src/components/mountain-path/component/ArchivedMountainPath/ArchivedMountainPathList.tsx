@@ -16,6 +16,9 @@ export const ArchivedMountainPathList = () => {
 
     return (
         <>
+
+        {status === "waiting" ? <label>Molimo pričekajte...</label> :
+            <>
             {archivedPaths.length > 0 ?
             <div className="path-archive-title">
                 <span className="archive-path-name">Visočje</span>
@@ -24,6 +27,7 @@ export const ArchivedMountainPathList = () => {
                 <span className="archive-path-name-first">slika</span>
             </div> : <label>Nemate arhiviranih planinarskih staza.</label>}
             {archivedPaths.map(path => <ArchivedMountainPath path={path} key={path.id}/>)}
-            </>);
+            </>}
+        </>);
 }
 
