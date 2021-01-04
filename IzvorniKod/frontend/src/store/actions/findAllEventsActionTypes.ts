@@ -19,4 +19,4 @@ interface findAllEventsError {
     payload: string | undefined
 }
 
-export type findAllEventsTypes = findAllEvents | findAllEventsSuccess | findAllEventsError;
+export type findAllEventsActionTypes = findAllEvents | findAllEventsSuccess | findAllEventsError;

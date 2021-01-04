@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Event} from "./Event";
 import {useDispatch, useSelector} from "react-redux";
-import {findEvents} from "../../../store/actions/findAllEventsAction";
+import {findEvents} from "../../../store/actions/findAllEventsActions";
 import {MainReducer} from "../../../store/reducer";
 
 export const EventsResults = () =>{

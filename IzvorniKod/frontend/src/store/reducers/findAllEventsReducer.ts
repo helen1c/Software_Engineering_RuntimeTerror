@@ -3,8 +3,8 @@ import {
     FIND_ALL_EVENTS,
     FIND_ALL_EVENTS_ERROR,
     FIND_ALL_EVENTS_SUCCESS,
-    findAllEventsTypes
-} from "../actions/findAllEventsTypes";
+    findAllEventsActionTypes
+} from "../actions/findAllEventsActionTypes";
 
 
 export interface EventState {
@@ -19,7 +19,7 @@ const initialEventState = {
     status: "idle"
 } as EventState;
 
-export default (state: EventState = initialEventState, action: findAllEventsTypes) => {
+export default (state: EventState = initialEventState, action: findAllEventsActionTypes) => {
 
     switch (action.type) {
         case FIND_ALL_EVENTS: return {...state, status: 'waiting'};
