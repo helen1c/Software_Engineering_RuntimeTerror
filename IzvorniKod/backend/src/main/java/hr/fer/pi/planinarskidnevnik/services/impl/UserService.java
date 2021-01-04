@@ -16,9 +16,12 @@ import hr.fer.pi.planinarskidnevnik.mappers.MountainLodgeArchiveToMountainLodgeA
 import hr.fer.pi.planinarskidnevnik.mappers.MountainPathGradeToMountainPathGradeResponseMapper;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainPathUserArchiveToMountainPathArchiveResponseMapper;
 import hr.fer.pi.planinarskidnevnik.models.MountainPath;
+import hr.fer.pi.planinarskidnevnik.models.Message;
 import hr.fer.pi.planinarskidnevnik.models.MountainPathGrade;
 import hr.fer.pi.planinarskidnevnik.models.Role;
 import hr.fer.pi.planinarskidnevnik.models.User;
+import hr.fer.pi.planinarskidnevnik.repositories.MessageRepository;
+import hr.fer.pi.planinarskidnevnik.repositories.MountainLodgeRepository;
 import hr.fer.pi.planinarskidnevnik.models.UserBadge.UserBadge;
 import hr.fer.pi.planinarskidnevnik.repositories.MountainPathRepository;
 import hr.fer.pi.planinarskidnevnik.repositories.RoleRepository;
@@ -50,12 +53,13 @@ public class UserService {
     private final MountainPathUserArchiveToMountainPathArchiveResponseMapper pathArchiveResponseMapper;
     private final MountainPathRepository mountainPathRepository;
     private final MountainPathGradeToMountainPathGradeResponseMapper pathGradeResponseMapper;
+    private final MessageRepository messageRepository;
 
     @Autowired
     public UserService(UserRepository userRepository,
                        RoleRepository roleRepository,
                        PasswordEncoder encoder,
-                       MountainPathRepository mountainPathRepository,
+                       MountainPathRepository mountainPathRepository,MountainLodgeRepository mountainLodgeRepository,
                        MountainLodgeArchiveToMountainLodgeArchiveResponseMapper lodgeArchiveResponseMapper,
                        MountainPathUserArchiveToMountainPathArchiveResponseMapper pathArchiveResponseMapper,
                        MountainPathGradeToMountainPathGradeResponseMapper pathGradeResponseMapper) {
@@ -66,6 +70,7 @@ public class UserService {
         this.pathArchiveResponseMapper = pathArchiveResponseMapper;
         this.mountainPathRepository = mountainPathRepository;
         this.pathGradeResponseMapper = pathGradeResponseMapper;
+        this.messageRepository = messageRepository;
     }
 
     public User getCurrentUser(Principal principal) {
@@ -173,6 +178,12 @@ public class UserService {
         User userForRemoval = getUserById(userId);
 
         if (currentUser.getId().equals(userForRemoval.getId()) || getRole(currentUser.getEmail()).equals("ADMIN")) {
+            List<Message> messagesForRemoval = messageRepository.findAllByOrderByNameAsc();
+            for(int i=0;i<messagesForRemoval.size();i++){
+                if(messagesForRemoval.get(i).getUser() == userForRemoval){
+                    messageRepository.delete(messagesForRemoval.get(i));
+                }
+            }
             userRepository.delete(userForRemoval);
         } else {
             LOGGER.error("Not allowed to delete user");

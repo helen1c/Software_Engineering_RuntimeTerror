@@ -40,30 +40,6 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="20201222224635" author="dkonjevod">
-        <createSequence sequenceName="message_id_seq" incrementBy="1" cycle="false" startValue="100"/>
-        <createTable tableName="MESSAGE">
-            <column name="id" type="BIGINT" autoIncrement="true">
-                <constraints primaryKey="true"/>
-            </column>
-            <column name="user_id" type="BIGINT">
-                <constraints foreignKeyName="message_sender_id_fk" references="user(id)"/>
-            </column>
-            <column name="status" type="VARCHAR(50)">
-
-            </column>
-            <column name="error" type="VARCHAR(50)">
-
-            </column>
-            <column name="message_name" type="VARCHAR(100)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="message_content" type="VARCHAR(1000)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-
     <changeSet id="20201129180400" author="lravenscak">
         <addColumn tableName="user">
             <column name="role_id" type="BIGINT" defaultValue="2">

@@ -136,8 +136,7 @@ export const Tipka = (prop : Props) =>{
                             handleReset();
                         }} aria-labelledby="form-dialog-title">
                             <Form className={"form-dialog"}>
-                                <DialogTitle className={"dialog-title"} id="form-dialog-title">Kontaktirajte
-                                    administratora!</DialogTitle>
+                                <DialogTitle className={"dialog-title"} id="form-dialog-title">Prijavljujete grešku za dom:</DialogTitle>
                                 <DialogContent>
                                     <div className="create-column">
                                         <div className="box-title">Naziv poruke:</div>
