@@ -8,7 +8,7 @@
     display: flex;
     background-color: white;
     flex-direction: column;
-    width: 60%;
+    width: 60vw ;
     margin: auto;
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
@@ -33,7 +33,7 @@
     background-size: cover;
     color: white;
     flex-direction: column;
-    width: 60%;
+    width: 60vw;
     margin: auto;
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
@@ -50,9 +50,9 @@ h1{
 .event-input{
     margin-left: auto;
     margin-right: auto;
-    border-radius: 10px;
+    border-radius: 2px;
     text-indent: 5px;
-    height: 2.5rem;
+    height: 3rem;
     width: 20vw;
     min-width: 15rem;
     border: 2px solid #211648;
@@ -60,18 +60,19 @@ h1{
     outline: none !important;
     font-family: Roboto, sans-serif;
     font-size: 1rem;
+    padding: 0.5rem;
 }
 
 .event-text-area {
     margin-left: auto;
-
+    padding: 0.5rem;
     min-height: 8rem;
     width: 35vw;
     min-width: 15rem;
     border: 2px solid #211648;
     box-shadow: none !important;
     outline: none !important;
-    border-radius: 10px;
+    border-radius: 2px;
     font-family: Roboto, sans-serif;
     font-size: 1rem;
     max-width: 45vw;
@@ -91,5 +92,10 @@ h1{
     margin-top: 3rem;
 
 
+}
+@media only screen and (max-width: 660px){
+    .main-event, .event-header{
+        width: 100vw ;
+    }
 }
 

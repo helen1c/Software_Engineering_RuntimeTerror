@@ -13,7 +13,7 @@
 }
 
 .mountain-lodge-cnt:hover{
-    transform: scale3d(1.03, 1.03, 1.03);
+    transform: scale(1.03);
     transition: all .20s linear;
     opacity: 1;
 }
