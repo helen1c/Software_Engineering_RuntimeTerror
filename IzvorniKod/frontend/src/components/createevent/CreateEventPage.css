@@ -50,9 +50,9 @@ h1{
 .event-input{
     margin-left: auto;
     margin-right: auto;
-    border-radius: 10px;
+    border-radius: 2px;
     text-indent: 5px;
-    height: 2.5rem;
+    height: 3rem;
     width: 20vw;
     min-width: 15rem;
     border: 2px solid #211648;
@@ -60,18 +60,19 @@ h1{
     outline: none !important;
     font-family: Roboto, sans-serif;
     font-size: 1rem;
+    padding: 0.5rem;
 }
 
 .event-text-area {
     margin-left: auto;
-
+    padding: 0.5rem;
     min-height: 8rem;
     width: 35vw;
     min-width: 15rem;
     border: 2px solid #211648;
     box-shadow: none !important;
     outline: none !important;
-    border-radius: 10px;
+    border-radius: 2px;
     font-family: Roboto, sans-serif;
     font-size: 1rem;
     max-width: 45vw;
