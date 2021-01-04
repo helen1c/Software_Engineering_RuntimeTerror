@@ -34,23 +34,44 @@ export const ShowFriendshipRequest= ({ user, allUsers, setAllUsers}: Props) => {
     }
 
     function confirm() {
-        setIsConfirmed(true);
-        setIsAllDone(NumberOfClicks.addClick());
+        fetch("api/users/friend-request-accept/" + user.id, {
+        method: "POST",
+        headers: new Headers({
+            authorization: sessionStorage.getItem("key") || "",
+            "Content-Type": "application/json",
+        }),
+    }).then((response) => {
+        if (response.status === 200) {
+            setIsConfirmed(true);
+            setIsAllDone(NumberOfClicks.addClick());
+        }
+    });
     }
 
     function refuse(){
-        setIsRefused(true);
-        let position=-1;
-        setIsAllDone(NumberOfClicks.addClick());
+        fetch("api/users/friend-request-decline/" + user.id, {
+            method: "POST",
+            headers: new Headers({
+                authorization: sessionStorage.getItem("key") || "",
+                "Content-Type": "application/json",
+            }),
+        }).then((response) => {
+            if (response.status === 200) {
+                setIsRefused(true);
+                let position=-1;
+                setIsAllDone(NumberOfClicks.addClick());
 
-        allUsersTemp.map((u, index) => {
-            if (u.id === user.id) {
-                position = index;
+                allUsersTemp.map((u, index) => {
+                    if (u.id === user.id) {
+                        position = index;
+                    }
+                });
+
+                allUsersTemp.splice(position, 1);
+                setAllUsers(allUsersTemp);
             }
         });
 
-        allUsersTemp.splice(position, 1);
-        setAllUsers(allUsersTemp);
 
     }
 

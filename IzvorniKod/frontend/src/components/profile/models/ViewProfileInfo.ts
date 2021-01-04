@@ -6,8 +6,10 @@ export interface ViewProfileInfo {
     placeOfResidence: string;
     description: string;
     dateOfBirth: string;
+    friend: boolean;
     isOwner: boolean;
     isAdmin: boolean;
+    sentFriendRequest: boolean;
     image: string;
     badges: Badge[];
 }
@@ -19,8 +21,10 @@ export const getEmptyProfile = (): ViewProfileInfo => {
         placeOfResidence: "",
         description: "",
         dateOfBirth: "",
+        friend: false,
         isOwner: false,
         isAdmin: false,
+        sentFriendRequest: false,
         image: "",
         badges: []
     };

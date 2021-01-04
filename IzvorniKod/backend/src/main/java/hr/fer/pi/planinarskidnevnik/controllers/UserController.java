@@ -7,7 +7,6 @@ import hr.fer.pi.planinarskidnevnik.dtos.User.UserCreateDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserHeaderDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserProfilePageDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserSearchDto;
-import hr.fer.pi.planinarskidnevnik.exceptions.LodgeAlreadyArchivedException;
 import hr.fer.pi.planinarskidnevnik.models.User;
 import hr.fer.pi.planinarskidnevnik.services.impl.UserService;
 import org.slf4j.Logger;
@@ -38,10 +37,17 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
-    @GetMapping("/community")
+    @GetMapping("/get-friends")
     public ResponseEntity<?> getUserCommunity(Principal principal) {
         LOGGER.info("User fetching by name");
         final List<UserSearchDto> list = userService.getUserCommunity(principal);
+        return ResponseEntity.ok(list);
+    }
+
+    @GetMapping("/get-all-users")
+    public ResponseEntity<?> getAllUsers(Principal principal) {
+        LOGGER.info("User fetching by name");
+        final List<UserSearchDto> list = userService.getAllUsers(principal);
         return ResponseEntity.ok(list);
     }
 
@@ -82,6 +88,35 @@ public class UserController {
         return ResponseEntity.ok(userService.getImage(principal.getName()));
     }
 
+    @PostMapping("/add-friend/{id}")
+    public ResponseEntity<?> sendFriendRequest(Principal principal, @PathVariable("id") final Long receiverId) {
+        userService.sendFriendRequest(principal.getName(), receiverId);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/remove-friend/{id}")
+    public ResponseEntity<?> removeFriend(Principal principal, @PathVariable("id") final Long friendRemovedId) {
+        userService.removeFriend(principal, friendRemovedId);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/friend-requests-received")
+    public ResponseEntity<?> checkFriendRequests(Principal principal) {
+        return ResponseEntity.ok(userService.checkFriendRequests(principal.getName()));
+    }
+
+    @PostMapping("/friend-request-accept/{id}")
+    public ResponseEntity<?> acceptFriendRequest(Principal principal, @PathVariable("id") final Long senderId) {
+        userService.acceptFriendRequest(principal, senderId);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/friend-request-decline/{id}")
+    public ResponseEntity<?> friendRequestDecline(Principal principal, @PathVariable("id") final Long senderId) {
+        userService.friendRequestDecline(principal, senderId);
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping(value = "/image/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<byte[]> getImageById(@PathVariable("id") final Long id) {
         return ResponseEntity.ok(userService.getImage(userService.getUserById(id).getEmail()));
@@ -104,12 +139,6 @@ public class UserController {
         LOGGER.info("Current user editing");
         final User user = userService.editCurrentUser(userCreateDto, principal);
         return ResponseEntity.ok(new UserCreateDto(user.getName(), user.getPassword(), user.getEmail(), user.getPlaceOfResidence(), user.getDateOfBirth(), user.getDescription(), null));
-    }
-
-    @ExceptionHandler(LodgeAlreadyArchivedException.class)
-    public final ResponseEntity<?> constraintsViolations(final Exception ex) {
-        LOGGER.error("Constraint exception. " + ex.getMessage());
-        return ResponseEntity.badRequest().body(ex.getMessage());
     }
 
     @GetMapping(value = "/archived-lodges/all")

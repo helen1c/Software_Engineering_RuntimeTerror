@@ -1,25 +1,26 @@
 package hr.fer.pi.planinarskidnevnik.services.impl;
 
+import hr.fer.pi.planinarskidnevnik.dtos.Badge.BadgeDto;
 import hr.fer.pi.planinarskidnevnik.dtos.MountainLodgeArchive.MountainLodgeArchiveResponse;
 import hr.fer.pi.planinarskidnevnik.dtos.MountainPath.MountainPathGradeResponse;
 import hr.fer.pi.planinarskidnevnik.dtos.MountainPathArchiveResponse;
-import hr.fer.pi.planinarskidnevnik.dtos.Badge.BadgeDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserCreateDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserHeaderDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserProfilePageDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserSearchDto;
-import hr.fer.pi.planinarskidnevnik.exceptions.*;
 import hr.fer.pi.planinarskidnevnik.exceptions.IllegalAccessException;
+import hr.fer.pi.planinarskidnevnik.exceptions.NoImageException;
+import hr.fer.pi.planinarskidnevnik.exceptions.ResourceNotFoundException;
+import hr.fer.pi.planinarskidnevnik.exceptions.UserWithEmailExistsException;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainLodgeArchiveToMountainLodgeArchiveResponseMapper;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainPathGradeToMountainPathGradeResponseMapper;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainPathUserArchiveToMountainPathArchiveResponseMapper;
 import hr.fer.pi.planinarskidnevnik.models.MountainPathGrade;
 import hr.fer.pi.planinarskidnevnik.models.Role;
 import hr.fer.pi.planinarskidnevnik.models.User;
-import hr.fer.pi.planinarskidnevnik.repositories.MountainLodgeRepository;
 import hr.fer.pi.planinarskidnevnik.models.UserBadge.UserBadge;
-import hr.fer.pi.planinarskidnevnik.repositories.RoleRepository;
-import hr.fer.pi.planinarskidnevnik.repositories.UserRepository;
+import hr.fer.pi.planinarskidnevnik.models.friendships.FriendshipRequest;
+import hr.fer.pi.planinarskidnevnik.repositories.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,8 @@ public class UserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final FriendshipRequestRepository friendshipRequestRepository;
+    private final FriendshipsRepository friendshipsRepository;
     private final PasswordEncoder encoder;
     private final String DEFAULT_PROFILE_IMAGE = "/images/planinar.jpeg";
     private final MountainLodgeArchiveToMountainLodgeArchiveResponseMapper lodgeArchiveResponseMapper;
@@ -47,9 +50,11 @@ public class UserService {
     private final MountainPathGradeToMountainPathGradeResponseMapper pathGradeResponseMapper;
 
     @Autowired
-    public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder encoder, MountainLodgeRepository mountainLodgeRepository, MountainLodgeArchiveToMountainLodgeArchiveResponseMapper lodgeArchiveResponseMapper, MountainPathUserArchiveToMountainPathArchiveResponseMapper pathArchiveResponseMapper, MountainPathGradeToMountainPathGradeResponseMapper pathGradeResponseMapper) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder encoder, FriendshipsRepository friendshipsRepository, FriendshipRequestRepository friendshipRequestRepository, MountainLodgeRepository mountainLodgeRepository, MountainLodgeArchiveToMountainLodgeArchiveResponseMapper lodgeArchiveResponseMapper, MountainPathUserArchiveToMountainPathArchiveResponseMapper pathArchiveResponseMapper, MountainPathGradeToMountainPathGradeResponseMapper pathGradeResponseMapper) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.friendshipRequestRepository = friendshipRequestRepository;
+        this.friendshipsRepository = friendshipsRepository;
         this.encoder = encoder;
         this.lodgeArchiveResponseMapper = lodgeArchiveResponseMapper;
         this.pathArchiveResponseMapper = pathArchiveResponseMapper;
@@ -185,7 +190,7 @@ public class UserService {
 
     public List<UserSearchDto> getUserCommunity(Principal principal) {
         User currentUser = getCurrentUser(principal);
-        List<User> allUsers = userRepository.getAllByIdNot(currentUser.getId());
+        List<User> allUsers = currentUser.getFriends();
         List<UserSearchDto> searchResult = new ArrayList<>();
 
         for (User u : allUsers) {
@@ -216,7 +221,13 @@ public class UserService {
                 user.getImage() == null ? getImage(user.getEmail()) : user.getImage(),
                 isOwner(profileId, principal.getName()),
                 getRole(principal.getName()).equals("ADMIN"),
+                isFriend(user, principal),
                 convertToBadgeDto(user.getUserBadgeList()));
+    }
+
+    private boolean isFriend(User user, Principal principal) {
+        User currentUser = getCurrentUser(principal);
+        return currentUser.getFriends().contains(user);
     }
 
     public UserHeaderDto getHeaderInformation(Principal principal) {
@@ -257,5 +268,71 @@ public class UserService {
         User currUser = getCurrentUser(principal);
         List<MountainPathGrade> mountainPathGradeList = currUser.getMountainPathGradeList();
         return pathGradeResponseMapper.mapToList(mountainPathGradeList);
+    }
+
+    public void sendFriendRequest(String email, Long friendId) {
+        User sender = findByEmail(email).orElseThrow(() -> new ResourceNotFoundException(email));
+        User receiver = userRepository.getOne(friendId);
+        receiver.getFriendRequests().add(sender);
+        userRepository.save(receiver);
+    }
+
+    public List<UserSearchDto> checkFriendRequests(String email) {
+        User user = findByEmail(email).orElseThrow(() -> new ResourceNotFoundException(email));
+        List<UserSearchDto> allRequests = new ArrayList<>();
+
+        for (User u : user.getFriendRequests()) {
+            allRequests.add(new UserSearchDto(u.getId(), getImage(u.getEmail()), u.getName()));
+        }
+        return allRequests;
+    }
+
+    public void acceptFriendRequest(Principal principal, Long senderId) {
+        User sender = getUserById(senderId);
+        User receiver = getCurrentUser(principal);
+
+        List<User> friendshipRequests = receiver.getFriendRequests();
+        if (friendshipRequests.contains(sender)) {
+            friendshipRequests.remove(sender);
+            sender.getFriends().add(receiver);
+            receiver.getFriends().add(sender);
+            sender.getFriendRequestsNotifications().add(receiver);
+        }
+        userRepository.save(sender);
+        userRepository.save(receiver);
+    }
+
+    public void removeFriend(Principal principal, Long friendRemovedId) {
+        User sender = getUserById(friendRemovedId);
+        User currentUser = getCurrentUser(principal);
+
+        sender.getFriends().remove(currentUser);
+        sender.getFriendRequestsNotifications().remove(currentUser);
+        currentUser.getFriends().remove(sender);
+        currentUser.getFriendRequestsNotifications().remove(sender);
+
+        userRepository.save(sender);
+        userRepository.save(currentUser);
+    }
+
+    public List<UserSearchDto> getAllUsers(Principal principal) {
+        User currentUser = getCurrentUser(principal);
+        List<User> allUsers = userRepository.getAllByIdNot(currentUser.getId());
+        List<UserSearchDto> searchResult = new ArrayList<>();
+
+        for (User u : allUsers) {
+            searchResult.add(new UserSearchDto(u.getId(), getImage(u.getEmail()), u.getName()));
+        }
+
+        return searchResult;
+    }
+
+    public void friendRequestDecline(Principal principal, Long senderId) {
+        User sender = getUserById(senderId);
+        User receiver = getCurrentUser(principal);
+
+        List<User> friendshipRequests = receiver.getFriendRequests();
+        friendshipRequests.remove(sender);
+        userRepository.save(receiver);
     }
 }

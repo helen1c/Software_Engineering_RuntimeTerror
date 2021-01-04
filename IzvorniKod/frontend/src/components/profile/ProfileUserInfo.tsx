@@ -12,7 +12,6 @@ import question from "../../assets/question.png";
 import {getEmptyProfile, ViewProfileInfo} from "./models/ViewProfileInfo";
 import Compress from "react-image-file-resizer";
 import {MountaineeringCommunitySearch} from "../mountaineering-community/MountaineeringCommunitySearch";
-import friend from "../../assets/friend.png";
 import {Badges} from "../badges/Badges";
 
 interface Props {
@@ -35,17 +34,23 @@ export const ProfileUserInfo = ({user, setUser}: Props) => {
         let file = event.target.files[0];
         console.log(file);
         Compress.imageFileResizer(
-            file, 480, 480, "JPEG", 100, 0, (uri) => {
-                console.log(uri)
+            file,
+            480,
+            480,
+            "JPEG",
+            100,
+            0,
+            (uri) => {
+                console.log(uri);
 
                 let reader = new FileReader();
-                if (uri !== undefined)
-                    reader.readAsDataURL(uri as Blob);
+                if (uri !== undefined) reader.readAsDataURL(uri as Blob);
 
                 reader.onload = function (newImage) {
                     setUser({...user, image: newImage?.target?.result as string});
                 };
-            }, "blob"
+            },
+            "blob"
         );
     };
 
@@ -128,6 +133,24 @@ export const ProfileUserInfo = ({user, setUser}: Props) => {
         }).then(function (response) {
             if (response.status === 200) {
                 setSentFriendRequest(true);
+            } else {
+                setError(true);
+            }
+        });
+    };
+
+    const handleRemoveUserAsFriend = () => {
+        fetch("/api/users/remove-friend/" + id, {
+            method: "POST",
+            headers: new Headers({
+                authorization: sessionStorage.getItem("key") || "",
+            }),
+        }).then(function (response) {
+            if (response.status === 200) {
+                let newUser = user;
+                newUser.friend = false;
+                setUser(newUser)
+                setSentFriendRequest(false);
             } else {
                 setError(true);
             }
@@ -351,22 +374,31 @@ export const ProfileUserInfo = ({user, setUser}: Props) => {
                     )
                 ) : (
                     <div>
-                        {!error ? (
-                            !sentFriendRequest ? (
-                                <button onClick={handleAddUserAsFriend}>
-                                    Dodaj prijatelja
-                                </button>
-                            ) : (
-                                <button disabled={true}>Zahtjev poslan &#10004;</button>
-                            )
-                        ) : (
-                            <span className="errorText">
-                Greška prilikom dodavanja prijatelja.
-                <button onClick={handleAddUserAsFriend}>
-                  Dodaj prijatelja
-                </button>
-              </span>
-                        )}
+
+                        <div>
+                            {!error ? (
+                                    user.friend ? (
+                                        <button onClick={handleRemoveUserAsFriend}>Ukloni prijatelja</button>
+                                    ) : (
+                                        !sentFriendRequest ? (
+                                            <button onClick={handleAddUserAsFriend}>
+                                                Dodaj prijatelja
+                                            </button>
+                                        ) : (
+                                            <button disabled={true}>Zahtjev poslan &#10004;</button>
+                                        )
+                                    )
+                                ) :
+                                (
+                                    <span className="errorText">
+                    Greška prilikom dodavanja prijatelja.
+                    <button onClick={handleAddUserAsFriend}>
+                      Dodaj prijatelja
+                    </button>
+                  </span>
+                                )}
+
+                        </div>
                     </div>
                 )}
                 {(user.isOwner || user.isAdmin) && (

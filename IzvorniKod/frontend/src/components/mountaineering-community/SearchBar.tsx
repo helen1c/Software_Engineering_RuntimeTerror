@@ -12,7 +12,7 @@ interface Props {
 export const SearchBar = ({ dataFunction }: Props) => {
   const [allUsers, setAllUsers] = useState<UserInfo[]>([]);
   useEffect(() => {
-    fetch("/api/users/community?name=", {
+    fetch("/api/users/get-friends", {
       method: "GET",
       headers: new Headers({
         authorization: sessionStorage.getItem("key") || "",

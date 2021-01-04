@@ -1,9 +1,14 @@
 package hr.fer.pi.planinarskidnevnik.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import hr.fer.pi.planinarskidnevnik.models.MountainLodgeUserArchive.MountainLodgeUserArchive;
 import hr.fer.pi.planinarskidnevnik.models.MountainPathUserArchive.MountainPathUserArchive;
 import hr.fer.pi.planinarskidnevnik.models.UserBadge.UserBadge;
+import hr.fer.pi.planinarskidnevnik.models.friendships.FriendshipRequest;
+import hr.fer.pi.planinarskidnevnik.models.friendships.Friendships;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -16,6 +21,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "user")
+@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class User {
 
     @Id
@@ -50,6 +56,30 @@ public class User {
     @JoinColumn(nullable = false)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Role role;
+
+    @ManyToMany
+    @JoinTable(
+            name = "friendships",
+            joinColumns = @JoinColumn(name = "current_user_id"),
+            inverseJoinColumns = @JoinColumn(name = "friend_id")
+    )
+    private List<User> friends;
+
+    @ManyToMany
+    @JoinTable(
+            name = "friendship_request",
+            joinColumns = @JoinColumn(name = "sender"),
+            inverseJoinColumns = @JoinColumn(name = "receiver")
+    )
+    private List<User> friendRequests;
+
+    @ManyToMany
+    @JoinTable(
+            name = "friendships_notifications",
+            joinColumns = @JoinColumn(name = "friendship_request_sender"),
+            inverseJoinColumns = @JoinColumn(name = "friendship_request_receiver")
+    )
+    private List<User> friendRequestsNotifications;
 
     @OneToMany(mappedBy = "user")
     private List<MountainPathGrade> mountainPathGradeList = new ArrayList<>();
@@ -192,6 +222,30 @@ public class User {
     public List<UserBadge> getUserBadgeList() { return userBadgeList; }
 
     public void setUserBadgeList(List<UserBadge> userBadgeList) { this.userBadgeList = userBadgeList; }
+
+    public List<User> getFriendRequests() {
+        return friendRequests;
+    }
+
+    public void setFriendRequests(List<User> friendRequest) {
+        this.friendRequests = friendRequest;
+    }
+
+    public List<User> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<User> friends) {
+        this.friends = friends;
+    }
+
+    public List<User> getFriendRequestsNotifications() {
+        return friendRequestsNotifications;
+    }
+
+    public void setFriendRequestsNotifications(List<User> friendRequestsNotifications) {
+        this.friendRequestsNotifications = friendRequestsNotifications;
+    }
 
     @Override
     public String toString() {
