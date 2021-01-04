@@ -6,17 +6,13 @@ import {findArchivedPaths} from "../../../../store/actions/findAllArchivedPathsA
 
 export const ArchivedMountainPathList = () => {
 
-    const {archivedPaths} = useSelector((state: MainReducer) => state.findAllArchivedPathsReducer);
+    const {archivedPaths, status} = useSelector((state: MainReducer) => state.findAllArchivedPathsReducer);
 
     const dispatcher = useDispatch();
 
     useEffect(() => {
-        if(!archivedPaths)
-            dispatcher(findArchivedPaths());
-        if(archivedPaths.length === 0) {
-            dispatcher(findArchivedPaths());
-        }
-    }, [dispatcher, archivedPaths])
+        dispatcher(findArchivedPaths())
+    }, [dispatcher])
 
     return (
         <>
@@ -26,7 +22,7 @@ export const ArchivedMountainPathList = () => {
                 <span className="archive-path-name">Naziv staze</span>
                 <span className="archive-path-name">Datum  </span>
                 <span className="archive-path-name-first">slika</span>
-            </div> : <div>Nemate arhiviranih planinarskih staza.</div>}
+            </div> : <label>Nemate arhiviranih planinarskih staza.</label>}
             {archivedPaths.map(path => <ArchivedMountainPath path={path} key={path.id}/>)}
             </>);
 }

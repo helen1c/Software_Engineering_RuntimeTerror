@@ -11,12 +11,8 @@ export const ArchivedMountainLodgeList = () => {
     const dispatcher = useDispatch();
 
     useEffect(() => {
-        if(!lodges)
-            dispatcher(findArchivedLodges());
-        if(lodges.length === 0) {
-            dispatcher(findArchivedLodges());
-        }
-    }, [dispatcher, lodges])
+        dispatcher(findArchivedLodges());
+    }, [dispatcher])
 
     return (
         <>
@@ -25,8 +21,7 @@ export const ArchivedMountainLodgeList = () => {
                 <span className="archive-lodge-name">Naziv doma</span>
                 <span className="archive-lodge-name">Datum  </span>
                 <span className="archive-lodge-name-first">slika</span>
-
-            </div> : <div>Nemate arhiviranih planinarskih domova.</div>}
+            </div> : <label>Nemate arhiviranih planinarskih domova.</label>}
             {lodges.map(lodge => <ArchivedMountainLodge key={lodge.id} lodge={lodge}/>)}
         </>);
 

@@ -10,8 +10,6 @@ interface Props {
 export const ArchivedMountainPath = ({path} : Props) => {
 
     return (
-
-
         <div className="path-archive-cnt">
             <span className="archive-path-name"> {path.hillName}</span>
             <span className="archive-path-name"> {path.name}</span>

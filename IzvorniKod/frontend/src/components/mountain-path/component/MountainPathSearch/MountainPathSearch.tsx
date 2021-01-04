@@ -78,6 +78,22 @@ export const MountainPathSearch = () => {
     }, []);
 
     const {archivedPaths} = useSelector((state: MainReducer) => state.findAllArchivedPathsReducer);
+    const {gradedPaths} = useSelector((state: MainReducer) => state.findAllGradedPathsReducer);
+
+    useEffect(() => {
+        if (sessionStorage.getItem("key")) {
+            dispatcher(findArchivedPaths());
+            dispatcher(findGradedPaths());
+        }
+    }, [dispatcher]);
+
+    useEffect(() => {
+        if (hillResults === undefined || hillResults.length === 0) {
+            console.log("Get all Hills...");
+            dispatcher(findHills());
+        }
+    }, [dispatcher, hillResults]);
+
 
     const checkId = (id: number) => {
         if (loggedIn) {
@@ -85,20 +101,6 @@ export const MountainPathSearch = () => {
         }
         return false;
     }
-
-    useEffect(() => {
-        if (sessionStorage.getItem("key")) {
-            dispatcher(findArchivedPaths());
-        }
-    }, [dispatcher, loggedIn]);
-
-    const {gradedPaths} = useSelector((state: MainReducer) => state.findAllGradedPathsReducer);
-
-    useEffect(() => {
-        if (sessionStorage.getItem("key")) {
-            dispatcher(findGradedPaths());
-        }
-    }, [dispatcher, loggedIn]);
 
     const getPathGrade = (pathId: number): number|null => {
         if (loggedIn) {
@@ -109,13 +111,6 @@ export const MountainPathSearch = () => {
         }
         return null;
     }
-
-    useEffect(() => {
-        if (hillResults === undefined || hillResults.length === 0) {
-            console.log("Get all Hills...");
-            dispatcher(findHills());
-        }
-    }, [dispatcher, hillResults]);
 
     return (
         <>

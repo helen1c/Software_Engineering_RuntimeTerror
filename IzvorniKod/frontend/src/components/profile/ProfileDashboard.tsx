@@ -5,9 +5,10 @@ import menu from "../../assets/menu-bar.jpg";
 import {ViewProfileInfo} from "./models/ViewProfileInfo";
 import {ArchivedMountainLodgeList} from "../mountain-lodge/component/ArchivedMountainLodge/ArchivedMountainLodgeList";
 import {ArchivedMountainPathList} from "../mountain-path/component/ArchivedMountainPath/ArchivedMountainPathList";
+import {MyMountainPaths} from "../mountain-path/component/MyMountainPaths/MyMountainPaths";
 
 const PROFILE = "PROFILE";
-const PATHS = "PATHS";
+const MY_PATHS = "MY_PATHS";
 const ARCHIVE_LODGE = "ARCHIVE_LODGE";
 const ARCHIVE_PATH = "ARCHIVE_PATH";
 const EVENTS = "EVENTS"
@@ -42,9 +43,9 @@ export const ProfileDashboard = ({ user, setUser }: Props) => {
           </button>
           <button
             className={
-              option === PATHS ? "sidebar__item selected" : "sidebar__item"
+              option === MY_PATHS ? "sidebar__item selected" : "sidebar__item"
             }
-            onClick={() => setOption(PATHS)}
+            onClick={() => setOption(MY_PATHS)}
           >
             <p className="sidebar__item__description">Moje staze</p>
             <img
@@ -107,6 +108,11 @@ export const ProfileDashboard = ({ user, setUser }: Props) => {
           {option === ARCHIVE_PATH && (
               <div className="admin-layout-mini">
               <ArchivedMountainPathList/>
+              </div>
+          )}
+          {option === MY_PATHS && (
+              <div className="admin-layout-mini">
+                  <MyMountainPaths/>
               </div>
           )}
       </div>
