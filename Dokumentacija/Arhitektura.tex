@@ -109,7 +109,6 @@
 		\item \textbf{utility}
 		\item \textbf{badge}
 		\item \textbf{contact$\_$message}
-		\item \underline{visit$\_$confirmation}
 		\item \underline{friendships}
 		\item \underline{frienship$\_$req}
 		\item \underline{user$\_$role}
@@ -117,7 +116,6 @@
 		\item \underline{user$\_$badge}
 		\item \underline{mountain$\_$lodge$\_$utility}
 		\item \underline{mountain$\_$lodge$\_$report}
-		\item \underline{duty$\_$mountaneer}
 		\item \underline{event$\_$path}
 		\item \underline{event$\_$attendance}
 		\item \underline{mountain$\_$path$\_$report}
@@ -362,25 +360,6 @@
 				\end{longtabu}
 				\vspace{10mm}
 				
-				
-				
-				\textbf{visit\_confirmation} Ovo je vezna tablica koja nam modelira zahtjeve koje korisnik šalje dežurnim planinarima kada je posjetio određeni dom. Tablica predstavlja Many-To-Many vezu između entiteta \textbf{user} i entiteta \textbf{mountain\_lodge}. Osim stranih ključeva "user\_id" i "lodge\_id" sadrži i atribute "time\_requested" i "status" koji redom predstavljaju vrijeme slanja zahtjeva te status obrade zahtjeva za posjetom, koji može biti: ACCEPTED (Prihvaćen), REJECTED (Odbijen) ili PENDING (Aktivan).
-				
-				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
-					
-					\hline \multicolumn{3}{|c|}{\textbf{visit\_confirmation - (Zahtjev za potvrdom posjeta)}}	 \\[3pt] \hline
-					\endfirsthead
-				
-					\hline 
-					\endlastfoot
-					
-					\underline{user\_id} & BIGINT	&  strani ključ korisnika koji traži potvrdu posjeta iz tablice \textbf{user}\\ \hline
-					\underline{lodge\_id}	& BIGINT & strani ključ planinarskog doma kojeg posjećuje iz tablice \textbf{mountain\_lodge} 	\\ \hline 
-					time\_requested & TIMESTAMP &  datum i vrijeme slanja zahtjeva za posjetom \\ \hline 
-					status & VARCHAR	&  status zahtjeva	\\ \hline  
-		
-		\end{longtabu}
-		\vspace{10mm}
 	
 			\textbf{friendships} Ovo je vezna tablica koja sadrži Many-To-Many vezu između dva korisnika, a služi nam za modeliranje prijateljstava, odnosno pripadanja istoj planinarskoj zajednici. Sadrži atribute "user\_id1" i "user\_id2" koji predstavljaju strane ključeve na tablicu \textbf{user} i govore nam tko su korisnici koji pripadaju istoj zajednici, te atribut "friendship\_created" koji nam govori o datumu i vremenu stvaranja prijateljstva.
 			
@@ -655,27 +634,6 @@
 			
 		\end{longtabu}
 			\vspace{10mm}
-		
-			\textbf{duty\_mountaneer} Vezna tablica koja modelira Many-To-Many vezu između planinarskog doma identifikatora "lodge\_id" i planinara identifikatora "user\_id", koji je dežurni planinar za taj dom.
-			
-			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
-				
-				\hline \multicolumn{3}{|c|}{\textbf{duty\_mountaneer}}	 \\[3pt] \hline
-				\endfirsthead
-				
-				\hline \multicolumn{3}{|c|}{\textbf{duty\_mountaneer}}	 \\[3pt] \hline
-				\endhead
-				
-				\hline 
-				\endlastfoot
-				
-				\underline{user\_id} & BIGINT	& strani ključ korisnika koji je dežurni planinar iz tablice \textbf{user}	\\ \hline
-				\underline{lodge\_id}	& BIGINT &   strani ključ planinarskog doma u kojem je planinar dežuran iz tablice \textbf{mountain\_lodge}	\\ \hline 
-				
-				
-			\end{longtabu}
-			\vspace{10mm}
-
 
 
 			\subsection{Dijagram baze podataka}
