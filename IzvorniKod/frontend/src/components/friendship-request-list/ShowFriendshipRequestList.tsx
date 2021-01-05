@@ -1,6 +1,7 @@
 import {UserInfo} from "../mountain-lodge/models/UserInfo";
 import {ShowFriendshipRequest} from "./ShowFriendshipRequest";
 import React from "react";
+import "./ShowFriendshipRequestList.css"
 
 interface Props {
     allUsers: UserInfo[];
@@ -9,8 +10,9 @@ interface Props {
 
 export const ShowFriendshipRequestList = ({ allUsers, setAllUsers }: Props) => {
     return (
-        <div style={{ margin: "5px" }}>
-            <div className="users-container">
+        <div style={{ backgroundColor: "aliceblue"}}>
+            <div className="all-users-container">
+                <span className="request-heading"> Zahtjevi za prijateljstvo </span>
                 {allUsers.map((user) => (
                     <div key={user.id}>
                         <ShowFriendshipRequest user={user} allUsers ={allUsers} setAllUsers={setAllUsers} />

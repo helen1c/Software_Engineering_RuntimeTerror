@@ -36,6 +36,7 @@
 
 .archive-path-name{
     width: 15%;
+    word-break: break-all;
 }
 .archive-path-name-first{
     color: #287334;

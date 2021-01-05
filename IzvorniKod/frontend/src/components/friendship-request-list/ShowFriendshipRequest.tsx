@@ -93,30 +93,30 @@ export const ShowFriendshipRequest= ({ user, allUsers, setAllUsers}: Props) => {
 
     return (
 
-        <div className="users-container">
-
+        <div >
             {!isConfirmed && !isRefused?(
-                <div>
+                <div className="users-container">
+                <div className="user-request">
                     <img
                         alt={user.name}
                         src={user.image}
-                        className="user-photo"
+                        className="user-request-photo"
                         onClick={(e) => history.push("/profile/" + user.id)}
                     />
-                    <span>
-                    <span className="user-name" >{user.name} </span>
-                    vam šalje zahtjev za prijateljstvo </span>
-                    <button type="submit" className="submitButton" onClick={() => confirm()}>
+
+                    <span className="user-name" > <b>{user.name}</b> vam šalje zahtjev za prijateljstvo! </span>
+                    <button type="submit" className="submitButtonaccept" onClick={() => confirm()}>
                         Prihvati
                     </button>
-                    <button type="submit" className="submitButton" onClick={() => refuse()}>
+                    <button type="submit" className="submitButtondecline" onClick={() => refuse()}>
                         Odbij
                     </button>
+                </div>
                 </div>
             ):(
                 <div>
                     {(numberOfRequests === isAllDone) ? (
-                        <div className="event-input">Nema pristiglih zahtjeva za prijateljstvo.</div>
+                        <div className="request-empty">Nema pristiglih zahtjeva za prijateljstvo.</div>
                     ) : (
                         <div> </div>
                     )}
