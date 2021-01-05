@@ -2,7 +2,8 @@
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-    height: 70px;
+    height: fit-content;
+    min-height: 70px;
     border-radius: 50px;
     border: 2px solid #406cba;
     align-items: center;

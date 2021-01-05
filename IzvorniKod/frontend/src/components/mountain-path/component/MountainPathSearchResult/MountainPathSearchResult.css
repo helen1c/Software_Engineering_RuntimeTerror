@@ -40,7 +40,6 @@
     .mountain-path-extend-info {
         flex-direction: column;
         padding: 0.5rem;
-        height: 300px;
         width: 90vw;
     }
     .mountain-path-avg-grade-expand, .avg-grade-span , .without-grade{
@@ -64,6 +63,10 @@
     label.MuiRating-label {
         min-width: 42px !important;
     }
+    .MuiRating-root {
+        display: flex;
+        flex-flow: wrap;
+    }
 }
 
 .mountain-path-main-info {
@@ -72,13 +75,6 @@
     height: 50px;
     align-items: center;
     justify-content: space-evenly;
-}
-
-.buttons-ar-fav {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
 }
 
 .mountain-path-cnt-expand {
@@ -148,6 +144,8 @@ fieldset {
 
 .mountain-path-name{
     width: 30%;
+    max-width: 30%;
+    word-break: break-all;
 }
 .mountain-path-avg-grade-expand , .mountain-path-avg-grade{
     align-items: center;
@@ -155,4 +153,9 @@ fieldset {
 }
 .avg-grade-span{
     margin:1rem;
+}
+.MuiButton-containedPrimary {
+    color: rgba(0, 0, 0, 0.87);
+    background-color: #4caf50;
+    margin: 0.3rem !important;
 }

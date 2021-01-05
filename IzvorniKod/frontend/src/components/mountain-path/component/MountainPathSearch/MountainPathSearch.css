@@ -280,6 +280,8 @@ margin-left: 2rem;
 
 .mountain-path-name, .mountain-path-name-expand{
     width: 30%;
+    word-break: break-all;
+    max-width: 30%;
 }
 
 .mountain-path-hillname ,.mountain-path-walktime , .mountain-path-difficulty , .mountain-path-difficulty-expand, .mountain-path-hillname-expand ,.mountain-path-walktime-expand{
