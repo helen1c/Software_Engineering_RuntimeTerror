@@ -19,19 +19,17 @@ export const FriendshipRequestList = () => {
                         item.image = "data:image/jpeg;base64," + item.image;
                     });
                     setAllUsers(users);
-                    allUsers.filter((user) => user.name.toLowerCase())
                 });
             } else {
-                allUsers.filter((user) => user.name.toLowerCase())
+
             }
         });
     }, []);
 
     return (
         <div>
-
             {!allUsers.length ? (
-                <div> </div>
+                <div>Nema pristiglih zahtjeva za prijateljstvo. </div>
             ) : (
                 <ShowFriendshipRequestList allUsers={allUsers} setAllUsers={setAllUsers} />
             )}

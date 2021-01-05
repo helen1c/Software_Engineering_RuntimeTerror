@@ -124,7 +124,9 @@
             <column name="event_id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="user_id" type="BIGINT"/>
+            <column name="user_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
             <column name="name" type="VARCHAR(50)">
                 <constraints nullable="false"/>
             </column>

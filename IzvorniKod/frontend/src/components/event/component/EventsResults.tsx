@@ -16,7 +16,7 @@ export const EventsResults = () =>{
             console.log("Get all Events...");
             dispatcher(findEvents());
         }
-    }, [dispatcher, eventsResults]);
+    }, [dispatcher, eventsResults, read]);
 
     return(
         <div>
