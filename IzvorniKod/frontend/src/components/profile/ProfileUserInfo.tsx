@@ -5,6 +5,7 @@ import uredi from "../../assets/paper-icon.png";
 import obrisi from "../../assets/delete-icon.png";
 import odustani from "../../assets/blue-x-png-1.png";
 import spremi from "../../assets/save-icon.png";
+import friend from "../../assets/friend.png"
 import mail from "../../assets/mail-inbox-app.png";
 import cake from "../../assets/cake.png";
 import city from "../../assets/cityscape.png";
@@ -378,23 +379,37 @@ export const ProfileUserInfo = ({user, setUser}: Props) => {
                         <div>
                             {!error ? (
                                     user.friend ? (
-                                        <button onClick={handleRemoveUserAsFriend}>Ukloni prijatelja</button>
+                                        <button className="button-profile-fr"   onClick={handleRemoveUserAsFriend}>
+                                            <span className="button-label-fr"> Ukloni prijatelja </span>
+                                        </button>
                                     ) : (
                                         !sentFriendRequest ? (
-                                            <button onClick={handleAddUserAsFriend}>
-                                                Dodaj prijatelja
+                                            <button className="button-profile-fr"  onClick={handleAddUserAsFriend}>
+                                                <span className="button-label-fr"> Dodaj prijatelja </span>
+                                                <img
+                                                    src={friend}
+                                                    alt={"Friend"}
+                                                    className="buttons-friend-img"
+                                                />
                                             </button>
+
                                         ) : (
-                                            <button disabled={true}>Zahtjev poslan &#10004;</button>
+                                            <button  className="button-profile-fr"  disabled={true}>Zahtjev poslan &#10004;</button>
                                         )
                                     )
                                 ) :
                                 (
                                     <span className="errorText">
                     Greška prilikom dodavanja prijatelja.
-                    <button onClick={handleAddUserAsFriend}>
-                      Dodaj prijatelja
-                    </button>
+                     <button className="button-profile-fr"  onClick={handleAddUserAsFriend}>
+                            <span className="button-label-fr"> Dodaj prijatelja </span>
+                            <img
+                                src={friend}
+                                alt={"Friend"}
+                                className="buttons-friend-img"
+                            />
+                          </button>
+
                   </span>
                                 )}
 

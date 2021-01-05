@@ -129,7 +129,7 @@ h1.profile-info-title {
     padding: 0.5rem;
 }
 .button-profile-fr:hover{
-    transform: scale3d(1.05,1.05,1.05);
+    transform: scale(1.05);
 }
 .button-profile:hover{
     transform: translate(2px, 0);
@@ -264,4 +264,13 @@ input[type="date" i] {
     height: 20px;
     width: 20px;
     margin-right: 0.5rem;
+}
+.button-profile-fr{
+    background-color: rgba(126, 200, 250,1);
+    display: block;
+
+}
+.buttons-friend-img{
+    height: 25px;
+    width: 25px;
 }

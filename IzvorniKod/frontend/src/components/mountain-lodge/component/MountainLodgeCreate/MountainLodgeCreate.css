@@ -80,9 +80,14 @@ a:hover {
     top: 120px;
 }
 
-.dialog-title {
+.dialog-title-lodge {
     text-align: center;
     font-size: 42rem;
+    background-color: #406cba;
+}
+.lodge-button{
+    background-color: #406cba !important;
+    color: white !important;
 }
 
 .pic {
@@ -109,7 +114,7 @@ a:hover {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: start;
     align-content: center;
 }
 
@@ -122,6 +127,7 @@ a:hover {
 }
 .utility-select{
     margin-top: 1em;
+    margin-left: -0.7rem;
 }
 .input-create {
     width: 20vw;
@@ -156,11 +162,14 @@ a:hover {
 
 .lodge-create-selects {
     margin-bottom: 80px;
+    margin-top: 20px;
+}
+.utility-select >div {
+    margin-left: 0px !important;
 }
 
 
-
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 600px) {
 
     .input-create {
         width: 250px;
@@ -169,7 +178,13 @@ a:hover {
     }
 
     .form-dialog {
-       max-width: 300px;
+        max-width: 300px;
+    }
+    .lodge-create-selects{
+        margin-left: 50px;
+    }
+    .utility-select >div {
+        width: 240px !important;
     }
 
 }
