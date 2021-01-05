@@ -10,6 +10,7 @@ import mail from "../../assets/mail-inbox-app.png";
 import cake from "../../assets/cake.png";
 import city from "../../assets/cityscape.png";
 import question from "../../assets/question.png";
+import cancel from "../../assets/cancel.png";
 import {getEmptyProfile, ViewProfileInfo} from "./models/ViewProfileInfo";
 import Compress from "react-image-file-resizer";
 import {MountaineeringCommunitySearch} from "../mountaineering-community/MountaineeringCommunitySearch";
@@ -164,7 +165,6 @@ export const ProfileUserInfo = ({user, setUser}: Props) => {
     return (
         <div>
             <div className="main-profile">
-                <h1 className="profile-info-title">Korisnički podaci</h1>
                 <div className="profile-info-container profile-info-text">
                     <div className="profile-text-wrap">
                         <div className="input-content-div-name">
@@ -345,7 +345,7 @@ export const ProfileUserInfo = ({user, setUser}: Props) => {
                     !edit ? (
                         <div>
                             <button className="button-profile" onClick={handleEditOnClick}>
-                                <span className="button-label">Uredi profil </span>
+                                <span className="button-label">Uredite  profil </span>
                                 <img
                                     src={uredi}
                                     alt={"Uredi"}
@@ -381,9 +381,10 @@ export const ProfileUserInfo = ({user, setUser}: Props) => {
 
                         <div>
                             {!error ? (
-                                    user.friend && !removedFriend ? (
-                                        <button className="button-profile-fr"   onClick={handleRemoveUserAsFriend}>
-                                            <span className="button-label-fr"> Ukloni prijatelja </span>
+                                    user.friend ? (
+                                        <button className="button-profile"   onClick={handleRemoveUserAsFriend}>
+                                            <span className="button-label">Ukloni prijatelja </span>
+                                            <img src={cancel} alt={"Cancel"} className="buttons-profile-img"/>
                                         </button>
                                     ) : (
                                         (!sentFriendRequest && !user.sentFriendRequest) ? (

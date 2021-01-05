@@ -1,4 +1,4 @@
-.user-search-bar{
+.community-user-search-bar{
     width: 20vw;
     min-width: 250px;
     min-height: 4rem;
@@ -11,17 +11,17 @@
     margin-top: 1em;
 }
 
-.user-container{
+.community-user-container{
     text-align: center;
     display: flex;
     flex-direction: column;
     width: min-content;
     padding: 1rem;
 }
-.user-container:hover{
+.community-user-container:hover{
     transform: scale(1.02);
 }
 
-.user-search-div{
+.community-user-search-div{
     margin: auto;
 }

@@ -1,0 +1,17 @@
+.all-user-photo{
+    border-radius: 50%;
+    height: 80px;
+    width: 80px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+}
+.all-user-container{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    width: min-content;
+    padding: 1rem;
+}
+
+.all-user-container:hover{
+    transform: scale(1.03);
+}
