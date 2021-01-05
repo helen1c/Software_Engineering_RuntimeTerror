@@ -25,12 +25,7 @@
 }
 
 @media all and (max-width: 680px) {
-    .mountain-path-cnt {
-        width: 95vw;
-    }
-    .mountain-path-cnt-expand {
-        width: 95vw;
-    }
+
     .mini-image,.mini-image-2{
         display: none;
     }
@@ -41,9 +36,7 @@
     }
 }
 @media only screen and (min-width: 681px) and (max-width: 1150px) {
-    .mountain-path-cnt-expand{
-        width: 60vw;
-    }
+
     .mini-image,.mini-image-2{
         display: none;
     }
@@ -71,7 +64,7 @@
 
 .mountain-path-extend-info {
     display: flex;
-    height: 250px;
+    height: min-content;
     align-items: center;
     justify-content: space-evenly;
     background-image: linear-gradient(to top, rgba(0,255 ,7 , 0), rgb(213 255 206));

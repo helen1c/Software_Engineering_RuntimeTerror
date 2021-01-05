@@ -20,10 +20,20 @@ import {MountainLodgeCreateRequest} from "../../models/MountainLodgeCreateReques
 import * as Yup from "yup";
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert, {AlertProps} from '@material-ui/lab/Alert';
+import {makeStyles, Theme} from '@material-ui/core/styles';
 
 function Alert(props: AlertProps) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
+
+const useStyles = makeStyles((theme: Theme) => ({
+    root: {
+        width: '100%',
+        '& > * + *': {
+            marginTop: theme.spacing(2),
+        },
+    },
+}));
 
 export default function MountainLodgeCreate() {
 
@@ -31,6 +41,7 @@ export default function MountainLodgeCreate() {
     const [open, setOpen] = useState(false);
     const [selectedOptions, setSelectedOptions] = useState([]);
 
+    const classes = useStyles();
     const [success, setSuccessMessage] = React.useState(false);
     const [error, setErrorMessage] = React.useState(false);
 
@@ -80,7 +91,7 @@ export default function MountainLodgeCreate() {
     }, [dispatcher, utilityResults]);
 
     // @ts-ignore
-    const create = async (request: MountainLodgeCreateRequest, {resetForm}) => {
+    const create = async (request: MountainLodgeCreateRequest,  {resetForm }) => {
 
         resetForm();
         setOpen(false);
@@ -96,7 +107,6 @@ export default function MountainLodgeCreate() {
             method: "POST",
             body: JSON.stringify(sRequest),
             headers: {
-                authorization: sessionStorage.getItem("key") || "",
                 Accept: "application/json",
                 "Content-Type": "application/json"
             }
@@ -174,7 +184,7 @@ export default function MountainLodgeCreate() {
                             handleReset();
                         }} aria-labelledby="form-dialog-title">
                             <Form className={"form-dialog"}>
-                                <DialogTitle className={"dialog-title"} id="form-dialog-title">Stvori novi
+                                <DialogTitle className={"dialog-title-lodge"} id="form-dialog-title">Stvori novi
                                     dom</DialogTitle>
                                 <DialogContent>
                                     <div className="create-column">
@@ -256,13 +266,13 @@ export default function MountainLodgeCreate() {
                                     </div>
                                 </DialogContent>
                                 <DialogActions>
-                                    <Button onClick={() => {
+                                    <Button className="lodge-button" onClick={() => {
                                         handleClose();
                                         handleReset();
                                     }} color="primary">
                                         ODUSTANI
                                     </Button>
-                                    <Button type="submit" color="primary">
+                                    <Button className="lodge-button" type="submit" color="primary">
                                         STVORI
                                     </Button>
                                 </DialogActions>

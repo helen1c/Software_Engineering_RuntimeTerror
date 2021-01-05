@@ -1,7 +1,7 @@
 .community-container{
     background-color: #ffffff;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     width: 70vw;
     margin: auto;
     border-radius: 15px;

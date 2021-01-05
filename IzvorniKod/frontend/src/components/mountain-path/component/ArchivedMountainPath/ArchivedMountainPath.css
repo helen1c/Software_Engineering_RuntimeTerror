@@ -2,7 +2,8 @@
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-    height: 70px;
+    height: fit-content;
+    min-height: 70px;
     border-radius: 50px;
     border: 2px solid #287334;
     align-items: center;
@@ -36,6 +37,7 @@
 
 .archive-path-name{
     width: 15%;
+    word-break: break-all;
 }
 .archive-path-name-first{
     color: #287334;
@@ -45,4 +47,8 @@
     .path-archive-title, .path-archive-cnt {
         width: 95vw;
     }
+    .path-archive-cnt{
+        height: fit-content;
+    }
+
 }
