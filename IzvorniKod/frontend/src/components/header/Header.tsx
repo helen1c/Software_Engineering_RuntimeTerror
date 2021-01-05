@@ -3,7 +3,7 @@ import "./Header.css";
 import logo from "../../assets/logo.jpg";
 import { useHistory } from "react-router";
 import logout from "../../assets/logout.jpg";
-import profile from "../../assets/profile.png"
+import profile from "../../assets/profile.png";
 
 function Header() {
   const [profileImage, setProfileImage] = useState("");
@@ -21,7 +21,7 @@ function Header() {
       }).then(function (response) {
         if (response.status === 200) {
           response.json().then((e) => {
-            setProfileImage("data:image/jpeg;base64," + e.image)
+            setProfileImage("data:image/jpeg;base64," + e.image);
             setProfileLink("/profile/" + e.id);
           });
         }
@@ -58,48 +58,116 @@ function Header() {
               </button>
             </div>
           ) : (
-            <div
-              className="relative"
-              onMouseLeave={() => setProfileActive(false)}
-            >
-              <div className={"user-cnt"}>
-                <img
-                  className="profil-image"
-                  alt={"Slika profila"}
-                  src={profileImage}
-                  onClick={() => setProfileActive(!isProfileActive)}
-                />
-                {isProfileActive && (
-                  <div>
-                    <div className="dropdown-item-div"
-                      role="menu"
-                      aria-orientation="vertical"
-                      aria-labelledby="user-menu"
-                    >
-                      <a className="dropdown-item"
-                        href={profileLink}
-                        //style={{ color: "blue" }}
-                        onClick={() => setProfileActive(false)}
-                        role="menuitem"
+            <div>
+              <div
+                className="relative"
+                onMouseLeave={() => setProfileActive(false)}
+              >
+                <div className={"user-cnt"}>
+                  <img
+                    className="profil-image"
+                    alt={"Slika profila"}
+                    src={profileImage}
+                    onClick={() => setProfileActive(!isProfileActive)}
+                  />
+                  {isProfileActive && (
+                    <div>
+                      <div
+                        className="dropdown-item-div"
+                        role="menu"
+                        aria-orientation="vertical"
+                        aria-labelledby="user-menu"
                       >
-                        Pogledajte svoj profil
-                        <img src={profile} alt={"Profile"} className="dropdown-image" />
-                      </a>
-                      <a className="dropdown-item"
-                        href={"/home"}
-                        //style={{ color: "blue" }}
-                        onClick={() => {
-                          setProfileActive(false);
-                          sessionStorage.clear();
-                        }}
-                        role="menuitem"
-                      >
-                        Odjavite se
-                        <img src={logout} alt={"Logout"} className="dropdown-image" />
-                      </a>
+                        <button
+                          className="dropdown-item"
+                          //style={{ color: "blue" }}
+                          onClick={() => history.push("/friendship-request-list")}
+                          role="menuitem"
+                        >
+                          Zahtjevi za prijateljstvo
+                          <img
+                            src={profile}
+                            alt={"Profile"}
+                            className="dropdown-image"
+                          />
+                        </button>
+                        <a
+                          className="dropdown-item"
+                          href={"/home"}
+                          //style={{ color: "blue" }}
+                          onClick={() => {
+                            setProfileActive(false);
+                            sessionStorage.clear();
+                          }}
+                          role="menuitem"
+                        >
+                          Obavijesti
+                          <img
+                            src={logout}
+                            alt={"Logout"}
+                            className="dropdown-image"
+                          />
+                        </a>
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
+                </div>
+              </div>
+
+              <div
+                className="relative"
+                onMouseLeave={() => setProfileActive(false)}
+              >
+                <div className={"user-cnt"}>
+                  <img
+                    className="profil-image"
+                    alt={"Slika profila"}
+                    src={profileImage}
+                    onClick={() => setProfileActive(!isProfileActive)}
+                  />
+                  {isProfileActive && (
+                    <div>
+                      <div
+                        className="dropdown-item-div"
+                        role="menu"
+                        aria-orientation="vertical"
+                        aria-labelledby="user-menu"
+                      >
+                        <a
+                          className="dropdown-item"
+                          href={profileLink}
+                          //style={{ color: "blue" }}
+                          onClick={() => setProfileActive(false)}
+                          role="menuitem"
+                        >
+                          Pogledajte svoj profil
+                          <img
+                            src={profile}
+                            alt={"Profile"}
+                            className="dropdown-image"
+                          />
+                        </a>
+                        <a
+                          className="dropdown-item"
+                          href={"/home"}
+                          //style={{ color: "blue" }}
+                          onClick={() => {
+                            setProfileActive(false);
+                            sessionStorage.clear();
+                          }}
+                          role="menuitem"
+                        >
+                          Odjavite se
+                          <img
+                            src={logout}
+                            alt={"Logout"}
+                            className="dropdown-image"
+                          />
+                        </a>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           )}

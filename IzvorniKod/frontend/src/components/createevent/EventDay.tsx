@@ -30,7 +30,7 @@ export const EventDay = ({
   const selectOptions = (day: string, mountainPath: MountainPathSelect) => {
     let allPaths = paths;
     let position = -1;
-    allPaths.map((path, index) => {
+    allPaths.forEach((path, index) => {
       if (path.date === day) {
         position = index;
       }

@@ -31,7 +31,7 @@ export const Search = ({dataFunction,stateFunction} : Props) =>{
                 stateFunction(false);
             }
         });
-    }, [dataFunction]);
+    }, [dataFunction, stateFunction]);
 
     function dataRequest(searchText: string) {
         dataFunction(
