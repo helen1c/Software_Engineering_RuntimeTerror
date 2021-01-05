@@ -37,6 +37,8 @@ public class CommunityEvent {
     @JsonManagedReference
     private List<CommunityEventMountainPath> paths = new ArrayList<>();
 
+
+
     public CommunityEvent(){}
 
     public CommunityEvent(String name, String description, Date dateCreated, Date startDate, Date endDate){

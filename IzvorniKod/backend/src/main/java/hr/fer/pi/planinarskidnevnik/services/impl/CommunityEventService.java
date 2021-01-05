@@ -31,7 +31,6 @@ public class CommunityEventService {
     private final MountainPathRepository mountainPathRepository;
     private final CommunityEventMountainPathRepository communityEventMountainPathRepository;
 
-    //public CommunityEventService(CommunityEventRepository eventRepository) {
     public CommunityEventService(CommunityEventRepository eventRepository, UserService userService, MountainPathQueryServiceImpl mountainPathQueryService, MountainPathRepository mountainPathRepository, CommunityEventMountainPathRepository communityEventMountainPathRepository) {
         this.eventRepository = eventRepository;
         this.userService = userService;
@@ -69,7 +68,6 @@ public class CommunityEventService {
         return event;
     }
 
-
     public List<PreviewCommunityEventDto> getAllEvents(Principal principal) {
         List<CommunityEvent> communityEvents = eventRepository.findAll();
         List<PreviewCommunityEventDto> communityEventDtos = new ArrayList<>();
@@ -78,7 +76,7 @@ public class CommunityEventService {
             PreviewCommunityEventDto communityEventDto = new PreviewCommunityEventDto();
             User user = event.getUser();
 
-            List<CommunityEventMountainPath> communityEventMountainPathList = communityEventMountainPathRepository.findAllByEvent(event);
+            List<CommunityEventMountainPath> communityEventMountainPathList = event.getPaths();
             List<PathDate> pathDates = new ArrayList<>();
             for (CommunityEventMountainPath path: communityEventMountainPathList) {
                 pathDates.add(new PathDate(path.getPath(), path.getDateArchived()));
