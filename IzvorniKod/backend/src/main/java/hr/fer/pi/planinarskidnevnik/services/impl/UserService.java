@@ -229,6 +229,7 @@ public class UserService {
                 isOwner(profileId, principal.getName()),
                 getRole(principal.getName()).equals("ADMIN"),
                 isFriend(user, principal),
+                user.getFriendRequests().contains(getCurrentUser(principal)),
                 convertToBadgeDto(user.getUserBadgeList()));
     }
 

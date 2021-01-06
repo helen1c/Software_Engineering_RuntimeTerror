@@ -27,6 +27,7 @@ export const ProfileUserInfo = ({user, setUser}: Props) => {
     const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
     const [openEditModal, setOpenEditModal] = useState<boolean>(false);
     const [sentFriendRequest, setSentFriendRequest] = useState<boolean>(false);
+    const [removedFriend, setRemovedFriend] = useState<boolean>(false);
     const [error, setError] = useState<boolean>(false);
     const id = window.location.pathname.split("/")[2];
 
@@ -134,6 +135,7 @@ export const ProfileUserInfo = ({user, setUser}: Props) => {
         }).then(function (response) {
             if (response.status === 200) {
                 setSentFriendRequest(true);
+                setRemovedFriend(false);
             } else {
                 setError(true);
             }
@@ -151,6 +153,7 @@ export const ProfileUserInfo = ({user, setUser}: Props) => {
                 let newUser = user;
                 newUser.friend = false;
                 setUser(newUser)
+                setRemovedFriend(true);
                 setSentFriendRequest(false);
             } else {
                 setError(true);
@@ -378,12 +381,12 @@ export const ProfileUserInfo = ({user, setUser}: Props) => {
 
                         <div>
                             {!error ? (
-                                    user.friend ? (
+                                    user.friend && !removedFriend ? (
                                         <button className="button-profile-fr"   onClick={handleRemoveUserAsFriend}>
                                             <span className="button-label-fr"> Ukloni prijatelja </span>
                                         </button>
                                     ) : (
-                                        !sentFriendRequest ? (
+                                        (!sentFriendRequest && !user.sentFriendRequest) ? (
                                             <button className="button-profile-fr"  onClick={handleAddUserAsFriend}>
                                                 <span className="button-label-fr"> Dodaj prijatelja </span>
                                                 <img

@@ -27,12 +27,28 @@ public class UserProfilePageDto {
 
     private Boolean isFriend;
 
+    private Boolean sentFriendRequest;
+
     private byte[] image;
 
     private List<BadgeDto> badges;
 
     public List<BadgeDto> getBadges() {
         return badges;
+    }
+
+    public UserProfilePageDto(String name, String email, String placeOfResidence, Date dateOfBirth, String description, byte[] image, boolean isOwner, boolean isAdmin, boolean isFriend, boolean sentFriendRequest, List<BadgeDto> badges) {
+        this.name = name;
+        this.email = email;
+        this.placeOfResidence = placeOfResidence;
+        this.dateOfBirth = dateOfBirth;
+        this.description = description;
+        this.isOwner = isOwner;
+        this.isAdmin = isAdmin;
+        this.isFriend = isFriend;
+        this.sentFriendRequest = sentFriendRequest;
+        this.image = image;
+        this.badges = badges;
     }
 
     public UserProfilePageDto(String name, String email, String placeOfResidence, Date dateOfBirth, String description, byte[] image, boolean isOwner, boolean isAdmin, boolean isFriend, List<BadgeDto> badges) {
@@ -54,6 +70,14 @@ public class UserProfilePageDto {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Boolean getSentFriendRequest() {
+        return sentFriendRequest;
+    }
+
+    public void setSentFriendRequest(Boolean sentFriendRequest) {
+        this.sentFriendRequest = sentFriendRequest;
     }
 
     public String getEmail() {
