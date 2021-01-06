@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface CommunityEventRepository extends JpaRepository<CommunityEvent, Long> {
 
-    List<CommunityEvent> findAllByUser_IdAndStartDateIsAfterOrderByStartDateDesc(Long user_id, Date dateCreated);
-    List<CommunityEvent> findAllByUser_IdOrderByStartDate(Long user_id);
+    List<CommunityEvent> findAllByUser_IdAndStartDateIsAfterOrderByStartDateAsc(Long user_id, Date dateCreated);
+    List<CommunityEvent> findAllByUser_IdOrderByStartDateDesc(Long user_id);
 
 }

@@ -262,7 +262,7 @@ public class UserService {
     }
 
     private String getBadgeImageURL(UserBadge userBadge) {
-        return "/api/images/" + userBadge.getBadge().getName() + ".png";
+        return userBadge.getBadge().getName() + ".png";
     }
 
     public List<MountainLodgeArchiveResponse> getArchivedLodges(Principal principal) {
