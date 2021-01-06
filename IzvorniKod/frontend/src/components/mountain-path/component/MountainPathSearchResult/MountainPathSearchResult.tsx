@@ -253,19 +253,6 @@ export const MountainPathSearchResult = (prop: Props) => {
                                 variant="contained"
                                 color="primary"
                                 size="small"
-                                className="archive-button"
-                                onClick={archivePath}
-                                disabled={archivedS}>
-                                {archivedS ? "Arhivirano" : "Arhiviraj"}
-                            </Button>
-                        </ThemeProvider>
-                        }
-                        {prop.loggedIn &&
-                        <ThemeProvider theme={theme}>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                size="small"
                                 className="wishlist-button"
                                 onClick={() => {
                                     if(fav) {

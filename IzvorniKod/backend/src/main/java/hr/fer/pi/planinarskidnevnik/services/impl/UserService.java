@@ -11,7 +11,6 @@ import hr.fer.pi.planinarskidnevnik.dtos.User.UserSearchDto;
 import hr.fer.pi.planinarskidnevnik.exceptions.IllegalAccessException;
 import hr.fer.pi.planinarskidnevnik.exceptions.*;
 import hr.fer.pi.planinarskidnevnik.dtos.User.*;
-import hr.fer.pi.planinarskidnevnik.exceptions.IllegalAccessException;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainLodgeArchiveToMountainLodgeArchiveResponseMapper;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainPathGradeToMountainPathGradeResponseMapper;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainPathUserArchiveToMountainPathArchiveResponseMapper;
@@ -21,7 +20,6 @@ import hr.fer.pi.planinarskidnevnik.models.MountainPathGrade;
 import hr.fer.pi.planinarskidnevnik.models.Role;
 import hr.fer.pi.planinarskidnevnik.models.User;
 import hr.fer.pi.planinarskidnevnik.repositories.MessageRepository;
-import hr.fer.pi.planinarskidnevnik.repositories.MountainLodgeRepository;
 import hr.fer.pi.planinarskidnevnik.models.UserBadge.UserBadge;
 import hr.fer.pi.planinarskidnevnik.repositories.MountainPathRepository;
 import hr.fer.pi.planinarskidnevnik.repositories.RoleRepository;
@@ -59,10 +57,10 @@ public class UserService {
     public UserService(UserRepository userRepository,
                        RoleRepository roleRepository,
                        PasswordEncoder encoder,
-                       MountainPathRepository mountainPathRepository,MountainLodgeRepository mountainLodgeRepository,
+                       MountainPathRepository mountainPathRepository,
                        MountainLodgeArchiveToMountainLodgeArchiveResponseMapper lodgeArchiveResponseMapper,
                        MountainPathUserArchiveToMountainPathArchiveResponseMapper pathArchiveResponseMapper,
-                       MountainPathGradeToMountainPathGradeResponseMapper pathGradeResponseMapper) {
+                       MountainPathGradeToMountainPathGradeResponseMapper pathGradeResponseMapper, MessageRepository messageRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.encoder = encoder;
