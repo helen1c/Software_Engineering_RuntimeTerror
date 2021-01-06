@@ -59,11 +59,11 @@ export const SearchBar = ({ dataFunction }: Props) => {
   }
 
     return (
-        <div className="user-search-div">
+        <div className="community-user-search-div">
             <form onSubmit={formik.handleSubmit}>
                 <div>
                     <div>
-                        <input className="user-search-bar"
+                        <input className="community-user-search-bar"
                             type="text"
                             name="searchText"
                             placeholder={placeholder()}

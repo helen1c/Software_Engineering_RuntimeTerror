@@ -12,12 +12,12 @@ export const ShowUser = ({ user }: Props) => {
   const history = useHistory();
 
   return (
-    <div className="user-container">
+    <div className="community-user-container">
       <div>
         <img
           alt={user.name}
           src={user.image}
-          className="user-photo"
+          className="community-user-photo"
           onClick={(e) => history.push("/profile/" + user.id)}
         />
       </div>

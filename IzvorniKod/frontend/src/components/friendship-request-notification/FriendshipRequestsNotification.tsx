@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { UserInfo } from "../mountain-lodge/models/UserInfo";
 import { HttpCodesUtil } from "../mountaineering-community/HttpCodesUtil";
 import { useHistory } from "react-router";
+import "./FriendshipRequestsNotification.css";
 
 export const FriendshipRequestsNotification = () => {
   const [allUsers, setAllUsers] = useState<UserInfo[]>([]);
@@ -44,12 +45,13 @@ export const FriendshipRequestsNotification = () => {
 
   return (
     <div>
-      <p>Obavijesti</p>
+
       {!allUsers.length ? (
-        <div> Nema novih obavijesti.</div>
+        <div className="request-empty"> Nema novih obavijesti.</div>
       ) : (
         <div style={{ margin: "5px" }}>
-          <div className="users-container">
+          <div className="all-users-container">
+            <span className="request-heading">Obavijesti</span>
             {allUsers.map((user) => (
               <div key={user.id}>
                 <div>
@@ -57,22 +59,21 @@ export const FriendshipRequestsNotification = () => {
                     <img
                       alt={user.name}
                       src={user.image}
-                      className="user-photo"
+                      className="user-request-photo"
                       onClick={(e) => history.push("/profile/" + user.id)}
                     />
-                    <span>
+                    <span className="user-name-span">
                       Postali ste prijatelj s <br></br>
-                      <div className="user-name">
-                        {user.name} <span> </span>
+                      <span className="user-name">
+                        {user.name}  !</span> </span>
                         <button
                           type="submit"
-                          className="submit"
+                          className="submitButtonaccept"
                           onClick={() => handleOk(user)}
                         >
                           OK
                         </button>
-                      </div>
-                    </span>
+
                   </div>
                 </div>
               </div>

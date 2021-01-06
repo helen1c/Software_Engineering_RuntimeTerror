@@ -1,7 +1,7 @@
 import React from "react";
 import {UserInfo} from "../mountain-lodge/models/UserInfo";
 import {useHistory} from "react-router";
-
+import "./User.css";
 interface Props{
     user: UserInfo;
 }
@@ -10,12 +10,12 @@ export const User = ({user}: Props) =>{
     const history = useHistory();
 
     return(
-        <div className="user-container">
+        <div className="all-user-container">
             <div>
                 <img
                     alt={user.name}
                     src={user.image}
-                    className="user-photo"
+                    className="all-user-photo"
                     onClick={(e) => history.push("/profile/" + user.id)}
                 />
             </div>

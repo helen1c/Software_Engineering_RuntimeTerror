@@ -165,8 +165,8 @@ export const MountainPathSearchResult = (prop: Props) => {
             </Snackbar>
             {!expand ?
             <div onClick={() => setExpand(!expand)} className="mountain-path-cnt">
-                {fav && <FavoriteOutlined/>}
-                <span className="mountain-path-name">{prop.result.name}</span>
+
+                <span className="mountain-path-name"> {prop.result.name} {fav && <FavoriteOutlined/>}</span>
                 <span className="mountain-path-hillname"> {prop.result.hill}</span>
                 <span className="mountain-path-walktime"> {prop.result.avgWalkTime}</span>
                 <span className="mountain-path-difficulty"> {mapdiff()}</span>

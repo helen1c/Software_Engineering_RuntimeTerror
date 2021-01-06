@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {UserInfo} from "../mountain-lodge/models/UserInfo";
 import {HttpCodesUtil} from "../mountaineering-community/HttpCodesUtil";
 import {useFormik} from "formik";
+import "./Search.css";
 
 interface Props{
     dataFunction: (userArray: UserInfo[]) => void;
@@ -60,11 +61,11 @@ export const Search = ({dataFunction,stateFunction} : Props) =>{
     }
 
     return (
-        <div className="user-search-div">
+        <div className="all-user-search-div">
             <form onSubmit={formik.handleSubmit}>
                 <div>
                     <div>
-                        <input className="user-search-bar"
+                        <input className="all-user-search-bar"
                                type="text"
                                name="searchText"
                                placeholder={placeholder()}

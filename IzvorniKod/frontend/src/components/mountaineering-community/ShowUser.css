@@ -1,4 +1,4 @@
-.user-photo{
+.community-user-photo{
     border-radius: 50%;
     height: 80px;
     width: 80px;
@@ -6,7 +6,7 @@
 }
 
 @media only screen and (max-width:  660px) {
-    .user-container{
+    .community-user-container{
         padding: 0.5rem;
     }
 
