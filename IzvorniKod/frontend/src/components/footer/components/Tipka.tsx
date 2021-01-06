@@ -106,8 +106,8 @@ export const Tipka = (prop : Props) =>{
     return(
         <>
             {prop.css === 1 ?
-                <button className="button-mountain-lodge" onClick={handleClickOpen}>PRIJAVI GRESKU</button>
-                : <Button className="button-mountain-path" onClick={handleClickOpen}>PRIJAVI GRESKU</Button>
+                <button className="button-mountain-lodge" onClick={handleClickOpen}>PRIJAVI GREŠKU</button>
+                : <Button className="button-mountain-path" onClick={handleClickOpen}>PRIJAVI GREŠKU</Button>
             }
             <Snackbar open={success} autoHideDuration={2000} onClose={closeSuccessMessage}>
                 <Alert onClose={closeSuccessMessage} severity="success">
