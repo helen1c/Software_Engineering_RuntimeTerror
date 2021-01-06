@@ -10,9 +10,6 @@ import hr.fer.pi.planinarskidnevnik.dtos.User.UserProfilePageDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserSearchDto;
 import hr.fer.pi.planinarskidnevnik.exceptions.IllegalAccessException;
 import hr.fer.pi.planinarskidnevnik.exceptions.*;
-import hr.fer.pi.planinarskidnevnik.exceptions.NoImageException;
-import hr.fer.pi.planinarskidnevnik.exceptions.ResourceNotFoundException;
-import hr.fer.pi.planinarskidnevnik.exceptions.UserWithEmailExistsException;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainLodgeArchiveToMountainLodgeArchiveResponseMapper;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainPathGradeToMountainPathGradeResponseMapper;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainPathUserArchiveToMountainPathArchiveResponseMapper;
@@ -21,12 +18,9 @@ import hr.fer.pi.planinarskidnevnik.models.MountainPathGrade;
 import hr.fer.pi.planinarskidnevnik.models.Role;
 import hr.fer.pi.planinarskidnevnik.models.User;
 import hr.fer.pi.planinarskidnevnik.models.UserBadge.UserBadge;
-import hr.fer.pi.planinarskidnevnik.repositories.MountainLodgeRepository;
 import hr.fer.pi.planinarskidnevnik.repositories.MountainPathRepository;
 import hr.fer.pi.planinarskidnevnik.repositories.RoleRepository;
 import hr.fer.pi.planinarskidnevnik.repositories.UserRepository;
-import hr.fer.pi.planinarskidnevnik.models.friendships.FriendshipRequest;
-import hr.fer.pi.planinarskidnevnik.repositories.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +33,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,8 +42,7 @@ public class UserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final FriendshipRequestRepository friendshipRequestRepository;
-    private final FriendshipsRepository friendshipsRepository;
+    //    private final UserToUserSearchDtoMapper userToUserSearchDtoMapper;
     private final PasswordEncoder encoder;
     private final String DEFAULT_PROFILE_IMAGE = "/images/planinar.jpeg";
     private final MountainLodgeArchiveToMountainLodgeArchiveResponseMapper lodgeArchiveResponseMapper;
@@ -60,16 +54,13 @@ public class UserService {
     public UserService(UserRepository userRepository,
                        RoleRepository roleRepository,
                        PasswordEncoder encoder,
-                       FriendshipsRepository friendshipsRepository,
-                       FriendshipRequestRepository friendshipRequestRepository,
                        MountainPathRepository mountainPathRepository,
                        MountainLodgeArchiveToMountainLodgeArchiveResponseMapper lodgeArchiveResponseMapper,
                        MountainPathUserArchiveToMountainPathArchiveResponseMapper pathArchiveResponseMapper,
                        MountainPathGradeToMountainPathGradeResponseMapper pathGradeResponseMapper) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
-        this.friendshipRequestRepository = friendshipRequestRepository;
-        this.friendshipsRepository = friendshipsRepository;
+//        this.userToUserSearchDtoMapper = userToUserSearchDtoMapper;
         this.encoder = encoder;
         this.lodgeArchiveResponseMapper = lodgeArchiveResponseMapper;
         this.pathArchiveResponseMapper = pathArchiveResponseMapper;
@@ -248,7 +239,7 @@ public class UserService {
 
     public UserHeaderDto getHeaderInformation(Principal principal) {
         User user = getCurrentUser(principal);
-        return new UserHeaderDto(user.getId(), getImage(user.getEmail()));
+        return new UserHeaderDto(user.getId(), getImage(user.getEmail()), user.getFriendRequests().size(), user.getFriendRequestsNotifications().size());
     }
 
     private List<BadgeDto> convertToBadgeDto(List<UserBadge> userBadgeList) {
@@ -351,10 +342,12 @@ public class UserService {
         friendshipRequests.remove(sender);
         userRepository.save(receiver);
     }
+
     /**
      * Metoda koja dodaje stazu na popis zelja korisnika.
+     *
      * @param principal credentialsi korisnika
-     * @param pathId jedinstevni identifikator staze
+     * @param pathId    jedinstevni identifikator staze
      * @return spremljenu stazu
      */
     public MountainPath addPathToWishList(Principal principal, Long pathId) {
@@ -381,17 +374,17 @@ public class UserService {
 
     /**
      * Pomocna metoda koja dohvaca planinarsku stazu nekog ID-a.
+     *
      * @param pathId
      * @return
-     *
      * @throws MountainPathDoesNotExist ako post
      */
     private MountainPath getPath(Long pathId) {
-        if(pathId == null) {
+        if (pathId == null) {
             throw new MountainPathDoesNotExist("Dogodila se pogreška prilikom dohvaćanja planinarske staze.");
         }
         Optional<MountainPath> optPath = mountainPathRepository.findById(pathId);
-        if(optPath.isEmpty()) {
+        if (optPath.isEmpty()) {
             throw new MountainPathDoesNotExist("Ne postoji planinarska staza id-a: " + pathId);
         }
 
@@ -400,6 +393,7 @@ public class UserService {
 
     /**
      * Metoda koja dohvaca sve staze s popisa zelja.
+     *
      * @param principal - credentialsi
      * @return sve staze s popisa želja korisnika, tj. favorite korisnika
      */
@@ -410,22 +404,46 @@ public class UserService {
 
     /**
      * Pomocna metoda koja provjerava je li sve u redu s credentialisima
+     *
      * @param principal
      * @return trenutnog korisnika
      */
     private User checkPrincipal(Principal principal) {
 
-        if(principal == null) {
+        if (principal == null) {
             throw new AuthorizationException("Dogodila se pogreška prilikom autorizacije.");
         }
 
         User currUser = getCurrentUser(principal);
 
-        if(currUser == null) {
+        if (currUser == null) {
             throw new AuthorizationException("Dogodila se pogreška prilikom autorizacije.");
         }
 
         return currUser;
 
+    }
+
+    public List<UserSearchDto> getNotifications(Principal principal) {
+        User currentUser = getCurrentUser(principal);
+        List<UserSearchDto> userSearchDtos = new LinkedList<>();
+        for (User newFriend : currentUser.getFriendRequestsNotifications()) {
+            UserSearchDto userSearchDto = new UserSearchDto();
+
+            userSearchDto.setId(newFriend.getId());
+            userSearchDto.setImage(getImage(newFriend.getEmail()));
+            userSearchDto.setName(newFriend.getName());
+
+            userSearchDtos.add(userSearchDto);
+        }
+
+        return userSearchDtos;
+    }
+
+    public void removeNotifications(Principal principal, Long removeFromUserId) {
+        User currentUser = getCurrentUser(principal);
+        User removeNotificationFromUser = getUserById(removeFromUserId);
+        currentUser.getFriendRequestsNotifications().remove(removeNotificationFromUser);
+        userRepository.save(currentUser);
     }
 }
