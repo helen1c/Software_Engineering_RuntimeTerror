@@ -639,7 +639,7 @@
 			\subsection{Dijagram baze podataka}
 				
 				\begin{figure}[H]
-					\includegraphics[scale=0.4, height=180mm]{slike/database.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+					\includegraphics[scale=0.4, height=180mm]{dijagrami/ER_Diagram.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
 					\centering
 					\caption{Dijagram baze podataka}
 					\label{fig:dijagrambp}
@@ -752,12 +752,6 @@
 			
 		%	 \textit{Potrebno je priložiti dijagram aktivnosti s pripadajućim opisom. Dijagram aktivnosti treba prikazivati značajan dio sustava.}
 			
-		%	\eject
-		%\section{Dijagram komponenti}
-		
-		%	\textbf{\textit{dio 2. revizije}}\\
-		
-		%	 \textit{Potrebno je priložiti dijagram komponenti s pripadajućim opisom. Dijagram komponenti treba prikazivati strukturu cijele aplikacije.}
 			\section{Dijagram komponenti}
 		Dijagrami komponenti prikazuju komponente sustava i njihove međusobne odnose. Komponenta je fizička i stvarna implementacija logičkih elemenata sustava, npr. razreda i sučelja. Često se kaže sa su u UML-u sve fizičke "stvari" modelirane kao komponente. Sustavu pristupamo preko dva različita sučelja. Preko jednog dohvaćamo HTML, CSS I TSX datoteke, pomoću kojih poslužujemo datoteke koje pripadaju front end-u aplikacije, a preko drugog sučelja dohvaćamo JSON podatke kojima pristupamo preko REST API komponente, a pomoću nje poslužujemo datoteke koje pripadaju back end-u aplikacije. Frontend sadrži komponentu Router koja pomoću zatraženog url-a na sučelje poslužuje odgovarajuću datoteku. Također sadrži i niz TypeScript datoteka koje su podijeljene u logičke cjeline, a naziv im je dodijeljen po tipu aktora koji pristupaju tim datotekama. React biblioteka je temeljna za sve TypeScript datoteke jer se preko nje dohvaćaju gotove komponente koje su ključne za prikaz podataka, primjerice gumbi i forme. Za dohvat podataka iz baze podataka pomoću SQL upita zadužen je Jdbc framework. Kada se podaci dohvate iz baze, šalju se MVC arhitekturi u obliku DTO. Aplikacija Planinarski dnevnik preko gore navedenih sučelja komunicira sa Reactovim komponentama i ovisno o korisnikovim željama prikazuje i dohvaća zatražene datoteke.
 		
