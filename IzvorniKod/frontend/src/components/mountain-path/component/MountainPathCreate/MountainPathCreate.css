@@ -213,11 +213,11 @@ a:hover {
 
 .MuiTypography-h6 {
     font-size: 1.7rem !important;
-    color: white !important;
+    color: black !important;
 }
 .MuiButton-textPrimary {
     color: white !important;
-    background-color: palegreen !important;
+    background-color: forestgreen !important;
     font-weight: 500 !important;
 }
 .MuiDialogContent-root {

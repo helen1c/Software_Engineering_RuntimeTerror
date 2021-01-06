@@ -1,15 +1,15 @@
 package hr.fer.pi.planinarskidnevnik.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import hr.fer.pi.planinarskidnevnik.models.MountainLodgeUserArchive.MountainLodgeUserArchive;
 import hr.fer.pi.planinarskidnevnik.models.MountainPathUserArchive.MountainPathUserArchive;
-import com.fasterxml.jackson.annotation.*;
 import hr.fer.pi.planinarskidnevnik.models.UserEvent.CommunityEventMountainPath;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.sql.Time;
 import java.sql.Date;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

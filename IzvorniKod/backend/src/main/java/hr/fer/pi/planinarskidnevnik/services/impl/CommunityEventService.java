@@ -72,19 +72,19 @@ public class CommunityEventService {
 
     public List<PreviewCommunityEventDto> getArchivedAuthoredEvents(Principal principal) {
         User curUser = userService.getCurrentUser(principal);
-        List<CommunityEvent> events = new ArrayList<>(eventRepository.findAllByUser_IdOrderByStartDate(curUser.getId()));
+        List<CommunityEvent> events = new ArrayList<>(eventRepository.findAllByUser_IdOrderByStartDateDesc(curUser.getId()));
         return mapToCommunityEvents(events);
     }
 
     public List<PreviewCommunityEventDto> getMyCommunityEvents(Principal principal) {
 
         User curUser = userService.getCurrentUser(principal);
-        List<CommunityEvent> events = new ArrayList<>(eventRepository.findAllByUser_IdAndStartDateIsAfterOrderByStartDateDesc(
+        List<CommunityEvent> events = new ArrayList<>(eventRepository.findAllByUser_IdAndStartDateIsAfterOrderByStartDateAsc(
                 curUser.getId(),
                 new Date(System.currentTimeMillis() - ONE_DAY)));
         List<User> friends = curUser.getFriends();
         for(User user : friends) {
-            events.addAll(eventRepository.findAllByUser_IdAndStartDateIsAfterOrderByStartDateDesc(user.getId(),
+            events.addAll(eventRepository.findAllByUser_IdAndStartDateIsAfterOrderByStartDateAsc(user.getId(),
                     new Date(System.currentTimeMillis() - ONE_DAY)));
         }
         return mapToCommunityEvents(events);

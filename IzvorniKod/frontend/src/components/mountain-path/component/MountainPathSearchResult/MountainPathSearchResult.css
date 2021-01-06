@@ -146,6 +146,9 @@ fieldset {
     width: 30%;
     max-width: 30%;
     word-break: break-all;
+    display: flex;
+    align-items: center;
+
 }
 .mountain-path-avg-grade-expand , .mountain-path-avg-grade{
     align-items: center;
@@ -158,4 +161,9 @@ fieldset {
     color: rgba(0, 0, 0, 0.87);
     background-color: #4caf50;
     margin: 0.3rem !important;
+}
+.MuiSvgIcon-root{
+    width: 25px!important;
+    height: 25px!important;
+    margin-left: 0.2rem;
 }
