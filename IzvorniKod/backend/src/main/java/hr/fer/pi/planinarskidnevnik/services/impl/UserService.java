@@ -280,7 +280,7 @@ public class UserService {
 
     public void sendFriendRequest(String email, Long friendId) {
         User sender = findByEmail(email).orElseThrow(() -> new ResourceNotFoundException(email));
-        User receiver = userRepository.getOne(friendId);
+        User receiver = userRepository.findById(friendId).get();
         receiver.getFriendRequests().add(sender);
         userRepository.save(receiver);
     }

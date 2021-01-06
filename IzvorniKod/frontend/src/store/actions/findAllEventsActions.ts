@@ -34,7 +34,16 @@ export const findEvents = () => (dispatch: Dispatch<findAllEventsActionTypes>) =
 }
 
 const getAllEvents = async (): Promise<EventResult[]> => {
-    const response = await fetch("/api/event/all");
+
+    const requestOptions = {
+        method: "GET",
+        headers: {
+            authorization: sessionStorage.getItem("key") || "",
+            Accept: "application/json"
+        }
+    };
+
+    const response = await fetch("/api/event/all", requestOptions);
     const json = await response.json();
     return json;
 }
