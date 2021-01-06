@@ -47,10 +47,10 @@ export const CommunityEvent = (prop : Props) => {
                <ul>
                    {prop.result.participants.map(result => <li key={result.userId}><a href={"/profile/" + result.userId}>{result.name}</a></li>)}
                </ul>
-           </nav> : <label>Na ovom događaju još nema sudionika.</label>}
+           </nav> : <label>Na ovom događaju nema sudionika.</label>}
 
        </div>
-          <label className="path-label">Staze:</label>
+          <label className="path-label">{prop.result.paths !== undefined && prop.result.paths.length > 0 && "Staze:"}</label>
           <div className="all-oneday-paths">
           {prop.result.paths.map(paths => <OneDayEventMountainPath key={paths.id} result={paths}/>)}
           </div>
