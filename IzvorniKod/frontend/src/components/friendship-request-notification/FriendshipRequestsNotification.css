@@ -1,12 +1,13 @@
 .notification-container{
     border-radius: 10px;
-    height: 8rem;
-    width: 20vw;
-    border: 2px solid #211648;
+    border: 2px solid #cccccc;
     box-shadow: none !important;
     outline: none !important;
-    padding-top: 10px;
-    padding-left: 10px;
+    padding:0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 0.5rem;
 }
 .submit{
     margin-left: auto;
@@ -24,7 +25,9 @@
 .user-name{
     text-align: match-parent;
 }
-
+.user-name-span{
+    font-size: large;
+}
 
 .event-input{
     margin-left: auto;
