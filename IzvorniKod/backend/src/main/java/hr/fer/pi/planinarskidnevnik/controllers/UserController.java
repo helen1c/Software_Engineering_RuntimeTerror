@@ -190,4 +190,15 @@ public class UserController {
     public final ResponseEntity<List<Long>> getPathWishlist(Principal principal) {
         return ResponseEntity.ok(userService.getPathWishlistForUser(principal).stream().map(MountainPath::getId).collect(Collectors.toList()));
     }
+
+    @GetMapping(value="/notifications")
+    public final ResponseEntity<List<UserSearchDto>> getNotifications(Principal principal) {
+        return ResponseEntity.ok(userService.getNotifications(principal));
+    }
+
+    @DeleteMapping(value="/notifications/{id}")
+    public final ResponseEntity<?> removeNotifications(@PathVariable("id") Long removeFromUserId, Principal principal) {
+        userService.removeNotifications(principal, removeFromUserId);
+        return ResponseEntity.ok().build();
+    }
 }

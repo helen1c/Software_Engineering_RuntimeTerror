@@ -36,11 +36,11 @@ export const Routes = () => {
                 <Route path="/profile/:id" component={MenuProfile} exact/>
                 <Route path="/mountain-path/create" component={MountainPathCreate} exact/>
                 <Route path="/mountain-lodge/create" component={MountainLodgeCreate} exact/>
-                <Route path="/friendship-request-list" component={FriendshipRequestList} exact/>
+                <Route path="/friendship-requests" component={FriendshipRequestList} exact/>
                 <Route path="/events/create" component={CreateEventPage} exact/>
                 <Route path="/events" component={EventsResults} exact/>
                 <Route path="/users/search" component={SearchUsers} exact/>
-                <Route path="/friendship-requests-notification" component={FriendshipRequestsNotification} exact/>
+                <Route path="/notifications" component={FriendshipRequestsNotification} exact/>
             </Switch>
         </div>
     );

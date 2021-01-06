@@ -9,6 +9,8 @@ function Header() {
   const [profileImage, setProfileImage] = useState("");
   const history = useHistory();
   const [isProfileActive, setProfileActive] = useState(false);
+  const [numberOfFriendRequests, setNumberOfFriendRequests] = useState(0);;
+  const [numberOfNotifications, setNumberOfNotifications] = useState(0);
   const [profileLink, setProfileLink] = useState("");
 
   useEffect(() => {
@@ -23,6 +25,8 @@ function Header() {
           response.json().then((e) => {
             setProfileImage("data:image/jpeg;base64," + e.image);
             setProfileLink("/profile/" + e.id);
+            setNumberOfFriendRequests(e.numberOfFriendRequests);
+            setNumberOfNotifications(e.numberOfNotifications);
           });
         }
       });
@@ -81,31 +85,48 @@ function Header() {
                         <button
                           className="dropdown-item"
                           //style={{ color: "blue" }}
-                          onClick={() => history.push("/friendship-request-list")}
+                          onClick={() => history.push("/friendship-requests")}
                           role="menuitem"
                         >
-                          Zahtjevi za prijateljstvo
-                          <img
-                            src={profile}
-                            alt={"Profile"}
-                            className="dropdown-image"
-                          />
+                          Zahtjevi za prijateljstvo {numberOfFriendRequests.toString()}
+                        </button>
+                        <button
+                          className="dropdown-item"
+                          //style={{ color: "blue" }}
+                          onClick={() => history.push("/notifications")}
+                          role="menuitem"
+                        >
+                          Obavijesti {numberOfNotifications.toString()}
                         </button>
                         <a
                           className="dropdown-item"
-                          href={"/home"}
+                          href={profileLink}
                           //style={{ color: "blue" }}
-                          onClick={() => {
-                            setProfileActive(false);
-                            sessionStorage.clear();
-                          }}
+                          onClick={() => setProfileActive(false)}
                           role="menuitem"
-                        >
-                          Obavijesti
-                          <img
-                            src={logout}
-                            alt={"Logout"}
+                      >
+                        Pogledajte svoj profil
+                        <img
+                            src={profile}
+                            alt={"Profile"}
                             className="dropdown-image"
+                        />
+                      </a>
+                        <a
+                            className="dropdown-item"
+                            href={"/home"}
+                            //style={{ color: "blue" }}
+                            onClick={() => {
+                              setProfileActive(false);
+                              sessionStorage.clear();
+                            }}
+                            role="menuitem"
+                        >
+                          Odjavite se
+                          <img
+                              src={logout}
+                              alt={"Logout"}
+                              className="dropdown-image"
                           />
                         </a>
                       </div>
@@ -118,56 +139,6 @@ function Header() {
                 className="relative"
                 onMouseLeave={() => setProfileActive(false)}
               >
-                <div className={"user-cnt"}>
-                  <img
-                    className="profil-image"
-                    alt={"Slika profila"}
-                    src={profileImage}
-                    onClick={() => setProfileActive(!isProfileActive)}
-                  />
-                  {isProfileActive && (
-                    <div>
-                      <div
-                        className="dropdown-item-div"
-                        role="menu"
-                        aria-orientation="vertical"
-                        aria-labelledby="user-menu"
-                      >
-                        <a
-                          className="dropdown-item"
-                          href={profileLink}
-                          //style={{ color: "blue" }}
-                          onClick={() => setProfileActive(false)}
-                          role="menuitem"
-                        >
-                          Pogledajte svoj profil
-                          <img
-                            src={profile}
-                            alt={"Profile"}
-                            className="dropdown-image"
-                          />
-                        </a>
-                        <a
-                          className="dropdown-item"
-                          href={"/home"}
-                          //style={{ color: "blue" }}
-                          onClick={() => {
-                            setProfileActive(false);
-                            sessionStorage.clear();
-                          }}
-                          role="menuitem"
-                        >
-                          Odjavite se
-                          <img
-                            src={logout}
-                            alt={"Logout"}
-                            className="dropdown-image"
-                          />
-                        </a>
-                      </div>
-                    </div>
-                  )}
-                </div>
               </div>
             </div>
           )}

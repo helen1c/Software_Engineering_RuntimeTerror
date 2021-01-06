@@ -9,7 +9,7 @@ export const FriendshipRequestsNotification = () => {
     const history = useHistory();
 
     useEffect(() => {
-        fetch("/api/users/community?name=", {
+        fetch("/api/users/notifications", {
             method: "GET",
             headers: new Headers({
                 authorization: sessionStorage.getItem("key") || "",
@@ -29,9 +29,19 @@ export const FriendshipRequestsNotification = () => {
     }, []);
 
     const handleOk = (user: UserInfo) => {
-        let users = allUsers
-        users = users.filter(u => u!==user)
-        setAllUsers(users)
+        fetch("/api/users/notifications/" + user.id, {
+            method: "DELETE",
+            headers: new Headers({
+                authorization: sessionStorage.getItem("key") || "",
+            }),
+        }).then(function (response) {
+            if (response.status === HttpCodesUtil.SUCCESS) {
+                let users = allUsers
+                users = users.filter(u => u!==user)
+                setAllUsers(users)
+            } else {
+            }
+        });
     }
 
     return (
