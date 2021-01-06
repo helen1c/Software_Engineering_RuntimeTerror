@@ -138,6 +138,7 @@ public class CommunityEvent {
         this.endDate = end_date;
     }
 
+    @JsonIgnore
     public List<CommunityEventMountainPath> getPaths() {
         return paths;
     }

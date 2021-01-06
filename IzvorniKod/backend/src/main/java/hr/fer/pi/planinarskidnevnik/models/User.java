@@ -1,9 +1,6 @@
 package hr.fer.pi.planinarskidnevnik.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import hr.fer.pi.planinarskidnevnik.models.MountainLodgeUserArchive.MountainLodgeUserArchive;
 import hr.fer.pi.planinarskidnevnik.models.MountainPathUserArchive.MountainPathUserArchive;
 import hr.fer.pi.planinarskidnevnik.models.UserBadge.UserBadge;
@@ -116,6 +113,7 @@ public class User {
         this.participatedEvents = participatedEvents;
     }
 
+    @JsonIgnore
     public List<MountainPath> getPathsWishlist() {
         return pathsWishlist;
     }
@@ -124,6 +122,7 @@ public class User {
         this.pathsWishlist = pathsWishlist;
     }
 
+    @JsonIgnore
     public List<MountainPathUserArchive> getMountainPathUserArchive() {
         return mountainPathUserArchive;
     }
@@ -132,6 +131,7 @@ public class User {
         this.mountainPathUserArchive = mountainPathUserArchive;
     }
 
+    @JsonIgnore
     public List<MountainLodgeUserArchive> getMountainLodgeUserArchive() {
         return mountainLodgeUserArchive;
     }
@@ -250,6 +250,7 @@ public class User {
         this.mountainPathGradeList = mountainPathGradeList;
     }
 
+    @JsonIgnore
     public List<UserBadge> getUserBadgeList() { return userBadgeList; }
 
     public void setUserBadgeList(List<UserBadge> userBadgeList) { this.userBadgeList = userBadgeList; }

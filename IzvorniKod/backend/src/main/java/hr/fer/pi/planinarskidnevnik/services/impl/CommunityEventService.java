@@ -65,6 +65,9 @@ public class CommunityEventService {
         return event;
     }
 
+
+
+
     public List<PreviewCommunityEventDto> getMyCommunityEvents(Principal principal) {
 
         User curUser = userService.getCurrentUser(principal);
@@ -109,46 +112,6 @@ public class CommunityEventService {
         }
 
         return communityEventDtos;
-
-
     }
-
-    /*public List<PreviewCommunityEventDto> getCommunities(Principal principal) {
-        User user1 = userService.getCurrentUser(principal);
-
-        List<CommunityEvent> communityEvents = eventRepository.findAllByUser_IdAndStartDateIsBeforeOrderByStartDateDesc(user1.getId(), new Date(System.currentTimeMillis()));
-        List<PreviewCommunityEventDto> communityEventDtos = new ArrayList<>();
-
-        for (CommunityEvent event : communityEvents) {
-            PreviewCommunityEventDto communityEventDto = new PreviewCommunityEventDto();
-            User user = event.getUser();
-
-            List<CommunityEventMountainPath> communityEventMountainPathList = event.getPaths();
-            List<PathDate> pathDates = new ArrayList<>();
-            for (CommunityEventMountainPath path : communityEventMountainPathList) {
-                pathDates.add(new PathDate(path.getPath(), path.getDateArchived()));
-            }
-
-            communityEventDto.setName(event.getName());
-            communityEventDto.setUser(new UserSearchDto(user.getId(), null, user.getName()));//userService.getImage(user.getEmail())
-            communityEventDto.setDescription(event.getDescription());
-            communityEventDto.setDate_created(event.getDateCreated());
-            communityEventDto.setEnd_date(event.getEndDate());
-            communityEventDto.setStart_date(event.getStartDate());
-            communityEventDto.setPaths(pathDates);
-
-            List<ParticipantDto> participantDtos = new ArrayList<>();
-            List<User> particiUsers = event.getParticipants();
-            for(User u : particiUsers) {
-                ParticipantDto participantDto = new ParticipantDto();
-                participantDto.setUserId(u.getId());
-                participantDto.setName(u.getName());
-            }
-
-            communityEventDtos.add(communityEventDto);
-        }
-
-        return communityEventDtos;
-    }*/
 
 }
