@@ -43,15 +43,17 @@ export const CommunityEvent = (prop : Props) => {
 
 
            {prop.result.participants.length > 0 ? <nav className="participants-nav">
-               Sudionici
+               <b>Sudionici</b>
                <ul>
                    {prop.result.participants.map(result => <li key={result.userId}><a href={"/profile/" + result.userId}>{result.name}</a></li>)}
                </ul>
            </nav> : <label>Na ovom događaju još nema sudionika.</label>}
 
        </div>
-          <label>Staze:</label>
+          <label className="path-label">Staze:</label>
+          <div className="all-oneday-paths">
           {prop.result.paths.map(paths => <OneDayEventMountainPath key={paths.id} result={paths}/>)}
+          </div>
       </div>
     );
 }

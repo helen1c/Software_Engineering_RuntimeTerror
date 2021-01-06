@@ -4,6 +4,7 @@ import logo from "../../assets/logo.jpg";
 import { useHistory } from "react-router";
 import logout from "../../assets/logout.jpg";
 import profile from "../../assets/profile.png";
+import community from "../../assets/worldwide.png";
 
 export const Header = () => {
   const [profileImage, setProfileImage] = useState("");
@@ -89,14 +90,14 @@ export const Header = () => {
                           //style={{ color: "blue" }}
                           role="menuitem"
                         >
-                          Zahtjevi za prijateljstvo {numberOfFriendRequests.toString()}
+                          Zahtjevi za prijateljstvo {numberOfFriendRequests ? <span style={{color: "red"}}>({numberOfFriendRequests.toString()})</span> :<></> }
                         </a>
                         <a href={"/notifications"}
                           className="dropdown-item"
                           //style={{ color: "blue" }}
                           role="menuitem"
                         >
-                          Obavijesti {numberOfNotifications.toString()}
+                          Obavijesti {numberOfNotifications ? <span style={{color: "red"}}>({numberOfNotifications.toString()})</span> :<></> }
                         </a>
                         <a
                             className="dropdown-item"
@@ -105,6 +106,11 @@ export const Header = () => {
                             role="menuitem"
                         >
                           Planinarska zajednica
+                          <img
+                              src={community}
+                              alt={"Community"}
+                              className="dropdown-image"
+                          />
                         </a>
 
                         <a
