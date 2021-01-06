@@ -383,7 +383,7 @@ export const ProfileUserInfo = ({user, setUser}: Props) => {
                                             <span className="button-label-fr"> Ukloni prijatelja </span>
                                         </button>
                                     ) : (
-                                        !sentFriendRequest ? (
+                                        (!sentFriendRequest && !user.sentFriendRequest) ? (
                                             <button className="button-profile-fr"  onClick={handleAddUserAsFriend}>
                                                 <span className="button-label-fr"> Dodaj prijatelja </span>
                                                 <img
