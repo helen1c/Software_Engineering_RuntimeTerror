@@ -67,6 +67,14 @@ public class User {
 
     @ManyToMany
     @JoinTable(
+            name = "event_attendance",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "event_id")
+    )
+    private List<User> participatedEvents;
+
+    @ManyToMany
+    @JoinTable(
             name = "friendship_request",
             joinColumns = @JoinColumn(name = "sender"),
             inverseJoinColumns = @JoinColumn(name = "receiver")
@@ -99,6 +107,14 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "path_id"))
     List<MountainPath> pathsWishlist = new ArrayList<>();
+
+    public List<User> getParticipatedEvents() {
+        return participatedEvents;
+    }
+
+    public void setParticipatedEvents(List<User> participatedEvents) {
+        this.participatedEvents = participatedEvents;
+    }
 
     public List<MountainPath> getPathsWishlist() {
         return pathsWishlist;

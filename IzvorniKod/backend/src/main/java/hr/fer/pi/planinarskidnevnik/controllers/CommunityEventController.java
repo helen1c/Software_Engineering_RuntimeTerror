@@ -2,7 +2,6 @@ package hr.fer.pi.planinarskidnevnik.controllers;
 
 import hr.fer.pi.planinarskidnevnik.dtos.CommunityEvent.CommunityEventDto;
 import hr.fer.pi.planinarskidnevnik.dtos.CommunityEvent.PreviewCommunityEventDto;
-import hr.fer.pi.planinarskidnevnik.dtos.MountainPath.MountainPathEventSearchRequest;
 import hr.fer.pi.planinarskidnevnik.models.CommunityEvent;
 import hr.fer.pi.planinarskidnevnik.services.impl.CommunityEventService;
 import hr.fer.pi.planinarskidnevnik.services.impl.UserService;
@@ -44,6 +43,6 @@ public class CommunityEventController {
     @GetMapping("/all")
     public ResponseEntity<List<PreviewCommunityEventDto>> getAllEvents(Principal principal) {
         LOGGER.info("Fetching all events");
-        return ResponseEntity.ok(eventService.getAllEvents(principal));
+        return ResponseEntity.ok(eventService.getMyCommunityEvents(principal));
     }
 }

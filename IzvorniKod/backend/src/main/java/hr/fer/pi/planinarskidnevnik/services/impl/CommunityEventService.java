@@ -1,9 +1,6 @@
 package hr.fer.pi.planinarskidnevnik.services.impl;
 
-import hr.fer.pi.planinarskidnevnik.dtos.CommunityEvent.CommunityEventDto;
-import hr.fer.pi.planinarskidnevnik.dtos.CommunityEvent.PathDate;
-import hr.fer.pi.planinarskidnevnik.dtos.CommunityEvent.PathDateIdDto;
-import hr.fer.pi.planinarskidnevnik.dtos.CommunityEvent.PreviewCommunityEventDto;
+import hr.fer.pi.planinarskidnevnik.dtos.CommunityEvent.*;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserSearchDto;
 import hr.fer.pi.planinarskidnevnik.exceptions.ResourceNotFoundException;
 import hr.fer.pi.planinarskidnevnik.models.User;
@@ -68,17 +65,19 @@ public class CommunityEventService {
         return event;
     }
 
-    public List<PreviewCommunityEventDto> getAllEvents(Principal principal) {
-        List<CommunityEvent> communityEvents = eventRepository.findAll();
+    public List<PreviewCommunityEventDto> getMyCommunityEvents(Principal principal) {
+        User user1 = userService.getCurrentUser(principal);
+
+        List<CommunityEvent> communityEvents = eventRepository.findAllByUser_IdAndStartDateIsBeforeOrderByStartDateDesc(user1.getId(), new Date(System.currentTimeMillis()));
         List<PreviewCommunityEventDto> communityEventDtos = new ArrayList<>();
 
-        for (CommunityEvent event: communityEvents) {
+        for (CommunityEvent event : communityEvents) {
             PreviewCommunityEventDto communityEventDto = new PreviewCommunityEventDto();
             User user = event.getUser();
 
             List<CommunityEventMountainPath> communityEventMountainPathList = event.getPaths();
             List<PathDate> pathDates = new ArrayList<>();
-            for (CommunityEventMountainPath path: communityEventMountainPathList) {
+            for (CommunityEventMountainPath path : communityEventMountainPathList) {
                 pathDates.add(new PathDate(path.getPath(), path.getDateArchived()));
             }
 
@@ -90,9 +89,18 @@ public class CommunityEventService {
             communityEventDto.setStart_date(event.getStartDate());
             communityEventDto.setPaths(pathDates);
 
+            List<ParticipantDto> participantDtos = new ArrayList<>();
+            List<User> particiUsers = event.getParticipants();
+            for(User u : particiUsers) {
+                ParticipantDto participantDto = new ParticipantDto();
+                participantDto.setUserId(u.getId());
+                participantDto.setName(u.getName());
+            }
+
             communityEventDtos.add(communityEventDto);
         }
 
         return communityEventDtos;
     }
+
 }

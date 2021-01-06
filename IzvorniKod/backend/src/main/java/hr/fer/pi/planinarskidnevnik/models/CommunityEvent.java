@@ -37,7 +37,21 @@ public class CommunityEvent {
     @JsonManagedReference
     private List<CommunityEventMountainPath> paths = new ArrayList<>();
 
+    @ManyToMany
+    @JoinTable(
+            name = "event_attendance",
+            joinColumns = @JoinColumn(name = "event_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<User> participants;
 
+    public List<User> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(List<User> participants) {
+        this.participants = participants;
+    }
 
     public CommunityEvent(){}
 

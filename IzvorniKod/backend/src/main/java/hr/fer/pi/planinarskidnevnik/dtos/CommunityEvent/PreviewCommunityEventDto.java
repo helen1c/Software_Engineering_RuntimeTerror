@@ -24,6 +24,17 @@ public class PreviewCommunityEventDto {
 
     private List<PathDate> paths;
 
+    private List<ParticipantDto> participantDtos;
+
+    public List<ParticipantDto> getParticipantDtos() {
+        return participantDtos;
+    }
+
+    public void setParticipantDtos(List<ParticipantDto> participantDtos) {
+        this.participantDtos = participantDtos;
+    }
+
+
     public PreviewCommunityEventDto() {
     }
 
