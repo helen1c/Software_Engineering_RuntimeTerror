@@ -1,31 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./MessageSearchResult.css";
-import { useDispatch, useSelector } from "react-redux";
-import { MainReducer } from "../../store/reducer";
-import { findMessages } from "../../store/actions/findAllMessagesAction";
 import { MessageFindResult } from "./models/MessageFindResult";
 
 export const MessageSearchResult = () => {
-  const dispatcher = useDispatch();
-  const { results: messagesResults, status } = useSelector(
-    (state: MainReducer) => state.findAllMessagesReducer
-  );
+  const [allMessages, setAllMessages] = useState<MessageFindResult[]>();
   const [loading, setLoading] = useState(true);
-  const [read, setRead] = useState(true);
-
-  useEffect(() => {
-    if (read) {
-      console.log("Get all Messages...");
-      setRead(false);
-      dispatcher(findMessages());
-    }
-  }, [dispatcher, messagesResults, read]);
-
   const [role, setRole] = useState("");
 
   useEffect(() => {
     if (sessionStorage.getItem("key") !== null) {
-      fetch("/api/users/user/role", {
+      fetch("/api/messages/all", {
         method: "GET",
         headers: new Headers({
           authorization: sessionStorage.getItem("key") || "",
@@ -33,12 +17,25 @@ export const MessageSearchResult = () => {
       }).then(function (response) {
         if (response.status === 200) {
           response.json().then((e) => {
-            setRole(e.role);
-            setLoading(false);
+            setAllMessages(e);
+          });
+          fetch("/api/users/user/role", {
+            method: "GET",
+            headers: new Headers({
+              authorization: sessionStorage.getItem("key") || "",
+            }),
+          }).then(function (response) {
+            if (response.status === 200) {
+              response.json().then((e) => {
+                setRole(e.role);
+                setLoading(false);
+              });
+            } else {
+              setRole("KORISNIK");
+              setLoading(false);
+            }
           });
         } else {
-          setRole("KORISNIK");
-          setLoading(false);
         }
       });
     } else {
@@ -47,58 +44,65 @@ export const MessageSearchResult = () => {
     }
   }, []);
 
-  const update = async (result: MessageFindResult) => {
+  const update = async (message: MessageFindResult) => {
     const sRequest = {
-      id: result.id,
-      status: result.status,
+      id: message.id,
+      status: message.status,
     };
 
-    const requestOptions = {
+    fetch("/api/messages/update", {
       method: "PATCH",
       body: JSON.stringify(sRequest),
-      headers: {
-        Accept: "application/json",
+      headers: new Headers({
         authorization: sessionStorage.getItem("key") || "",
-        "Content-Type": "application/json",
-      },
-    };
-    const response = await fetch("/api/messages/update", requestOptions);
-    window.location.href = "/admin/message-box";
+        "Content-Type": "application/json"
+      }),
+    }).then(function (response) {
+      if (response.status === 200) {
+        let messages = allMessages;
+        messages = messages?.filter((m) => m !== message);
+        setAllMessages(messages);
+      } else {
+      }
+    });
   };
   return (
     <>
       <div>
-        {(status === "waiting" || loading) && (
+        {!loading && (
           <div>
             {role === "ADMIN" ? (
               <div>
-                {messagesResults.length > 0 ? (
-                  messagesResults.map((result) => (
+                {allMessages && allMessages.length > 0 ? (
+                  allMessages.map((message) => (
                     <div className="result-box">
                       <span className="result-column">
                         <p>Korisnik:</p>
                         <a
                           onClick={(e) =>
-                            (window.location.href = "/profile/" + result.userId)
+                            (window.location.href =
+                              "/profile/" + message.userId)
                           }
                         >
-                          {result.userName}
+                          {message.userName}
                         </a>
                       </span>
                       <span className="result-column">
                         <p>NASLOV PORUKE:</p>
-                        {result.name}
+                        {message.name}
                       </span>
                       <span className="result-column">
                         <p>GREŠKA NASTALA:</p>
-                        {result.error}
+                        {message.error}
                       </span>
                       <text className="result-column">
                         <p>SADRŽAJ:</p>
-                        {result.content}
+                        {message.content}
                       </text>
                       <span className="result-column">
-                        <button onClick={() => update(result)}>RIJEŠENO</button>
+                        <button onClick={() => update(message)}>
+                          RIJEŠENO
+                        </button>
                       </span>
                     </div>
                   ))
