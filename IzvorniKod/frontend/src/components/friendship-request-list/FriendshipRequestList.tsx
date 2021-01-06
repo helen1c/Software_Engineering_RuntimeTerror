@@ -65,40 +65,42 @@ export const FriendshipRequestList = () => {
       {!allUsers.length ? (
         <div>Nema pristiglih zahtjeva za prijateljstvo. </div>
       ) : (
-        <div>
-          <span className="request-heading"> Zahtjevi za prijateljstvo </span>
-          {allUsers.map((user) => (
-            <div key={user.id}>
-              <div className="users-container">
-                <div>
-                  <img
-                    alt={user.name}
-                    src={user.image}
-                    className="user-photo"
-                    onClick={(e) => history.push("/profile/" + user.id)}
-                  />
-                  <span>
-                    <span className="user-name">{user.name} </span>
-                    vam šalje zahtjev za prijateljstvo{" "}
-                  </span>
-                  <button
-                    type="submit"
-                    className="submitButton"
-                    onClick={() => confirm(user)}
-                  >
-                    Prihvati
-                  </button>
-                  <button
-                    type="submit"
-                    className="submitButton"
-                    onClick={() => refuse(user)}
-                  >
-                    Odbij
-                  </button>
+        <div style={{ backgroundColor: "aliceblue" }}>
+          <div className="all-users-container">
+            <span className="request-heading"> Zahtjevi za prijateljstvo </span>
+            {allUsers.map((user) => (
+              <div key={user.id}>
+                <div className="users-container">
+                  <div>
+                    <img
+                      alt={user.name}
+                      src={user.image}
+                      className="user-photo"
+                      onClick={(e) => history.push("/profile/" + user.id)}
+                    />
+                    <span>
+                      <span className="user-name">{user.name} </span>
+                      vam šalje zahtjev za prijateljstvo{" "}
+                    </span>
+                    <button
+                      type="submit"
+                      className="submitButton"
+                      onClick={() => confirm(user)}
+                    >
+                      Prihvati
+                    </button>
+                    <button
+                      type="submit"
+                      className="submitButton"
+                      onClick={() => refuse(user)}
+                    >
+                      Odbij
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       )}
     </div>
