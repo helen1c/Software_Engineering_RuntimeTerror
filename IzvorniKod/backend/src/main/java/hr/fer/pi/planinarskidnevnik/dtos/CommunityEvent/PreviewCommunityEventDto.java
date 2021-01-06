@@ -22,7 +22,7 @@ public class PreviewCommunityEventDto {
     //    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     private Date end_date;
 
-    private List<PathDate> paths;
+    private List<MountainPathOnDateDtoResponse> paths;
 
     private List<ParticipantDto> participantDtos;
 
@@ -34,11 +34,18 @@ public class PreviewCommunityEventDto {
         this.participantDtos = participantDtos;
     }
 
+    public List<MountainPathOnDateDtoResponse> getPaths() {
+        return paths;
+    }
+
+    public void setPaths(List<MountainPathOnDateDtoResponse> paths) {
+        this.paths = paths;
+    }
 
     public PreviewCommunityEventDto() {
     }
 
-    public PreviewCommunityEventDto(UserSearchDto user, String name, String description, Date date_created, Date start_date, Date end_date, List<PathDate> paths) {
+    public PreviewCommunityEventDto(UserSearchDto user, String name, String description, Date date_created, Date start_date, Date end_date, List<MountainPathOnDateDtoResponse> paths) {
         this.user = user;
         this.name = name;
         this.description = description;
@@ -96,11 +103,4 @@ public class PreviewCommunityEventDto {
         this.end_date = end_date;
     }
 
-    public List<PathDate> getPaths() {
-        return paths;
-    }
-
-    public void setPaths(List<PathDate> paths) {
-        this.paths = paths;
-    }
 }

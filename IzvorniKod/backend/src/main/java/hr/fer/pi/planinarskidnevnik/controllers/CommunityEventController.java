@@ -37,7 +37,8 @@ public class CommunityEventController {
     @PostMapping
     public ResponseEntity<?> createEvent(@Valid @RequestBody final CommunityEventDto dto, Principal principal) {
         LOGGER.info("Event creating");
-        return ResponseEntity.status(HttpStatus.CREATED).body(eventService.createEvent(dto, principal));
+        CommunityEvent event = eventService.createEvent(dto, principal);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Uspješno stvoren događaj: " + event.getName());
     }
 
     @GetMapping("/all")

@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Path} from "../models/Path";
+import {MountainPathOnDateEvent} from "../models/MountainPathOnDateEvent";
 import "../style/MountainPath.css"
 import goimg from "../../../assets/go.png";
 import finish from "../../../assets/finish_flag-512.png"
@@ -7,10 +7,10 @@ import dots from "../../../assets/dots.png";
 import elevation from "../../../assets/Snowy_Mountain_Transparent_PNG_Clip_Art_Image.png";
 
 interface Props {
-    result: Path
+    result: MountainPathOnDateEvent
 }
 
-export const MountainPath = (prop: Props) => {
+export const OneDayEventMountainPath = (prop: Props) => {
 
     const [expand, setExpand] = useState<boolean>(false);
 
@@ -31,7 +31,7 @@ export const MountainPath = (prop: Props) => {
             {!expand ?
                 <div onClick={() => setExpand(true)} className="mountain-path-cnt2">
                     <span className="mountain-path-name">{prop.result.name}</span>
-                    <span className="mountain-path-hillname"> {prop.result.hill.name}</span>
+                    <span className="mountain-path-hillname"> {prop.result.hillName}</span>
                     <span className="mountain-path-walktime">Trajanje: {prop.result.avgWalkTime}</span>
                     <span className="mountain-path-difficulty"> {mapdiff()}</span>
                 </div>
@@ -39,14 +39,13 @@ export const MountainPath = (prop: Props) => {
                 <div className="mountain-path-cnt-expand2" onClick={() =>setExpand(false)}>
                     <div className="mountain-path-main-info">
                         <span className="mountain-path-name-expand">{prop.result.name}</span>
-                        <span className="mountain-path-hillname-expand"> {prop.result.hill.name}</span>
+                        <span className="mountain-path-hillname-expand"> {prop.result.hillName}</span>
                         <span className="mountain-path-walktime-expand">Trajanje:{prop.result.avgWalkTime}</span>
                         <span className="mountain-path-difficulty-expand"> {mapdiff()}</span>
                     </div>
                     <div className="mountain-path-extend-info">
                         <div className="mountain-path-cnt-mini">
                             <span className="mountain-path-length">Duljina: {prop.result.length}m</span>
-                            {prop.result.seaLevelDiff && <span className="mountain-path-elevation">Razlika u nadmorskoj visini: {prop.result.seaLevelDiff}m</span>}
                             <img className="mini-image-2" alt="GO" src={elevation}/>
                         </div>
                         <div className="mountain-path-cnt-mini">
@@ -58,10 +57,6 @@ export const MountainPath = (prop: Props) => {
                                 <img className="mini-image" alt="Finish" src={finish}/>
                             </fieldset>
                         </div>
-                        <div className="mountain-path-cnt-mini">
-                            <span className="mountain-path-datecreated">Datum stvaranja: {prop.result.dateCreated}</span>
-                        </div>
-
                     </div>
                 </div>
             }</>

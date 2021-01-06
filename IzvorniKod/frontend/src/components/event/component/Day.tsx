@@ -1,16 +1,16 @@
 import React from "react";
-import {Paths} from "../models/Paths";
-import {MountainPath} from "./MountainPath";
+import {OneDayEventMountainPath} from "./OneDayEventMountainPath";
 import "../style/Day.css"
+import {MountainPathOnDateEvent} from "../models/MountainPathOnDateEvent";
 
 interface Props {
-    result : Paths;
+    result: MountainPathOnDateEvent
 }
 
-export const Day = (prop : Props) => {
+export const Day = ({result} : Props) => {
     return(
       <div className="event-day">
-          <h3 className="day-date">{prop.result.date}: </h3><div><MountainPath result={prop.result.path}/></div>
+          <h3 className="day-date">{result.dateTraveled}: </h3>
       </div>
     );
 }

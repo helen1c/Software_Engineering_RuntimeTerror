@@ -59,6 +59,7 @@ public class MountainPath {
     @OneToMany(mappedBy = "mountainPath")
     private List<MountainPathUserArchive> mountainPathUserArchive = new ArrayList<>();
 
+    @JsonIgnore
     public List<MountainPathUserArchive> getMountainPathUserArchive() {
         return mountainPathUserArchive;
     }
@@ -174,6 +175,7 @@ public class MountainPath {
 
     public void setDifficulty(Short difficulty) {this.difficulty = difficulty;}
 
+    @JsonIgnore
     public List<MountainPathGrade> getMountainPathGradeList() {
         return mountainPathGradeList;
     }

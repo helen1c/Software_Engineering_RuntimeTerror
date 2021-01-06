@@ -3,6 +3,7 @@ package hr.fer.pi.planinarskidnevnik.services.impl;
 import hr.fer.pi.planinarskidnevnik.dtos.CommunityEvent.*;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserSearchDto;
 import hr.fer.pi.planinarskidnevnik.exceptions.ResourceNotFoundException;
+import hr.fer.pi.planinarskidnevnik.models.MountainPath;
 import hr.fer.pi.planinarskidnevnik.models.User;
 import hr.fer.pi.planinarskidnevnik.models.UserEvent.CommunityEventMountainPath;
 import hr.fer.pi.planinarskidnevnik.repositories.CommunityEventMountainPathRepository;
@@ -27,6 +28,8 @@ public class CommunityEventService {
     private final MountainPathQueryServiceImpl mountainPathQueryService;
     private final MountainPathRepository mountainPathRepository;
     private final CommunityEventMountainPathRepository communityEventMountainPathRepository;
+
+    private static final int ONE_DAY = 24*60*60*1000;
 
     public CommunityEventService(CommunityEventRepository eventRepository, UserService userService, MountainPathQueryServiceImpl mountainPathQueryService, MountainPathRepository mountainPathRepository, CommunityEventMountainPathRepository communityEventMountainPathRepository) {
         this.eventRepository = eventRepository;
@@ -65,34 +68,38 @@ public class CommunityEventService {
         return event;
     }
 
-
-
-
     public List<PreviewCommunityEventDto> getMyCommunityEvents(Principal principal) {
 
         User curUser = userService.getCurrentUser(principal);
-        List<CommunityEvent> events = new ArrayList<>(eventRepository.findAllByUser_IdAndStartDateIsAfterOrderByStartDateDesc(curUser.getId(), new Date(System.currentTimeMillis())));
+
+        List<CommunityEvent> events = new ArrayList<>(eventRepository.findAllByUser_IdAndStartDateIsAfterOrderByStartDateDesc(
+                curUser.getId(),
+                new Date(System.currentTimeMillis() - ONE_DAY)));
         List<User> friends = curUser.getFriends();
-
-        List<PreviewCommunityEventDto> communityEventDtos = new ArrayList<>();
-
         for(User user : friends) {
-            events.addAll(eventRepository.findAllByUser_IdAndStartDateIsAfterOrderByStartDateDesc(user.getId(), new Date(System.currentTimeMillis())));
+            events.addAll(eventRepository.findAllByUser_IdAndStartDateIsAfterOrderByStartDateDesc(user.getId(),
+                    new Date(System.currentTimeMillis() - ONE_DAY)));
         }
 
+        return mapToCommunityEvents(events);
+    }
+
+    private List<PreviewCommunityEventDto> mapToCommunityEvents(List<CommunityEvent> events) {
+
+        List<PreviewCommunityEventDto> communityEventDtos = new ArrayList<>();
         for(CommunityEvent event : events) {
 
             PreviewCommunityEventDto communityEventDto = new PreviewCommunityEventDto();
             User user = event.getUser();
-
             List<CommunityEventMountainPath> communityEventMountainPathList = event.getPaths();
-            List<PathDate> pathDates = new ArrayList<>();
+            List<MountainPathOnDateDtoResponse> pathDates = new ArrayList<>();
+
             for (CommunityEventMountainPath path : communityEventMountainPathList) {
-                pathDates.add(new PathDate(path.getPath(), path.getDateArchived()));
+                pathDates.add(getMountainPathOnSpecificDateResponse(path));
             }
 
             communityEventDto.setName(event.getName());
-            communityEventDto.setUser(new UserSearchDto(user.getId(), null, user.getName()));//userService.getImage(user.getEmail())
+            communityEventDto.setUser(new UserSearchDto(user.getId(), userService.getImage(user.getEmail()), user.getName()));//userService.getImage(user.getEmail())
             communityEventDto.setDescription(event.getDescription());
             communityEventDto.setDate_created(event.getDateCreated());
             communityEventDto.setEnd_date(event.getEndDate());
@@ -106,12 +113,28 @@ public class CommunityEventService {
                 participantDto.setUserId(u.getId());
                 participantDto.setName(u.getName());
             }
-
             communityEventDtos.add(communityEventDto);
 
         }
-
         return communityEventDtos;
+
+    }
+
+    private MountainPathOnDateDtoResponse getMountainPathOnSpecificDateResponse(CommunityEventMountainPath path) {
+
+        MountainPathOnDateDtoResponse response = new MountainPathOnDateDtoResponse();
+        MountainPath p = path.getPath();
+        response.setId(p.getId());
+        response.setHillName(p.getHill().getName());
+        response.setDateTraveled(path.getDateArchived());
+        response.setDifficulty(p.getDifficulty());
+        response.setLength(p.getLength());
+        response.setStartPoint(p.getStartPoint());
+        response.setEndPoint(p.getEndPoint());
+        response.setName(p.getName());
+
+        return response;
+
     }
 
 }
