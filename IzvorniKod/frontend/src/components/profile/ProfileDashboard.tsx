@@ -6,6 +6,7 @@ import {ViewProfileInfo} from "./models/ViewProfileInfo";
 import {ArchivedMountainLodgeList} from "../mountain-lodge/component/ArchivedMountainLodge/ArchivedMountainLodgeList";
 import {ArchivedMountainPathList} from "../mountain-path/component/ArchivedMountainPath/ArchivedMountainPathList";
 import {MyMountainPaths} from "../mountain-path/component/MyMountainPaths/MyMountainPaths";
+import {MyCommunityEventsResults} from "../event/component/MyCommunityEventsResults";
 
 const PROFILE = "PROFILE";
 const MY_PATHS = "MY_PATHS";
@@ -113,6 +114,11 @@ export const ProfileDashboard = ({ user, setUser }: Props) => {
           {option === MY_PATHS && (
               <div className="admin-layout-mini">
                   <MyMountainPaths/>
+              </div>
+          )}
+          {option === EVENTS && (
+              <div className="admin-layout-mini">
+                  <MyCommunityEventsResults/>
               </div>
           )}
       </div>

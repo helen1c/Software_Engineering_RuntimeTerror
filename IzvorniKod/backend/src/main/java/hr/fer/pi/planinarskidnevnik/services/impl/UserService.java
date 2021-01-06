@@ -69,12 +69,16 @@ public class UserService {
     }
 
     public User getCurrentUser(Principal principal) {
-        Optional<User> optionalCurrentUser = userRepository.findByEmail(principal.getName());
-        if (optionalCurrentUser.isEmpty()) {
-            LOGGER.error("User {} doesn't exist", principal.getName());
-            throw new ResourceNotFoundException(String.format("Korisnik %s ne postoji", principal.getName()));
+        try {
+            Optional<User> optionalCurrentUser = userRepository.findByEmail(principal.getName());
+            if (optionalCurrentUser.isEmpty()) {
+                LOGGER.error("User {} doesn't exist", principal.getName());
+                throw new ResourceNotFoundException(String.format("Korisnik %s ne postoji", principal.getName()));
+            }
+            return optionalCurrentUser.get();
+        } catch (NullPointerException ex) {
+            throw new AuthorizationException("Dogodio se problem prilikom autorizacije.");
         }
-        return optionalCurrentUser.get();
     }
 
 
@@ -280,7 +284,7 @@ public class UserService {
 
     public void sendFriendRequest(String email, Long friendId) {
         User sender = findByEmail(email).orElseThrow(() -> new ResourceNotFoundException(email));
-        User receiver = userRepository.getOne(friendId);
+        User receiver = userRepository.findById(friendId).get();
         receiver.getFriendRequests().add(sender);
         userRepository.save(receiver);
     }

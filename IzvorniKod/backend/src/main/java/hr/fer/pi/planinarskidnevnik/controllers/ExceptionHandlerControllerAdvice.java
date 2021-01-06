@@ -74,7 +74,8 @@ public class ExceptionHandlerControllerAdvice {
             MountainLodgeDoesNotExist.class,
             MountainPathDoesNotExist.class,
             MountainPathAlreadyAddedAsFavouriteException.class,
-            PathAlreadyNonPrivateException.class})
+            PathAlreadyNonPrivateException.class,
+    EventAttendanceException.class})
     public ResponseEntity<String> handlePathLodgeDoesNotExist(final Exception exception) {
         return ResponseEntity.badRequest().body(exception.getMessage());
     }

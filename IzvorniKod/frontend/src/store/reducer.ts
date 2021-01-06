@@ -5,19 +5,21 @@ import findAllArchivedLodgesReducer from "./reducers/findAllArchivedLodgesReduce
 import findAllArchivedPathsReducer from "./reducers/findAllArchivedPathsReducer";
 import findAllGradedPathsReducer from "./reducers/findAllGradedPathsReducer";
 import getOwnMountainPathsReducer from "./reducers/getOwnMountainPathsReducer";
-import findAllEvents from "./reducers/findAllEventsReducer";
+import findAllEventsAndAttendance from "./reducers/findAllEventsAndAttendanceReducer";
 import findFavPathsReducer from "./reducers/findFavPathsReducer";
+import findMyEventsReducer from "./reducers/findMyEventsReducer";
 
 export const mainReducer = combineReducers(
     {
         findAllUtilitiesReducer,
         findAllHillsReducer,
-        findAllEvents,
+        findAllEventsAndAttendance,
         findAllArchivedLodgesReducer,
         findAllArchivedPathsReducer,
         getOwnMountainPathsReducer,
         findAllGradedPathsReducer,
-        findFavPathsReducer
+        findFavPathsReducer,
+        findMyEventsReducer
     }
 );
 

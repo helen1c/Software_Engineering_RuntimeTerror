@@ -1,5 +1,7 @@
 package hr.fer.pi.planinarskidnevnik.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -14,6 +16,7 @@ public class MountainPathGrade {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @MapsId("pathId")
     private MountainPath path;
 

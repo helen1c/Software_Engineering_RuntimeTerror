@@ -1,0 +1,9 @@
+.event-box {
+    max-width: 800px;
+    margin: 2rem auto 2rem auto;
+    padding: 0.8rem;
+    border: 1px solid black;
+}
+
+.participants-nav ul{height:120px; width:30%;}
+.participants-nav ul{overflow:hidden; overflow-y:scroll;}

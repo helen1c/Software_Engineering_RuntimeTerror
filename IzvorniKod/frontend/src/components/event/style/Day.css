@@ -1,9 +1,0 @@
-.event-day{
-    display: flex;
-    flex-direction: row;
-    margin: 30px;
-}
-.day-date{
-    margin-right: 15px;
-    margin-top: 20px!important;
-}
