@@ -24,13 +24,35 @@ export default function MountainPathRating({mountainPathId, initialValue, onValu
                     onValueChange(newValue);
                 }
             });
+        } else {
+            deleteMountainPathGrade( {
+                mountainPathId: mountainPathId
+            }).then(() => {
+                if (onValueChange) {
+                    onValueChange(newValue);
+                }
+            });
         }
     };
 
-    const gradeMountainPath = (request: { mountainPathId: number, grade: number }) => {
+    const gradeMountainPath = (request: { mountainPathId: number, grade: number | null }) => {
         return fetch("/api/mountain-paths/grade", {
             method: "POST",
             body: JSON.stringify(request),
+            headers: new Headers({
+                authorization: sessionStorage.getItem("key") || "",
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            }),
+        }).then(() => {
+            dispatcher(findGradedPaths());
+        });
+    };
+
+
+    const deleteMountainPathGrade = (request: { mountainPathId: number }) => {
+        return fetch("/api/mountain-paths/grade/delete/" + mountainPathId, {
+            method: "POST",
             headers: new Headers({
                 authorization: sessionStorage.getItem("key") || "",
                 Accept: "application/json",

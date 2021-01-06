@@ -113,6 +113,13 @@ public class MountainPathController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    @PostMapping("/grade/delete/{path_id}")
+    public ResponseEntity<?> deleteMountainPathGrade(@PathVariable("path_id") final Long pathId, Principal principal) {
+        LOGGER.info("Deleting grade for Mountain Path with ID: " + pathId);
+        service.deleteMountainPathGrade(principal, pathId);
+        return ResponseEntity.ok("Ocjena uspjesno obrisana.");
+    }
+
     @GetMapping("/all-public")
     public ResponseEntity<List<MountainPathEventSearchRequest>> getAllPublicPaths() {
         LOGGER.info("Fetching all public paths");

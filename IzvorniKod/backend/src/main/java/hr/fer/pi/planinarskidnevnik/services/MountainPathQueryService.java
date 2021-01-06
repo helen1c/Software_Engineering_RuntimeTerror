@@ -22,6 +22,8 @@ public interface MountainPathQueryService {
 
     MountainPathGrade gradeMountainPath(MountainPathGradeRequest gradeRequest, Principal principal);
 
+    void deleteMountainPathGrade(Principal principal, Long pathId);
+
     List<MountainPath> findAllMountainPathsByAuthor(Principal principal);
 
     MountainPath makeMountainPathNonPrivate(Principal principal, Long pathId);
