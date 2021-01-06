@@ -2,7 +2,7 @@ import React from "react";
 import {Redirect, Route, Switch} from "react-router";
 import {HomePage} from "./components/homepage/HomePage";
 import {AboutUs} from "./aboutus/components/AboutUs/AboutUs";
-import Header from "./components/header/Header";
+import {Header} from "./components/header/Header";
 import {RegistrationForm} from "./components/login-registration/RegistrationForm";
 import {LoginForm} from "./components/login-registration/LoginForm";
 import {MountaineeringCommunitySearch} from "./components/mountaineering-community/MountaineeringCommunitySearch"
@@ -16,6 +16,7 @@ import {FriendshipRequestList} from "./components/friendship-request-list/Friend
 import {FriendshipRequestsNotification} from "./components/friendship-request-notification/FriendshipRequestsNotification";
 import {SearchUsers} from "./components/search-all-users/SearchUsers";
 import {CommunityEventsResults} from "./components/event/component/CommunityEventsResults";
+import {MountaineeringCommunity} from "./components/mountaineering-community/MountaineeringCommunity";
 import {MyCommunityEventsResults} from "./components/event/component/MyCommunityEventsResults";
 
 export const Routes = () => {
@@ -43,6 +44,7 @@ export const Routes = () => {
                 <Route path="/users/search" component={SearchUsers} exact/>
                 <Route path="/notifications" component={FriendshipRequestsNotification} exact/>
                 <Route path="/my-events" component={MyCommunityEventsResults} exact/>
+                <Route path="/mountaineering-community" component={MountaineeringCommunity} exact/>
             </Switch>
         </div>
     );

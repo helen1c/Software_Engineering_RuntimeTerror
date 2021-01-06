@@ -51,7 +51,7 @@ export const CreateEventPage = () => {
                 }),
             }).then(function (response) {
                 if (response.status === 201) {
-                    history.push('/home')   //promijeniti poslije
+                    history.push('/mountaineering-community');
                 } else {
                     //nadodat isto kao na izradi doma
                 }

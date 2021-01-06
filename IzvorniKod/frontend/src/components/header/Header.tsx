@@ -5,13 +5,14 @@ import { useHistory } from "react-router";
 import logout from "../../assets/logout.jpg";
 import profile from "../../assets/profile.png";
 
-function Header() {
+export const Header = () => {
   const [profileImage, setProfileImage] = useState("");
   const history = useHistory();
   const [isProfileActive, setProfileActive] = useState(false);
-  const [numberOfFriendRequests, setNumberOfFriendRequests] = useState(0);;
+  const [numberOfFriendRequests, setNumberOfFriendRequests] = useState(0);
   const [numberOfNotifications, setNumberOfNotifications] = useState(0);
   const [profileLink, setProfileLink] = useState("");
+  const [mountaineeringCommunityLink, setMountaineeringCommunityLink] = useState("");
 
   useEffect(() => {
     if (sessionStorage.getItem("key") !== null)
@@ -25,6 +26,7 @@ function Header() {
           response.json().then((e) => {
             setProfileImage("data:image/jpeg;base64," + e.image);
             setProfileLink("/profile/" + e.id);
+            setMountaineeringCommunityLink("/mountaineering-community")
             setNumberOfFriendRequests(e.numberOfFriendRequests);
             setNumberOfNotifications(e.numberOfNotifications);
           });
@@ -39,7 +41,7 @@ function Header() {
           src={logo}
           alt={"Logo"}
           className="logo-image"
-          onClick={(e) => history.push("/home")}
+          onClick={() => history.push("/home")}
         />
         <div className={"title"}>Planinarski dnevnik</div>
       </div>
@@ -50,13 +52,13 @@ function Header() {
             <div className={"login-cnt"}>
               <button
                 className="loginAndRegisterButton"
-                onClick={(e) => history.push("/login")}
+                onClick={() => history.push("/login")}
               >
                 Prijavi se
               </button>
               <button
                 className="loginAndRegisterButton"
-                onClick={(e) => history.push("/register")}
+                onClick={() => history.push("/register")}
               >
                 Registriraj se
               </button>
@@ -96,6 +98,15 @@ function Header() {
                         >
                           Obavijesti {numberOfNotifications.toString()}
                         </a>
+                        <a
+                            className="dropdown-item"
+                            href={mountaineeringCommunityLink}
+                            //style={{ color: "blue" }}
+                            role="menuitem"
+                        >
+                          Planinarska zajednica
+                        </a>
+
                         <a
                           className="dropdown-item"
                           href={profileLink}
@@ -145,5 +156,3 @@ function Header() {
     </nav>
   );
 }
-
-export default Header;
