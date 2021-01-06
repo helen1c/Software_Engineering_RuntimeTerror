@@ -38,13 +38,11 @@
                 <constraints primaryKey="true"/>
             </column>
             <column name="user_id" type="BIGINT">
-                <constraints foreignKeyName="message_sender_id_fk" references="user(id)"/>
+                <constraints primaryKey="true"/>
             </column>
             <column name="status" type="VARCHAR(50)">
-
             </column>
             <column name="error" type="VARCHAR(50)">
-
             </column>
             <column name="message_name" type="VARCHAR(100)">
                 <constraints nullable="false"/>
@@ -53,5 +51,12 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <addForeignKeyConstraint baseTableName="MESSAGE"
+                                 baseColumnNames="user_id"
+                                 constraintName="message_sender_id_fk"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
     </changeSet>
 </databaseChangeLog>

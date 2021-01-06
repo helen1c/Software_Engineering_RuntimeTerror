@@ -420,7 +420,7 @@ export const ProfileUserInfo = ({user, setUser}: Props) => {
                         </div>
                     </div>
                 )}
-                {(user.isOwner || user.isAdmin) && (
+                {(user.isOwner || (user.isAdmin && !user.ownerAdmin)) && (
                     <button
                         className="button-profile"
                         onClick={() => setOpenDeleteModal(true)}

@@ -242,6 +242,7 @@ public class UserService {
                 user.getImage() == null ? getImage(user.getEmail()) : user.getImage(),
                 isOwner(profileId, principal.getName()),
                 getRole(principal.getName()).equals("ADMIN"),
+                getRole(user.getEmail()).equals("ADMIN"),
                 isFriend(user, principal),
                 user.getFriendRequests().contains(getCurrentUser(principal)),
                 convertToBadgeDto(user.getUserBadgeList()));
