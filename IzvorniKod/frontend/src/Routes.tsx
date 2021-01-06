@@ -16,6 +16,7 @@ import {FriendshipRequestList} from "./components/friendship-request-list/Friend
 import {FriendshipRequestsNotification} from "./components/friendship-request-notification/FriendshipRequestsNotification";
 import {SearchUsers} from "./components/search-all-users/SearchUsers";
 import {CommunityEventsResults} from "./components/event/component/CommunityEventsResults";
+import {MyCommunityEventsResults} from "./components/event/component/MyCommunityEventsResults";
 
 export const Routes = () => {
 
@@ -41,6 +42,7 @@ export const Routes = () => {
                 <Route path="/events" component={CommunityEventsResults} exact/>
                 <Route path="/users/search" component={SearchUsers} exact/>
                 <Route path="/notifications" component={FriendshipRequestsNotification} exact/>
+                <Route path="/my-events" component={MyCommunityEventsResults} exact/>
             </Switch>
         </div>
     );

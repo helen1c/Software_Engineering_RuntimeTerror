@@ -7,6 +7,7 @@ import {participate, unparticipate} from "../../../store/actions/findAllEventsAn
 
 interface Props {
     result : EventResult;
+    isOwner? : boolean;
 }
 
 export const CommunityEvent = (prop : Props) => {
@@ -26,7 +27,7 @@ export const CommunityEvent = (prop : Props) => {
           <h3 className="event-title">Naziv događaja: {prop.result.name}</h3>
        <div className="event-information">
         <div className="event-user">
-            <div className="event-creator"><label>Autor: <a href={"/profile/" + prop.result.user.id}>{prop.result.user.name}</a></label></div>
+            {!prop.isOwner && <div className="event-creator"><label>Autor: <a href={"/profile/" + prop.result.user.id}>{prop.result.user.name}</a></label></div>}
             <div className="date"><label>Datum početka: </label>{prop.result.start_date}</div>
             <div className="date"><label>Datum završetka: </label>{prop.result.end_date}</div>
         </div>
@@ -35,10 +36,11 @@ export const CommunityEvent = (prop : Props) => {
                 <textarea className="event-description" disabled value={prop.result.description}/>
         </div>
 
-           <div>
+           {!prop.isOwner && <div>
                <button onClick={participateButton}>Dolazim</button>
                <button onClick={unparticipateButton}>Ne dolazim</button>
-           </div>
+           </div>}
+
 
            {prop.result.participants.length > 0 ? <nav className="participants-nav">
                Sudionici

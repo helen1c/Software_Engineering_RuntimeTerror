@@ -1,0 +1,27 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="03-01-2021-03" author="josipak">
+        <insert tableName="event">
+            <column name="event_id">4</column>
+            <column name="user_id">4</column>
+            <column name="name">dogadaj4</column>
+            <column name="description">Stvaram dogadaj 4</column>
+            <column name="date_created">2021-01-03</column>
+            <column name="start_date">2021-02-02</column>
+            <column name="end_date">2021-02-06</column>
+        </insert>
+        <insert tableName="event">
+            <column name="event_id">5</column>
+            <column name="user_id">4</column>
+            <column name="name">dogadaj5</column>
+            <column name="description">Stvaram dogadaj 5</column>
+            <column name="date_created">2021-01-03</column>
+            <column name="start_date">2021-02-01</column>
+            <column name="end_date">2021-02-11</column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
