@@ -179,7 +179,6 @@ public class UserController {
         return ResponseEntity.status(200).body(userService.getGradedPaths(principal));
     }
 
-
     @DeleteMapping(value="/delete/path-wish/{path_id}")
     public final ResponseEntity<String> deletePathFromWishList(@PathVariable("path_id") Long pathId, Principal principal) {
         var s = userService.deletePathFromWishlist(principal, pathId);

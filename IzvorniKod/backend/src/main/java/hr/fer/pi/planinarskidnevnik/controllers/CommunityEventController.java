@@ -1,8 +1,10 @@
 package hr.fer.pi.planinarskidnevnik.controllers;
 
 import hr.fer.pi.planinarskidnevnik.dtos.CommunityEvent.CommunityEventDto;
+import hr.fer.pi.planinarskidnevnik.dtos.CommunityEvent.EventAttendanceParticipatingResponse;
 import hr.fer.pi.planinarskidnevnik.dtos.CommunityEvent.PreviewCommunityEventDto;
 import hr.fer.pi.planinarskidnevnik.models.CommunityEvent;
+import hr.fer.pi.planinarskidnevnik.models.User;
 import hr.fer.pi.planinarskidnevnik.services.impl.CommunityEventService;
 import hr.fer.pi.planinarskidnevnik.services.impl.UserService;
 import org.slf4j.Logger;
@@ -45,5 +47,21 @@ public class CommunityEventController {
     public ResponseEntity<List<PreviewCommunityEventDto>> getAllEvents(Principal principal) {
         LOGGER.info("Fetching all events");
         return ResponseEntity.ok(eventService.getMyCommunityEvents(principal));
+    }
+
+    @GetMapping("/by-author")
+    public ResponseEntity<List<PreviewCommunityEventDto>> getEventsByAuthor(Principal principal) {
+        LOGGER.info("Fetching all events by author");
+        return ResponseEntity.ok(eventService.getArchivedAuthoredEvents(principal));
+    }
+
+    @PatchMapping("/participate/{event_id}")
+    public ResponseEntity<EventAttendanceParticipatingResponse> participateOnEvent(@PathVariable("event_id") Long eventId, Principal principal) {
+        return ResponseEntity.ok(eventService.particiapteOnEvent(eventId, principal));
+    }
+
+    @PatchMapping("/departicipate/{event_id}")
+    public ResponseEntity<EventAttendanceParticipatingResponse> departicipateOnEvent(@PathVariable("event_id") Long eventId, Principal principal) {
+         return ResponseEntity.ok(eventService.deParticiapteOnEvent(eventId, principal));
     }
 }

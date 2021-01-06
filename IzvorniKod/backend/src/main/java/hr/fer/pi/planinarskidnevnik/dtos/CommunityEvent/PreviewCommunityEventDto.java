@@ -7,6 +7,8 @@ import java.util.List;
 
 public class PreviewCommunityEventDto {
 
+    private Long id;
+
     private UserSearchDto user;
 
     private String name;
@@ -24,14 +26,22 @@ public class PreviewCommunityEventDto {
 
     private List<MountainPathOnDateDtoResponse> paths;
 
-    private List<ParticipantDto> participantDtos;
+    private List<ParticipantDto> participants;
 
-    public List<ParticipantDto> getParticipantDtos() {
-        return participantDtos;
+    public Long getId() {
+        return id;
     }
 
-    public void setParticipantDtos(List<ParticipantDto> participantDtos) {
-        this.participantDtos = participantDtos;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public List<ParticipantDto> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(List<ParticipantDto> participants) {
+        this.participants = participants;
     }
 
     public List<MountainPathOnDateDtoResponse> getPaths() {

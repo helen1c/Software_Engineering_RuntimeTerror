@@ -2,6 +2,7 @@ package hr.fer.pi.planinarskidnevnik.services.impl;
 
 import hr.fer.pi.planinarskidnevnik.dtos.CommunityEvent.*;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserSearchDto;
+import hr.fer.pi.planinarskidnevnik.exceptions.EventAttendanceException;
 import hr.fer.pi.planinarskidnevnik.exceptions.ResourceNotFoundException;
 import hr.fer.pi.planinarskidnevnik.models.MountainPath;
 import hr.fer.pi.planinarskidnevnik.models.User;
@@ -19,6 +20,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CommunityEventService {
@@ -68,10 +70,15 @@ public class CommunityEventService {
         return event;
     }
 
+    public List<PreviewCommunityEventDto> getArchivedAuthoredEvents(Principal principal) {
+        User curUser = userService.getCurrentUser(principal);
+        List<CommunityEvent> events = new ArrayList<>(eventRepository.findAllByUser_IdOrderByStartDate(curUser.getId()));
+        return mapToCommunityEvents(events);
+    }
+
     public List<PreviewCommunityEventDto> getMyCommunityEvents(Principal principal) {
 
         User curUser = userService.getCurrentUser(principal);
-
         List<CommunityEvent> events = new ArrayList<>(eventRepository.findAllByUser_IdAndStartDateIsAfterOrderByStartDateDesc(
                 curUser.getId(),
                 new Date(System.currentTimeMillis() - ONE_DAY)));
@@ -80,7 +87,6 @@ public class CommunityEventService {
             events.addAll(eventRepository.findAllByUser_IdAndStartDateIsAfterOrderByStartDateDesc(user.getId(),
                     new Date(System.currentTimeMillis() - ONE_DAY)));
         }
-
         return mapToCommunityEvents(events);
     }
 
@@ -98,8 +104,9 @@ public class CommunityEventService {
                 pathDates.add(getMountainPathOnSpecificDateResponse(path));
             }
 
+            communityEventDto.setId(event.getId());
             communityEventDto.setName(event.getName());
-            communityEventDto.setUser(new UserSearchDto(user.getId(), userService.getImage(user.getEmail()), user.getName()));//userService.getImage(user.getEmail())
+            communityEventDto.setUser(new UserSearchDto(user.getId(), null, user.getName()));//userService.getImage(user.getEmail())
             communityEventDto.setDescription(event.getDescription());
             communityEventDto.setDate_created(event.getDateCreated());
             communityEventDto.setEnd_date(event.getEndDate());
@@ -112,9 +119,10 @@ public class CommunityEventService {
                 ParticipantDto participantDto = new ParticipantDto();
                 participantDto.setUserId(u.getId());
                 participantDto.setName(u.getName());
+                participantDtos.add(participantDto);
             }
+            communityEventDto.setParticipants(participantDtos);
             communityEventDtos.add(communityEventDto);
-
         }
         return communityEventDtos;
 
@@ -135,6 +143,63 @@ public class CommunityEventService {
 
         return response;
 
+    }
+
+    public EventAttendanceParticipatingResponse particiapteOnEvent(Long eventId, Principal principal) {
+
+        CommunityEvent event = eventRepository.findById(eventId).get();
+        User curUser = userService.getCurrentUser(principal);
+
+        List<Long> friends = event.getUser().getFriends().stream().map(User::getId).collect(Collectors.toList());
+
+        if(!(friends.contains(curUser.getId()) || curUser.getId().equals(event.getUser().getId()))) {
+            throw new EventAttendanceException("Ovaj događaj nije na listi prijatelja vaše planinarske zajednice pa se ne možete prijaviti na njega.");
+        }
+
+        if(event.getStartDate().getTime() < System.currentTimeMillis() - ONE_DAY) {
+            throw new EventAttendanceException("Ne možete se prijaviti na događaj jer je već započeo.");
+        }
+
+        List<User> participUsers = event.getParticipants();
+        for(User u : participUsers) {
+            if(curUser.getId().equals(u.getId())) {
+                throw new EventAttendanceException("Već sudjelujete u događaju: " + event.getName());
+            }
+        }
+
+        event.getParticipants().add(curUser);
+        eventRepository.save(event);
+
+        EventAttendanceParticipatingResponse response = new EventAttendanceParticipatingResponse();
+        response.setMessage("Korisnik " + curUser.getName() + " se uspješno prijavio za sudjelovanje na događaju: " + event.getName());
+        response.setUserId(curUser.getId());
+        response.setEventId(event.getId());
+        response.setName(curUser.getName());
+
+        return response;
+    }
+
+    public EventAttendanceParticipatingResponse deParticiapteOnEvent(Long eventId, Principal principal) {
+
+        CommunityEvent event = eventRepository.findById(eventId).get();
+        User curUser = userService.getCurrentUser(principal);
+
+        List<User> participUsers = event.getParticipants();
+
+        List<Long> ids = participUsers.stream().map(User::getId).collect(Collectors.toList());
+        if(!ids.contains(curUser.getId())) {
+            throw new EventAttendanceException("Niste prijavljeni za dolazak na ovaj događaj pa se ne možete odjaviti.");
+        }
+        event.getParticipants().removeIf(v -> v.getId().equals(curUser.getId()));
+        eventRepository.save(event);
+
+        EventAttendanceParticipatingResponse response = new EventAttendanceParticipatingResponse();
+        response.setMessage("Korisnik " + curUser.getName() + " se uspješno odjavio sa sudjelovanja na događaju: " + event.getName());
+        response.setUserId(curUser.getId());
+        response.setEventId(event.getId());
+        response.setName(curUser.getName());
+
+        return response;
     }
 
 }
