@@ -1,5 +1,6 @@
 package hr.fer.pi.planinarskidnevnik.models.MountainPathUserArchive;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import hr.fer.pi.planinarskidnevnik.models.MountainPath;
 import hr.fer.pi.planinarskidnevnik.models.User;
 
@@ -18,11 +19,13 @@ public class MountainPathUserArchive {
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("userId")
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("pathId")
     @JoinColumn(name = "path_id")
+    @JsonIgnore
     private MountainPath mountainPath;
 
     @Column(name = "DATE_ARCHIVED")

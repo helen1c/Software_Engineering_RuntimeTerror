@@ -53,7 +53,7 @@ public class MountainPath {
     private Boolean isPrivate;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(nullable = true)
     private User author;
 
     @OneToMany(mappedBy = "mountainPath")

@@ -37,11 +37,13 @@
             <column name="is_private" type="BOOLEAN">
                 <constraints nullable="false"/>
             </column>
-            <column name="author_id" type="BIGINT"/>
+            <column name="author_id" type="BIGINT">
+            </column>
             <column name="difficulty" type="SMALLINT">
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <addDefaultValue tableName="mountain_path" columnName="author_id" defaultValue="2"/>
         <addForeignKeyConstraint baseTableName="mountain_path"
                                  baseColumnNames="author_id"
                                  constraintName="author_in_path_fkey"
