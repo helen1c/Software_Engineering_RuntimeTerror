@@ -9,6 +9,9 @@ import getOwnMountainPathsReducer from "./reducers/getOwnMountainPathsReducer";
 import findAllEventsAndAttendance from "./reducers/findAllEventsAndAttendanceReducer";
 import findFavPathsReducer from "./reducers/findFavPathsReducer";
 import findMyEventsReducer from "./reducers/findMyEventsReducer";
+import getAndRefuseAndAcceptFriendRequestsReducer from "./reducers/getAndRefuseAndAcceptFriendRequestsReducer";
+import getAndResolveFriendRequestsNotificationActionReducer
+        from "./reducers/getAndResolveFriendRequestsNotificationActionReducer";
 
 export const mainReducer = combineReducers(
     {
@@ -21,7 +24,9 @@ export const mainReducer = combineReducers(
         getOwnMountainPathsReducer,
         findAllGradedPathsReducer,
         findFavPathsReducer,
-        findMyEventsReducer
+        findMyEventsReducer,
+        getAndRefuseAndAcceptFriendRequestsReducer,
+        getAndResolveFriendRequestsNotificationActionReducer
     }
 );
 
