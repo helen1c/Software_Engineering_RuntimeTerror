@@ -82,22 +82,20 @@ function Header() {
                         aria-orientation="vertical"
                         aria-labelledby="user-menu"
                       >
-                        <button
+                        <a href={"/friendship-requests"}
                           className="dropdown-item"
                           //style={{ color: "blue" }}
-                          onClick={() => history.push("/friendship-requests")}
                           role="menuitem"
                         >
                           Zahtjevi za prijateljstvo {numberOfFriendRequests.toString()}
-                        </button>
-                        <button
+                        </a>
+                        <a href={"/notifications"}
                           className="dropdown-item"
                           //style={{ color: "blue" }}
-                          onClick={() => history.push("/notifications")}
                           role="menuitem"
                         >
                           Obavijesti {numberOfNotifications.toString()}
-                        </button>
+                        </a>
                         <a
                           className="dropdown-item"
                           href={profileLink}
