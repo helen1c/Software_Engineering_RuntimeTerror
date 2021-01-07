@@ -27,7 +27,7 @@ export const Routes = () => {
         <div>
 
             <Header/>
-            <div className="body-page">
+            {/*<div className="body-page">*/}
                 <Switch>
                     <Route path={"/"} exact={true}>
                         <Redirect to={"home"}/>
@@ -45,18 +45,14 @@ export const Routes = () => {
                     <Route path="/test" component={MessageSearchResult} exact/>
                     <Route path="/friendship-requests" component={FriendshipRequestList} exact/>
                     <Route path="/events/create" component={CreateEventPage} exact/>
-                    <Route path="/events" component={EventsResults} exact/>
                     <Route path="/users/search" component={SearchUsers} exact/>
                     <Route path="/notifications" component={FriendshipRequestsNotification} exact/>
-<<<<<<< HEAD
                     <Route path="/my-events" component={MyCommunityEventsResults} exact/>
                     <Route path="/mountaineering-community" component={MountaineeringCommunity} exact/>
-=======
                     <Route path="/admin/message-box" component={MessageSearchResult} exact/>
->>>>>>> df2d3fc ([#45] fixed footer and message inbox)
                 </Switch>
-            </div>
-            <Footer/>
+            {/*</div>*/}
+            {/*<Footer/>*/}
         </div>
     );
 

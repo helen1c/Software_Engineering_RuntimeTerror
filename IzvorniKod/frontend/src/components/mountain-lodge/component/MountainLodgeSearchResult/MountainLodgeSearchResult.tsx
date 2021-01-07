@@ -136,10 +136,10 @@ export const MountainLodgeSearchResult = (prop: Props) => {
                             disabled={archivedS}>
                             {archivedS ? "Arhivirano" : "Arhiviraj"}
                         </Button>}
-                        {role === "PLANINAR" ?
-                            <Tipka result={prop.result.name} css={1}/>
-                            : <div/>
-                        }
+                        {/*{role === "PLANINAR" ?*/}
+                        {/*    <Tipka result={prop.result.name} css={1}/>*/}
+                        {/*    : <div/>*/}
+                        {/*}*/}
                     </div>
                 </div>}
         </>

@@ -23,7 +23,10 @@ export const Header = () => {
   const history = useHistory();
   const [isProfileActive, setProfileActive] = useState(false);
   const [profileLink, setProfileLink] = useState("");
-  const [mountaineeringCommunityLink, setMountaineeringCommunityLink] = useState("");
+  const [
+    mountaineeringCommunityLink,
+    setMountaineeringCommunityLink,
+  ] = useState("");
 
   useEffect(() => {
     if (sessionStorage.getItem("key") !== null) {
@@ -39,7 +42,7 @@ export const Header = () => {
           response.json().then((e) => {
             setProfileImage("data:image/jpeg;base64," + e.image);
             setProfileLink("/profile/" + e.id);
-            setMountaineeringCommunityLink("/mountaineering-community")
+            setMountaineeringCommunityLink("/mountaineering-community");
           });
         }
       });
@@ -103,7 +106,11 @@ export const Header = () => {
                           role="menuitem"
                         >
                           Zahtjevi za prijateljstvo{" "}
-                          {friendRequestsResults.length && <span style={{color: "red"}}>({friendRequestsResults.length.toString()})</span>}
+                          {friendRequestsResults.length > 0  && (
+                            <span style={{ color: "red" }}>
+                              ({friendRequestsResults.length.toString()})
+                            </span>
+                          )}
                         </a>
                         <a
                           href={"/notifications"}
@@ -111,19 +118,26 @@ export const Header = () => {
                           //style={{ color: "blue" }}
                           role="menuitem"
                         >
-                          Obavijesti {friendRequestsNotificationResults.length && <span style={{color: "red"}}>({friendRequestsNotificationResults.length.toString()})</span>}
+                          Obavijesti{" "}
+                          {friendRequestsNotificationResults.length > 0 && (
+                            <span style={{ color: "red" }}>
+                              (
+                              {friendRequestsNotificationResults.length.toString()}
+                              )
+                            </span>
+                          )}
                         </a>
                         <a
-                            className="dropdown-item"
-                            href={mountaineeringCommunityLink}
-                            //style={{ color: "blue" }}
-                            role="menuitem"
+                          className="dropdown-item"
+                          href={mountaineeringCommunityLink}
+                          //style={{ color: "blue" }}
+                          role="menuitem"
                         >
                           Planinarska zajednica
                           <img
-                              src={community}
-                              alt={"Community"}
-                              className="dropdown-image"
+                            src={community}
+                            alt={"Community"}
+                            className="dropdown-image"
                           />
                         </a>
 
@@ -167,11 +181,11 @@ export const Header = () => {
               <div
                 className="relative"
                 onMouseLeave={() => setProfileActive(false)}
-              ></div>
+              />
             </div>
           )}
         </li>
       </ul>
     </nav>
   );
-}
+};
