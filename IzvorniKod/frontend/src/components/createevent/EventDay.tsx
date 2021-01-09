@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { EventInfo } from "./EventInfo";
 import "./CreateEventPage.css";
 import { MountainPathSearch } from "./models/MountainPathSearch";
-import Select, { ValueType } from "react-select";
+import Select from "react-select";
 import { MountainPathSelect } from "./models/MountainPathSelect";
 import { Paths } from "./models/Paths";
 import "./EventDay.css";
@@ -74,7 +74,7 @@ export const EventDay = ({
           isSearchable={true}
           placeholder="Unesite ime staze"
           name={"utilities"}
-          onChange={(e: ValueType<MountainPathSelect>) => {
+          onChange={(e) => {
             selectOptions(day.date, e as MountainPathSelect);
           }}
           options={selectValues}

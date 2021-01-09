@@ -63,8 +63,10 @@ public class CommunityEventService {
         event.setDateCreated(new Date(System.currentTimeMillis()));
         event.setUser(userService.getCurrentUser(principal));
         CommunityEvent evRet = eventRepository.save(event);
-        for (PathDateIdDto path: eventCreateDto.getPaths()) {
-            communityEventMountainPathRepository.save(new CommunityEventMountainPath(event, mountainPathRepository.findById(path.getPathId()).get(), path.getDate()));
+        if (eventCreateDto.getPaths() != null) {
+            for (PathDateIdDto path: eventCreateDto.getPaths()) {
+                communityEventMountainPathRepository.save(new CommunityEventMountainPath(event, mountainPathRepository.findById(path.getPathId()).get(), path.getDate()));
+            }
         }
         LOGGER.info("New event {} created", event);
         return event;

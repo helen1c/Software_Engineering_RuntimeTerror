@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./MountainLodgeSearch.css";
-import Select, { ValueType } from "react-select";
+import Select from "react-select";
 import { Field, Form, Formik } from "formik";
 import { HillOption } from "../../models/HillOption";
 import { MountainLodgeSearchRequest } from "../../models/MountainLodgeSearchRequest";
@@ -146,7 +146,7 @@ export const MountainLodgeSearch = () => {
                     isSearchable={true}
                     placeholder="Odaberite područje..."
                     name={"hillId"}
-                    onChange={(option: ValueType<HillOption>) =>
+                    onChange={(option) =>
                       setFieldValue(
                         "hillId",
                         option === null ? null : (option as HillOption).value

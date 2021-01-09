@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Select, { ValueType } from "react-select";
+import Select from "react-select";
 import { Field, Form, Formik } from "formik";
 import { HillOption } from "../../models/HillOption";
 import { useDispatch, useSelector } from "react-redux";
@@ -168,7 +168,7 @@ export const MountainPathSearch = () => {
                     isSearchable={true}
                     placeholder="Odaberite područje..."
                     name={"hillId"}
-                    onChange={(option: ValueType<HillOption>) =>
+                    onChange={(option) =>
                       setFieldValue(
                         "hillId",
                         option === null ? null : (option as HillOption).value

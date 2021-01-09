@@ -61,7 +61,7 @@ export const LoginForm = () => {
             "key",
             response.headers.get("authorization") || ""
           );
-          window.location.href = "/home";
+          window.location.href = "/mountaineering-community";
         }
       });
     },

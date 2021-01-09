@@ -4,7 +4,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Select, {ValueType} from "react-select";
+import Select from "react-select";
 import {Field, Form, Formik} from "formik";
 import Compress from "react-image-file-resizer";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
@@ -220,7 +220,7 @@ export default function MountainLodgeCreate({hillResults, utilityResults}: Props
                                                 isSearchable={true}
                                                 placeholder="Odaberite područje..."
                                                 name={"hillId"}
-                                                onChange={(option: ValueType<HillOption>) => setFieldValue("hillId",
+                                                onChange={(option) => setFieldValue("hillId",
                                                     option === null ? null : (option as HillOption).value)
                                                 }
                                                 options={hillResults}>
