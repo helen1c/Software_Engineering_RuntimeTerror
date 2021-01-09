@@ -27,7 +27,7 @@ export const Routes = () => {
         <div>
 
             <Header/>
-            {/*<div className="body-page">*/}
+            <div className="body-page">
                 <Switch>
                     <Route path={"/"} exact={true}>
                         <Redirect to={"home"}/>
@@ -51,8 +51,8 @@ export const Routes = () => {
                     <Route path="/mountaineering-community" component={MountaineeringCommunity} exact/>
                     <Route path="/admin/message-box" component={MessageSearchResult} exact/>
                 </Switch>
-            {/*</div>*/}
-            {/*<Footer/>*/}
+            </div>
+            <Footer/>
         </div>
     );
 

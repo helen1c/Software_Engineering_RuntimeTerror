@@ -282,6 +282,7 @@ export const MountainPathSearchResult = (prop: Props) => {
             </div>
           </div>
           <div className="mountain-path-extend-info">
+            <div>
             <div className="mountain-path-cnt-mini">
               <span className="mountain-path-length">
                 Duljina: {prop.result.length}m
@@ -292,7 +293,11 @@ export const MountainPathSearchResult = (prop: Props) => {
                 </span>
               )}
               <img className="mini-image-2" alt="GO" src={elevation} />
-            </div>
+            </div>{role ==="PLANINAR"?
+              <Tipka result={prop.result.name} css={2}/> :
+              <div/>
+          }</div>
+
             <div className="mountain-path-cnt-mini">
               <fieldset>
                 {" "}

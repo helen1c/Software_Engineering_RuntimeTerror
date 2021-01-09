@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 function Footer() {
     const history = useHistory();
     const [role,setRole] = useState("");
-    const [loading,setLoading] = useState(true);
 
     useEffect(() => {
         if (sessionStorage.getItem("key") !== null) {
@@ -21,13 +20,11 @@ function Footer() {
                 if (response.status === 200) {
                     response.json().then((e) => {
                         setRole(e.role);
-                        setLoading(false);
                     });
                 }
             });
         }else{
             setRole("NEPRIJAVLJEN")
-            setLoading(false);
         }
     }, []);
 
