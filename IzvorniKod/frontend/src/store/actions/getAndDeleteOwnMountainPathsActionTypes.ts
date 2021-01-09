@@ -22,7 +22,7 @@ interface deleteMountainPathSuccess {
 
 interface deleteMountainPathError {
     type: typeof DELETE_MOUNTAIN_PATH_ERROR,
-    payload: string |undefined
+    payload: string | undefined
 }
 
 interface getOwnPaths {

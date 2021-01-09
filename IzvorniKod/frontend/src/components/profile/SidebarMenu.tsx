@@ -77,7 +77,7 @@ export const SidebarMenu = ({ user, setUser }: Props) => {
         <Tab className={classes.tab} label="ARHIVA" id="{1}" />
         <Tab className={classes.tab} label="MOJE STAZE" id="{2}" />
         <Tab className={classes.tab} label="MOJI DOGAĐAJI" id="{3}" />
-        <Tab className={classes.tab} label="" id="{4}" />
+        <Tab className={classes.tab} label="PORUKE KORISNIKA" id="{4}" />
       </Tabs>
       <TabPanel value={value} index={0}>
         <ProfileUserInfo user={user} setUser={setUser} />
@@ -91,7 +91,9 @@ export const SidebarMenu = ({ user, setUser }: Props) => {
       <TabPanel value={value} index={3}>
         Moji događaji
       </TabPanel>
-      <TabPanel index={value} value={4}></TabPanel>
+      <TabPanel index={value} value={4}>
+          Poruke korisnika
+      </TabPanel>
     </div>
   );
 };

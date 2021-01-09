@@ -3,73 +3,42 @@ import { UserInfo } from "../mountain-lodge/models/UserInfo";
 import { HttpCodesUtil } from "../mountaineering-community/HttpCodesUtil";
 import { useHistory } from "react-router";
 import "./FriendshipRequestList.css";
+import {useDispatch, useSelector} from "react-redux";
+import {MainReducer} from "../../store/reducer";
+import {
+  dispatchAcceptFriendRequest,
+  dispatchRefuseFriendRequest,
+  findFriendRequests
+} from "../../store/actions/getAndRefuseAndAcceptFriendRequestsActions";
+import getAndRefuseAndAcceptFriendRequestsReducer
+  from "../../store/reducers/getAndRefuseAndAcceptFriendRequestsReducer";
 
 export const FriendshipRequestList = () => {
-  const [allUsers, setAllUsers] = useState<UserInfo[]>([]);
+  const dispatch = useDispatch();
+  const {results: friendRequestsResults} = useSelector((state: MainReducer) => state.getAndRefuseAndAcceptFriendRequestsReducer);
   const history = useHistory();
 
   function confirm(user: UserInfo) {
-    fetch("api/users/friend-request-accept/" + user.id, {
-      method: "POST",
-      headers: new Headers({
-        authorization: sessionStorage.getItem("key") || "",
-        "Content-Type": "application/json",
-      }),
-    }).then((response) => {
-      if (response.status === 200) {
-        removeUser(user);
-      }
-    });
+    dispatch(dispatchAcceptFriendRequest(user));
   }
 
   function refuse(user: UserInfo) {
-    fetch("api/users/friend-request-decline/" + user.id, {
-      method: "POST",
-      headers: new Headers({
-        authorization: sessionStorage.getItem("key") || "",
-        "Content-Type": "application/json",
-      }),
-    }).then((response) => {
-      if (response.status === 200) {
-        removeUser(user);
-      }
-    });
-  }
-
-  function removeUser(user: UserInfo) {
-    let users = allUsers;
-    users = users.filter((u) => u !== user);
-    setAllUsers(users);
+    dispatch(dispatchRefuseFriendRequest(user));
   }
 
   useEffect(() => {
-    fetch("/api/users/friend-requests-received", {
-      method: "GET",
-      headers: new Headers({
-        authorization: sessionStorage.getItem("key") || "",
-      }),
-    }).then(function (response) {
-      if (response.status === HttpCodesUtil.SUCCESS) {
-        response.json().then((users) => {
-          users.forEach(function (item: UserInfo) {
-            item.image = "data:image/jpeg;base64," + item.image;
-          });
-          setAllUsers(users);
-        });
-      } else {
-      }
-    });
+    dispatch(findFriendRequests())
   }, []);
 
   return (
       <div>
-        {!allUsers.length ? (
+        {!friendRequestsResults.length ? (
             <div className="request-empty">Nema pristiglih zahtjeva za prijateljstvo. </div>
         ) : (
             <div style={{ backgroundColor: "aliceblue" }}>
               <div className="all-users-container">
                 <span className="request-heading"> Zahtjevi za prijateljstvo </span>
-                {allUsers.map((user) => (
+                {friendRequestsResults.map((user) => (
                     <div key={user.id}>
                       <div className="users-container">
                         <div className="user-request">

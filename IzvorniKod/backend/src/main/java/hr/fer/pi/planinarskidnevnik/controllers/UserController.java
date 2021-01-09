@@ -1,5 +1,6 @@
 package hr.fer.pi.planinarskidnevnik.controllers;
 
+import hr.fer.pi.planinarskidnevnik.dtos.User.*;
 import hr.fer.pi.planinarskidnevnik.dtos.MountainLodgeArchive.MountainLodgeArchiveResponse;
 import hr.fer.pi.planinarskidnevnik.dtos.MountainPath.MountainPathGradeResponse;
 import hr.fer.pi.planinarskidnevnik.dtos.MountainPathArchiveResponse;
@@ -80,6 +81,11 @@ public class UserController {
     public ResponseEntity<UserHeaderDto> getCurrentUser(Principal principal) {
         LOGGER.info("Getting current user");
         return ResponseEntity.ok(userService.getHeaderInformation(principal));
+    }
+    @GetMapping("/user/role")
+    public ResponseEntity<UserFooterDto> getCurrentUserRole(Principal principal) {
+        LOGGER.info("Getting current user role");
+        return ResponseEntity.ok(userService.getFooterInformation(principal));
     }
 
     @PostMapping

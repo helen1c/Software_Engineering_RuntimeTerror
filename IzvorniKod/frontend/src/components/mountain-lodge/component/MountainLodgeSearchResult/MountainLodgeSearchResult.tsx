@@ -5,6 +5,7 @@ import {Button} from "@material-ui/core";
 import {HttpCodesUtil} from "../../../../errors/HttpCodesUtil";
 import Snackbar from "@material-ui/core/Snackbar";
 import {Alert} from "@material-ui/lab";
+import Tipka from "../../../footer/components/Tipka";
 
 interface Props {
     result: MountainLodgeResult,
@@ -18,6 +19,26 @@ export const MountainLodgeSearchResult = (prop: Props) => {
     const [loading, setLoading] = useState(true);
     const [defImage] = useState(require('../../../../assets/default-ml2.jpg'));
     const [archivedS, setArchivedS] = useState(prop.archived);
+    const [role,setRole] = useState("");
+
+    useEffect(() => {
+        if (sessionStorage.getItem("key") !== null) {
+            fetch("/api/users/user/role", {
+                method: "GET",
+                headers: new Headers({
+                    authorization: sessionStorage.getItem("key") || "",
+                }),
+            }).then(function (response) {
+                if (response.status === 200) {
+                    response.json().then((e) => {
+                        setRole(e.role);
+                    });
+                }
+            });
+        }else{
+            setRole("NEPRIJAVLJEN")
+        }
+    }, []);
 
     const archiveLodge = async () => {
 
@@ -115,6 +136,10 @@ export const MountainLodgeSearchResult = (prop: Props) => {
                             disabled={archivedS}>
                             {archivedS ? "Arhivirano" : "Arhiviraj"}
                         </Button>}
+                        {role === "PLANINAR" ?
+                            <Tipka result={prop.result.name} css={1}/>
+                            : <div/>
+                        }
                     </div>
                 </div>}
         </>

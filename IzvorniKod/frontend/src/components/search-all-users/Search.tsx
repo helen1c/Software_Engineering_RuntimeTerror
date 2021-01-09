@@ -36,7 +36,7 @@ export const Search = ({dataFunction,stateFunction} : Props) =>{
 
     function dataRequest(searchText: string) {
         dataFunction(
-            allUsers.filter((user) => user.name.toLowerCase().includes(searchText))
+            allUsers.filter((user) => user.name.toLowerCase().includes(searchText.toLowerCase()))
         );
     }
 

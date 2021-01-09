@@ -27,6 +27,7 @@ export const ProfileUserInfo = ({user, setUser}: Props) => {
     const [nameError, setNameError] = useState("");
     const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
     const [openEditModal, setOpenEditModal] = useState<boolean>(false);
+    const [openRemoveFriendModal, setOpenRemoveFriendModal] = useState(false)
     const [sentFriendRequest, setSentFriendRequest] = useState<boolean>(false);
     const [removedFriend, setRemovedFriend] = useState<boolean>(false);
     const [error, setError] = useState<boolean>(false);
@@ -156,6 +157,7 @@ export const ProfileUserInfo = ({user, setUser}: Props) => {
                 setUser(newUser)
                 setRemovedFriend(true);
                 setSentFriendRequest(false);
+                setOpenRemoveFriendModal(false)
             } else {
                 setError(true);
             }
@@ -382,7 +384,7 @@ export const ProfileUserInfo = ({user, setUser}: Props) => {
                         <div>
                             {!error ? (
                                     user.friend ? (
-                                        <button className="button-profile"   onClick={handleRemoveUserAsFriend}>
+                                        <button className="button-profile"   onClick={() => setOpenRemoveFriendModal(true)}>
                                             <span className="button-label">Ukloni prijatelja </span>
                                             <img src={cancel} alt={"Cancel"} className="buttons-profile-img"/>
                                         </button>
@@ -420,7 +422,7 @@ export const ProfileUserInfo = ({user, setUser}: Props) => {
                         </div>
                     </div>
                 )}
-                {(user.isOwner || user.isAdmin) && (
+                {(user.isOwner || (user.isAdmin && !user.ownerAdmin)) && (
                     <button
                         className="button-profile"
                         onClick={() => setOpenDeleteModal(true)}
@@ -462,6 +464,24 @@ export const ProfileUserInfo = ({user, setUser}: Props) => {
                         NE
                     </Button>
                     <Button onClick={handleSaveOnClick} color="primary" autoFocus>
+                        DA
+                    </Button>
+                </DialogActions>
+            </Dialog>
+            <Dialog
+                open={openRemoveFriendModal}
+                onClose={() => setOpenRemoveFriendModal(false)}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    {"Jeste li sigurni da želite ukloniti prijatelja?"}
+                </DialogTitle>
+                <DialogActions>
+                    <Button onClick={() => setOpenRemoveFriendModal(false)} color="primary">
+                        NE
+                    </Button>
+                    <Button onClick={handleRemoveUserAsFriend} color="primary" autoFocus>
                         DA
                     </Button>
                 </DialogActions>

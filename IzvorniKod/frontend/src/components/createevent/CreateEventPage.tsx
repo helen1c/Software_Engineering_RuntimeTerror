@@ -51,6 +51,7 @@ export const CreateEventPage = () => {
                 }),
             }).then(function (response) {
                 if (response.status === 201) {
+                    sessionStorage.setItem("successfulEventCreation", "true");
                     history.push('/mountaineering-community');
                 } else {
                     //nadodat isto kao na izradi doma

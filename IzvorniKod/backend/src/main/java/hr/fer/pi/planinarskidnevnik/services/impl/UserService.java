@@ -10,13 +10,16 @@ import hr.fer.pi.planinarskidnevnik.dtos.User.UserProfilePageDto;
 import hr.fer.pi.planinarskidnevnik.dtos.User.UserSearchDto;
 import hr.fer.pi.planinarskidnevnik.exceptions.IllegalAccessException;
 import hr.fer.pi.planinarskidnevnik.exceptions.*;
+import hr.fer.pi.planinarskidnevnik.dtos.User.*;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainLodgeArchiveToMountainLodgeArchiveResponseMapper;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainPathGradeToMountainPathGradeResponseMapper;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainPathUserArchiveToMountainPathArchiveResponseMapper;
 import hr.fer.pi.planinarskidnevnik.models.MountainPath;
+import hr.fer.pi.planinarskidnevnik.models.Message;
 import hr.fer.pi.planinarskidnevnik.models.MountainPathGrade;
 import hr.fer.pi.planinarskidnevnik.models.Role;
 import hr.fer.pi.planinarskidnevnik.models.User;
+import hr.fer.pi.planinarskidnevnik.repositories.MessageRepository;
 import hr.fer.pi.planinarskidnevnik.models.UserBadge.UserBadge;
 import hr.fer.pi.planinarskidnevnik.repositories.MountainPathRepository;
 import hr.fer.pi.planinarskidnevnik.repositories.RoleRepository;
@@ -42,13 +45,13 @@ public class UserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    //    private final UserToUserSearchDtoMapper userToUserSearchDtoMapper;
     private final PasswordEncoder encoder;
     private final String DEFAULT_PROFILE_IMAGE = "/images/planinar.jpeg";
     private final MountainLodgeArchiveToMountainLodgeArchiveResponseMapper lodgeArchiveResponseMapper;
     private final MountainPathUserArchiveToMountainPathArchiveResponseMapper pathArchiveResponseMapper;
     private final MountainPathRepository mountainPathRepository;
     private final MountainPathGradeToMountainPathGradeResponseMapper pathGradeResponseMapper;
+    private final MessageRepository messageRepository;
 
     @Autowired
     public UserService(UserRepository userRepository,
@@ -57,15 +60,15 @@ public class UserService {
                        MountainPathRepository mountainPathRepository,
                        MountainLodgeArchiveToMountainLodgeArchiveResponseMapper lodgeArchiveResponseMapper,
                        MountainPathUserArchiveToMountainPathArchiveResponseMapper pathArchiveResponseMapper,
-                       MountainPathGradeToMountainPathGradeResponseMapper pathGradeResponseMapper) {
+                       MountainPathGradeToMountainPathGradeResponseMapper pathGradeResponseMapper, MessageRepository messageRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
-//        this.userToUserSearchDtoMapper = userToUserSearchDtoMapper;
         this.encoder = encoder;
         this.lodgeArchiveResponseMapper = lodgeArchiveResponseMapper;
         this.pathArchiveResponseMapper = pathArchiveResponseMapper;
         this.mountainPathRepository = mountainPathRepository;
         this.pathGradeResponseMapper = pathGradeResponseMapper;
+        this.messageRepository = messageRepository;
     }
 
     public User getCurrentUser(Principal principal) {
@@ -173,6 +176,12 @@ public class UserService {
         User userForRemoval = getUserById(userId);
 
         if (currentUser.getId().equals(userForRemoval.getId()) || getRole(currentUser.getEmail()).equals("ADMIN")) {
+            List<Message> messagesForRemoval = messageRepository.findAllByOrderByNameAsc();
+            for(int i=0;i<messagesForRemoval.size();i++){
+                if(messagesForRemoval.get(i).getUser() == userForRemoval){
+                    messageRepository.delete(messagesForRemoval.get(i));
+                }
+            }
             userRepository.delete(userForRemoval);
         } else {
             LOGGER.error("Not allowed to delete user");
@@ -198,6 +207,7 @@ public class UserService {
 
         return currentUser;
     }
+
 
     public List<UserSearchDto> getUserCommunity(Principal principal) {
         User currentUser = getCurrentUser(principal);
@@ -232,6 +242,7 @@ public class UserService {
                 user.getImage() == null ? getImage(user.getEmail()) : user.getImage(),
                 isOwner(profileId, principal.getName()),
                 getRole(principal.getName()).equals("ADMIN"),
+                getRole(user.getEmail()).equals("ADMIN"),
                 isFriend(user, principal),
                 user.getFriendRequests().contains(getCurrentUser(principal)),
                 convertToBadgeDto(user.getUserBadgeList()));
@@ -245,6 +256,11 @@ public class UserService {
     public UserHeaderDto getHeaderInformation(Principal principal) {
         User user = getCurrentUser(principal);
         return new UserHeaderDto(user.getId(), getImage(user.getEmail()), user.getFriendRequests().size(), user.getFriendRequestsNotifications().size());
+    }
+
+    public UserFooterDto getFooterInformation(Principal principal) {
+        User user = getCurrentUser(principal);
+        return new UserFooterDto(user.getRole().getName());
     }
 
     private List<BadgeDto> convertToBadgeDto(List<UserBadge> userBadgeList) {
