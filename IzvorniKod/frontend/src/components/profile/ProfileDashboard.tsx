@@ -96,6 +96,7 @@ export const ProfileDashboard = ({ user, setUser }: Props) => {
               alt=""
             />
           </button>
+            {user.isAdmin &&
             <button
                 className={
                     option === EVENTS ? "sidebar__item selected" : "sidebar__item"
@@ -108,7 +109,7 @@ export const ProfileDashboard = ({ user, setUser }: Props) => {
                     src={require("../../assets/message.jpg")}
                     alt=""
                 />
-            </button>
+            </button>}
         </div>
       </div>
 

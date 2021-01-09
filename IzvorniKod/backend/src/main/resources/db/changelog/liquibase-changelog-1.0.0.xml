@@ -5,6 +5,8 @@
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
     <changeSet id="20201020204416" author="lravenscak">
+        <createSequence sequenceName="user_id_seq" incrementBy="1" cycle="false" startValue="100"/>
+
         <createTable tableName="roles">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true"/>
@@ -38,6 +40,7 @@
             </column>
             <column name="image" type="BYTEA"/>
         </createTable>
+
     </changeSet>
 
     <changeSet id="20201129180400" author="lravenscak">

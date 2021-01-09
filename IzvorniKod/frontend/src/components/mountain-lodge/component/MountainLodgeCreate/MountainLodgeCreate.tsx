@@ -4,7 +4,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Select, {ValueType} from "react-select";
+import Select from "react-select";
 import {Field, Form, Formik} from "formik";
 import Compress from "react-image-file-resizer";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
@@ -21,27 +21,22 @@ import * as Yup from "yup";
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert, {AlertProps} from '@material-ui/lab/Alert';
 import {makeStyles, Theme} from '@material-ui/core/styles';
+import {UtilityOption} from "../../models/UtilityOption";
 
 function Alert(props: AlertProps) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
-    root: {
-        width: '100%',
-        '& > * + *': {
-            marginTop: theme.spacing(2),
-        },
-    },
-}));
+interface Props {
+    hillResults: HillOption[];
+    utilityResults: UtilityOption[];
+}
 
-export default function MountainLodgeCreate() {
+export default function MountainLodgeCreate({hillResults, utilityResults}: Props) {
 
     const [newImage, setNewImage] = useState("");
     const [open, setOpen] = useState(false);
     const [selectedOptions, setSelectedOptions] = useState([]);
-
-    const classes = useStyles();
     const [success, setSuccessMessage] = React.useState(false);
     const [error, setErrorMessage] = React.useState(false);
 
@@ -65,30 +60,11 @@ export default function MountainLodgeCreate() {
         setErrorMessage(false);
     };
 
-    const dispatcher = useDispatch();
-
     // @ts-ignore
     const handleChange = e => {
         // @ts-ignore
         setSelectedOptions(Array.isArray(e) ? e.map(x => x.value) : []);
     };
-
-    const {results: hillResults} = useSelector((state: MainReducer) => state.findAllHillsReducer);
-    const {results: utilityResults} = useSelector((state: MainReducer) => state.findAllUtilitiesReducer);
-
-    useEffect(() => {
-        if (hillResults === undefined || hillResults.length === 0) {
-            console.log("Get all Hills...");
-            dispatcher(findHills());
-        }
-    }, [dispatcher, hillResults]);
-
-    useEffect(() => {
-        if (utilityResults === undefined || utilityResults.length === 0) {
-            console.log("Get all Utilities...");
-            dispatcher(findUtilities());
-        }
-    }, [dispatcher, utilityResults]);
 
     // @ts-ignore
     const create = async (request: MountainLodgeCreateRequest,  {resetForm }) => {
@@ -107,6 +83,7 @@ export default function MountainLodgeCreate() {
             method: "POST",
             body: JSON.stringify(sRequest),
             headers: {
+                authorization: sessionStorage.getItem("key") || "",
                 Accept: "application/json",
                 "Content-Type": "application/json"
             }
@@ -243,7 +220,7 @@ export default function MountainLodgeCreate() {
                                                 isSearchable={true}
                                                 placeholder="Odaberite područje..."
                                                 name={"hillId"}
-                                                onChange={(option: ValueType<HillOption>) => setFieldValue("hillId",
+                                                onChange={(option) => setFieldValue("hillId",
                                                     option === null ? null : (option as HillOption).value)
                                                 }
                                                 options={hillResults}>

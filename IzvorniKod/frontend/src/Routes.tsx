@@ -40,8 +40,6 @@ export const Routes = () => {
                     <Route path="/mountain-lodge/search" component={MountainLodgeSearch} exact/>
                     <Route path="/mountain-path/search" component={MountainPathSearch} exact/>
                     <Route path="/profile/:id" component={MenuProfile} exact/>
-                    <Route path="/mountain-path/create" component={MountainPathCreate} exact/>
-                    <Route path="/mountain-lodge/create" component={MountainLodgeCreate} exact/>
                     <Route path="/test" component={MessageSearchResult} exact/>
                     <Route path="/friendship-requests" component={FriendshipRequestList} exact/>
                     <Route path="/events/create" component={CreateEventPage} exact/>

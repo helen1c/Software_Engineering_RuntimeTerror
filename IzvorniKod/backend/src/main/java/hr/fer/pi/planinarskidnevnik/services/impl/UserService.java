@@ -176,12 +176,6 @@ public class UserService {
         User userForRemoval = getUserById(userId);
 
         if (currentUser.getId().equals(userForRemoval.getId()) || getRole(currentUser.getEmail()).equals("ADMIN")) {
-            List<Message> messagesForRemoval = messageRepository.findAllByOrderByNameAsc();
-            for(int i=0;i<messagesForRemoval.size();i++){
-                if(messagesForRemoval.get(i).getUser() == userForRemoval){
-                    messageRepository.delete(messagesForRemoval.get(i));
-                }
-            }
             userRepository.delete(userForRemoval);
         } else {
             LOGGER.error("Not allowed to delete user");
