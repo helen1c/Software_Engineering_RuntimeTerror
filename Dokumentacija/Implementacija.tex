@@ -6,8 +6,7 @@
 			\textbf{\textit{dio 2. revizije}}
 			
 			 \textit{Detaljno navesti sve tehnologije i alate koji su primijenjeni pri izradi dokumentacije i aplikacije. Ukratko ih opisati, te navesti njihovo značenje i mjesto primjene. Za svaki navedeni alat i tehnologiju je potrebno \textbf{navesti internet poveznicu} gdje se mogu preuzeti ili više saznati o njima}.
-			
-			
+			 		
 			\eject 
 		
 	
@@ -25,15 +24,204 @@
 			
 			\subsection{Ispitivanje sustava}
 			
-			 \textit{Potrebno je provesti i opisati ispitivanje sustava koristeći radni okvir Selenium\footnote{\url{https://www.seleniumhq.org/}}. Razraditi \textbf{minimalno 4 ispitna slučaja} u kojima će se ispitati redovni slučajevi, rubni uvjeti te poziv funkcionalnosti koja nije implementirana/izaziva pogrešku kako bi se vidjelo na koji način sustav reagira kada nešto nije u potpunosti ostvareno. Ispitni slučaj se treba sastojati od ulaza (npr. korisničko ime i lozinka), očekivanog izlaza ili rezultata, koraka ispitivanja i dobivenog izlaza ili rezultata.\\ }
-			 
-			 \textit{Izradu ispitnih slučajeva pomoću radnog okvira Selenium moguće je provesti pomoću jednog od sljedeća dva alata:}
-			 \begin{itemize}
-			 	\item \textit{dodatak za preglednik \textbf{Selenium IDE} - snimanje korisnikovih akcija radi automatskog ponavljanja ispita	}
-			 	\item \textit{\textbf{Selenium WebDriver} - podrška za pisanje ispita u jezicima Java, C\#, PHP koristeći posebno programsko sučelje.}
-			 \end{itemize}
-		 	\textit{Detalji o korištenju alata Selenium bit će prikazani na posebnom predavanju tijekom semestra.}
-			
+			  Ispitivanje sustava smo proveli pomoću dodataka za preglednike Selenium IDE (https://www.selenium.dev/selenium-ide/) te koristeći Selenium WebDriver unutar JUnit testova.\\
+	
+		 	\textbf{\textit{Ispitni slučaj 1: Prijava planinara u sustav s ispravnim/neispravnim podacima}}
+		 	
+		 	\begin{lstlisting}
+		 	public void testLoginBadAndGoodCreds() throws InterruptedException {
+		 		//Driver setup...
+		 		System.setProperty("webdriver.chrome.driver", "/path...");
+		 		WebDriver driver = new ChromeDriver(); 
+		 		driver.manage().timeouts().implicitlyWait(Duration.of(20, ChronoUnit.SECONDS));
+		 		
+		 		driver.get("http://localhost:3000/home");
+		 		WebElement loginButton = driver.findElement(By.id("log-button"));
+		 		loginButton.click();
+		 		String loginUrl = driver.getCurrentUrl();
+		 		assertTrue(loginUrl.contains("/login"));
+		 		WebElement Emailelement = driver.findElement(By.id("email"));        
+		 		Emailelement.sendKeys("luka.ravenscak");   
+		 		WebElement passElement = driver.findElement(By.id("password"));
+		 		passElement.sendKeys("password");
+		 		driver.findElement(By.className("submitButton")).click();
+		 		WebElement element = driver.findElement(By.className("errorText"));
+		 		assertEquals("Neispravan oblik mail-a.", element.getText());
+		 		Emailelement.clear();
+		 		Emailelement.sendKeys("luka.ravenscak@fer.hr");
+		 		passElement.clear();
+		 		passElement.sendKeys("mypassword");
+		 		driver.findElement(By.className("submitButton")).click();
+		 		element = driver.findElement(By.id("error-span"));
+		 		assertEquals("Neispravan e-mail ili lozinka.", element.getText());
+		 		passElement.clear();
+		 		passElement.sendKeys("password");
+		 		driver.findElement(By.className("submitButton")).click();
+		 		Thread.sleep(1000);
+		 		assertTrue(driver.getCurrentUrl().contains("/mountaineering-community"));
+		 		
+		 		driver.quit();
+		 	}
+		 	\end{lstlisting}
+	 	
+	 	 U ispitnom slučaju broj jedan ispitana je funkcionalnost prijave u sustav. Prvo se dohvati početna stranica web aplikacije te se odabire opcija "prijavi se", zatim se unese neispravni oblik email-a i lozinka, na što aplikacija vraća obavijest "neispravan e-mail ili lozinka", nakon toga se unose valjani email i neispravna lozinka, aplikacija reagira tako da ponovno vrati obavijest "neispravan e-mail ili lozinka", te na kraju se unesu ispravni podaci za prijavu i aplikacija reagira uspješnom prijavnom korisnika u sustav i odvede korisnika na profil vlastite planinarske zajednice.\newline
+	 	 
+	 		\textbf{\textit{Ispitni slučaj 2: Planinar pretražuje ostale korisnike}}
+	 	
+	 	\begin{lstlisting}
+	 		public void testSearchAdminOnAllUserSearchPage() throws InterruptedException {
+	 			
+	 			//Driver setup
+	 			driver.get("http://localhost:3000/login");
+	 			
+	 			WebElement element = driver.findElement(By.id("email"));        
+	 			element.sendKeys("luka.ravenscak@fer.hr");
+	 			element = driver.findElement(By.id("password"));
+	 			element.sendKeys("password");
+	 			driver.findElement(By.className("submitButton")).click();
+	 			Thread.sleep(2000);
+	 			assertTrue(driver.getCurrentUrl().contains("/mountaineering-community"));
+	 			
+	 			WebElement searchAllButton = driver.findElement(By.className("search-all-button"));
+	 			searchAllButton.click(); 
+	 			
+	 			assertTrue(driver.getCurrentUrl().contains("/users/search"));    
+	 			element = driver.findElement(By.name("searchText"));        
+	 			element.sendKeys("admin");
+	 			driver.findElement(By.name("searchText")).click();
+	 			driver.findElement(By.className("all-user-photo")).click();
+	 			Thread.sleep(2000);	    
+	 			assertTrue(driver.getCurrentUrl().contains("/profile"));
+	 			
+	 			assertEquals("admin", driver.findElement(By.id("name-profile")).getAttribute("value"));
+	 			driver.quit();
+	 		}
+	 	\end{lstlisting}
+ 	
+	 	U ispitnom slučaju broj dva ispitana je funkcionalnost pretrage svih korisnika od strane planinara. Prvo se provede prijava planinara u sustav, zatim prijavljeni korisnik odabire opciju "Pretrazi sve planinare", aplikacija ga preusmjeri na stranicu za pretragu svih korisnika, korisnik u prostor za unos teksta za pretragu upiše "admin" i odabire opciju pretrage, aplikacija u rezultatima pretrage vrati traženog korisnika, zatim korisnik klikne na adminovu sličicu profila i aplikacija mu prikaže adminov profil.\newline
+	 	
+ 		\textbf{\textit{Ispitni slučaj 3: Pretraga i arhiviranje posjećenog planinarskog doma}}
+ 		
+ 		\begin{lstlisting}
+ 			public void testMountainLodgeSearchArchiveAndBadgeAdd() throws InterruptedException {
+ 			//Driver setup
+ 			
+ 			driver.get("http://localhost:3000");
+ 			driver.findElement(By.className("domovi")).click();
+ 			assertTrue(driver.getCurrentUrl().contains("/mountain-lodge/search"));
+ 			driver.findElement(By.className("input-search")).sendKeys("Planinarski dom Glavica");	    
+ 			driver.findElement(By.className("search-button")).click();
+ 			assertEquals("Planinarski dom Glavica", driver.findElement(By.className("mountain-lodge-name")).getText());
+ 			assertThrows(NoSuchElementException.class, new ThrowingRunnable() {
+ 				public void run() throws Throwable {
+ 					driver.findElement(By.className("archive-button-lodge"));
+ 				}
+ 			});
+ 			
+ 			WebElement loginButton = driver.findElement(By.id("log-button"));
+ 			loginButton.click();
+ 			String loginUrl = driver.getCurrentUrl();
+ 			assertTrue(loginUrl.contains("/login"));
+ 			WebElement Emailelement = driver.findElement(By.id("email"));        
+ 			Emailelement.sendKeys("luka.ravenscak@fer.hr");   
+ 			WebElement passElement = driver.findElement(By.id("password"));
+ 			passElement.sendKeys("password");
+ 			driver.findElement(By.className("submitButton")).click();
+ 			Thread.sleep(2000);
+ 			assertTrue(driver.getCurrentUrl().contains("/mountaineering-community"));
+ 			driver.findElement(By.className("logo-image")).click();
+ 			
+ 			driver.findElement(By.className("domovi")).click();
+ 			assertTrue(driver.getCurrentUrl().contains("/mountain-lodge/search"));
+ 			driver.findElement(By.className("input-search")).sendKeys("Planinarski dom Glavica");	    
+ 			driver.findElement(By.className("search-button")).click();
+ 			assertEquals("Planinarski dom Glavica", driver.findElement(By.className("mountain-lodge-name")).getText());
+ 			
+ 			WebElement archiveButton = driver.findElement(By.className("archive-button-lodge"));
+ 			assertEquals("ARHIVIRAJ",driver.findElement(By.className("MuiButton-label"))
+ 			.getText());
+ 			archiveButton.click();
+ 			Thread.sleep(3000);
+ 			assertEquals("ARHIVIRANO",driver.findElement(By.className("MuiButton-label"))
+ 			.getText());
+ 			
+ 			driver.findElement(By.className("profil-image")).click();
+ 			driver.findElement(By.id("my-profile")).click();
+ 			String badgeDesc = driver.findElement(By.className("badge-image")).getAttribute("title");
+ 			assertEquals("Imam barem 1 posjećen planinarski dom!", badgeDesc);
+ 			
+ 			driver.quit();
+ 		}
+ 		\end{lstlisting}
+ 	
+ 		U ispitnom slučaju broj tri ispitana je funkcionalnost pretraga i arhiviranje planinarskog doma. Ne prijavljen korisnik odabire opciju "pretraga planinarskih domova" u prostor za unos teksta upisuje "Planinarski dom Glavica". Taj dom postoji u arhivi i aplikacija mu kao rezultat pretrage prikaže traženi planinarski dom. Zatim korisnik pokuša arhivirati dom, ali pošto nije prijavljen aplikacija mu neće pružati tu mogućnost. Nakon što je taj dio testa aplikacija uspješno prošla, test se nastavlja i korisnik se prijavi u sustav kao planinar te ponavlja istu radnju. Ovaj put aplikacija mu prikazuje traženi dom, ali postoji mogućnost arhiviranja doma. Korisnik odabire opciju "arhiviraj", aplikacija na tu akciju mijenja opis uz navedeni dom u "arhivirano" također arhivirani dom sprema u arhivu planinara koji je odabrao opciju "arhiviraj". Korisnik odabire opciju "Moj profil", aplikacija mu prikaže profil na kojem se može vidjeti bedž kojeg je dobio arhiviranjem jednog planinarskog doma.\newline
+ 		
+ 		 	\textbf{\textit{Ispitni slučaj 4: Slanje zahtjeva za prijateljstvo i primanje obavijesti o prihvatu zahtjeva}}
+ 		
+ 		\begin{lstlisting}
+ 			public void testAddFriendAndFriendRequestApproveOrDeclineAndFriendNotification() throws InterruptedException {
+ 				//Driver setup
+ 				
+ 				driver.get("http://localhost:3000/login");      
+ 				driver.findElement(By.id("email")).sendKeys("luka.ravenscak@fer.hr");   
+ 				driver.findElement(By.id("password")).sendKeys("password");
+ 				driver.findElement(By.className("submitButton")).click();
+ 				Thread.sleep(2000);
+ 				
+ 				WebElement searchAllButton = driver.findElement(By.className("search-all-button"));
+ 				searchAllButton.click(); 
+ 				assertTrue(driver.getCurrentUrl().contains("/users/search"));
+ 				WebElement element = driver.findElement(By.name("searchText"));        
+ 				element.sendKeys("admin");
+ 				driver.findElement(By.name("searchText")).click();
+ 				driver.findElement(By.className("all-user-photo")).click();
+ 				Thread.sleep(2000);	    
+ 				assertTrue(driver.getCurrentUrl().contains("/profile"));
+ 				
+ 				driver.findElement(By.className("button-profile")).click();
+ 				assertTrue(driver.findElement(By.className("button-profile-fr"))
+ 				.getText().contains("Zahtjev poslan"));
+ 				driver.findElement(By.className("profil-image")).click();
+ 				driver.findElement(By.id("logout-b")).click();
+ 				Thread.sleep(2000);
+ 				driver.findElement(By.id("log-button")).click();
+ 				driver.findElement(By.id("email")).sendKeys("admin@fer.hr");   
+ 				driver.findElement(By.id("password")).sendKeys("password");
+ 				driver.findElement(By.className("submitButton")).click();
+ 				Thread.sleep(2000);
+ 				driver.findElement(By.className("profil-image")).click();
+ 				driver.findElement(By.id("fr-requests")).click();
+ 				assertEquals("Luka Ravenscak", driver.findElement(By.className("user-name")).getText());
+ 				driver.findElement(By.className("submitButtonaccept")).click();
+ 				
+ 				driver.findElement(By.className("profil-image")).click();
+ 				driver.findElement(By.id("logout-b")).click();
+ 				Thread.sleep(2000);
+ 				driver.findElement(By.id("log-button")).click();
+ 				driver.findElement(By.id("email")).sendKeys("luka.ravenscak@fer.hr");   
+ 				driver.findElement(By.id("password")).sendKeys("password");
+ 				driver.findElement(By.className("submitButton")).click();
+ 				Thread.sleep(2000);
+ 				driver.findElement(By.className("profil-image")).click();
+ 				driver.findElement(By.id("fr-notifications")).click();
+ 				assertTrue(driver.findElement(By.className("user-name-span"))
+ 				.getText().contains("Postali ste prijatelj s"));
+ 				assertTrue(driver.findElement(By.className("user-name"))
+ 				.getText().contains("admin"));
+ 				driver.quit();
+ 			}
+ 		\end{lstlisting}
+ 	
+ 		U ispitnom slučaju broj četiri ispitana je funkcionalnost slanja zahtjeva za prijateljstvo i primanje obavijesti o prihvaćenom zahtjevu. Prvo se korisnik prijavi kao "luka.ravenscak@fer.hr" te provede radnje kao u testu dva, kada je na profilu od admina klikne opciju "pošalji zahtjev za prijateljstvo". Aplikacija promijeni status gumba u "zahtjev poslan" te proslijedi zahtjev adminu. Zatim se korisnik odjavi i prijavi se kao "admin" nakon čega provjeri zahtjeve za prijateljstvo i prihvati zahtjev korisnika "luka.ravenscak@fer.hr". Nakon što je admin uspješno prihvatio zahtjev korisnik se odjavi i prijavi ponovno kao "luka.ravenscak@fer.hr". Nakon toga aplikacija će korisniku "luka.ravenscak@fer.hr" prikazati novu obavijest o prihvaćenom zahtjevu za prijateljstvo. 
+ 		
+		
+		\begin{figure}[H]
+			\includegraphics[scale=0.6, height=125mm, width=165mm]{slike/test_results.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+			\centering
+			\caption{Rezultati testova}
+			\label{fig:test_results}
+		\end{figure}
+		
 			\eject 
 		
 		
