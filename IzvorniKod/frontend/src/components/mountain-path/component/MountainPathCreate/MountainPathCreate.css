@@ -223,3 +223,23 @@ a:hover {
 .MuiDialogContent-root {
     padding-top: 0 !important;
 }
+.path-create-img{
+    width: 35px;
+    height: 35px;
+}
+.MuiButton-outlinedPrimary{
+    padding: 0 !important;
+    width: min-content !important;
+    height: min-content !important;
+    border-radius: 100% !important;
+    border: none !important;
+}
+.MuiButton-root{
+    min-width: min-content !important;
+    height: min-content !important;
+}
+.MuiSnackbar-anchorOriginBottomCenter{
+    left: 650% ;
+    z-index: 10000 ;
+    opacity: 1 ;
+}

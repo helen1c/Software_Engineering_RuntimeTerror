@@ -55,6 +55,10 @@ button {
     font-family: 'Oswald', sans-serif;
     color: #211648;
 }
+.sidebar__item__description{
+    margin: 0;
+    margin-right: 0.3rem;
+}
 .sidebar__image {
     width: 1.7rem;
     height: 1.7rem;

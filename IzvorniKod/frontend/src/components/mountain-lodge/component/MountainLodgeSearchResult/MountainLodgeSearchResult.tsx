@@ -127,6 +127,7 @@ export const MountainLodgeSearchResult = (prop: Props) => {
                             <span className="mountain-lodge-elevation">Visina: {prop.result.elevation}m</span>
                             <span className="mountain-lodge-hill">Planina: {prop.result.hillName}</span>
                         </div>
+                        <div className="lodge-buttons-cnt">
                         {prop.loggedIn && <Button
                             variant="contained"
                             color="primary"
@@ -140,6 +141,7 @@ export const MountainLodgeSearchResult = (prop: Props) => {
                             <Tipka result={prop.result.name} css={1}/>
                             : <div/>
                         }
+                        </div>
                     </div>
                 </div>}
         </>

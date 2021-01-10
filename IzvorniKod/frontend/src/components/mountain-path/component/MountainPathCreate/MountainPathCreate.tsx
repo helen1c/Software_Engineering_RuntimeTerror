@@ -18,6 +18,7 @@ import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import 'semantic-ui-css/semantic.min.css'
 import TimePicker, {TimePickerValue} from "react-time-picker";
 import {HttpCodesUtil} from "../../../../errors/HttpCodesUtil";
+import plus from "../../../../assets/plus.png";
 
 function Alert(props: AlertProps) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -140,9 +141,10 @@ export default function MountainPathCreate() {
     return (
         <>
             <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                STVORI STAZU
+                <img  className="path-create-img" src={plus} alt ="PLus"/>
             </Button>
-            <Snackbar open={success} autoHideDuration={1500} onClose={onCloseSuccess}>
+            <div className={"snackbar-div"}>
+            <Snackbar open={success} autoHideDuration={150000} onClose={onCloseSuccess}>
                 <Alert onClose={onCloseSuccess} severity="success">
                     Planinarska staza je uspješno stvorena.
                 </Alert>
@@ -152,6 +154,7 @@ export default function MountainPathCreate() {
                     Dogodila se pogreška prilikom stvaranja planinarske staze. Pokušajte kasnije.
                 </Alert>
             </Snackbar>
+            </div>
             <Formik initialValues={{
                 name: "",
                 startPoint: "",

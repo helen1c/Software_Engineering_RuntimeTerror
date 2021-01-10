@@ -15,7 +15,7 @@
 .mountain-lodge-cnt:hover{
     transform: scale(1.03);
     transition: all .20s linear;
-    opacity: 1;
+    opacity: 1 !important;
 }
 
 
