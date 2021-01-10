@@ -32,7 +32,7 @@ export const RegistrationForm = () => {
       name: Yup.string().required("Obavezan unos!"),
       email: Yup.string()
         .required("Obavezan unos!")
-        .email("E-mail u ne ispravnom obliku."),
+        .email("E-mail u neispravnom obliku."),
       password: Yup.string().required("Obavezan unos!"),
       confirmPassword: Yup.string()
         .required("Obavezan unos!")

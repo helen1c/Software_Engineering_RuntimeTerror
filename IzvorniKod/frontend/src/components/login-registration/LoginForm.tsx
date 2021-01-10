@@ -36,7 +36,7 @@ export const LoginForm = () => {
     validationSchema: Yup.object({
       email: Yup.string()
         .required("Molimo unesite e-mail.")
-        .email("Ne ispravan oblik mail-a."),
+        .email("Neispravan oblik mail-a."),
       password: Yup.string().required("Molimo unesite lozinku."),
     }),
     onSubmit: (values) => {
@@ -102,7 +102,7 @@ export const LoginForm = () => {
           </div>
         </div>
         <div>
-          {showError && <span className="errorText">Neispravan e-mail ili lozinka.</span>}
+          {showError && <span className="errorText" id="error-span">Neispravan e-mail ili lozinka.</span>}
         </div>
         <div>
           <button type={"submit"} className="submitButton">
