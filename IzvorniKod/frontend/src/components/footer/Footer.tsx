@@ -71,7 +71,7 @@ function Footer() {
                                 <div>
                                     <h4 className="list-title">Kontaktirajte nas:</h4>
                                     <ul className="list-elements">
-                                        <Tipka result={"Neodredeno"} css={1}/>
+                                        <Tipka result={"Neodredeno"} css={1} place={"footer"}/>
                                     </ul>
                                 </div> :
                                 <div>

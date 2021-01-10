@@ -9,7 +9,6 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
 import {MessageForm} from "../models/MessageForm";
 import MuiAlert, {AlertProps} from "@material-ui/lab/Alert";
-import {makeStyles, Theme} from "@material-ui/core/styles";
 import Snackbar from "@material-ui/core/Snackbar";
 
 function Alert(props: AlertProps) {
@@ -18,22 +17,12 @@ function Alert(props: AlertProps) {
 interface Props {
     result: String;
     css: number;
+    place: string
 }
-
-const useStyles = makeStyles((theme: Theme) => ({
-    root: {
-        width: '100%',
-        '& > * + *': {
-            marginTop: theme.spacing(2),
-        },
-    },
-}));
 
 export const Tipka = (prop : Props) =>{
 
     const [open, setOpen] = useState(false);
-
-    const classes = useStyles();
     const [success, setSuccessMessage] = React.useState(false);
     const [error, setErrorMessage] = React.useState(false);
 
@@ -55,12 +44,6 @@ export const Tipka = (prop : Props) =>{
             return;
         }
         setErrorMessage(false);
-    };
-
-    // @ts-ignore
-    const handleChange = e => {
-        // @ts-ignore
-        setSelectedOptions(Array.isArray(e) ? e.map(x => x.value) : []);
     };
 
     // @ts-ignore
@@ -103,11 +86,21 @@ export const Tipka = (prop : Props) =>{
         content: Yup.string().required("Molimo Vas unesite sadrzaj poruke."),
     })
 
+    const getTitle = () => {
+        if(prop.place === "footer") {
+            return "Kontaktirajte administratora..."
+        } else if (prop.place === "lodge") {
+            return "Prijavljujete grešku za dom: " + prop.result;
+        } else if(prop.place === "path") {
+            return "Prijavljujete grešku za stazu: " + prop.result;
+        }
+    }
+
     return(
         <>
             {prop.css === 1 ?
-                <button className="button-mountain-lodge-er" onClick={handleClickOpen}>PRIJAVI GREŠKU</button>
-                : <Button className="button-mountain-path" onClick={handleClickOpen}>PRIJAVI GREŠKU</Button>
+                <button className="button-mountain-lodge-er" onClick={handleClickOpen}>{prop.place === "footer" ? "Kontaktirajte nas" : "Prijavi pogrešku"}</button>
+                : <Button className="button-mountain-path" onClick={handleClickOpen}>{prop.place === "footer" ? "Kontaktirajte nas" : "Prijavi pogrešku"}</Button>
             }
             <Snackbar open={success} autoHideDuration={2000} onClose={closeSuccessMessage}>
                 <Alert onClose={closeSuccessMessage} severity="success">
@@ -136,15 +129,15 @@ export const Tipka = (prop : Props) =>{
                             handleReset();
                         }} aria-labelledby="form-dialog-title">
                             <Form className={"form-dialog"}>
-                                <DialogTitle className={"dialog-title"} id="form-dialog-title">Prijavljujete grešku za dom:</DialogTitle>
+                                <DialogTitle className={"dialog-title"} id="form-dialog-title">{getTitle()}</DialogTitle>
                                 <DialogContent>
                                     <div className="create-column">
-                                        <div className="box-title">Naziv poruke:</div>
+                                        <div className="box-title">Predmet poruke:</div>
                                         <Field className={"message-title"}
                                                name={"name"} id={"name"}/>
                                         {errors.name && touched.name ?
                                             <div className="errorText">{errors.name}</div> : <></>}
-                                        <div className="box-title">Sadrzaj poruke:</div>
+                                        <div className="box-title">Sadržaj poruke:</div>
                                         <Field as={"textarea"} className={"message-content"}
                                                   name={"content"} id={"content"}/>
                                         {errors.content && touched.content ?

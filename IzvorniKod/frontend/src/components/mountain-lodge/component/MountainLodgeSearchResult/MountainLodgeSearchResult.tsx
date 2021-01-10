@@ -138,7 +138,7 @@ export const MountainLodgeSearchResult = (prop: Props) => {
                             {archivedS ? "Arhivirano" : "Arhiviraj"}
                         </Button>}
                         {role === "PLANINAR" ?
-                            <Tipka result={prop.result.name} css={1}/>
+                            <Tipka result={prop.result.name} css={1} place={"lodge"}/>
                             : <div/>
                         }
                         </div>

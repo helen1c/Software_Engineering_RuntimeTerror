@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -11,16 +11,11 @@ import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import {IconButton} from "@material-ui/core";
 import {AddAPhotoOutlined} from "@material-ui/icons";
 import "./MountainLodgeCreate.css";
-import {useDispatch, useSelector} from "react-redux";
-import {MainReducer} from "../../../../store/reducer";
-import {findHills} from "../../../../store/actions/findAllHillsActions";
-import {findUtilities} from "../../../../store/actions/findAllUtilitiesActions";
 import {HillOption} from "../../models/HillOption";
 import {MountainLodgeCreateRequest} from "../../models/MountainLodgeCreateRequest";
 import * as Yup from "yup";
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert, {AlertProps} from '@material-ui/lab/Alert';
-import {makeStyles, Theme} from '@material-ui/core/styles';
 import {UtilityOption} from "../../models/UtilityOption";
 import plus from "../../../../assets/plus.png";
 
@@ -68,7 +63,7 @@ export default function MountainLodgeCreate({hillResults, utilityResults}: Props
     };
 
     // @ts-ignore
-    const create = async (request: MountainLodgeCreateRequest,  {resetForm }) => {
+    const create = async (request: MountainLodgeCreateRequest, {resetForm}) => {
 
         resetForm();
         setOpen(false);
@@ -133,8 +128,9 @@ export default function MountainLodgeCreate({hillResults, utilityResults}: Props
     return (
         <>
             <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                <img  className="path-create-img" src={plus} alt ="PLus"/>
+                <img className="path-create-img" src={plus} alt="PLus"/>
             </Button>
+            <div className="fixed-div">
             <Snackbar open={success} autoHideDuration={1500} onClose={closeSuccessMessage}>
                 <Alert onClose={closeSuccessMessage} severity="success">
                     Planinarski dom je uspješno stvoren.
@@ -145,6 +141,7 @@ export default function MountainLodgeCreate({hillResults, utilityResults}: Props
                     Dogodila se pogreška prilikom stvaranja planinarskog doma. Pokušajte kasnije.
                 </Alert>
             </Snackbar>
+            </div>
             <Formik initialValues={{
                 name: "",
                 hillId: null,

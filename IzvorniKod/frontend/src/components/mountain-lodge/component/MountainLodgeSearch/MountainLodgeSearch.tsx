@@ -43,6 +43,9 @@ export const MountainLodgeSearch = () => {
     const response = await fetch("/api/mountain-lodges/search", requestOptions);
     const json = await response.json();
 
+    if(sessionStorage.getItem("key"))
+        dispatcher(findArchivedLodges());
+
     setSearchResults(json);
   };
 

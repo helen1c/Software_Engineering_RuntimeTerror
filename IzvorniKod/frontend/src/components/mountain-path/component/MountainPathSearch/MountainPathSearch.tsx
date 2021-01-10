@@ -54,6 +54,12 @@ export const MountainPathSearch = () => {
     const json = await response.json();
 
     setSearchResults(json);
+
+    if (sessionStorage.getItem("key")) {
+      dispatcher(findArchivedPaths());
+      dispatcher(findGradedPaths());
+      dispatcher(findWishlist());
+    }
   };
 
   const { results: hillResults } = useSelector(
