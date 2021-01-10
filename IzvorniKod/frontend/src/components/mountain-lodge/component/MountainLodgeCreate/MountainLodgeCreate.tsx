@@ -17,7 +17,7 @@ import * as Yup from "yup";
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert, {AlertProps} from '@material-ui/lab/Alert';
 import {UtilityOption} from "../../models/UtilityOption";
-import plus from "../../../../assets/plus.png";
+import plus from "../../../../assets/blueplus.png";
 
 function Alert(props: AlertProps) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;

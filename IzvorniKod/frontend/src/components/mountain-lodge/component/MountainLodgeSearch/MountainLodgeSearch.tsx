@@ -124,13 +124,13 @@ export const MountainLodgeSearch = () => {
             return (
               <Form className="search-lodges-form">
                 {isAdmin && (
-                  <div className="slider-button-div" >
+                  <div className="slider-button-div-lodge" >
                     <MountainLodgeCreate
                       hillResults={hillResults}
                       utilityResults={utilityResults}
 
                     />
-                      <span className="add-path-span" >Stvori novi dom </span>
+                      <span className="add-lodge-span" >Stvorite novi dom </span>
                   </div>
                 )}
                 <div className={"search-hill"}>

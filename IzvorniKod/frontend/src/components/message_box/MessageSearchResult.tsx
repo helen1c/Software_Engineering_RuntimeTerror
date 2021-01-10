@@ -77,8 +77,12 @@ export const MessageSearchResult = () => {
                 {allMessages && allMessages.length > 0 ? (
                   allMessages.map((message) => (
                     <div className="result-box">
+                      <span className="result-column-name">
+                        <p>Naslov poruke:</p>
+                        {message.name}
+                      </span>
                       <span className="result-column">
-                        <p>Korisnik:</p>
+                        <p className="result-user-p">Korisnik:</p>
                         <a
                           onClick={(e) =>
                             (window.location.href =
@@ -88,17 +92,14 @@ export const MessageSearchResult = () => {
                           {message.userName}
                         </a>
                       </span>
+
                       <span className="result-column">
-                        <p>NASLOV PORUKE:</p>
-                        {message.name}
-                      </span>
-                      <span className="result-column">
-                        <p>GREŠKA NASTALA:</p>
+                        <p className="result-user-p">Greška nastala:</p>
                         {message.error}
                       </span>
-                      <text className="result-column">
-                        <p>SADRŽAJ:</p>
-                        {message.content}
+                      <text className="result-column-content">
+                        <p className="result-user-p">Sadržaj:</p>
+                        <span className="message-content-admin" > {message.content}</span>
                       </text>
                       <span className="result-column">
                         <button className="admin-button" onClick={() => update(message)}>

@@ -85,7 +85,7 @@ function Footer() {
                             }
                     </div>
                     <hr />
-                    <div className="row">
+                    <div className="row-about">
                         <p className="col-sm">
                             &copy;{new Date().getFullYear()} RuntimeTerror | Progi |
                             projekt | Planinarski Dnevnik
