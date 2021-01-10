@@ -32,7 +32,7 @@ function Footer() {
             <div className="main-footer">
                 <div className="container">
                     <div className="row">
-                        <div className="col">
+                        <div className="col-title">
                             <div className="title-footer">
                                 <img
                                     src={logo}
@@ -44,14 +44,14 @@ function Footer() {
                             </div>
                         </div>
                         <div className="col">
-                            <h4 className="list-title">MENU:</h4>
+                            <h4 className="list-title">Menu:</h4>
                             <ul className="list-elements">
-                                <li><Link className="footer-link" to="/home">HOME</Link></li>
-                                <li><Link className="footer-link" to="/mountain-lodge/search">PRETRAZI PLANINARSKE DOMOVE</Link></li>
-                                <li><Link className="footer-link" to="/mountain-path/search">PRETRAZI PLANINARSKE STAZE</Link></li>
+                                <li><Link className="footer-link" to="/home">Home</Link></li>
+                                <li><Link className="footer-link" to="/mountain-lodge/search">Pretražite domove</Link></li>
+                                <li><Link className="footer-link" to="/mountain-path/search">Petražite staze</Link></li>
                             </ul>
                         </div>
-                        <div className="col">
+                        <div className="col-about">
                             <h4 className="list-title">O nama:</h4>
                             <ul className="list-elements">
                                 <li>Stranica za sve planinare</li>
@@ -76,8 +76,8 @@ function Footer() {
                                 </div> :
                                 <div>
                                     <ul className="list-elements">
-                                        <li><Link className="footer-link" to="/users/all">PRETRAŽI KORISNIKE</Link></li>
-                                        <li><Link className="footer-link" to="/admin/message-box">PORUKE KORISNIKA</Link></li>
+                                        <li><Link className="footer-link" to="/users/all">Pretraži korisnike</Link></li>
+                                        <li><Link className="footer-link" to="/admin/message-box">Poruke korisnika</Link></li>
                                     </ul>
                                 </div>
                               }

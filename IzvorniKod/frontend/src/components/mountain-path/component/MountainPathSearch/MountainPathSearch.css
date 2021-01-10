@@ -32,7 +32,7 @@
     position: relative;
 }
 .sliders-container {
-margin-left: 2rem;
+
     flex-direction: row;
     display: flex;
 
@@ -220,7 +220,7 @@ margin-left: 2rem;
     }
     .hill-select{
     }
-   .mountain-path-walktime , .mountain-path-difficulty , .mountain-path-difficulty-expand ,.mountain-path-walktime-expand , .mountain-path-avg-grade{
+   .mountain-path-walktime , .mountain-path-difficulty , .mountain-path-difficulty-expand ,.mountain-path-walktime-expand , .mountain-path-avg-grade, .add-path-span{
         display: none;
     }
 
@@ -232,7 +232,7 @@ margin-left: 2rem;
     }
 }
 @media only screen and (min-width: 661px) and (max-width: 1150px) {
-    .mountain-path-avg-grade{
+    .mountain-path-avg-grade ,.add-path-span{
         display: none;
     }
 }
@@ -306,3 +306,15 @@ margin-left: 2rem;
     flex-direction: column;
     align-items: flex-end;
 }
+.slider-button-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: green;
+    font-family: Roboto,sans-serif !important;
+    filter: drop-shadow(0px 10px 10px rgba(0, 0, 0, 0.35));
+    position: absolute;
+    top: 56.5%;
+    left: 5%;
+}
+

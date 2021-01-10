@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./MessageSearchResult.css";
 import { MessageFindResult } from "./models/MessageFindResult";
+import check from "../../assets/checkmark.png";
 
 export const MessageSearchResult = () => {
   const [allMessages, setAllMessages] = useState<MessageFindResult[]>();
@@ -72,7 +73,7 @@ export const MessageSearchResult = () => {
         {!loading && (
           <div>
             {role === "ADMIN" ? (
-              <div>
+              <div className="admin-container">
                 {allMessages && allMessages.length > 0 ? (
                   allMessages.map((message) => (
                     <div className="result-box">
@@ -100,8 +101,8 @@ export const MessageSearchResult = () => {
                         {message.content}
                       </text>
                       <span className="result-column">
-                        <button onClick={() => update(message)}>
-                          RIJEŠENO
+                        <button className="admin-button" onClick={() => update(message)}>
+                          RIJEŠENO <img  className="going-btn-img" src={check} alt={"Check"}/>
                         </button>
                       </span>
                     </div>

@@ -146,8 +146,9 @@ export const MountainPathSearch = () => {
             return (
               <Form className="search-paths-form">
                 {sessionStorage.getItem("key") && (
-                  <div className="slider-button">
+                  <div className="slider-button-div">
                     <MountainPathCreate />
+                    <span className="add-path-span" >Stvori novu stazu </span>
                   </div>
                 )}
                 <div className={"search-hill"}>

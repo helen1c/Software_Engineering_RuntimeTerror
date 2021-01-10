@@ -4,6 +4,8 @@ import {OneDayEventMountainPath} from "./OneDayEventMountainPath";
 import "./CommunityEvent.css";
 import {useDispatch} from "react-redux";
 import {participate, unparticipate} from "../../../store/actions/findAllEventsAndParticipatingActions";
+import cancel from "../../../assets/cancel.png";
+import check from "../../../assets/checkmark.png";
 
 interface Props {
     result : EventResult;
@@ -36,9 +38,9 @@ export const CommunityEvent = (prop : Props) => {
                 <textarea className="event-description" disabled value={prop.result.description}/>
         </div>
 
-           {!prop.isOwner && <div>
-               <button onClick={participateButton}>Dolazim</button>
-               <button onClick={unparticipateButton}>Ne dolazim</button>
+           {!prop.isOwner && <div className="going-button-cnt" >
+               <button className="going-button" onClick={participateButton}>Dolazim <img  className="going-btn-img" src={check} alt={"Check"}/></button>
+               <button className="going-button"  onClick={unparticipateButton}>Ne dolazim <img  className="going-btn-img" src={cancel} alt={"Cancel"}/></button>
            </div>}
 
 

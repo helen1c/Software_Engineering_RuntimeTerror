@@ -22,6 +22,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert, {AlertProps} from '@material-ui/lab/Alert';
 import {makeStyles, Theme} from '@material-ui/core/styles';
 import {UtilityOption} from "../../models/UtilityOption";
+import plus from "../../../../assets/plus.png";
 
 function Alert(props: AlertProps) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -132,9 +133,9 @@ export default function MountainLodgeCreate({hillResults, utilityResults}: Props
     return (
         <>
             <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                STVORI DOM
+                <img  className="path-create-img" src={plus} alt ="PLus"/>
             </Button>
-            <Snackbar open={success} autoHideDuration={2000} onClose={closeSuccessMessage}>
+            <Snackbar open={success} autoHideDuration={1500} onClose={closeSuccessMessage}>
                 <Alert onClose={closeSuccessMessage} severity="success">
                     Planinarski dom je uspješno stvoren.
                 </Alert>

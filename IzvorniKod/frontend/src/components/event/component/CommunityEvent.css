@@ -2,8 +2,8 @@
     max-width: 800px;
     margin: 2rem auto 2rem auto;
     padding: 0.8rem;
-    border: 1px solid #a2a2a2;
-    border-radius: 5px;
+    border: 3px solid lavender;
+    border-radius: 15px;
 }
 
 .participants-nav ul{height:120px; width:30%;}
@@ -59,4 +59,27 @@ label {
     .participants-nav ul {
         width: 50%;
     }
+}
+
+.going-button{
+    border: none;
+    background-color: lavender;
+    padding: 0.4rem;
+    margin-right: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    border-radius: 5px;
+}
+
+.going-button-cnt{
+    margin: 1rem 0;
+    display: flex;
+}
+
+
+.going-btn-img{
+    height: 20px;
+    width: 20px;
+    margin: 0.3rem;
 }
