@@ -1,5 +1,6 @@
 package hr.fer.pi.planinarskidnevnik.services;
 
+import hr.fer.pi.planinarskidnevnik.dtos.MountainLodge.MountainLodgeCreateRequest;
 import hr.fer.pi.planinarskidnevnik.dtos.MountainLodge.MountainLodgeSearchRequest;
 import hr.fer.pi.planinarskidnevnik.models.MountainLodge;
 import org.junit.Assert;
@@ -80,4 +81,5 @@ public class MountainLodgeQueryServiceTest {
         Assert.assertEquals(1, response.size());
         Assert.assertEquals("Hajducke vrleti", response.get(0).getName());
     }
+
 }

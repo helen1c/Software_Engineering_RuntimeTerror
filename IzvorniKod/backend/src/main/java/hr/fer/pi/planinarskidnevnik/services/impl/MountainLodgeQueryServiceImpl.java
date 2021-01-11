@@ -83,7 +83,6 @@ public class MountainLodgeQueryServiceImpl implements MountainLodgeQueryService 
 
         LOGGER.info("Creating new mountain lodge with name: " + dto.getName());
 
-
         MountainLodge mountainLodge = new MountainLodge();
         List<Utility> utilities = utilityRepository.findAllByOrderByNameAsc();
         Hill hill = hillRepository.findById(dto.getHillId()).orElseThrow(() -> new ResourceNotFoundException("Cannot find hill with hill id "+ dto.getHillId()));

@@ -1,7 +1,10 @@
 package hr.fer.pi.planinarskidnevnik.controllers;
 
 import hr.fer.pi.planinarskidnevnik.MockMvcConfig.MockMvcConfig;
+import hr.fer.pi.planinarskidnevnik.dtos.MountainLodge.MountainLodgeCreateRequest;
+import hr.fer.pi.planinarskidnevnik.dtos.MountainLodge.MountainLodgeCreateResponse;
 import hr.fer.pi.planinarskidnevnik.mappers.MountainLodgeToMountainLodgeSearchResponseMapper;
+import hr.fer.pi.planinarskidnevnik.models.Hill;
 import hr.fer.pi.planinarskidnevnik.models.MountainLodge;
 import hr.fer.pi.planinarskidnevnik.models.Utility;
 import hr.fer.pi.planinarskidnevnik.services.MountainLodgeQueryService;
@@ -14,9 +17,11 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.security.Principal;
 import java.util.Collections;
 import java.util.List;
 
@@ -45,6 +50,9 @@ public class MountainLodgeControllerTest {
 
     @Autowired
     private MountainLodgeToMountainLodgeSearchResponseMapper mapper;
+
+    private static final String NON_ADMIN_AUTH = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsdWthLnJhdmVuc2Nha0BmZXIuaHIiLCJleHAiOjE2MDk5NTAxMjl9.AVliUzpZ3_Z3RRJPQAaek4RNcJ-_Jfhy5jMQWej0nJHAVXLfGaKtiZeL0I8Fb15QKTyihj61hodCBEacEypbrQ";
+    private static final String ADMIN_AUTH = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBmZXIuaHIiLCJleHAiOjE2MTEyNTY4Njl9.hChtji1ZYtgFRdOPbj_KOgW9G8Ohm6RulnxO52OxK5ttxHK9KcJ8r0IBhm3gt7BGOFl66xwzUicqROtr2uOvvw";
 
     @Test
     public void GivenRequestAllFieldsNull_When_MountainLodgeSearch_Should_ReturnAllResults() throws Exception {
@@ -130,6 +138,74 @@ public class MountainLodgeControllerTest {
                 .andExpect(jsonPath("$[1].utilities", hasSize(1)));
 
     }
+
+    @Test
+    public void Given_PrincipalNotAdmin_When_createMountainLodge_ShouldReturnForbiddenStatus() throws Exception {
+
+        mvc.perform(post("/mountain-lodges/create")
+                .contentType(MediaType.APPLICATION_JSON).content("{\"name\":\"Graficar\", \"hillId\":\"1\", \"elevation\":\"1000\"}")
+                .header("Authorization", NON_ADMIN_AUTH)).andExpect(status().isForbidden());
+
+    }
+
+    @Test
+    public void Given_PrincipalAdmin_When_createMountainLodge_ShouldSuccess() throws Exception {
+
+        MountainLodge lodge = getDefaultLodge();
+        Principal adminPrincipal = getAdminPrincipal();
+
+        given(userService.getRole(any())).willReturn("ADMIN");
+        given(mountainLodgeQueryService.createMountainLodge(any())).willReturn(lodge);
+
+
+        mvc.perform(post("/mountain-lodges/create")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"name\":\"Graficar\", \"hillId\":\"1\", \"elevation\":\"1000\"}")
+                .principal(adminPrincipal))
+                .andExpect(status().isCreated());
+
+    }
+
+    @Test
+    public void Given_RequestWithoutRequiredField_When_createMountainLodge_ShouldReturnBadRequest() throws Exception {
+
+        MountainLodge lodge = getDefaultLodge();
+        Principal adminPrincipal = getAdminPrincipal();
+
+        given(userService.getRole(any())).willReturn("ADMIN");
+        given(mountainLodgeQueryService.createMountainLodge(any())).willReturn(lodge);
+
+
+        mvc.perform(post("/mountain-lodges/create")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"name\":\"Graficar\", \"elevation\":\"1000\"}")
+                .principal(adminPrincipal))
+                .andExpect(status().isBadRequest());
+
+    }
+
+    private MountainLodge getDefaultLodge() {
+
+        MountainLodge lodge = new MountainLodge();
+        lodge.setName("Graficar");
+        Hill h = new Hill();
+        h.setName("Graficar");
+        h.setId(1L);
+        lodge.setHill(h);
+        lodge.setElevation(1000L);
+
+        return lodge;
+    }
+
+    Principal getAdminPrincipal() {
+        return new Principal() {
+            @Override
+            public String getName() {
+                return "admin@fer.hr";
+            }
+        };
+    }
+
 
     private List<Utility> getUtilities() {
 
