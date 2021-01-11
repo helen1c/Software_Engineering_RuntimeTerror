@@ -60,4 +60,14 @@ public class MountainLodgeController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    @DeleteMapping("/delete/{lodge_id}")
+    public ResponseEntity<?> deleteMountainLodge(@PathVariable("lodge_id") Long lodgeId, Principal principal) {
+        if(principal == null || !userService.getRole(principal.getName()).equals("ADMIN")) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Nemate ovlasti.");
+        }
+        MountainLodge lodge = service.deleteMountainLodge(lodgeId, principal);
+
+        return ResponseEntity.ok("Planinarski dom: " + lodge.getName() + " je uspješno obrisan.");
+    }
+
 }
