@@ -3,9 +3,10 @@
 		
 		\section{Korištene tehnologije i alati}
 		
-			\textbf{\textit{dio 2. revizije}}
-			
-			 \textit{Detaljno navesti sve tehnologije i alate koji su primijenjeni pri izradi dokumentacije i aplikacije. Ukratko ih opisati, te navesti njihovo značenje i mjesto primjene. Za svaki navedeni alat i tehnologiju je potrebno \textbf{navesti internet poveznicu} gdje se mogu preuzeti ili više saznati o njima}.
+			 Tijekom rada na projektu najveći dio komunikacije ostvaren je redovnim sastancima putem aplikacije \textit{Microsoft Teams}\footnote{https://www.microsoft.com/hr-hr/microsoft-365/microsoft-teams/}, aplikaciji namijenjenoj za komunikaciju članova tima. Za olakšan timski rad na projektu veliku zaslugu imao je i \textit{Git}\footnote{https://git-scm.com/}, alat za verzioniranje inačica i praćenje promjena, a kao udaljena platforma koristio se \textit{Gitlab}\footnote{https://gitlab.com/}.\newline
+			  Kao razvojno okruženje koristio se \textit{IntellijIDEA} \footnote{https://www.jetbrains.com/idea}, a predstavlja integrirano razvojno okruženje napisano na Javi za razvoj računalnog softvera. Tehnologija na poslužiteljskoj strani bio je \textit{Spring Boot}\footnote{https://spring.io/projects/spring-boot}, radni okvir otvorenog koda korišten za stvaranje mikroservisa, a kod na poslužiteljskoj stranii pisan je u programskom jeziku \textit{Java 11}. \textit{Spring Boot} je odabran zato što nudi veliku količinu gotovih funkcionalnosti visoke razine apstrakcije. Uz njega koristimo i poznatu knjižnicu \textit{Spring JPA}\footnote{https://spring.io/projects/spring-data-jpa} te ORM bibiloteku \textit{Hibernate}\footnote{https://hibernate.org/} koja služi za mapiranje objektno orijentiranog modela domena u relacijsku bazu podataka. Za vrijeme razvoja aplikacije korištena je privremena baza podataka \textit{H2}\footnote{https://www.h2database.com/}, a ona predstavlja neperzistentnu bazu podataka napisanu u programskom jeziku \textit{Java}. Kao produkcijska baza korištena je relacijska perzistentna baza podataka \textit{PostgreSQL}\footnote{https://www.postgresql.org/}, koja je besplatna i otvorenog koda, u \textit{Springu} dobro podržana. Kao alat za praćenje promjena, tzv. migracija baze podataka korišten je \textit{Liquibase} \footnote{https://www.liquibase.org/}. Za testiranje poslužiteljske strane korištena je knjižnica \textit{JUnit}\footnote{https://junit.org/junit5/}, namijenjena za testiranje komponenti.
+			  \\Što se tiče klijentske strane korišten je \textit{React}\footnote{https://reactjs.org/}, a predstavlja \textit{Javascript}\footnote{https://www.javascript.com/} knjižnicu za izgradnju korisničkog sučelja ili UI komponenti. Kod na klijentskoj strani pisan je u programskom jeziku \textit{Typescript}\footnote{https://www.typescriptlang.org/}, a to je programski jezik koji je razvio \textit{Microsoft}, te u klasični \textit{Javascript} dodaje navođenje tipova podataka. Prilikom izvršavanja, prevodi se u \textit{Javascript} te se izvodi unutar preglednika. Osim toga korišten je standardni \textit{CSS} i \textit{HTML}, a neke gotove komponente preuzete su iz knjižnice gotovih \textit{React} komponenti, \textit{Material-UI}\footnote{https://material-ui.com/} te \textit{Semantic UI}\footnote{https://semantic-ui.com/}.\\
+			  Za pisanje dokumentacije korišten je \textit{LaTeX}\footnote{https://www.latex-project.org/}, jezik za pisanje strukturiranih tekstova, a pisan unutar integracijskog radnog okruženja za pisanje \textit{LaTeX} dokumenata \textit{TexStudio}\footnote{https://www.texstudio.org/}. Svi potrebni dijagrami napravljeni su pomoću alata \textit{Astah}\footnote{https://astah.net/}.
 			 		
 			\eject 
 		
@@ -13,8 +14,315 @@
 		\section{Ispitivanje programskog rješenja}
 			
 			\subsection{Ispitivanje komponenti}
-			\textit{Potrebno je provesti ispitivanje jedinica (engl. unit testing) nad razredima koji implementiraju temeljne funkcionalnosti. Razraditi \textbf{minimalno 6 ispitnih slučajeva} u kojima će se ispitati redovni slučajevi, rubni uvjeti te izazivanje pogreške (engl. exception throwing). Poželjno je stvoriti i ispitni slučaj koji koristi funkcionalnosti koje nisu implementirane. Potrebno je priložiti izvorni kôd svih ispitnih slučajeva te prikaz rezultata izvođenja ispita u razvojnom okruženju (prolaz/pad ispita). }
+			U 7 testova proveli smo ispitivanje sloja nadglednika za pretraživanje domova i stvaranje novog planinarskog doma od strane administratora, te 4 testa za pretragu planinarskih domova na servisnom sloju. Kako bismo testirali servisni sloj, napravili smo \textit{SQL} skriptu koja nam bazu podataka puni testnim podacima. Navedena skripta će biti prikazana prije navođena testova servisnog sloja.
+			Za testiranje sloja nadglednika koristili smo \textit{MockMvc}, odnosno nema stvarne komunikacije s bazom podataka prilikom testiranja sloja nadglednika. Prilikom testiranja neke pomoćne metode nisu navede zbog prevelikog prostora koji zauzima cijeli kod.\\
 			
+			\subsubsection{Testiranje sloja nadglednika}
+			
+			\textbf{\textit{Ispitni slučaj 1: Pretraga planinarskih domova kada su sva polja null vrijednosti.}}\\
+			Očekivani rezultat ovog testa je povratak svih domova koji se nalaze u bazi podataka, to je podrazumijevano pretraživanje domova.\\
+			
+			
+			\begin{lstlisting}
+				@Test
+				public void GivenRequestAllFieldsNull_When_MountainLodgeSearch_Should_ReturnAllResults()
+				throws Exception {
+					
+					List<MountainLodge> mountainLodges = MountainLodgeGeneratingUtil
+					.generateLodgesEmptyUtilitiesAndImageNull(3);
+					given(mountainLodgeQueryService
+					.findAllMountainLodgeBySearchCriteria(any()))
+					.willReturn(mountainLodges);
+					
+					mvc.perform(post("/mountain-lodges/search")
+					.content("{}")
+					.contentType(MediaType.APPLICATION_JSON))
+					.andExpect(status().isOk())
+					.andExpect(jsonPath("$", hasSize(3)))
+					.andExpect(jsonPath("$[0].hillName", is("hill1")))
+					.andExpect(jsonPath("$[1].hillName", is("hill2")))
+					.andExpect(jsonPath("$[2].hillName", is("hill3")))
+					.andExpect(jsonPath("$[0].name", is("lodge1")))
+					.andExpect(jsonPath("$[1].name", is("lodge2")))
+					.andExpect(jsonPath("$[2].name", is("lodge3")))
+					.andExpect(jsonPath("$[0].id", is(1)))
+					.andExpect(jsonPath("$[1].id", is(2)))
+					.andExpect(jsonPath("$[2].id", is(3)));
+					}
+			\end{lstlisting}
+
+
+			\textbf{\textit{Ispitni slučaj 2: Pretraga planinarskih domova, polje za pretragu sadrži prazan znakovni niz.}}\\
+			Očekivani rezultat ovog testa je povratak svih domova koji se nalaze u bazi podataka.\\
+			
+			
+			\begin{lstlisting}
+				@Test
+				public void GivenRequestSearchTextEmpty_When_MountainLodgeSearch_Should_ReturnAllResults()
+				throws Exception {
+					
+					List<MountainLodge> mountainLodges = MountainLodgeGeneratingUtil
+					.generateLodgesEmptyUtilitiesAndImageNull(3);
+					given(mountainLodgeQueryService
+					.findAllMountainLodgeBySearchCriteria(any())).willReturn(mountainLodges);
+					
+					mvc.perform(post("/mountain-lodges/search")
+					.content("{\"searchText\":\"\"}")
+					.contentType(MediaType.APPLICATION_JSON))
+					.andExpect(status().isOk())
+					.andExpect(jsonPath("$", hasSize(3)))
+					.andExpect(jsonPath("$[0].hillName", is("hill1")))
+					.andExpect(jsonPath("$[1].hillName", is("hill2")))
+					.andExpect(jsonPath("$[2].hillName", is("hill3")))
+					.andExpect(jsonPath("$[0].name", is("lodge1")))
+					.andExpect(jsonPath("$[1].name", is("lodge2")))
+					.andExpect(jsonPath("$[2].name", is("lodge3")))
+					.andExpect(jsonPath("$[0].id", is(1)))
+					.andExpect(jsonPath("$[1].id", is(2)))
+					.andExpect(jsonPath("$[2].id", is(3)));
+				}
+		\end{lstlisting}
+			\textbf{\textit{Ispitni slučaj 3: Pretraga planinarskih domova, sva polja sadržavaju dozvoljene vrijednosti.}}\\
+			Očekivani rezultat ovog testa je povratak prazne liste domova, jer dom koji zadovoljava parametre ne postoji.\\
+			
+			
+			\begin{lstlisting}
+				@Test
+				public void GivenRequestWithAllFields_When_MountainLodgeSearch_Should_ReturnEmptyList()
+				throws Exception {
+					
+					List<MountainLodge> mountainLodges = Collections.emptyList();
+					given(mountainLodgeQueryService
+					.findAllMountainLodgeBySearchCriteria(any()))
+					.willReturn(mountainLodges);
+					
+					mvc.perform(post("/mountain-lodges/search")
+					.content(
+					"{\"searchText\":\"planinarski dom graficar\",
+						\"hillId\":\"1\",
+						\"utilities\":[\"1\"]}")
+					.contentType(MediaType.APPLICATION_JSON))
+					.andExpect(status().isOk())
+					.andExpect(jsonPath("$", hasSize(0)));
+				}
+			\end{lstlisting}
+		
+		
+				\textbf{\textit{Ispitni slučaj 4: Pretraga planinarskih domova, sva polja sadržavaju dozvoljene vrijednosti.}}\\
+				Očekivani rezultat ovog testa je povratak liste koja sadržava jedan dom, jedini dom koji zadovoljava parametre pretrage.\\
+				
+				
+				\begin{lstlisting}
+					@Test
+					public void GivenRequestWithAllFields_When_MountainLodgeSearch_Should_ReturnOneResultsGoodParams()
+					throws Exception {
+						
+						List<MountainLodge> mountainLodges = MountainLodgeGeneratingUtil
+						.generateLodgesEmptyUtilitiesAndImageNull(2);
+						
+						List<Utility> utilities = getUtilities();
+						
+						mountainLodges.get(0).setUtilities(utilities);
+						mountainLodges.get(1).setUtilities(utilities);
+						mountainLodges.get(1).setHill(mountainLodges.get(0).getHill());
+						
+						given(mountainLodgeQueryService
+						.findAllMountainLodgeBySearchCriteria(any())).willReturn(mountainLodges);
+						
+						mvc.perform(post("/mountain-lodges/search")
+						.content("{\"searchText\":\"lodge\", \"hillId\":\"1\", \"utilities\":[\"1\"]}")
+						.contentType(MediaType.APPLICATION_JSON))
+						.andExpect(status().isOk())
+						.andExpect(jsonPath("$", hasSize(2)))
+						.andExpect(jsonPath("$[0].hillName", is("hill1")))
+						.andExpect(jsonPath("$[1].hillName", is("hill1")))
+						.andExpect(jsonPath("$[0].name", is("lodge1")))
+						.andExpect(jsonPath("$[1].name", is("lodge2")))
+						.andExpect(jsonPath("$[0].id", is(1)))
+						.andExpect(jsonPath("$[1].id", is(2)))
+						.andExpect(jsonPath("$[0].utilities", hasSize(1)))
+						.andExpect(jsonPath("$[1].utilities", hasSize(1)));
+						
+					}
+				\end{lstlisting}		
+				\textbf{\textit{Ispitni slučaj 5: Stvaranje planinarskog doma, korisnik nije administrator.}}\\
+				Očekivani rezultat ovog testa je povratak statusa \textit{403}, običan korisnik nema ovlasti stvaranja planinarskog doma.\\
+				
+				
+				\begin{lstlisting}
+					@Test
+					public void Given_PrincipalNotAdmin_When_createMountainLodge_ShouldReturnForbiddenStatus()
+					throws Exception {
+						
+						mvc.perform(post("/mountain-lodges/create")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content("{\"name\":\"Graficar\", \"hillId\":\"1\", \"elevation\":\"1000\"}")
+						.header("Authorization", NON_ADMIN_AUTH))
+						.andExpect(status().isForbidden());
+						
+					}
+				\end{lstlisting}
+				\textbf{\textit{Ispitni slučaj 6: Stvaranje planinarskog doma, korisnik je admin}}\\
+				Očekivani rezultat ovog testa je uspješno stvaranje novog planinarskog doma.\\
+				
+				
+				\begin{lstlisting}
+				@Test
+				public void Given_PrincipalAdmin_When_createMountainLodge_ShouldSuccess() throws Exception {
+					
+					MountainLodge lodge = getDefaultLodge();
+					Principal adminPrincipal = getAdminPrincipal();
+					
+					given(userService.getRole(any())).willReturn("ADMIN");
+					given(mountainLodgeQueryService.createMountainLodge(any()))
+					.willReturn(lodge);
+					
+					
+					mvc.perform(post("/mountain-lodges/create")
+					.contentType(MediaType.APPLICATION_JSON)
+					.content("{\"name\":\"Graficar\", \"hillId\":\"1\", \"elevation\":\"1000\"}")
+					.principal(adminPrincipal))
+					.andExpect(status().isCreated());
+					
+				}
+				\end{lstlisting}
+			 	\newpage
+				\textbf{\textit{Ispitni slučaj 7: Stvaranje planinarskog doma, korisnik je admin ali su polja pogrešno zadana.}}\\
+				Ovaj test provjerava nemogućnost stvaranja planinarskog doma ukoliko nedostaje parametar koji govori na kojemu se visočju planinarski dom nalazi.
+				Očekivani rezultat ovog testa je status \textit{404}, pogrešan zahtjev.\\
+				
+				
+				\begin{lstlisting}
+					@Test
+					public void Given_RequestWithoutRequiredField_When_createMountainLodge_ShouldReturnBadRequest() throws Exception {
+						
+						MountainLodge lodge = getDefaultLodge();
+						Principal adminPrincipal = getAdminPrincipal();
+						
+						given(userService.getRole(any())).willReturn("ADMIN");
+						given(mountainLodgeQueryService.createMountainLodge(any())).willReturn(lodge);
+						
+						
+						mvc.perform(post("/mountain-lodges/create")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content("{\"name\":\"Graficar\", \"elevation\":\"1000\"}")
+						.principal(adminPrincipal))
+						.andExpect(status().isBadRequest());
+						
+					}
+				\end{lstlisting}\newpage
+					
+					\subsubsection{Testiranje sloja servisa}
+					U nastavku je prikazana prije navedena \textit{SQL} skripta, kao i testovi sloja servisa.
+					
+					\begin{figure}[H]
+						\includegraphics[scale=0.6, height=75mm, width=150mm]{slike/servis-sql.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+						\centering
+						\caption{SQL skripta za testiranje servisnog sloja}
+						\label{fig:SQL skripta}
+					\end{figure}
+					
+					\eject 
+					 
+					
+					\textbf{\textit{Ispitni slučaj 8: Pretraga planinarskih domova prema nazivu.}}\\
+					Pretražujemo sve planinarske domove koji sadržavaju slovo "v", a infrastrukturne pogodnosti su voda i hrana, predstavljene svojim identifikatorima 1000 odnosno 1001.
+					Očekivano ponašanje je povratak 3 planinarska doma.\\
+					
+					
+					\begin{lstlisting}
+						@Test
+						public void Given_ValidRequestWithUtilities_When_SearchMountainLodgesBySearchCriteria_
+						Should_ReturnResultsFromDb(){
+							
+							MountainLodgeSearchRequest request = new MountainLodgeSearchRequest();
+							
+							request.setSearchText("v");
+							request.setUtilities(List.of(1000L, 1001L));
+							
+							List<MountainLodge> response = mountainLodgeQueryService.findAllMountainLodgeBySearchCriteria(request);
+							
+							Assert.assertEquals(3, response.size());
+							Assert.assertEquals("Hajducke vrleti", response.get(0).getName());
+							Assert.assertEquals("Veleske vrleti", response.get(1).getName());
+							Assert.assertEquals("Cvrsci san", response.get(2).getName());
+							
+							Assert.assertEquals(Long.valueOf(1000), response.get(0).getId());
+							Assert.assertEquals(Long.valueOf(1001), response.get(1).getId());
+							Assert.assertEquals(Long.valueOf(1003), response.get(2).getId());
+						}
+					\end{lstlisting}
+				
+				\textbf{\textit{Ispitni slučaj 9: Pretraga planinarskih domova, sva polja sadržavaju dozvoljene vrijednosti.}}\\
+				Očekivani rezultat ovog testa je povratak liste planinarskih domova, čije ime sadržava riječ "vrleti", a nalaze se na planini "Blidinje", identifikatora \textit{1000}.\\
+				
+							
+							\begin{lstlisting}
+								@Test
+								public void Given_ValidRequest_When_SearchMountainLodgesBySearchCriteria
+								_Should_ReturnResultsFromDb(){
+									
+									MountainLodgeSearchRequest request = new MountainLodgeSearchRequest();
+									request.setHillId(1000L);
+									request.setSearchText("vrleti");
+									request.setUtilities(Collections.emptyList());
+									
+									List<MountainLodge> response = mountainLodgeQueryService.findAllMountainLodgeBySearchCriteria(request);
+									
+									Assert.assertEquals(1, response.size());
+									Assert.assertEquals("Hajducke vrleti", response.get(0).getName());
+									Assert.assertEquals(Long.valueOf(1000), response.get(0).getId());
+									Assert.assertEquals(4, response.get(0).getUtilities().size());
+									
+								}
+							\end{lstlisting}
+						
+						\textbf{\textit{Ispitni slučaj 10: Pretraga planinarskih domova, sva polja sadržavaju dozvoljene vrijednosti, nema rezultata.}}\\
+						Očekivani rezultat ovog testa je povratak prazne liste domova, jer dom koji zadovoljava parametre ne postoji u bazi podataka. Parametar koji nije zadovoljen je naziv planinarskog doma "Planinarski dom graficar".\\
+						
+						\begin{lstlisting}
+							@Test
+							public void Given_ValidRequestNoMatchingLodgeName_When_SearchMountainLodgesBySearchCriteria_
+							Should_ReturnEmptyList(){
+								
+								MountainLodgeSearchRequest request = new MountainLodgeSearchRequest();
+								request.setSearchText("Planinarski dom graficar");
+								request.setUtilities(List.of(1000L, 1001L));
+								
+								List<MountainLodge> response = mountainLodgeQueryService
+								.findAllMountainLodgeBySearchCriteria(request);
+								Assert.assertEquals(0, response.size());
+							}
+						\end{lstlisting}
+					
+					\textbf{\textit{Ispitni slučaj 11: Pretraga planinarskih domova, tekst pretrage velikim slovima.}}\\
+					Očekivani rezultat ovog testa je povratak liste koja sadrži jedan dom naziva "Hajducke vrleti".\\
+							
+				
+				\begin{lstlisting}
+					@Test
+					public void Given_ValidRequestUppercase_When_SearchMountainLodgesBySearchCriteria
+					_Should_ReturnOneResult(){
+						
+						MountainLodgeSearchRequest request = new MountainLodgeSearchRequest();
+						request.setSearchText("HAJDUCKE vRlEti");
+						
+						List<MountainLodge> response = mountainLodgeQueryService.findAllMountainLodgeBySearchCriteria(request);
+						Assert.assertEquals(1, response.size());
+						Assert.assertEquals("Hajducke vrleti", response.get(0).getName());
+					}
+				\end{lstlisting}
+				
+				\subsubsection{Prikaz rezultata testova}
+				
+				\begin{figure}[H]
+					\includegraphics[scale=0.6, height=50mm, width=150mm]{slike/junit.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+					\centering
+					\caption{Rezultati JUnit testova}
+					\label{fig:junit testovi}
+				\end{figure}
+				
+				\eject 
 			
 			
 			\subsection{Ispitivanje sustava}
@@ -22,6 +330,7 @@
 			  Ispitivanje smo proveli koristeći Selenium WebDriver unutar JUnit testova. Cilj ispitivanje bio je provjera nekih glavnih funkcionalnosti sustava i pronalazak pogrešaka. WebDriver potrebno je instalirati lokalno na računalo i prilikom pokretanja postaviti putanju koja se nalazi u varijablama okruženja sustava. Prilikom testiranja aplikacija se pokretala na lokalnom računalu zato što je Heroku servis na kojemu je aplikacija puštena u pogon dosta sporiji, pa bi testovi trajali nešto dulje vremena.
 			  Slika testova koji su se uspješno izvršili i na aplikaciji puštenoj u pogon na servisu Heroku će biti priložena.\\
 	
+		
 		 	\textbf{\textit{Ispitni slučaj 1: Prijava planinara u sustav s ispravnim/neispravnim podacima}}
 		 	
 		 	\begin{lstlisting}
@@ -144,7 +453,7 @@
  			driver.findElement(By.className("profil-image")).click();
  			driver.findElement(By.id("my-profile")).click();
  			String badgeDesc = driver.findElement(By.className("badge-image")).getAttribute("title");
- 			assertEquals("Imam barem 1 posjećen planinarski dom!", badgeDesc);
+ 			assertEquals("Imam barem 1 posjecen planinarski dom!", badgeDesc);
  			
  			driver.quit();
  		}
