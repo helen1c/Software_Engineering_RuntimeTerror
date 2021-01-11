@@ -294,7 +294,7 @@ export const MountainPathSearchResult = (prop: Props) => {
               )}
               <img className="mini-image-2" alt="GO" src={elevation} />
             </div>{role ==="PLANINAR"?
-              <Tipka result={prop.result.name} css={2}/> :
+              <Tipka result={prop.result.name} css={2} place="path"/> :
               <div/>
           }</div>
 

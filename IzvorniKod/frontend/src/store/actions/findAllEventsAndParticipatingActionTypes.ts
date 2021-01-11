@@ -1,9 +1,9 @@
 import {EventResult} from "../../components/event/models/EventResult";
 import {EventParticipatingResponse} from "../../components/event/models/EventParticipatingResponse";
 
-export const FIND_ALL_EVENTS = "FIND_ALL_HILLS";
-export const FIND_ALL_EVENTS_SUCCESS = "FIND_ALL_HILLS_SUCCESS";
-export const FIND_ALL_EVENTS_ERROR = "FIND_ALL_HILLS_ERROR";
+export const FIND_ALL_EVENTS = "FIND_ALL_EVENTS";
+export const FIND_ALL_EVENTS_SUCCESS = "FIND_ALL_EVENTS_SUCCESS";
+export const FIND_ALL_EVENTS_ERROR = "FIND_ALL_EVENTS_ERROR";
 
 export const PARTICIPATE_ON_EVENT = "PARTICIPATE_ON_EVENT";
 export const UN_PARTICIPATE_ON_EVENT = "UN_PARTICIPATE_ON_EVENT";

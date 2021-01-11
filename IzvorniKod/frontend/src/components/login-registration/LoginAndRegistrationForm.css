@@ -238,7 +238,10 @@ password-component {
     .registration-column{
         justify-content: center;
     }
-
+    .toRegistration{
+        display: flex;
+        flex-direction: column;
+    }
 }
 
 

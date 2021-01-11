@@ -175,6 +175,7 @@ export const ProfileUserInfo = ({user, setUser}: Props) => {
                                 <input
                                     className="input-content-name"
                                     type="text"
+                                    id="name-profile"
                                     disabled
                                     value={user ? user.name : ""}
                                     onChange={(e) => setUser({...user, name: e.target.value})}

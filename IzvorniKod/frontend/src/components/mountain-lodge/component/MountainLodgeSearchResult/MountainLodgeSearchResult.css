@@ -92,6 +92,14 @@
         object-fit: cover;
         border-radius: 5px;
     }
+    .right-cnt{
+        display: none;
+    }
+    .mountain-lodge-cnt{
+        display: flex;
+        min-width: min-content;
+        height: min-content;
+    }
 }
 
 .mountain-lodge-elevation {

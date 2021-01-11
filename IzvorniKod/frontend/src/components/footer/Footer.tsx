@@ -4,6 +4,7 @@ import logo from "../../assets/logo.jpg";
 import {useHistory} from "react-router";
 import Tipka from "./components/Tipka";
 import { Link } from "react-router-dom";
+import {ProfileDashboard} from "../profile/ProfileDashboard";
 
 function Footer() {
     const history = useHistory();
@@ -71,13 +72,12 @@ function Footer() {
                                 <div>
                                     <h4 className="list-title">Kontaktirajte nas:</h4>
                                     <ul className="list-elements">
-                                        <Tipka result={"Neodredeno"} css={1}/>
+                                        <Tipka result={"Neodredeno"} css={1} place={"footer"}/>
                                     </ul>
                                 </div> :
                                 <div>
                                     <ul className="list-elements">
-                                        <li><Link className="footer-link" to="/users/all">Pretraži korisnike</Link></li>
-                                        <li><Link className="footer-link" to="/admin/message-box">Poruke korisnika</Link></li>
+                                        <li><Link className="footer-link" to="/users/search">Pretraži korisnike</Link></li>
                                     </ul>
                                 </div>
                               }
@@ -85,7 +85,7 @@ function Footer() {
                             }
                     </div>
                     <hr />
-                    <div className="row">
+                    <div className="row-about">
                         <p className="col-sm">
                             &copy;{new Date().getFullYear()} RuntimeTerror | Progi |
                             projekt | Planinarski Dnevnik

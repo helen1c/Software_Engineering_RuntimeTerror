@@ -67,12 +67,14 @@ export const Header = () => {
             <div className={"login-cnt"}>
               <button
                 className="loginAndRegisterButton"
+                id="log-button"
                 onClick={() => history.push("/login")}
               >
                 Prijavi se
               </button>
               <button
                 className="loginAndRegisterButton"
+                id="reg-button"
                 onClick={() => history.push("/register")}
               >
                 Registriraj se
@@ -104,6 +106,7 @@ export const Header = () => {
                           className="dropdown-item"
                           //style={{ color: "blue" }}
                           role="menuitem"
+                          id="fr-requests"
                         >
                           Zahtjevi za prijateljstvo{" "}
                           {friendRequestsResults.length > 0  && (
@@ -117,6 +120,7 @@ export const Header = () => {
                           className="dropdown-item"
                           //style={{ color: "blue" }}
                           role="menuitem"
+                          id="fr-notifications"
                         >
                           Obavijesti{" "}
                           {friendRequestsNotificationResults.length > 0 && (
@@ -132,6 +136,7 @@ export const Header = () => {
                           href={mountaineeringCommunityLink}
                           //style={{ color: "blue" }}
                           role="menuitem"
+                          id="my-community"
                         >
                           Planinarska zajednica
                           <img
@@ -147,6 +152,7 @@ export const Header = () => {
                           //style={{ color: "blue" }}
                           onClick={() => setProfileActive(false)}
                           role="menuitem"
+                          id="my-profile"
                         >
                           Pogledajte svoj profil
                           <img
@@ -164,6 +170,7 @@ export const Header = () => {
                             sessionStorage.clear();
                           }}
                           role="menuitem"
+                          id="logout-b"
                         >
                           Odjavite se
                           <img

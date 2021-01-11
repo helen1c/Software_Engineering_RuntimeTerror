@@ -26,10 +26,10 @@
 }
 .box-title{
     font-size: larger;
-    font-family: ui-monospace;
+    font-family: sans-serif !important;
 }
 .MuiTypography-h6{
-    font-family: none!important;
+    font-family: sans-serif !important;
     font-size: 2rem!important;
 }
 .error-button{

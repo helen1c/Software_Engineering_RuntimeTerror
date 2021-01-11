@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useHistory} from "react-router";
 import SearchIcon from '@material-ui/icons/Search';
 import AddIcon from '@material-ui/icons/Add';
-import {Button, IconButton} from "@material-ui/core";
+import {Button} from "@material-ui/core";
 import './MountaineeringCommunity.css';
 import {CommunityEventsResults} from "../event/component/CommunityEventsResults";
 import Snackbar from "@material-ui/core/Snackbar";
