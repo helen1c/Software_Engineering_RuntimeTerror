@@ -19,10 +19,11 @@ const MESSAGES = "MESSAGES"
 interface Props {
     user: ViewProfileInfo;
     setUser: (user: ViewProfileInfo) => void;
+    opt?: string
 }
 
-export const ProfileDashboard = ({ user, setUser }: Props) => {
-  const [option, setOption] = useState(PROFILE);
+export const ProfileDashboard = ({ user, setUser, opt }: Props) => {
+  const [option, setOption] = useState(opt !== undefined ? opt : PROFILE);
 
   return (
     <div>

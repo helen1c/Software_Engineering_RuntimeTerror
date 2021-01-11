@@ -4,6 +4,7 @@ import logo from "../../assets/logo.jpg";
 import {useHistory} from "react-router";
 import Tipka from "./components/Tipka";
 import { Link } from "react-router-dom";
+import {ProfileDashboard} from "../profile/ProfileDashboard";
 
 function Footer() {
     const history = useHistory();
@@ -76,8 +77,7 @@ function Footer() {
                                 </div> :
                                 <div>
                                     <ul className="list-elements">
-                                        <li><Link className="footer-link" to="/users/all">Pretraži korisnike</Link></li>
-                                        <li><Link className="footer-link" to="/admin/message-box">Poruke korisnika</Link></li>
+                                        <li><Link className="footer-link" to="/users/search">Pretraži korisnike</Link></li>
                                     </ul>
                                 </div>
                               }

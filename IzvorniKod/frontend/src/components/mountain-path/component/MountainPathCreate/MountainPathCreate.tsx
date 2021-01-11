@@ -144,7 +144,7 @@ export default function MountainPathCreate() {
                 <img  className="path-create-img" src={plus} alt ="PLus"/>
             </Button>
             <div className={"snackbar-div"}>
-            <Snackbar open={success} autoHideDuration={150000} onClose={onCloseSuccess}>
+            <Snackbar open={success} autoHideDuration={1300} onClose={onCloseSuccess}>
                 <Alert onClose={onCloseSuccess} severity="success">
                     Planinarska staza je uspješno stvorena.
                 </Alert>

@@ -210,3 +210,8 @@ a:hover {
 
 }
 
+.slider-button-div-lodge {
+    color: black;
+    padding-top: 2rem;
+    z-index: 100;
+}
