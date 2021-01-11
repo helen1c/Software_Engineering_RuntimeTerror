@@ -2,11 +2,35 @@ import React, { useEffect, useState } from "react";
 import "./MessageSearchResult.css";
 import { MessageFindResult } from "./models/MessageFindResult";
 import check from "../../assets/checkmark.png";
+import Snackbar from "@material-ui/core/Snackbar";
+import {Alert} from "@material-ui/lab";
 
 export const MessageSearchResult = () => {
   const [allMessages, setAllMessages] = useState<MessageFindResult[]>();
   const [loading, setLoading] = useState(true);
   const [role, setRole] = useState("");
+  const [success, setSuccessMessage] = React.useState(false);
+  const [error, setErrorMessage] = React.useState(false);
+
+  const successMessage = () => {
+    setSuccessMessage(true);
+  };
+  const errorMessage = () => {
+    setErrorMessage(true);
+  };
+
+  const closeSuccessMessage = (event?: React.SyntheticEvent, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSuccessMessage(false);
+  };
+  const closeErrorMessage = (event?: React.SyntheticEvent, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setErrorMessage(false);
+  };
 
   useEffect(() => {
     if (sessionStorage.getItem("key") !== null) {
@@ -63,12 +87,24 @@ export const MessageSearchResult = () => {
         let messages = allMessages;
         messages = messages?.filter((m) => m !== message);
         setAllMessages(messages);
+        successMessage();
       } else {
+        errorMessage();
       }
     });
   };
   return (
     <>
+      <Snackbar open={success} autoHideDuration={2000} onClose={closeSuccessMessage}>
+        <Alert onClose={closeSuccessMessage} severity="success">
+          Poruka je riješena.
+        </Alert>
+      </Snackbar>
+      <Snackbar open={error} autoHideDuration={2000} onClose={closeErrorMessage}>
+        <Alert onClose={closeErrorMessage} severity="error">
+          Dogodila se pogreška. Pokušajte kasnije.
+        </Alert>
+      </Snackbar>
       <div>
         {!loading && (
           <div>
