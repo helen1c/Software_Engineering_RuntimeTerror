@@ -12,11 +12,6 @@
 	
 		\section{Ispitivanje programskog rješenja}
 			
-			\textbf{\textit{dio 2. revizije}}\\
-			
-			 \textit{U ovom poglavlju je potrebno opisati provedbu ispitivanja implementiranih funkcionalnosti na razini komponenti i na razini cijelog sustava s prikazom odabranih ispitnih slučajeva. Studenti trebaju ispitati temeljnu funkcionalnost i rubne uvjete.}
-	
-			
 			\subsection{Ispitivanje komponenti}
 			\textit{Potrebno je provesti ispitivanje jedinica (engl. unit testing) nad razredima koji implementiraju temeljne funkcionalnosti. Razraditi \textbf{minimalno 6 ispitnih slučajeva} u kojima će se ispitati redovni slučajevi, rubni uvjeti te izazivanje pogreške (engl. exception throwing). Poželjno je stvoriti i ispitni slučaj koji koristi funkcionalnosti koje nisu implementirane. Potrebno je priložiti izvorni kôd svih ispitnih slučajeva te prikaz rezultata izvođenja ispita u razvojnom okruženju (prolaz/pad ispita). }
 			
@@ -24,7 +19,8 @@
 			
 			\subsection{Ispitivanje sustava}
 			
-			  Ispitivanje sustava smo proveli pomoću dodataka za preglednike Selenium IDE (https://www.selenium.dev/selenium-ide/) te koristeći Selenium WebDriver unutar JUnit testova.\\
+			  Ispitivanje smo proveli koristeći Selenium WebDriver unutar JUnit testova. Cilj ispitivanje bio je provjera nekih glavnih funkcionalnosti sustava i pronalazak pogrešaka. WebDriver potrebno je instalirati lokalno na računalo i prilikom pokretanja postaviti putanju koja se nalazi u varijablama okruženja sustava. Prilikom testiranja aplikacija se pokretala na lokalnom računalu zato što je Heroku servis na kojemu je aplikacija puštena u pogon dosta sporiji, pa bi testovi trajali nešto dulje vremena.
+			  Slika testova koji su se uspješno izvršili i na aplikaciji puštenoj u pogon na servisu Heroku će biti priložena.\\
 	
 		 	\textbf{\textit{Ispitni slučaj 1: Prijava planinara u sustav s ispravnim/neispravnim podacima}}
 		 	
@@ -64,7 +60,7 @@
 		 	}
 		 	\end{lstlisting}
 	 	
-	 	 U ispitnom slučaju broj jedan ispitana je funkcionalnost prijave u sustav. Prvo se dohvati početna stranica web aplikacije te se odabire opcija "prijavi se", zatim se unese neispravni oblik email-a i lozinka, na što aplikacija vraća obavijest "neispravan e-mail ili lozinka", nakon toga se unose valjani email i neispravna lozinka, aplikacija reagira tako da ponovno vrati obavijest "neispravan e-mail ili lozinka", te na kraju se unesu ispravni podaci za prijavu i aplikacija reagira uspješnom prijavnom korisnika u sustav i odvede korisnika na profil vlastite planinarske zajednice.\newline
+	 	 U 1. ispitnom slučaju ispitana je funkcionalnost prijave u sustav. Prvo se dohvati početna stranica aplikacije te se odabire opcija "Prijavi se" koja se nalazi na zaglavlju stranice. Zatim se unese neispravni oblik email-a, na što aplikacija vraća obavijest "Neispravan oblik mail-a.", nakon toga se unose valjani email i neispravna lozinka, aplikacija reagira tako da vrati obavijest "Neispravan e-mail ili lozinka.". Na kraju se unesu ispravni podaci za prijavu i aplikacija reagira uspješnom prijavnom korisnika u sustav i odvede korisnika na stranicu vlastite planinarske zajednice.\newline
 	 	 
 	 		\textbf{\textit{Ispitni slučaj 2: Planinar pretražuje ostale korisnike}}
 	 	
@@ -98,7 +94,7 @@
 	 		}
 	 	\end{lstlisting}
  	
-	 	U ispitnom slučaju broj dva ispitana je funkcionalnost pretrage svih korisnika od strane planinara. Prvo se provede prijava planinara u sustav, zatim prijavljeni korisnik odabire opciju "Pretrazi sve planinare", aplikacija ga preusmjeri na stranicu za pretragu svih korisnika, korisnik u prostor za unos teksta za pretragu upiše "admin" i odabire opciju pretrage, aplikacija u rezultatima pretrage vrati traženog korisnika, zatim korisnik klikne na adminovu sličicu profila i aplikacija mu prikaže adminov profil.\newline
+	 	U 2. ispitnom slučaju ispitana je funkcionalnost pretrage svih korisnika od strane planinara. Prvo se provede prijava planinara u sustav, zatim prijavljeni korisnik odabire opciju "Pretraži sve planinare" te ga aplikacija preusmjeri na stranicu za pretragu svih korisnika. Korisnik u prostor za unos teksta za pretragu upiše "admin" i odabire opciju pretrage, aplikacija u rezultatima pretrage vrati traženog korisnika. Nakon toga korisnik odabere adminovu sličicu profila i aplikacija mu prikaže adminov profil. Testiranje je provedeno na način da se pretražuje profil admina, koji unutar aplikacije uvijek postoji.\newline
 	 	
  		\textbf{\textit{Ispitni slučaj 3: Pretraga i arhiviranje posjećenog planinarskog doma}}
  		
@@ -154,9 +150,9 @@
  		}
  		\end{lstlisting}
  	
- 		U ispitnom slučaju broj tri ispitana je funkcionalnost pretraga i arhiviranje planinarskog doma. Ne prijavljen korisnik odabire opciju "pretraga planinarskih domova" u prostor za unos teksta upisuje "Planinarski dom Glavica". Taj dom postoji u arhivi i aplikacija mu kao rezultat pretrage prikaže traženi planinarski dom. Zatim korisnik pokuša arhivirati dom, ali pošto nije prijavljen aplikacija mu neće pružati tu mogućnost. Nakon što je taj dio testa aplikacija uspješno prošla, test se nastavlja i korisnik se prijavi u sustav kao planinar te ponavlja istu radnju. Ovaj put aplikacija mu prikazuje traženi dom, ali postoji mogućnost arhiviranja doma. Korisnik odabire opciju "arhiviraj", aplikacija na tu akciju mijenja opis uz navedeni dom u "arhivirano" također arhivirani dom sprema u arhivu planinara koji je odabrao opciju "arhiviraj". Korisnik odabire opciju "Moj profil", aplikacija mu prikaže profil na kojem se može vidjeti bedž kojeg je dobio arhiviranjem jednog planinarskog doma.\newline
+ 		U 3. ispitnom slučaju ispitana je funkcionalnost pretraživanja i arhiviranja planinarskog doma, te je testirano da pristup arhiviranju imaju samo prijavljeni korisnici. Neprijavljen korisnik odabire opciju "Pretraga planinarskih domova", u prostor za unos teksta upisuje "Planinarski dom Glavica". Taj dom postoji u bazi podataka i aplikacija mu kao rezultat pretrage prikaže traženi planinarski dom. Zatim se testira da aplikacija neprijavljenom korisniku ne nudi mogućnost arhiviranja doma. Nakon što je taj dio testa aplikacija zadovoljen, test se nastavlja i korisnik se prijavi u sustav kao planinar te ponavlja istu radnju. Ovaj put aplikacija mu prikazuje traženi dom, ali korisnik ima mogućnost arhiviranja doma. Korisnik odabire opciju "Arhiviraj", aplikacija na tu akciju mijenja opis uz navedeni dom u "Arhivirano", te odabrani dom sprema u popis posjećenih domova planinara koji je odabrao opciju "Arhiviraj". Korisnik odabire opciju "Moj profil", aplikacija mu prikaže profil na kojem se može vidjeti priznanje (bedž) kojeg je dobio posjetom jednog planinarskog doma, uz opis postignuća "Imam barem 1 posjećen planinarski dom!"\newline
  		
- 		 	\textbf{\textit{Ispitni slučaj 4: Slanje zahtjeva za prijateljstvo i primanje obavijesti o prihvatu zahtjeva}}
+ 		 	\textbf{\textit{Ispitni slučaj 4: Slanje zahtjeva za prijateljstvo i primitak obavijesti o prihvaćenom zahtjevu}}
  		
  		\begin{lstlisting}
  			public void testAddFriendAndFriendRequestApproveOrDeclineAndFriendNotification() throws InterruptedException {
@@ -212,13 +208,14 @@
  			}
  		\end{lstlisting}
  	
- 		U ispitnom slučaju broj četiri ispitana je funkcionalnost slanja zahtjeva za prijateljstvo i primanje obavijesti o prihvaćenom zahtjevu. Prvo se korisnik prijavi kao "luka.ravenscak@fer.hr" te provede radnje kao u testu dva, kada je na profilu od admina klikne opciju "pošalji zahtjev za prijateljstvo". Aplikacija promijeni status gumba u "zahtjev poslan" te proslijedi zahtjev adminu. Zatim se korisnik odjavi i prijavi se kao "admin" nakon čega provjeri zahtjeve za prijateljstvo i prihvati zahtjev korisnika "luka.ravenscak@fer.hr". Nakon što je admin uspješno prihvatio zahtjev korisnik se odjavi i prijavi ponovno kao "luka.ravenscak@fer.hr". Nakon toga aplikacija će korisniku "luka.ravenscak@fer.hr" prikazati novu obavijest o prihvaćenom zahtjevu za prijateljstvo. 
+ 		U 4. ispitnom slučaju ispitana je funkcionalnost slanja zahtjeva za prijateljstvo i primanje obavijesti o prihvaćenom zahtjevu. Prvo se korisnik prijavi kao "luka.ravenscak@fer.hr" te provede radnje kao u testu 2. Dolaskom na adminov profil odabere opciju "Dodaj prijatelja". Aplikacija promijeni status gumba u "Zahtjev poslan" te proslijedi zahtjev za prijateljstvo adminu. Zatim se korisnik odjavi, te odlazimo na profil admina, nakon čega korisnik provjeri zahtjeve za prijateljstvo i prihvati zahtjev korisnika "luka.ravenscak@fer.hr".
+ 		Nakon što je admin uspješno prihvatio zahtjev korisnik se odjavi i prijavi ponovno kao "luka.ravenscak@fer.hr". Nakon toga aplikacija će korisniku "luka.ravenscak@fer.hr" prikazati novu obavijest o prihvaćenom zahtjevu za prijateljstvo od strane admina. 
  		
 		
 		\begin{figure}[H]
-			\includegraphics[scale=0.6, height=125mm, width=165mm]{slike/test_results.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+			\includegraphics[scale=0.6, height=65mm, width=100mm]{slike/test_results.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
 			\centering
-			\caption{Rezultati testova}
+			\caption{Uspješno izvršeni Selenium testovi - lokalno računalo}
 			\label{fig:test_results}
 		\end{figure}
 		
