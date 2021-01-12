@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import "./ProfileUserInfo.css";
-import { Button, Dialog, DialogActions, DialogTitle } from "@material-ui/core";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  IconButton,
+} from "@material-ui/core";
 import uredi from "../../assets/paper-icon.png";
 import obrisi from "../../assets/delete-icon.png";
 import odustani from "../../assets/blue-x-png-1.png";
@@ -15,6 +21,8 @@ import { getEmptyProfile, ViewProfileInfo } from "./models/ViewProfileInfo";
 import Compress from "react-image-file-resizer";
 import { MountaineeringCommunitySearch } from "../mountaineering-community/MountaineeringCommunitySearch";
 import { Badges } from "../badges/Badges";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import { AddAPhotoOutlined } from "@material-ui/icons";
 
 interface Props {
   user: ViewProfileInfo;
@@ -167,7 +175,9 @@ export const ProfileUserInfo = ({ user, setUser }: Props) => {
   return (
     <>
       {!sessionStorage.getItem("key") ? (
-        <div className="request-empty">Prijavite se za korištenje ove funkcionalnosti</div>
+        <div className="request-empty">
+          Prijavite se za korištenje ove funkcionalnosti
+        </div>
       ) : (
         <div>
           <div className="main-profile">
@@ -337,26 +347,72 @@ export const ProfileUserInfo = ({ user, setUser }: Props) => {
                   </div>
                 </div>
               </div>
-
-              <div className="profile-image-wrap">
-                <img
-                  className="profil-info-image"
-                  alt={"Slika profila"}
-                  src={user.image}
-                />
-                {edit && (
-                  <div className="image-input">
-                    <label htmlFor="image">
-                      <u>DODAJ SLIKU</u>
-                    </label>
-                    <input
-                      id="image"
-                      type="file"
-                      onChange={(event) => showImage(event)}
-                    />
+              <input
+                className={"upload-picture"}
+                accept={"image/*"}
+                id={"icon-button-file"}
+                type="file"
+                multiple
+                onChange={(event) => {
+                  showImage(event);
+                  event.target.value = "";
+                }}
+              />
+              {user.image ? (
+                <div className={"wrapper-picture"}>
+                  <img
+                    style={{ display: "block" }}
+                    className="profileImage"
+                    src={user.image}
+                    alt="Slika profila"
+                  />
+                  {edit && (
+                    <>
+                      <span
+                        className={"remove-picture"}
+                        onClick={() => setUser({ ...user, image: "" })}
+                      >
+                        <DeleteForeverIcon />
+                      </span>
+                    </>
+                  )}
+                </div>
+              ) : (
+                <>
+                  <div className={"wrapper-picture"}>
+                    <div className={"picture-container"}>
+                      <label htmlFor="icon-button-file">
+                        <IconButton
+                          color="primary"
+                          aria-label="upload picture"
+                          component="span"
+                        >
+                          <AddAPhotoOutlined />
+                        </IconButton>
+                      </label>
+                    </div>
                   </div>
-                )}
-              </div>
+                </>
+              )}
+              {/*<div className="profile-image-wrap">*/}
+              {/*  <img*/}
+              {/*    className="profil-info-image"*/}
+              {/*    alt={"Slika profila"}*/}
+              {/*    src={user.image}*/}
+              {/*  />*/}
+              {/*  {edit && (*/}
+              {/*    <div className="image-input">*/}
+              {/*      <label htmlFor="image">*/}
+              {/*        <u>DODAJ SLIKU</u>*/}
+              {/*      </label>*/}
+              {/*      <input*/}
+              {/*        id="image"*/}
+              {/*        type="file"*/}
+              {/*        onChange={(event) => showImage(event)}*/}
+              {/*      />*/}
+              {/*    </div>*/}
+              {/*  )}*/}
+              {/*</div>*/}
             </div>
           </div>
           <div className="buttons-profile">
