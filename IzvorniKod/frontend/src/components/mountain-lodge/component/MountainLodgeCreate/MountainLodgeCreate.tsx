@@ -18,6 +18,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert, {AlertProps} from '@material-ui/lab/Alert';
 import {UtilityOption} from "../../models/UtilityOption";
 import plus from "../../../../assets/blueplus.png";
+import {fetcher} from "../../../../Util";
 
 function Alert(props: AlertProps) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -77,14 +78,9 @@ export default function MountainLodgeCreate({hillResults, utilityResults}: Props
 
         const requestOptions = {
             method: "POST",
-            body: JSON.stringify(sRequest),
-            headers: {
-                authorization: sessionStorage.getItem("key") || "",
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            }
+            body: JSON.stringify(sRequest)
         };
-        const response = await fetch("/api/mountain-lodges/create", requestOptions);
+        const response = await fetcher("/api/mountain-lodges/create", requestOptions);
         if ((response.status) === 201 || (response.status / 10 >= 20 && response.status / 10 < 30)) {
             successMessage();
         } else {

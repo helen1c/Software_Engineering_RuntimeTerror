@@ -6,6 +6,7 @@ import {
     findAllArchivedPathsActionTypes
 } from "./findAllArchivedPathsActionTypes";
 import {MountainPathUserArchive} from "../../components/mountain-path/models/MountainPathUserArchive";
+import {fetcher} from "../../Util";
 
 export const findAllArchivedPaths = (): findAllArchivedPathsActionTypes => ({
     type: FIND_ALL_ARCHIVED_PATHS,
@@ -35,13 +36,9 @@ export const findArchivedPaths = () => (dispatch: Dispatch<findAllArchivedPathsA
 const getAllArchivedPaths = async (): Promise<MountainPathUserArchive[]> => {
 
     const requestOptions = {
-        method: "GET",
-        headers: {
-            authorization: sessionStorage.getItem("key") || "",
-            Accept: "application/json"
-        }
+        method: "GET"
     };
 
-    let result = await fetch("/api/users/archived-paths/all", requestOptions);
+    let result = await fetcher("/api/users/archived-paths/all", requestOptions);
     return result.json();
 }

@@ -9,6 +9,7 @@ import { AddAPhotoOutlined } from "@material-ui/icons";
 import moment from "moment";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import Compress from "react-image-file-resizer";
+import {fetcher} from "../../Util";
 
 export const RegistrationForm = () => {
   const [newImage, setNewImage] = useState("");
@@ -41,12 +42,9 @@ export const RegistrationForm = () => {
     onSubmit: (values) => {
       values.image = newImage.split(",")[1];
 
-      fetch("/api/users", {
+      fetcher("/api/users", {
         method: "POST",
-        body: JSON.stringify(values),
-        headers: {
-          "Content-Type": "application/json",
-        },
+        body: JSON.stringify(values)
       }).then((response) => {
         if (response.status !== HttpCodesUtil.CREATED) {
           response.text().then((errors) => {

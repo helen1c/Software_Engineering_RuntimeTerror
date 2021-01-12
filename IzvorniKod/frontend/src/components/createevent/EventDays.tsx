@@ -5,6 +5,7 @@ import { MountainPathSearch } from "./models/MountainPathSearch";
 import { MountainPathSelect } from "./models/MountainPathSelect";
 import { Paths } from "./models/Paths";
 import { EventDay } from "./EventDay";
+import {fetcher} from "../../Util";
 
 interface Props {
   cardsToRender: EventInfo[];
@@ -23,11 +24,8 @@ export const EventDays = ({
   const [selectValues, setSelectValues] = useState<MountainPathSelect[]>();
 
   useEffect(() => {
-    fetch("/api/mountain-paths/all-public", {
-      method: "GET",
-      headers: new Headers({
-        authorization: sessionStorage.getItem("key") || "",
-      }),
+    fetcher("/api/mountain-paths/all-public", {
+      method: "GET"
     }).then(function (response) {
       if (response.status === 200) {
         response.json().then((e) => {

@@ -7,6 +7,7 @@ import {
 
 import {MessageFindResult} from "../../components/message_box/models/MessageFindResult";
 import {Dispatch} from "react";
+import {fetcher} from "../../Util";
 
 export const findAllMessagesAction = () : findAllMessagesTypes => ({
     type: FIND_ALL_MESSAGES,
@@ -35,14 +36,9 @@ export const findMessages = () => (dispatch: Dispatch<findAllMessagesTypes>) => 
 
 const getAllMessages = async (): Promise<MessageFindResult[]> => {
     const requestOptions = {
-        method: "GET",
-        headers: {
-            Accept: "application/json",
-            authorization: sessionStorage.getItem("key") || "",
-            "Content-Type": "application/json"
-        }
+        method: "GET"
     };
-    const response = await fetch("/api/messages/all", requestOptions);
+    const response = await fetcher("/api/messages/all", requestOptions);
     const json = await response.json();
     return json;
 }

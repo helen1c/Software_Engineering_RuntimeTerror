@@ -8,6 +8,7 @@ import {EventDays} from "./EventDays";
 import {EventInfo} from "./EventInfo";
 import {Paths} from "./models/Paths";
 import {useHistory} from "react-router";
+import {fetcher} from "../../Util";
 
 export const CreateEventPage = () => {
     const history = useHistory();
@@ -42,13 +43,9 @@ export const CreateEventPage = () => {
                 paths: paths
             }
 
-            fetch("/api/event", {
+            fetcher("/api/event", {
                 method: "POST",
-                body: JSON.stringify(newEvent),
-                headers: new Headers({
-                    "Content-Type": "application/json",
-                    authorization: sessionStorage.getItem("key") || "",
-                }),
+                body: JSON.stringify(newEvent)
             }).then(function (response) {
                 if (response.status === 201) {
                     sessionStorage.setItem("successfulEventCreation", "true");

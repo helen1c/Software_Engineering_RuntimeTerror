@@ -6,6 +6,7 @@ import {
 } from "./findAllHillsActionTypes"
 import {HillOption} from "../../components/mountain-lodge/models/HillOption";
 import {Dispatch} from "react";
+import {fetcher} from "../../Util";
 
 
 export const findAllHills = () : findAllHillsActionTypes => ({
@@ -34,7 +35,7 @@ export const findHills = () => (dispatch: Dispatch<findAllHillsActionTypes>) => 
 }
 
 const getAllHills = async (): Promise<HillOption[]> => {
-    let result = await fetch("/api/hills/all");
+    let result = await fetcher("/api/hills/all", {method: "GET"});
     return result.json();
 }
 

@@ -23,6 +23,7 @@ import { MountaineeringCommunitySearch } from "../mountaineering-community/Mount
 import { Badges } from "../badges/Badges";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import { AddAPhotoOutlined } from "@material-ui/icons";
+import {fetcher} from "../../Util";
 
 interface Props {
   user: ViewProfileInfo;
@@ -101,13 +102,9 @@ export const ProfileUserInfo = ({ user, setUser }: Props) => {
     if (validateProfile()) {
       let transfer = { ...user };
       transfer.image = transfer.image.split(",")[1];
-      fetch("/api/users/current", {
+      fetcher("/api/users/current", {
         method: "PATCH",
-        body: JSON.stringify(transfer),
-        headers: new Headers({
-          authorization: sessionStorage.getItem("key") || "",
-          "Content-Type": "application/json",
-        }),
+        body: JSON.stringify(transfer)
       }).then((response) => {
         if (response.status === 200) {
           setOldUser(user);
@@ -120,12 +117,8 @@ export const ProfileUserInfo = ({ user, setUser }: Props) => {
 
   const handleDeleteOnClick = () => {
     setOpenDeleteModal(false);
-    fetch("/api/users/" + id, {
-      method: "DELETE",
-      headers: new Headers({
-        authorization: sessionStorage.getItem("key") || "",
-        "Content-Type": "application/json",
-      }),
+    fetcher("/api/users/" + id, {
+      method: "DELETE"
     }).then((response) => {
       if (response.status === 200) {
         if (user.isOwner) {
@@ -137,11 +130,8 @@ export const ProfileUserInfo = ({ user, setUser }: Props) => {
   };
 
   const handleAddUserAsFriend = () => {
-    fetch("/api/users/add-friend/" + id, {
-      method: "POST",
-      headers: new Headers({
-        authorization: sessionStorage.getItem("key") || "",
-      }),
+    fetcher("/api/users/add-friend/" + id, {
+      method: "POST"
     }).then(function (response) {
       if (response.status === 200) {
         setSentFriendRequest(true);
@@ -153,11 +143,8 @@ export const ProfileUserInfo = ({ user, setUser }: Props) => {
   };
 
   const handleRemoveUserAsFriend = () => {
-    fetch("/api/users/remove-friend/" + id, {
-      method: "POST",
-      headers: new Headers({
-        authorization: sessionStorage.getItem("key") || "",
-      }),
+    fetcher("/api/users/remove-friend/" + id, {
+      method: "POST"
     }).then(function (response) {
       if (response.status === 200) {
         let newUser = user;

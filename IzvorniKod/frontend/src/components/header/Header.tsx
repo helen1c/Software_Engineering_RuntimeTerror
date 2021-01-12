@@ -9,6 +9,7 @@ import { MainReducer } from "../../store/reducer";
 import { findFriendRequests } from "../../store/actions/getAndRefuseAndAcceptFriendRequestsActions";
 import { dispatchGetFriendRequestsNotifications } from "../../store/actions/getAndResolveFriendRequestsNotificationActions";
 import community from "../../assets/worldwide.png";
+import {fetcher} from "../../Util";
 
 export const Header = () => {
   const dispatch = useDispatch();
@@ -32,11 +33,8 @@ export const Header = () => {
     if (sessionStorage.getItem("key") !== null) {
       dispatch(findFriendRequests());
       dispatch(dispatchGetFriendRequestsNotifications());
-      fetch("/api/users/me", {
-        method: "GET",
-        headers: new Headers({
-          authorization: sessionStorage.getItem("key") || "",
-        }),
+      fetcher("/api/users/me", {
+        method: "GET"
       }).then(function (response) {
         if (response.status === 200) {
           response.json().then((e) => {

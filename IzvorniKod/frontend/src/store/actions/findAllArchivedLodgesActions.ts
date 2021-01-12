@@ -6,6 +6,7 @@ import {
     findAllArchivedLodgesActionTypes
 } from "./findAllArchivedLodgesActionTypes";
 import {MountainLodgeUserArchive} from "../../components/mountain-lodge/models/MountainLodgeUserArchive";
+import {fetcher} from "../../Util";
 
 export const findAllArchivedLodges = () : findAllArchivedLodgesActionTypes => ({
    type: FIND_ALL_ARCHIVED_LODGES,
@@ -35,14 +36,10 @@ export const findArchivedLodges = () => (dispatch: Dispatch<findAllArchivedLodge
 const getAllArchivedLodges = async (): Promise<MountainLodgeUserArchive[]> => {
 
     const requestOptions = {
-        method: "GET",
-        headers: {
-            authorization: sessionStorage.getItem("key") || "",
-            Accept: "application/json"
-        }
+        method: "GET"
     };
 
-    let result = await fetch("/api/users/archived-lodges/all", requestOptions);
+    let result = await fetcher("/api/users/archived-lodges/all", requestOptions);
     return result.json();
 }
 

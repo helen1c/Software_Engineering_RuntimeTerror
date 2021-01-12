@@ -5,6 +5,7 @@ import {useHistory} from "react-router";
 import Tipka from "./components/Tipka";
 import { Link } from "react-router-dom";
 import {ProfileDashboard} from "../profile/ProfileDashboard";
+import {fetcher} from "../../Util";
 
 function Footer() {
     const history = useHistory();
@@ -12,11 +13,8 @@ function Footer() {
 
     useEffect(() => {
         if (sessionStorage.getItem("key") !== null) {
-            fetch("/api/users/user/role", {
-                method: "GET",
-                headers: new Headers({
-                    authorization: sessionStorage.getItem("key") || "",
-                }),
+            fetcher("/api/users/user/role", {
+                method: "GET"
             }).then(function (response) {
                 if (response.status === 200) {
                     response.json().then((e) => {

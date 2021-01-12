@@ -3,6 +3,7 @@ import { getEmptyProfile, ViewProfileInfo } from "./models/ViewProfileInfo";
 import { useHistory } from "react-router";
 import { ProfileUserInfo } from "./ProfileUserInfo";
 import { ProfileDashboard } from "./ProfileDashboard";
+import {fetcher} from "../../Util";
 
 export const MenuProfile = () => {
   const [user, setUser] = useState<ViewProfileInfo>(getEmptyProfile);
@@ -10,11 +11,8 @@ export const MenuProfile = () => {
   const id = window.location.pathname.split("/")[2];
 
   useEffect(() => {
-    fetch("/api/users/profile/" + id, {
-      method: "GET",
-      headers: new Headers({
-        authorization: sessionStorage.getItem("key") || "",
-      }),
+    fetcher("/api/users/profile/" + id, {
+      method: "GET"
     }).then(function (response) {
       if (response.status === 200) {
         response.json().then((currentUser) => {

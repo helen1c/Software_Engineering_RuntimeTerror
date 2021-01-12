@@ -16,6 +16,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import { Alert } from "@material-ui/lab";
 import { FavoriteOutlined } from "@material-ui/icons";
 import Tipka from "../../../footer/components/Tipka";
+import {fetcher} from "../../../../Util";
 
 interface Props {
   result: MountainPathResult;
@@ -35,11 +36,8 @@ export const MountainPathSearchResult = (prop: Props) => {
 
   useEffect(() => {
     if (sessionStorage.getItem("key") !== null) {
-      fetch("/api/users/user/role", {
-        method: "GET",
-        headers: new Headers({
-          authorization: sessionStorage.getItem("key") || "",
-        }),
+      fetcher("/api/users/user/role", {
+        method: "GET"
       }).then(function (response) {
         if (response.status === 200) {
           response.json().then((e) => {
@@ -67,14 +65,9 @@ export const MountainPathSearchResult = (prop: Props) => {
 
   const archivePath = async () => {
     const requestOptions = {
-      method: "PUT",
-      headers: {
-        authorization: sessionStorage.getItem("key") || "",
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
+      method: "PUT"
     };
-    const response = await fetch(
+    const response = await fetcher(
       "/api/archive-path/user/" + prop.result.id,
       requestOptions
     );
@@ -95,14 +88,9 @@ export const MountainPathSearchResult = (prop: Props) => {
 
   const addToWishList = async () => {
     const requestOptions = {
-      method: "PATCH",
-      headers: {
-        authorization: sessionStorage.getItem("key") || "",
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
+      method: "PATCH"
     };
-    const response = await fetch(
+    const response = await fetcher(
       "/api/users/add/path-wish/" + prop.result.id,
       requestOptions
     );
@@ -123,14 +111,9 @@ export const MountainPathSearchResult = (prop: Props) => {
 
   const deleteFromWishList = async () => {
     const requestOptions = {
-      method: "DELETE",
-      headers: {
-        authorization: sessionStorage.getItem("key") || "",
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
+      method: "DELETE"
     };
-    const response = await fetch(
+    const response = await fetcher(
       "/api/users/delete/path-wish/" + prop.result.id,
       requestOptions
     );
@@ -182,12 +165,9 @@ export const MountainPathSearchResult = (prop: Props) => {
 
   const handleGradeValueChanged = async (newValue: number | null) => {
     const requestOptions = {
-      method: "GET",
-      headers: {
-        authorization: sessionStorage.getItem("key") || "",
-      },
+      method: "GET"
     };
-    const response = await fetch(
+    const response = await fetcher(
       "/api/mountain-paths/" + prop.result.id,
       requestOptions
     );

@@ -4,6 +4,7 @@ import { MessageFindResult } from "./models/MessageFindResult";
 import check from "../../assets/checkmark.png";
 import Snackbar from "@material-ui/core/Snackbar";
 import {Alert} from "@material-ui/lab";
+import {fetcher} from "../../Util";
 
 export const MessageSearchResult = () => {
   const [allMessages, setAllMessages] = useState<MessageFindResult[]>();
@@ -34,21 +35,15 @@ export const MessageSearchResult = () => {
 
   useEffect(() => {
     if (sessionStorage.getItem("key") !== null) {
-      fetch("/api/messages/all", {
-        method: "GET",
-        headers: new Headers({
-          authorization: sessionStorage.getItem("key") || "",
-        }),
+      fetcher("/api/messages/all", {
+        method: "GET"
       }).then(function (response) {
         if (response.status === 200) {
           response.json().then((e) => {
             setAllMessages(e);
           });
-          fetch("/api/users/user/role", {
-            method: "GET",
-            headers: new Headers({
-              authorization: sessionStorage.getItem("key") || "",
-            }),
+          fetcher("/api/users/user/role", {
+            method: "GET"
           }).then(function (response) {
             if (response.status === 200) {
               response.json().then((e) => {
@@ -75,13 +70,9 @@ export const MessageSearchResult = () => {
       status: message.status,
     };
 
-    fetch("/api/messages/update", {
+    fetcher("/api/messages/update", {
       method: "PATCH",
-      body: JSON.stringify(sRequest),
-      headers: new Headers({
-        authorization: sessionStorage.getItem("key") || "",
-        "Content-Type": "application/json"
-      }),
+      body: JSON.stringify(sRequest)
     }).then(function (response) {
       if (response.status === 200) {
         let messages = allMessages;

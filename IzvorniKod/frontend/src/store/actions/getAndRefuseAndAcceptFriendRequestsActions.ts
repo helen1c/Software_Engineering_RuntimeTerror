@@ -9,6 +9,7 @@ import {
 } from "./getAndRefuseAndAcceptFriendRequestsActionTypes";
 import {UserInfo} from "../../components/mountain-lodge/models/UserInfo";
 import {Dispatch} from "react";
+import {fetcher} from "../../Util";
 
 
 export const getAndRefuseAndAcceptFriendRequestsActions = () : getAndRefuseAndAcceptFriendRequestsActionTypes => ({
@@ -62,12 +63,9 @@ export const acceptFriendRequestsError = (error : string | undefined) : getAndRe
 
 const getAllFriendRequests = async () : Promise<UserInfo[]> => {
     const requestOptions = {
-        method: "GET",
-        headers: new Headers({
-            authorization: sessionStorage.getItem("key") || "",
-        }),
+        method: "GET"
     };
-    const response = await fetch("/api/users/friend-requests-received", requestOptions);
+    const response = await fetcher("/api/users/friend-requests-received", requestOptions);
     const json = await response.json().then((users) => {
         users.forEach(function (item: UserInfo) {
             item.image = "data:image/jpeg;base64," + item.image;
@@ -78,25 +76,17 @@ const getAllFriendRequests = async () : Promise<UserInfo[]> => {
 }
 const refuseFriendRequest = async (userInfo: UserInfo) : Promise<string> => {
     const requestOptions = {
-        method: "POST",
-        headers: new Headers({
-            authorization: sessionStorage.getItem("key") || "",
-            "Content-Type": "application/json",
-        }),
+        method: "POST"
     };
-    let result = await fetch("api/users/friend-request-decline/" + userInfo.id, requestOptions);
+    let result = await fetcher("api/users/friend-request-decline/" + userInfo.id, requestOptions);
     return result.text();
 }
 
 const acceptFriendRequset = async (userInfo: UserInfo) : Promise<string> => {
     const requestOption = {
-        method: "POST",
-        headers: new Headers({
-            authorization: sessionStorage.getItem("key") || "",
-            "Content-Type": "application/json",
-        }),
+        method: "POST"
     }
-    let result = await fetch("api/users/friend-request-accept/" + userInfo.id, requestOption);
+    let result = await fetcher("api/users/friend-request-accept/" + userInfo.id, requestOption);
     return result.text();
 }
 

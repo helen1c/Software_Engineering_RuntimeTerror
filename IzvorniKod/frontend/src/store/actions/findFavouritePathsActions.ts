@@ -5,6 +5,7 @@ import {
     FIND_FAVOURITE_PATHS_SUCCESS,
     findFavouritePathsActionTypes
 } from "./findFavouritePathsActionTypes";
+import {fetcher} from "../../Util";
 
 export const findFavPaths = () : findFavouritePathsActionTypes => ({
    type: FIND_FAVOURITE_PATHS,
@@ -34,14 +35,10 @@ export const findWishlist = () => (dispatch: Dispatch<findFavouritePathsActionTy
 const getPathWishlist = async (): Promise<number[]> => {
 
     const requestOptions = {
-        method: "GET",
-        headers: {
-            authorization: sessionStorage.getItem("key") || "",
-            Accept: "application/json"
-        }
+        method: "GET"
     };
 
-    let result = await fetch("/api/users/path-wishlist", requestOptions);
+    let result = await fetcher("/api/users/path-wishlist", requestOptions);
     return result.json();
 }
 

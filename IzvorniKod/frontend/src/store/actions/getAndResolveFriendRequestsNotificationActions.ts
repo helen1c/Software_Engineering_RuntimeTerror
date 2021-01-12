@@ -9,6 +9,7 @@ import {
     RESOLVE_FRIEND_REQUEST_NOTIFICATION_ERROR,
     RESOLVE_FRIEND_REQUEST_NOTIFICATION_SUCCESS
 } from "./getAndResolveFriendRequestsNotificationActionTypes";
+import {fetcher} from "../../Util";
 
 
 export const getFriendRequestsNotification = () : getAndResolveFriendRequestsNotificationActionTypes => ({
@@ -45,12 +46,9 @@ export const resolveFriendRequestsNotificationError = (error : string | undefine
 
 const getAllFriendRequestsNotifications = async () : Promise<UserInfo[]> => {
     const requestOptions = {
-        method: "GET",
-        headers: new Headers({
-            authorization: sessionStorage.getItem("key") || "",
-        }),
+        method: "GET"
     };
-    const response = await fetch("/api/users/notifications", requestOptions);
+    const response = await fetcher("/api/users/notifications", requestOptions);
     const json = await response.json().then((users) => {
         users.forEach(function (item: UserInfo) {
             item.image = "data:image/jpeg;base64," + item.image;
@@ -62,12 +60,9 @@ const getAllFriendRequestsNotifications = async () : Promise<UserInfo[]> => {
 
 const resolveFriendRequestNotification = async (userInfo: UserInfo) : Promise<string> => {
     const requestOptions = {
-        method: "DELETE",
-        headers: new Headers({
-            authorization: sessionStorage.getItem("key") || "",
-        }),
+        method: "DELETE"
     };
-    let result = await fetch("/api/users/notifications/" + userInfo.id, requestOptions);
+    let result = await fetcher("/api/users/notifications/" + userInfo.id, requestOptions);
     return result.text();
 }
 

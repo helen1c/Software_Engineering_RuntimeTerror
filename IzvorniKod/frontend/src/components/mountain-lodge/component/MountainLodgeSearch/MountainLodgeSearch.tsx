@@ -12,6 +12,7 @@ import { MountainLodgeSearchResult } from "../MountainLodgeSearchResult/Mountain
 import { MountainLodgeResult } from "../../models/MountainLodgeResult";
 import { findArchivedLodges } from "../../../../store/actions/findAllArchivedLodgesActions";
 import MountainLodgeCreate from "../MountainLodgeCreate/MountainLodgeCreate";
+import {fetcher} from "../../../../Util";
 
 export const MountainLodgeSearch = () => {
   const dispatcher = useDispatch();
@@ -33,14 +34,10 @@ export const MountainLodgeSearch = () => {
 
     const requestOptions = {
       method: "POST",
-      body: JSON.stringify(sRequest),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
+      body: JSON.stringify(sRequest)
     };
 
-    const response = await fetch("/api/mountain-lodges/search", requestOptions);
+    const response = await fetcher("/api/mountain-lodges/search", requestOptions);
     const json = await response.json();
 
     if(sessionStorage.getItem("key"))
@@ -57,11 +54,8 @@ export const MountainLodgeSearch = () => {
       setLoggedIn(false);
       return;
     } else {
-        fetch("/api/users/is-admin", {
-            method: "GET",
-            headers: new Headers({
-                authorization: sessionStorage.getItem("key") || "",
-            }),
+        fetcher("/api/users/is-admin", {
+            method: "GET"
         }).then(function (response) {
             if (response.status === 200) {
                 response.json().then((e) => {

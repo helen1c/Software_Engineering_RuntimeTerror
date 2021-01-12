@@ -15,6 +15,7 @@ import { findArchivedPaths } from "../../../../store/actions/findAllArchivedPath
 import { findGradedPaths } from "../../../../store/actions/findAllGradedPathsActions";
 import { findWishlist } from "../../../../store/actions/findFavouritePathsActions";
 import MountainPathCreate from "../MountainPathCreate/MountainPathCreate";
+import {fetcher} from "../../../../Util";
 
 export const MountainPathSearch = () => {
   const dispatcher = useDispatch();
@@ -43,14 +44,10 @@ export const MountainPathSearch = () => {
 
     const requestOptions = {
       method: "POST",
-      body: JSON.stringify(sRequest),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
+      body: JSON.stringify(sRequest)
     };
 
-    const response = await fetch("/api/mountain-paths/search", requestOptions);
+    const response = await fetcher("/api/mountain-paths/search", requestOptions);
     const json = await response.json();
 
     setSearchResults(json);

@@ -7,6 +7,7 @@ import {
 } from "./findAllGradedPathsActionTypes";
 
 import {MountainPathUserGrade} from "../../components/mountain-path/models/MountainPathUserGrade";
+import {fetcher} from "../../Util";
 
 export const findAllGradedPaths = (): findAllGradedPathsActionTypes => ({
     type: FIND_ALL_GRADED_PATHS,
@@ -36,13 +37,9 @@ export const findGradedPaths = () => (dispatch: Dispatch<findAllGradedPathsActio
 const getAllGradedPaths = async (): Promise<MountainPathUserGrade[]> => {
 
     const requestOptions = {
-        method: "GET",
-        headers: {
-            authorization: sessionStorage.getItem("key") || "",
-            Accept: "application/json"
-        }
+        method: "GET"
     };
 
-    let result = await fetch("/api/users/graded-paths/all", requestOptions);
+    let result = await fetcher("/api/users/graded-paths/all", requestOptions);
     return result.json();
 }

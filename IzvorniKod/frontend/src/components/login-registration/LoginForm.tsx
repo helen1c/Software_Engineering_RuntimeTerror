@@ -6,6 +6,7 @@ import "./LoginAndRegistrationForm.css";
 import loginImage from "../../assets/login-image.png";
 import Snackbar from "@material-ui/core/Snackbar";
 import { Alert } from "@material-ui/lab";
+import {fetcher} from "../../Util";
 
 export const LoginForm = () => {
   const [showError, setShowError] = useState<boolean>(false);
@@ -44,12 +45,9 @@ export const LoginForm = () => {
         email: values.email,
         password: values.password,
       };
-      fetch("/api/login", {
+      fetcher("/api/login", {
         method: "POST",
-        body: JSON.stringify(loginInfo),
-        headers: {
-          "Content-Type": "application/json",
-        },
+        body: JSON.stringify(loginInfo)
       }).then(function (response) {
         if (
           response.status === HttpCodesUtil.UNAUTHORIZED ||

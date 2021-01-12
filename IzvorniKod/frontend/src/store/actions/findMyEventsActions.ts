@@ -7,6 +7,7 @@ import {
 
 import {EventResult} from "../../components/event/models/EventResult";
 import {Dispatch} from "react";
+import {fetcher} from "../../Util";
 
 export const findMyEvents = () : findMyEventsActionsTypes => ({
     type: FIND_MY_EVENTS,
@@ -35,12 +36,8 @@ export const findEvents = () => (dispatch: Dispatch<findMyEventsActionsTypes>) =
 
 const getMyEvents = async (): Promise<EventResult[]> => {
     const requestOptions = {
-        method: "GET",
-        headers: {
-            authorization: sessionStorage.getItem("key") || "",
-            Accept: "application/json"
-        }
+        method: "GET"
     };
-    const response = await fetch("/api/event/by-author", requestOptions);
+    const response = await fetcher("/api/event/by-author", requestOptions);
     return await response.json();
 }

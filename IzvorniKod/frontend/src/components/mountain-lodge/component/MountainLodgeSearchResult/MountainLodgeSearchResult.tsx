@@ -6,6 +6,7 @@ import {HttpCodesUtil} from "../../../../errors/HttpCodesUtil";
 import Snackbar from "@material-ui/core/Snackbar";
 import {Alert} from "@material-ui/lab";
 import Tipka from "../../../footer/components/Tipka";
+import {fetcher} from "../../../../Util";
 
 interface Props {
     result: MountainLodgeResult,
@@ -25,11 +26,8 @@ export const MountainLodgeSearchResult = (prop: Props) => {
 
     useEffect(() => {
         if (sessionStorage.getItem("key") !== null) {
-            fetch("/api/users/user/role", {
-                method: "GET",
-                headers: new Headers({
-                    authorization: sessionStorage.getItem("key") || "",
-                }),
+            fetcher("/api/users/user/role", {
+                method: "GET"
             }).then(function (response) {
                 if (response.status === 200) {
                     response.json().then((e) => {
@@ -45,14 +43,9 @@ export const MountainLodgeSearchResult = (prop: Props) => {
     const archiveLodge = async () => {
 
         const requestOptions = {
-            method: "PUT",
-            headers: {
-                authorization: sessionStorage.getItem("key") || "",
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            }
+            method: "PUT"
         };
-        const response = await fetch("/api/archive-lodge/user/" + prop.result.id, requestOptions);
+        const response = await fetcher("/api/archive-lodge/user/" + prop.result.id, requestOptions);
 
         if (response.status === HttpCodesUtil.SUCCESS) {
             setSuccess(true);
@@ -65,14 +58,9 @@ export const MountainLodgeSearchResult = (prop: Props) => {
 
     const deleteLodge = async () => {
         const requestOptions = {
-            method: "DELETE",
-            headers: {
-                authorization: sessionStorage.getItem("key") || "",
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            }
+            method: "DELETE"
         };
-        const response = await fetch("/api/mountain-lodges/delete/" + prop.result.id, requestOptions);
+        const response = await fetcher("/api/mountain-lodges/delete/" + prop.result.id, requestOptions);
 
         if (response.status === HttpCodesUtil.SUCCESS) {
             setExists(false);

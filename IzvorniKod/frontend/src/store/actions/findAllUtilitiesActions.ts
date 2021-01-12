@@ -6,6 +6,7 @@ import {
 } from "./findAllUtilitiesActionTypes"
 import {Dispatch} from "react";
 import {UtilityOption} from "../../components/mountain-lodge/models/UtilityOption";
+import {fetcher} from "../../Util";
 
 
 export const findAllUtilities = () : findAllUtilitiesActionTypes => ({
@@ -34,7 +35,7 @@ export const findUtilities = () => (dispatch: Dispatch<findAllUtilitiesActionTyp
 }
 
 const getAllUtilities = async (): Promise<UtilityOption[]> => {
-    let result = await fetch("/api/utilities/all");
+    let result = await fetcher("/api/utilities/all", {method: "GET"});
     return result.json();
 }
 

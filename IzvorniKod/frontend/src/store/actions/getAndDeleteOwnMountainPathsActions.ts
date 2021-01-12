@@ -9,6 +9,7 @@ import {
     getAndDeleteOwnMountainPathsActionTypes
 } from "./getAndDeleteOwnMountainPathsActionTypes";
 import {MyMountainPathResult} from "../../components/mountain-path/models/MyMountainPathResult";
+import {fetcher} from "../../Util";
 
 export const getOwnPaths = () : getAndDeleteOwnMountainPathsActionTypes => ({
    type: GET_OWN_PATHS,
@@ -64,26 +65,18 @@ export const dispatchDeleteOwnMountainPath = (id: number) => (dispatch: Dispatch
 
 const deletePath = async (id: number): Promise<string> => {
     const requestOptions = {
-        method: "DELETE",
-        headers: {
-            authorization: sessionStorage.getItem("key") || "",
-            Accept: "application/json"
-        }
+        method: "DELETE"
     };
-    let result = await fetch("/api/mountain-paths/" + id, requestOptions);
+    let result = await fetcher("/api/mountain-paths/" + id, requestOptions);
     return result.text();
 }
 
 const getMyPaths = async (): Promise<MyMountainPathResult[]> => {
 
     const requestOptions = {
-        method: "GET",
-        headers: {
-            authorization: sessionStorage.getItem("key") || "",
-            Accept: "application/json"
-        }
+        method: "GET"
     };
 
-    let result = await fetch("/api/mountain-paths/by-user", requestOptions);
+    let result = await fetcher("/api/mountain-paths/by-user", requestOptions);
     return result.json();
 }

@@ -6,6 +6,7 @@ import Switch from "@material-ui/core/Switch";
 import opened from "../../../../assets/open-lock.png"
 import {useDispatch} from "react-redux";
 import {dispatchDeleteOwnMountainPath} from "../../../../store/actions/getAndDeleteOwnMountainPathsActions";
+import {fetcher} from "../../../../Util";
 
 interface Props {
     result: MyMountainPathResult
@@ -24,15 +25,11 @@ export const MyMountainPath = ({result}: Props) => {
     const makePathPublic = async () => {
 
         const requestOptions = {
-            method: "PATCH",
-            headers: {
-                authorization: sessionStorage.getItem("key") || "",
-                Accept: "application/json"
-            }
+            method: "PATCH"
         };
 
         if (result.isPrivate) {
-            const response = await fetch("/api/mountain-paths/update-private/" + result.id, requestOptions);
+            const response = await fetcher("/api/mountain-paths/update-private/" + result.id, requestOptions);
             const message = await response.text()
             console.log(message);
             if (response.status === 200) {

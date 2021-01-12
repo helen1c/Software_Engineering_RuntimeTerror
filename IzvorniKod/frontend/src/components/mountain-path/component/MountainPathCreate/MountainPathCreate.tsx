@@ -19,6 +19,7 @@ import 'semantic-ui-css/semantic.min.css'
 import TimePicker, {TimePickerValue} from "react-time-picker";
 import {HttpCodesUtil} from "../../../../errors/HttpCodesUtil";
 import plus from "../../../../assets/plus.png";
+import {fetcher} from "../../../../Util";
 
 function Alert(props: AlertProps) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -91,14 +92,10 @@ export default function MountainPathCreate() {
 
         const requestOptions = {
             method: "POST",
-            body: JSON.stringify(sRequest),
-            headers: {
-                authorization: sessionStorage.getItem("key") || "",
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            }
+            body: JSON.stringify(sRequest)
         };
-        const response = await fetch("/api/mountain-paths/create", requestOptions);
+
+        const response = await fetcher("/api/mountain-paths/create", requestOptions);
         if((response.status) === HttpCodesUtil.CREATED || (response.status / 10 >= 20 && response.status/10 < 30)){
             setOpen(false);
             resetForm();
@@ -106,6 +103,7 @@ export default function MountainPathCreate() {
             setAlreadyExists(false);
             successMessage();
         } else{
+
             if(response.status === HttpCodesUtil.BAD_REQUEST) {
                 setAlreadyExists(true);
             } else {

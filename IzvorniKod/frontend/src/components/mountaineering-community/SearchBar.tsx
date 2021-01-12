@@ -4,6 +4,7 @@ import { useFormik } from "formik";
 import { UserInfo } from "../mountain-lodge/models/UserInfo";
 import {HttpCodesUtil} from "./HttpCodesUtil";
 import "./SearchBar.css";
+import {fetcher} from "../../Util";
 
 interface Props {
   dataFunction: (userArray: UserInfo[]) => void;
@@ -12,11 +13,8 @@ interface Props {
 export const SearchBar = ({ dataFunction }: Props) => {
   const [allUsers, setAllUsers] = useState<UserInfo[]>([]);
   useEffect(() => {
-    fetch("/api/users/get-friends", {
-      method: "GET",
-      headers: new Headers({
-        authorization: sessionStorage.getItem("key") || "",
-      }),
+    fetcher("/api/users/get-friends", {
+      method: "GET"
     }).then(function (response) {
       if (response.status === HttpCodesUtil.SUCCESS) {
         response.json().then((users) => {

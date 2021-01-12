@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import Rating from '@material-ui/lab/Rating';
 import {findGradedPaths} from "../../../../store/actions/findAllGradedPathsActions";
 import {useDispatch} from "react-redux";
+import {fetcher} from "../../../../Util";
 
 interface Props {
     mountainPathId: number,
@@ -36,14 +37,9 @@ export default function MountainPathRating({mountainPathId, initialValue, onValu
     };
 
     const gradeMountainPath = (request: { mountainPathId: number, grade: number | null }) => {
-        return fetch("/api/mountain-paths/grade", {
+        return fetcher("/api/mountain-paths/grade", {
             method: "POST",
-            body: JSON.stringify(request),
-            headers: new Headers({
-                authorization: sessionStorage.getItem("key") || "",
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            }),
+            body: JSON.stringify(request)
         }).then(() => {
             dispatcher(findGradedPaths());
         });
@@ -51,13 +47,8 @@ export default function MountainPathRating({mountainPathId, initialValue, onValu
 
 
     const deleteMountainPathGrade = (request: { mountainPathId: number }) => {
-        return fetch("/api/mountain-paths/grade/delete/" + mountainPathId, {
-            method: "POST",
-            headers: new Headers({
-                authorization: sessionStorage.getItem("key") || "",
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            }),
+        return fetcher("/api/mountain-paths/grade/delete/" + mountainPathId, {
+            method: "POST"
         }).then(() => {
             dispatcher(findGradedPaths());
         });

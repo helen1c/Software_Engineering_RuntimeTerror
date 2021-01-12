@@ -10,6 +10,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import {MessageForm} from "../models/MessageForm";
 import MuiAlert, {AlertProps} from "@material-ui/lab/Alert";
 import Snackbar from "@material-ui/core/Snackbar";
+import {fetcher} from "../../../Util";
 
 function Alert(props: AlertProps) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -59,14 +60,9 @@ export const Tipka = (prop : Props) =>{
         };
         const requestOptions = {
             method: "POST",
-            body: JSON.stringify(sRequest),
-            headers: {
-                Accept: "application/json",
-                authorization: sessionStorage.getItem("key") || "",
-                "Content-Type": "application/json"
-            }
+            body: JSON.stringify(sRequest)
         };
-        const response = await fetch("/api/messages/send", requestOptions);
+        const response = await fetcher("/api/messages/send", requestOptions);
         if ((response.status) === 201 || (response.status / 10 >= 20 && response.status / 10 < 30)) {
             successMessage();
         } else {

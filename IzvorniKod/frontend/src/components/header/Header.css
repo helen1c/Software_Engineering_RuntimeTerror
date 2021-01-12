@@ -44,6 +44,7 @@
     background-size: cover;
     object-fit: cover;
     margin-right: 3rem;
+    cursor: pointer;
 }
 
 .link{

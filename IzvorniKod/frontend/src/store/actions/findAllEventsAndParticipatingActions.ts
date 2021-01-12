@@ -13,6 +13,7 @@ import {
 import {EventResult} from "../../components/event/models/EventResult";
 import {Dispatch} from "react";
 import {EventParticipatingResponse} from "../../components/event/models/EventParticipatingResponse";
+import {fetcher} from "../../Util";
 
 export const participateEvent = () : findAllEventsAndParticipatingActionTypes => ({
    type: PARTICIPATE_ON_EVENT,
@@ -92,37 +93,25 @@ export const unparticipate = (event_id:number) => (dispatch: Dispatch<findAllEve
 
 const getAllEvents = async (): Promise<EventResult[]> => {
     const requestOptions = {
-        method: "GET",
-        headers: {
-            authorization: sessionStorage.getItem("key") || "",
-            Accept: "application/json"
-        }
+        method: "GET"
     };
-    const response = await fetch("/api/event/all", requestOptions);
+    const response = await fetcher("/api/event/all", requestOptions);
     return await response.json();
 }
 
 const participateOnMountainEvent = async (event_id: number): Promise<EventParticipatingResponse> => {
     const requestOptions = {
-        method: "PATCH",
-        headers: {
-            authorization: sessionStorage.getItem("key") || "",
-            Accept: "application/json"
-        }
+        method: "PATCH"
     };
-    const response = await fetch("/api/event/participate/" + event_id, requestOptions);
+    const response = await fetcher("/api/event/participate/" + event_id, requestOptions);
     return await response.json();
 }
 
 const unParticipateOnMountainEvent = async (event_id: number): Promise<EventParticipatingResponse> => {
     const requestOptions = {
-        method: "PATCH",
-        headers: {
-            authorization: sessionStorage.getItem("key") || "",
-            Accept: "application/json"
-        }
+        method: "PATCH"
     };
-    const response = await fetch("/api/event/departicipate/" + event_id, requestOptions);
+    const response = await fetcher("/api/event/departicipate/" + event_id, requestOptions);
     return await response.json();
 }
 

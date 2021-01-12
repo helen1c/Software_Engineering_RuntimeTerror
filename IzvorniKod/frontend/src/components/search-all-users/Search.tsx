@@ -3,6 +3,7 @@ import {UserInfo} from "../mountain-lodge/models/UserInfo";
 import {HttpCodesUtil} from "../mountaineering-community/HttpCodesUtil";
 import {useFormik} from "formik";
 import "./Search.css";
+import {fetcher} from "../../Util";
 
 interface Props{
     dataFunction: (userArray: UserInfo[]) => void;
@@ -12,11 +13,8 @@ interface Props{
 export const Search = ({dataFunction,stateFunction} : Props) =>{
     const [allUsers, setAllUsers] = useState<UserInfo[]>([]);
     useEffect(() => {
-        fetch("/api/users/get-all-users", {
-            method: "GET",
-            headers: new Headers({
-                authorization: sessionStorage.getItem("key") || "",
-            }),
+        fetcher("/api/users/get-all-users", {
+            method: "GET"
         }).then(function (response) {
             if (response.status === HttpCodesUtil.SUCCESS) {
                 response.json().then((users) => {
