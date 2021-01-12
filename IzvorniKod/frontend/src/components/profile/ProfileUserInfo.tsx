@@ -359,7 +359,7 @@ export const ProfileUserInfo = ({ user, setUser }: Props) => {
                 }}
               />
               {user.image ? (
-                <div className={"wrapper-picture"}>
+                <div className={"wrapper-picture"} id={"wp"}>
                   <img
                     style={{ display: "block" }}
                     className="profileImage"
@@ -370,6 +370,7 @@ export const ProfileUserInfo = ({ user, setUser }: Props) => {
                     <>
                       <span
                         className={"remove-picture"}
+                        id={"rp"}
                         onClick={() => setUser({ ...user, image: "" })}
                       >
                         <DeleteForeverIcon />
@@ -381,7 +382,7 @@ export const ProfileUserInfo = ({ user, setUser }: Props) => {
                 <>
                   <div className={"wrapper-picture"}>
                     <div className={"picture-container"}>
-                      <label htmlFor="icon-button-file">
+                      <label htmlFor="icon-button-file" id="label-profil">
                         <IconButton
                           color="primary"
                           aria-label="upload picture"

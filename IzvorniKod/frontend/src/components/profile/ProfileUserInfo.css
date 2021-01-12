@@ -21,6 +21,22 @@ h1.profile-info-title {
 
 }
 
+#rp {
+    height: 1.8rem;
+    margin-right: 12px;
+}
+
+#wp {
+    width: 250px;
+    align-self: center;
+}
+
+#label-profil {
+    display: flex;
+    flex-direction: row;
+    justify-content: center
+}
+
 .profile-info-text {
     font-family: Roboto, 'sans-serif';
     font-style: normal;
