@@ -104,12 +104,13 @@
 					\item upravljati planinarskim stazama
 						\begin{packed_enum}
 							\item pregled prijavljenih netočnih i nepreciznih informacija vezanih uz objavljene planinarske staze
-						
+
 						\end{packed_enum}	
 					\item upravljati planinarskim domovima
 					\begin{packed_enum}
 						\item pregled prijavljenih netočnih i nepreciznih informacija vezanih uz objavljene planinarske domove
 						\item stvaranje novog planinarskog doma
+						\item obrisati postojeći planinarski dom
 					\end{packed_enum}
 					\item pregledati poruke koje su poslali planinari
 					
@@ -884,6 +885,37 @@
 				
 				
 			\end{packed_enum}
+		\end{packed_item}
+			\noindent \underbar{\textbf{UC$ $30$ $ -$ $Obrisati postojeći planinarski dom$ $}}
+		\begin{packed_item}
+			
+			\item \textbf{Glavni sudionik: }$ $Administrator$ $
+			\item  \textbf{Cilj:} $ $Obrisati postojeće planinarske domove $ $
+			\item  \textbf{Sudionici:} $ $Baza podataka $ $
+			\item  \textbf{Preduvjet:} $ $Korisniku je u bazi podataka dodijeljena uloga Administratora$ $
+			\item  \textbf{Opis osnovnog tijeka:}
+			
+			\item[] \begin{packed_enum}
+				
+				\item $ $Administrator odabire opciju pregleda svih planinarskih domova$ $
+				\item $ $Administrator odabire opciju "Uklonite planinarski dom"$ $ 
+				\item $ $Sustav pita korisnika je li siguran da želi obrisati planinarski dom$ $
+				\item $ $Administrator je siguran da želi obrisati planinarski dom$ $
+				\item $ $Sustav uklanja planinarski dom iz baze podataka $ $
+				
+			\end{packed_enum}
+			
+			\item  \textbf{Opis mogućih odstupanja:}
+			
+			\item[] \begin{packed_item}
+				
+				\item[1.a] $ $Administrator odustaje od brisanja planinarskog doma$ $
+				\item[] \begin{packed_enum}
+					
+					\item $ $Sustav vraća administratora na popis svih planinarskih domova$ $
+				\end{packed_enum}
+			\end{packed_item}
+			
 		\end{packed_item}
 	
 		
