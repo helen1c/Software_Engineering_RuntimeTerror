@@ -545,12 +545,139 @@
 		
 		\section{Upute za puštanje u pogon}
 		
-			\textbf{\textit{dio 2. revizije}}\\
+			U ovom poglavlju će biti opisano puštanje aplikacije u pogon, odnosno jedan od načina da se od izvornog koda dođe do funkcionalne aplikacije koja odgovara na upite.
+			Aplikacija je u pogon puštena na servis Heroku\footnote{https://www.heroku.com/home} (platforma kao usluga). Prije početka, potrebno je napraviti korisnički račun na toj platformi, pritiskom na gumb \textbf{Sign up for free}, a nakon toga i prijaviti\footnote{https://id.heroku.com/login} na platformu. Nakon prijave otvara se ekran koji prikazuje popis Vaših aplikacija te mogućnost stvaranja nove aplikacije, kao na slici. Ako ste se prvi put registrirali, ovaj popis će biti prazan.
+			\begin{figure}[H]
+				\includegraphics[width=170mm, height=70mm]{slike/heroku-dash.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+				\centering
+				\caption{Heroku dashboard}
+				\label{fig:dijagramdeployment}
+			\end{figure}
+			\eject 
+			
+			Pritiskom na gumb za stvaranje nove aplikacije, otvara se prozor kao na slici, gdje unosite željeni naziv aplikacije, u našem slučaju \textit{deploy-demo-frontend}.
+			
+			\begin{figure}[H]
+				\includegraphics[width=120mm, height=80mm]{slike/heroku-create-fr.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+				\centering
+				\caption{Stvaranje frontenda - Heroku}
+				\label{fig:dijagramdeployment}
+			\end{figure}
+			\eject 
+			
+			Nakon toga se otvara upravljač za Vašu aplikaciju, odaberite \textbf{Settings} te nakon toga gumb \textbf{Add buildpack}, kao na slici.
+			
+			\begin{figure}[H]
+				\includegraphics[width=160mm, height=140mm]{slike/heroku-settings.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+				\centering
+				\caption{Dodavanje buildpacka}
+				\label{fig:dijagramdeployment}
+			\end{figure}
+			\eject 
+			Nakon otvaranja novog prozora, upište sljedeći URL: \textit{https://github.com/mars/create-react-app-buildpack.git}, kao na slici.
+			\begin{figure}[H]
+				\includegraphics[width=130mm, height=80mm]{slike/heroku-buildp.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+				\centering
+				\caption{Dodavanje buildpacka}
+				\label{fig:dijagramdeployment}
+			\end{figure}
+			
+			Na istom mjestu možete pronaći i domenu Vaše aplikacije, ona će uvijek biti u obliku \textbf{https://APP-NAME.herokuapp.com/}, gdje je APP-NAME Vaš odabrani naziv aplikacije. U našem slučaju to bi bilo: \textbf{https://deploy-demo-frontend.herokuapp.com/}.
+			Na analogan način treba postupiti i s dodavanjem poslužiteljskog dijela aplikacije, samo ovoga puta nakon stvaranja aplikacije \textbf{nije potrebno dodavati buildpack} zato što je poslužiteljski dio aplikacije pisan u Javi, s \textit{Gradle-om} kao upravljačem.
+			
+			Za dodavanje \textit{PostgreSQL} baze podataka na backendu, nakon stvaranja aplikacije pratite niže navedene korake. Prilikom odabira za koju aplikaciju stvarate bazu podataka, odaberite poslužiteljsku stranu, u našem slučaju \textit{deploy-demo-backend}.
+			
+			\begin{figure}[H]
+				\includegraphics[width=110mm, height=60mm]{slike/heroku-create-b.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+				\centering
+				\caption{Dodavanje backenda}
+				\label{fig:dijagramdeployment}
+			\end{figure}
+			\begin{figure}[H]
+				\includegraphics[width=150mm, height=70mm]{slike/heroku-adddb.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+				\centering
+				\caption{Dodavanje baze podataka prvi korak}
+				\label{fig:dijagramdeployment}
+			\end{figure}
+			\begin{figure}[H]
+				\includegraphics[width=50mm, height=50mm]{slike/heroku-pgaddon.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+				\centering
+				\caption{Dodavanje baze podataka drugi korak}
+				\label{fig:dijagramdeployment}
+			\end{figure}
+			\begin{figure}[H]
+				\includegraphics[width=130mm, height=60mm]{slike/heroku-insaddon.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+				\centering
+				\caption{Dodavanje baze podataka treći korak}
+				\label{fig:dijagramdeployment}
+			\end{figure}
+			\begin{figure}[H]
+				\includegraphics[width=130mm, height=60mm]{slike/heroku-submit.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+				\centering
+				\caption{Dodavanje baze podataka četvrti korak}
+				\label{fig:dijagramdeployment}
+			\end{figure}
+			
+			Sada je sve spremno za postavljanje našeg izvornog koda na udaljeni poslužitelj koji pruža \textit{Heroku}.
+			
+			Nakon stvaranja aplikacija na Heroku i uspostavljanja baze, sa URL-a \footnote{https://gitlab.com/Pi-FER/RuntimeTerror/-/tree/final-deploy/IzvorniKod} potrebno je preuzeti naš Izvorni kod, preporučljivo kao ZIP arhivu zbog monorepozitorija, te ju raspakirati na lokalnom računalu. Nakon toga potrebno je preuzeti \textit{HerokuCLI}\footnote{https://devcenter.heroku.com/articles/heroku-cli}.
+			Nakon što ste preuzeli izvorni kod, pozicionirajte se u direktorij \textit{IzvorniKod} u Vašem terminalu.
+			Nakon toga unesite naredbu 
+			
+			\begin{lstlisting}[language=bash]
+				heroku login
+			\end{lstlisting}
+			 te se prijavite na Vaš Heroku korisnički račun.
+			\begin{figure}[H]
+				\includegraphics[width=160mm]{slike/h-login.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+				\centering
+				\caption{Dodavanje baze podataka četvrti korak}
+				\label{fig:dijagramdeployment}
+			\end{figure}
+			Nakon toga je potrebno otvoriti: 
+			\begin{lstlisting}[language=bash]
+				IzvorniKod\frontend\src\Util.ts
+			\end{lstlisting}
+			te zamijeniti postojeći varijablu \textbf{PROD\_ENV} URL-om Vašeg poslužiteljskog dijela aplikacije. Na slici je prikazan URL u ovom demonstracijskom slučaju.
+			\begin{lstlisting}[language=bash]
+				const PROD_ENV = "https://deploy-demo-backend.herokuapp.com";
+			\end{lstlisting}
 		
-			 \textit{U ovom poglavlju potrebno je dati upute za puštanje u pogon (engl. deployment) ostvarene aplikacije. Na primjer, za web aplikacije, opisati postupak kojim se od izvornog kôda dolazi do potpuno postavljene baze podataka i poslužitelja koji odgovara na upite korisnika. Za mobilnu aplikaciju, postupak kojim se aplikacija izgradi, te postavi na neku od trgovina. Za stolnu (engl. desktop) aplikaciju, postupak kojim se aplikacija instalira na računalo. Ukoliko mobilne i stolne aplikacije komuniciraju s poslužiteljem i/ili bazom podataka, opisati i postupak njihovog postavljanja. Pri izradi uputa preporučuje se \textbf{naglasiti korake instalacije uporabom natuknica} te koristiti što je više moguće \textbf{slike ekrana} (engl. screenshots) kako bi upute bile jasne i jednostavne za slijediti.}
+			Nakon ovoga klijentska strana aplikacije spremna je za puštanje u pogon.	
+			Isti postupak ćemo napraviti i na poslužiteljskoj strani, otvorite datoteku:
+			\begin{lstlisting}[language=bash]
+				IzvorniKod\backend\src\hr\fer\src\main\java\pi\planinarskidnevnik
+				\PlaninarskiDnevnikApplication.java
+			\end{lstlisting}
+			te u dopuštene izvore dodajte URL Vaše klijentske strane aplikacije. U našem slučaju to bi izgledalo ovako:
 			
+			\begin{lstlisting}[language=java]
+				allowedOrigins("https://deploy-demo-frontend.herokuapp.com")
+			\end{lstlisting}
+			Nakon toga se pozicionirajte u \textit{IzvorniKod} te unesite redom naredbe:
+			\begin{lstlisting}[language=bash]
+				cd backend
+				git init
+				heroku git:remote -a deploy-demo-backend
+				
+				git add .
+				git commit -am "initial commit"
+				git push heroku master
+			\end{lstlisting}
 			
-			 \textit{Dovršenu aplikaciju potrebno je pokrenuti na javno dostupnom poslužitelju. Studentima se preporuča korištenje neke od sljedećih besplatnih usluga: \href{https://aws.amazon.com/}{Amazon AWS}, \href{https://azure.microsoft.com/en-us/}{Microsoft Azure} ili \href{https://www.heroku.com/}{Heroku}. Mobilne aplikacije trebaju biti objavljene na F-Droid, Google Play ili Amazon App trgovini.}
+			gdje ćete umjesto \textbf{deploy-demo-backend} unijeti ime Vašeg poslužiteljskog dijela aplikacije. Nakon nekoliko minuta će proces unutar naredbenog retka završiti porukom uspjeha te je poslužiteljski dio aplikacije pušten u pogon.
 			
+			Preostalo je još u pogon pustiti klijentski dio aplikacije. Unesite sljedeće naredbe:
+			\begin{lstlisting}[language=bash]
+				cd ../frontend
+				git init
+				heroku git:remote -a deploy-demo-frontend
+				
+				git add .
+				git commit -am "initial commit"
+				git push heroku master
+			\end{lstlisting}
+			gdje ćete umjesto \textbf{deploy-demo-frontend} unijeti ime Vašeg klijentskog dijela aplikacije. Ovaj proces će potrajati nekoliko minuta duže od poslužiteljskog dijela aplikacije. Naravno, pretpostavka je da imate instaliran \textit{Git}\footnote{https://git-scm.com/}.
+			Nakon završetka, aplikacija je dostupna na URL-u.\footnote{https://deploy-demo-frontend.herokuapp.com/home}
 			
 			\eject 
