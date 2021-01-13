@@ -533,10 +533,14 @@
 		
 		\section{Dijagram razmještaja}
 			
-			\textbf{\textit{dio 2. revizije}}
-			
-			 \textit{Potrebno je umetnuti \textbf{specifikacijski} dijagram razmještaja i opisati ga. Moguće je umjesto specifikacijskog dijagrama razmještaja umetnuti dijagram razmještaja instanci, pod uvjetom da taj dijagram bolje opisuje neki važniji dio sustava.}
-			
+			Dijagrami razmještaja opisuju topologiju fizikalnih uređaja i radnih okruženja koja se koriste u implementaciji sustava. Na korisničkom računalu se nalazi web poslužitelj kao pristupna točka aplikaciji. Na samom poslužitelju imamo našu PostgreSQL bazu podataka i backend koji služi za razmjenu HTTP zahtjeva s korisnikom i obrađivanje transakcija s bazom podataka. Sustav je baziran na arhitekturi "klijent - poslužitelj".
+			 
+			\begin{figure}[H]
+				\includegraphics[width=160mm, height=155mm]{dijagrami/deployment diagram.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+				\centering
+				\caption{Dijagram razmještaja}
+				\label{fig:dijagramdeployment}
+			\end{figure}
 			\eject 
 		
 		\section{Upute za puštanje u pogon}

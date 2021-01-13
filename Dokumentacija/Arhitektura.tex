@@ -784,21 +784,77 @@
 			
 			\eject
 		
-		%\section{Dijagram stanja}
+		\section{Dijagram stanja}
 			
-			
-		%	\textbf{\textit{dio 2. revizije}}\\
-		%	
-		%	\textit{Potrebno je priložiti dijagram stanja i opisati ga. Dovoljan je jedan dijagram stanja koji prikazuje \textbf{značajan dio funkcionalnosti} sustava. Na primjer, stanja korisničkog sučelja i tijek korištenja neke ključne funkcionalnosti jesu značajan dio sustava, a registracija i prijava nisu. }
-			
-			
-		%	\eject 
 		
-		%\section{Dijagram aktivnosti}
-		%	
-		%	\textbf{\textit{dio 2. revizije}}\\
+			Dijagrami stanja prikazuju stanja objekata i njihov prelazak iz jednog stanja u drugo. Takav pogled nam dozvoljava veću preglednost sustava. Zbog čitljivosti smo mi naše dijagrame stanja podijelili u više odvojenih dijagrama. 
 			
-		%	 \textit{Potrebno je priložiti dijagram aktivnosti s pripadajućim opisom. Dijagram aktivnosti treba prikazivati značajan dio sustava.}
+			Na slici 4.9 prikazan je proces autentikacije. Korisnik dolazi u aplikaciju u neprijavljenom stanju. Iz toga stanja može vršiti određene akcije, poput pregledavanja domova i staza. Da mu se omogući pregled profila, kreiranje staza i ako je admin, kreiranje domova, mora se ulogirati/registrirati. Taj proces je prikazan na dijagramu. Klikom na "log in" korisnik prelazi u stanje ulogiranja. Ako unese pogrešne informacije, stanje se resetira. Ako klikne na "nemate račun", otići će na stranicu registracije. Ako unese pogrešne podatke, stanje mu se resetira. Na registraciju može otići i direktno iz headera. Kada se uspješno registrira, vraća ga na log in. Kada se ulogira, onda ima globalno stanje "prijavljen" što mu omogućava pristup većem broju sadržaja same stranice.
+			
+			\begin{figure}[H]
+				\includegraphics[width=160mm,height=100mm]{dijagrami/sd-autentikacija/autentikacija.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+				\centering
+				\caption{Dijagram stanja - autentikacija}
+				\label{fig:dijagrami_stanja1}
+			\end{figure}
+			\newpage
+			Na slici 4.10 prikazana su stanja vezana za domove. Početno stanje provjerava je li korisnik admin, i ako je, prikazuje mu gumb za kreiranje domova. Ako korisnik nije admin, ne prikazuje mu se taj gumb i ne može kreirati domove, samo pregledavati. Prijavljenom korisniku se još prikazuju gumbi za arhiviranje staze i prijavljivanje pogreške na stazi
+			
+			\begin{figure}[H]
+				\includegraphics[width=160mm,height=150mm]{dijagrami/sd-autentikacija/domovi.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+				\centering
+				\caption{Dijagram stanja - domovi}
+				\label{fig:dijagrami_stanja2}
+			\end{figure}
+		
+		    Na slici 4.11 prikazana su stanja vezana za planinarske staze. Početno stanje provjerava je li korisnik prijavljen, i ako je, prikazuje mu gumb za kreiranje staza. Ako korisnik nije prijavljen, ne prikazuje mu se taj gumb i ne može kreirati staze, samo pregledavati. Dodatno se prijavljenom korisniku prikazuju gumbi za dodavanje u favorite, ocjenjivanje staze, arhiviranje staze i prijavljivanje pogreške na stazi
+		    
+		    \begin{figure}[H]
+		    	\includegraphics[width=160mm, height=160mm]{dijagrami/sd-autentikacija/staze.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+		    	\centering
+		    	\caption{Dijagram stanja - staze}
+		    	\label{fig:dijagrami_stanja3}
+		    \end{figure}
+			
+			\newpage
+			Na slici 4.12 prikazana su stanja vezana za korisnički profil. Ako je prijavljen, korisnik može otići na svoj profil gdje su mu omogućene radnje poput pregleda profila, uređivanje vlastitog profila, pretraživanja planinarske zajednice, brisanje profila i potvrda brisanja profila.
+			
+			\begin{figure}[H]
+				\includegraphics[width=160mm, height=165mm]{dijagrami/sd-autentikacija/profil.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+				\centering
+				\caption{Dijagram stanja - profil}
+				\label{fig:dijagrami_stanja4}
+			\end{figure}
+			
+			\eject 
+			
+
+		
+		\section{Dijagram aktivnosti}
+			
+			 Dijagram aktivnosti se koristi za modeliranje poslovnih procesa, upravljačkog i podatkovnog toka. Pogodni su za opisivanje sinkronizacije i konkurentnosti. Ne primjenjuju se za modeliranje događajima poticanog ponašanja. Na dijagramu 4.13 prikazan je dijagram aktivnosti pretrage i arhiviranja staze. U našoj aplikaciji, jedna od funkcionalnosti koju dozvoljavamo korisniku je pretraga planinarskih staza po nekim parametrima, prikaz detalja o toj stazi i mogućnost arhiviranja te staze kako bi korisnik mogao čuvati informaciju o stazama koje je prešao. Ako je arhivirao određeni broj staza, dobiva bedž na svome profilu koji to označava.
+			 
+			 \begin{figure}[H]
+			 	\includegraphics[scale=0.6, height=150mm, width=165mm]{dijagrami/activity/path search diagram.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+			 	\centering
+			 	\caption{Dijagram aktivnosti - pretraga i arhiviranje staze}
+			 	\label{fig:dijagrami_aktivnosti1}
+			 \end{figure}
+		 
+		 	Još jedna od funkcionalnosti je dodavanje prijatelja. Korisnik može Poslati zahtjev za prijateljstvo drugom korisniku. Taj drugi korisnik nakon toga može prihvatiti ili odbiti zahtjev za prijateljstvo
+		 	\begin{figure}[H]
+		 	\includegraphics[scale=0.6, height=120mm, width=165mm]{dijagrami/activity/friend request diagram.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+		 	\centering
+		 	\caption{Dijagram aktivnosti - dodavanje prijatelja}
+		 	\label{fig:dijagrami_aktivnosti2}
+			 \end{figure}
+		 
+		 	\begin{figure}[H]
+		 	\includegraphics[scale=0.6, height=120mm, width=165mm]{dijagrami/activity/friend accept or decline diagram.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+		 	\centering
+		 	\caption{Dijagram aktivnosti - prihvaćanje ili odbijanje prijateljstva}
+		 	\label{fig:dijagrami_aktivnosti2}
+		 	\end{figure}
 			
 			\section{Dijagram komponenti}
 		Dijagrami komponenti prikazuju komponente sustava i njihove međusobne odnose. Komponenta je fizička i stvarna implementacija logičkih elemenata sustava, npr. razreda i sučelja. Često se kaže sa su u UML-u sve fizičke "stvari" modelirane kao komponente. Sustavu pristupamo preko dva različita sučelja. Preko jednog dohvaćamo HTML, CSS I TSX datoteke, pomoću kojih poslužujemo datoteke koje pripadaju front end-u aplikacije, a preko drugog sučelja dohvaćamo JSON podatke kojima pristupamo preko REST API komponente, a pomoću nje poslužujemo datoteke koje pripadaju back end-u aplikacije. Frontend sadrži komponentu Router koja pomoću zatraženog url-a na sučelje poslužuje odgovarajuću datoteku. Također sadrži i niz TypeScript datoteka koje su podijeljene u logičke cjeline, a naziv im je dodijeljen po tipu aktora koji pristupaju tim datotekama. React biblioteka je temeljna za sve TypeScript datoteke jer se preko nje dohvaćaju gotove komponente koje su ključne za prikaz podataka, primjerice gumbi i forme. Za dohvat podataka iz baze podataka pomoću SQL upita zadužen je Jdbc framework. Kada se podaci dohvate iz baze, šalju se MVC arhitekturi u obliku DTO. Aplikacija Planinarski dnevnik preko gore navedenih sučelja komunicira sa Reactovim komponentama i ovisno o korisnikovim željama prikazuje i dohvaća zatražene datoteke.
