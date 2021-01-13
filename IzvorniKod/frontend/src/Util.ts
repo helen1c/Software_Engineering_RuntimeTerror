@@ -16,5 +16,5 @@ const updateOptions = (options?: RequestInit | any) => {
 };
 
 export const fetcher = async (url: RequestInfo, options?: RequestInit) => {
-    return fetch(`${DEV_ENV}${url}`, updateOptions(options));
+    return fetch(`${PROD_ENV}${url}`, updateOptions(options));
 };

@@ -78,7 +78,7 @@ const refuseFriendRequest = async (userInfo: UserInfo) : Promise<string> => {
     const requestOptions = {
         method: "POST"
     };
-    let result = await fetcher("api/users/friend-request-decline/" + userInfo.id, requestOptions);
+    let result = await fetcher("/api/users/friend-request-decline/" + userInfo.id, requestOptions);
     return result.text();
 }
 
@@ -86,7 +86,7 @@ const acceptFriendRequset = async (userInfo: UserInfo) : Promise<string> => {
     const requestOption = {
         method: "POST"
     }
-    let result = await fetcher("api/users/friend-request-accept/" + userInfo.id, requestOption);
+    let result = await fetcher("/api/users/friend-request-accept/" + userInfo.id, requestOption);
     return result.text();
 }
 
