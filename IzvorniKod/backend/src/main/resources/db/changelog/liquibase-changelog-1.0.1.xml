@@ -71,7 +71,7 @@
             <column name="lodge_id" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="date_Archived" type="DATE">
+            <column name="date_archived" type="DATE">
                 <constraints nullable="false"/>
             </column>
         </createTable>

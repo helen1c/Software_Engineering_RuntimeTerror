@@ -13,6 +13,8 @@ public class PlaninarskidnevnikApplication {
         SpringApplication.run(PlaninarskidnevnikApplication.class, args);
     }
 
+    //prilikom pustanja u pogon, unutar allowedOrigins dodajte "https://{naziv frontenda}.herokuapp.com"
+
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
@@ -20,9 +22,7 @@ public class PlaninarskidnevnikApplication {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedOrigins(
-                                "https://planinarski-dnevnik-frontend.herokuapp.com",
                                 "http://localhost:3000",
-                                "https://frontend-planinarskidnevnik.herokuapp.com",
                                 "https://pdnevnik.herokuapp.com" )
                         .allowedMethods("POST", "GET", "PATCH", "PUT", "DELETE").exposedHeaders("Authorization");
             }
