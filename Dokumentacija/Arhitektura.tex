@@ -162,7 +162,7 @@ date\_of\_birth & DATE & datum rođenja korisnika, unos je opcionalan \\ \hline
 \end{longtabu}
 \vspace{10mm}
 
-\textbf{roles} Ovaj entitet modelira ulogu korisnika unutar aplikacije, tzv. "aplikativne role". Određuje razinu ovlasti koje korisnik ima. Sadrži atribute: "id" i "name" koji predstavljaju jedinstveni identifikator uloge te naziv uloge. Dopuštene uloge u našoj aplikaciji su: Planinar, Dežurni planinar i Administrator.
+\textbf{roles} Ovaj entitet modelira ulogu korisnika unutar aplikacije, tzv. "aplikativne role". Određuje razinu ovlasti koje korisnik ima. Sadrži atribute: "id" i "name" koji predstavljaju jedinstveni identifikator uloge te naziv uloge. Dopuštene uloge u našoj aplikaciji su: Planinar i Administrator.
 
 \begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 
@@ -454,10 +454,10 @@ date\_recieved & DATE & datum dobivanja pojedinog bedža za određenog korisnika
 
 \begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 
-\hline \multicolumn{3}{|c|}{\textbf{event\_path}}	 \\[3pt] \hline
+\hline \multicolumn{3}{|c|}{\textbf{community\_event\_mountain\_path}}	 \\[3pt] \hline
 \endfirsthead
 
-\hline \multicolumn{3}{|c|}{\textbf{event\_path}}	 \\[3pt] \hline
+\hline \multicolumn{3}{|c|}{\textbf{community\_event\_mountain\_path}}	 \\[3pt] \hline
 \endhead
 
 \hline 
@@ -574,12 +574,10 @@ date\_archived & DATE & datum kojeg je određeni korisnik prepješačio određen
 \end{longtabu}
 \vspace{10mm}
 
-
-
 			\subsection{Dijagram baze podataka}
 				
 				\begin{figure}[H]
-					\includegraphics[scale=0.4, height=180mm]{slike/database.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+					\includegraphics[scale=0.4, height=180mm]{dijagrami/ER_Diagram.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
 					\centering
 					\caption{Dijagram baze podataka}
 					\label{fig:dijagrambp}
@@ -644,7 +642,7 @@ date\_archived & DATE & datum kojeg je određeni korisnik prepješačio određen
 					Sloj servisa - tu se obavlja sva naša poslovna logika, pozivaju se metode repozitorija dohvaćaju se podaci
 				\item Sloj nadglednika - prima zahtjeve od korisnika i poziva metoda servisnog sloja	
 			\end{itemize}
-			Dijagram ovog sloja podijeljeni su na nekoliko manjih dijagrama.
+			Dijagrami ovog sloja podijeljeni su na nekoliko manjih dijagrama.
 			Razredi koji su trenutno implementirani u ovom sloju prikazani su na dijagramu slijedno, od najnižeg podsloja odnosno pristupa bazi podataka pa sve do podsloja nadglednika koji prima i delegira zahtjeve korisnika.
 			Dijagrami se sastoje od nekoliko nadglednika: \textit{UserController}, \textit{MountainLodgeController}, \textit{MountainPathController}, \textit{HillController}, \textit{UtilityController}, \textit{MountainLodgeUserArchiveController}, \textit{MountainLodgePathArchiveController}, \textit{MessageController} te \textit{CommunityEventController}.
 			
@@ -693,13 +691,13 @@ date\_archived & DATE & datum kojeg je određeni korisnik prepješačio određen
 			 
 			 Provjera se vrši tako da se zove metoda \textit{loadUserByUsername} razreda \textit{UserDetailsServiceImpl}, a ona provjerava postoji li korisnik koji sadrži e-mail koji je poslan unutar zahtjeva. 
 			 
-			 Nakon utvrđivanja da ta osoba postoji \textit{Spring security modul} provjerava lozinku i druge podatke vezane uz prijavu. Nakon uspješne prijave pomoću metode \textit{successfulAuthentication} se generira jedinstveni token (identifikator) i šalje korisniku. Svojstva tokena poput trajanja se određuju u razredu \textit{SecurityConstants}. 
+			 Nakon utvrđivanja da ta osoba postoji, \textit{Spring security modul} provjerava lozinku i druge podatke vezane uz prijavu. Nakon uspješne prijave pomoću metode \textit{successfulAuthentication} se generira jedinstveni token (identifikator) i šalje korisniku. Svojstva tokena poput trajanja se određuju u razredu \textit{SecurityConstants}. 
 			
 			Prijavljeni korisnik za vrijeme rada unutar Web aplikacije svaki zahtjev obavlja pomoću jedinstvenog tokena koji mu je dodijeljen, a koji se provjerava unutar razreda \textit{JWTAuthorizationFilter}. 
 			
 			Metoda \textit{getPasswordEncoder} razreda \textit{Configuration} služi da bi definirali enkoder za zaštitu lozinki. 
 			
-			Razred \textit{UniqueEmailValidator} prilikom registracije provjerava postoji li u bazi podataka korisnik kojem je e-mail isti e-mailu zahtjeva. Budući da ne možemo imati dva korisnika s istom adresom elektroničke pošte, u tom slučaju događa se iznimka \textit{UserWithEmailExistsException}.
+			Razred \textit{UniqueEmailValidator} prilikom registracije provjerava postoji li u bazi podataka korisnik kojemu je e-mail isti e-mailu zahtjeva. Budući da ne možemo imati dva korisnika s istom adresom elektroničke pošte, u tom slučaju događa se iznimka \textit{UserWithEmailExistsException}.
 			
 			Na drugom dijagramu prikazane su iznimke koje je moguće izazvati na poslužiteljskoj strani, kao i razred koji obrađuje iznimke.  
 		
@@ -729,7 +727,7 @@ date\_archived & DATE & datum kojeg je određeni korisnik prepješačio određen
 		
 			Dijagrami stanja prikazuju stanja objekata i njihov prelazak iz jednog stanja u drugo. Takav pogled nam dozvoljava veću preglednost sustava. Zbog čitljivosti smo mi naše dijagrame stanja podijelili u više odvojenih dijagrama. 
 			
-			Na slici 4.9 prikazan je proces autentikacije. Korisnik dolazi u aplikaciju u neprijavljenom stanju. Iz toga stanja može vršiti određene akcije, poput pregledavanja domova i staza. Da mu se omogući pregled profila, kreiranje staza i ako je admin, kreiranje domova, mora se ulogirati/registrirati. Taj proces je prikazan na dijagramu. Klikom na "log in" korisnik prelazi u stanje ulogiranja. Ako unese pogrešne informacije, stanje se resetira. Ako klikne na "nemate račun", otići će na stranicu registracije. Ako unese pogrešne podatke, stanje mu se resetira. Na registraciju može otići i direktno iz headera. Kada se uspješno registrira, vraća ga na log in. Kada se ulogira, onda ima globalno stanje "prijavljen" što mu omogućava pristup većem broju sadržaja same stranice.
+			Na slici 4.9 prikazan je proces autentikacije. Korisnik dolazi u aplikaciju u neprijavljenom stanju. Iz toga stanja može vršiti određene akcije, poput pregledavanja domova i staza. Da mu se omogući pregled profila, kreiranje staza i ako je admin, kreiranje domova, mora se ulogirati/registrirati. Taj proces je prikazan na dijagramu. Klikom na "Prijavi se" korisnik prelazi u stanje ulogiranja. Ako unese pogrešne informacije, stanje se resetira. Ako klikne na "Nemate račun", otići će na stranicu registracije. Ako unese pogrešne podatke, stanje mu se resetira. Na registraciju može otići i direktno iz headera. Kada se uspješno registrira, vraća ga na formu za prijavu. Kada se ulogira, onda ima globalno stanje "Prijavljen" što mu omogućava pristup većem broju sadržaja same stranice.
 			
 			\begin{figure}[H]
 				\includegraphics[width=160mm,height=100mm]{dijagrami/sd-autentikacija/autentikacija.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
@@ -747,7 +745,7 @@ date\_archived & DATE & datum kojeg je određeni korisnik prepješačio određen
 				\label{fig:dijagrami_stanja2}
 			\end{figure}
 		
-		    Na slici 4.11 prikazana su stanja vezana za planinarske staze. Početno stanje provjerava je li korisnik prijavljen, i ako je, prikazuje mu gumb za kreiranje staza. Ako korisnik nije prijavljen, ne prikazuje mu se taj gumb i ne može kreirati staze, samo pregledavati. Dodatno se prijavljenom korisniku prikazuju gumbi za dodavanje u favorite, ocjenjivanje staze, arhiviranje staze i prijavljivanje pogreške na stazi
+		    Na slici 4.11 prikazana su stanja vezana za planinarske staze. Početno stanje provjerava je li korisnik prijavljen, i ako je, prikazuje mu gumb za kreiranje staza. Ako korisnik nije prijavljen, ne prikazuje mu se taj gumb i ne može kreirati staze, već samo pregledavati. Dodatno se prijavljenom korisniku prikazuju gumbi za dodavanje u favorite, ocjenjivanje staze, arhiviranje staze i prijavljivanje pogreške na stazi
 		    
 		    \begin{figure}[H]
 		    	\includegraphics[width=160mm, height=160mm]{dijagrami/sd-autentikacija/staze.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
@@ -796,9 +794,14 @@ date\_archived & DATE & datum kojeg je određeni korisnik prepješačio određen
 		 	\label{fig:dijagrami_aktivnosti2}
 		 	\end{figure}
 			
-		%	\eject
-		%\section{Dijagram komponenti}
+			\section{Dijagram komponenti}
+		Dijagrami komponenti prikazuju komponente sustava i njihove međusobne odnose. Komponenta je fizička i stvarna implementacija logičkih elemenata sustava, npr. razreda i sučelja. Često se kaže da su u UML-u sve fizičke "stvari" modelirane kao komponente. Sustavu pristupamo preko dva različita sučelja. Preko jednog dohvaćamo HTML, CSS i TSX datoteke, pomoću kojih poslužujemo datoteke koje pripadaju frontend-u aplikacije, a preko drugog sučelja dohvaćamo JSON podatke kojima pristupamo preko REST API komponente, a pomoću nje poslužujemo datoteke koje pripadaju backend-u aplikacije. Frontend sadrži komponentu Router koja pomoću zatraženog url-a na sučelje poslužuje odgovarajuću datoteku. Također sadrži i niz TypeScript datoteka koje su podijeljene u logičke cjeline, a naziv im je dodijeljen po tipu aktora koji pristupaju tim datotekama. React biblioteka je temeljna za sve TypeScript datoteke jer se preko nje dohvaćaju gotove komponente koje su ključne za prikaz podataka, primjerice gumbi i forme. Za dohvat podataka iz baze podataka pomoću SQL upita zadužen je \textit{Spring JPA} koji u pozadini koristi \textit{JDBC}. Kada se podaci dohvate iz baze, šalju se MVC arhitekturi u obliku DTO. Aplikacija "Planinarski dnevnik" preko gore navedenih sučelja komunicira sa Reactovim komponentama i ovisno o korisničkim željama prikazuje i dohvaća zatražene datoteke.
 		
-		%	\textbf{\textit{dio 2. revizije}}\\
+		\begin{figure}[H]
+			\includegraphics[scale=0.4, height=170mm, width=165mm]{dijagrami/dijagram-komponenti.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+			\centering
+			\caption{Dijagram komponenti}
+			\label{fig:dijagrami-komponenti.png}
+		\end{figure}
 		
-		%	 \textit{Potrebno je priložiti dijagram komponenti s pripadajućim opisom. Dijagram komponenti treba prikazivati strukturu cijele aplikacije.}
+		\eject
