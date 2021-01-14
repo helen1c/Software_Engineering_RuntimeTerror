@@ -1,0 +1,245 @@
+*{
+    box-sizing: border-box;
+}
+
+h1 {
+    text-align: center;
+}
+p {
+    padding: 0;
+    margin: 0;
+    font-size: 18px;
+}
+a:hover {
+    cursor: pointer;
+}
+.wrapper-picture {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.upload-picture{
+    display: none;
+}
+
+.picture-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 25vw;
+    min-width: 15rem;
+    height: 25vw;
+    min-height: 15rem;
+    max-width: 250px;
+    max-height: 250px;
+    border: 3px solid #211648;
+    border-radius: 10px;
+}
+
+.label-picture {
+    display: flex;
+    justify-content: center;
+}
+
+.errorText {
+    color: red;
+    font-family: Roboto, sans-serif;
+    font-size: 1.2rem;
+}
+.inputComponent {
+    min-height: 6.5rem;
+    margin-left: auto;
+}
+
+.inputLabel {
+    margin-bottom: 0;
+}
+.inputForm {
+    padding: 1rem 0 0 0;
+    display: inline-block;
+    text-align: left;
+}
+
+.textAlignLeft {
+    display: inline-block;
+    text-align: left;
+}
+
+.create-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    align-content: center;
+    border-radius: 15px;;
+}
+
+.MuiSnackbar-root {
+    height: 120px;
+    top: 120px;
+}
+
+.dialog-title {
+    text-align: center;
+    font-size: 42rem;
+}
+
+.pic {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.remove-picture {
+    position: absolute;
+    right: 5%;
+    top: 5%;
+    transform: translate(5%, -5%);
+    background-color: #5d4ca7;
+    border-radius: 35px;
+    outline: none;
+    opacity: 0.5;
+    font-size: 1rem;
+    color: white;
+}
+
+
+.lodge-create-selects {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.remove-picture:hover {
+    opacity: 1;
+    min-height: 2rem;
+}
+.hill-select {
+    margin-top: 1em;
+}
+.utility-select{
+    margin-top: 1em;
+}
+.input-search {
+    width: 30vw;
+    max-width: 500px;
+    min-height: 4rem;
+    padding-left: 0.5rem;
+    font-family: Roboto, sans-serif;
+    font-size: 1.2rem;
+    outline: none !important;
+    border: 2px solid #211648;
+    border-radius: 10px;
+    margin-top: 1em;
+}
+.hill-select >div, .utility-select >div {
+    width:240px;
+    max-width: 250px;
+    min-height: 4rem;
+    border-radius: 10px;
+    border-color: #211648 !important;
+    outline: none !important;
+    border-width: 2px;
+    font-size: 1.1rem;
+    user-select: none !important;
+}
+.hill-select, .utility-select {
+    min-width: 200px;
+    width: unset;
+    margin-left: 1rem;
+    outline: none !important;
+    border: none !important;
+}
+
+.checkbox__cnt {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+.checkbox {
+    height: 1.5rem;
+    width: 1.5rem;
+    margin-left: 1rem;
+}
+
+.react-time-picker__wrapper {
+    height: 3rem;
+    width: 120px;
+    border-radius: 5px;
+}
+
+.react-time-picker__inputGroup {
+    font-size: 1.2rem;
+}
+
+
+.checkbox-label {
+    align-self: center;
+    font-size: 1.2rem;
+    font-family: Roboto, sans-serif;
+    margin-right: 15px;
+}
+
+.input-number {
+    width: 30vw;
+    max-width: 500px;
+    min-height: 4rem;
+    padding-left: 0.5rem;
+    font-family: Roboto, sans-serif;
+    font-size: 1.2rem;
+    outline: none !important;
+    border: 2px solid #211648;
+    border-radius: 10px;
+    margin-top: 1em;
+}
+
+.flex-cnt-select {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.dialog-title {
+    text-align: center;
+    font-size: 42rem;
+    background-color: palegreen;
+}
+
+.MuiTypography-h6 {
+    font-size: 1.7rem !important;
+    color: black !important;
+}
+.MuiButton-textPrimary {
+    color: white !important;
+    background-color: forestgreen !important;
+    font-weight: 500 !important;
+}
+.MuiDialogContent-root {
+    padding-top: 0 !important;
+}
+.path-create-img{
+    width: 35px;
+    height: 35px;
+}
+.MuiButton-outlinedPrimary{
+    padding: 0 !important;
+    width: min-content !important;
+    height: min-content !important;
+    border-radius: 100% !important;
+    border: none !important;
+}
+.MuiButton-root{
+    min-width: min-content !important;
+    height: min-content !important;
+}
+.MuiSnackbar-anchorOriginBottomCenter{
+    left: 650% ;
+    z-index: 10000 ;
+    opacity: 1 ;
+}

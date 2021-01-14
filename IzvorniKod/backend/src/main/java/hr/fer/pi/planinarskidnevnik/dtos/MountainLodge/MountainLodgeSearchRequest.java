@@ -1,7 +1,5 @@
 package hr.fer.pi.planinarskidnevnik.dtos.MountainLodge;
 
-import hr.fer.pi.planinarskidnevnik.models.request.PageSearchRequest;
-
 import java.util.List;
 
 public class MountainLodgeSearchRequest {
@@ -10,9 +8,9 @@ public class MountainLodgeSearchRequest {
 
     private Long hillId;
 
-    private List<String> utilities;
+    private List<Long> utilities;
 
-    public List<String> getUtilities() {
+    public List<Long> getUtilities() {
         return utilities;
     }
 
@@ -24,4 +22,15 @@ public class MountainLodgeSearchRequest {
         return searchText;
     }
 
+    public void setSearchText(String searchText) {
+        this.searchText = searchText;
+    }
+
+    public void setHillId(Long hillId) {
+        this.hillId = hillId;
+    }
+
+    public void setUtilities(List<Long> utilities) {
+        this.utilities = utilities;
+    }
 }

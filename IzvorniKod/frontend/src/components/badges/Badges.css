@@ -1,0 +1,10 @@
+.badges-container {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.badge-image {
+    height: 50px;
+    width: 50px;
+}

@@ -1,0 +1,89 @@
+.event-box {
+    max-width: 800px;
+    margin: 2rem auto 2rem auto;
+    padding: 0.8rem;
+    border: 3px solid lavender;
+    border-radius: 15px;
+}
+
+.participants-nav ul{height:120px; width:30%;}
+.participants-nav ul{overflow:hidden; overflow-y:scroll;}
+
+.all-oneday-paths{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.event-information{
+    margin:1rem;
+}
+.path-label{
+    margin: 1rem;
+}
+.date,.event-creator{
+    margin-top: 0.6rem;
+}
+.event-description{
+    padding: 0.3rem;
+    margin-left: 0.3rem;
+    min-height: 8rem;
+    width: 20vw;
+    min-width: 10rem;
+    box-shadow: none !important;
+    outline: none !important;
+    font-family: Roboto, sans-serif;
+    font-size: 1rem;
+    max-width: 25vw;
+    max-height: 15vw;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+}
+.event-description-box{
+    display: flex;
+    margin-top: 0.6rem;
+}
+label {
+    font-family: 'Roboto', sans-serif;
+}
+
+@media only screen and (max-width:  660px) {
+    .event-description-box{
+        flex-direction: column;
+    }
+    .mountaineering-community-container{
+        width: 90vw;
+    }
+    .participants-nav ul {
+        width: 50%;
+    }
+}
+
+.going-button{
+    border: none;
+    background-color: lavender;
+    padding: 0.4rem;
+    margin-right: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    border-radius: 5px;
+}
+
+.going-button-cnt{
+    margin: 1rem 0;
+    display: flex;
+}
+
+
+.going-btn-img{
+    height: 20px;
+    width: 20px;
+    margin: 0.3rem;
+}
+
+.going-button:hover{
+    cursor: pointer;
+}

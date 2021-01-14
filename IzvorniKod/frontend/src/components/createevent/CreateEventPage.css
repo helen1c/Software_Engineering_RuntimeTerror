@@ -1,0 +1,101 @@
+.main{
+    text-align: center;
+    background-image: url("../../assets/ng.jpg");
+
+}
+
+.main-event{
+    display: flex;
+    background-color: white;
+    flex-direction: column;
+    width: 60vw ;
+    margin: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+    padding: 1.5rem;
+
+}
+
+.event-container {
+    display: flex;
+    flex-direction: column;
+
+
+}
+.event-column{
+    display: flex;
+    flex-direction: column;
+}
+
+.event-header{
+    display: flex;
+    background-image: url("../../assets/header.jpg");
+    background-size: cover;
+    color: white;
+    flex-direction: column;
+    width: 60vw;
+    margin: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+}
+h1{
+    padding: 30px;
+}
+
+.eventComponent{
+    padding: 1em;
+    display: inline-block;
+}
+
+.event-input{
+    margin-left: auto;
+    margin-right: auto;
+    text-indent: 5px;
+    height: 3rem;
+    width: 20vw;
+    min-width: 15rem;
+    border: 2px solid #211648;
+    box-shadow: none !important;
+    outline: none !important;
+    font-family: Roboto, sans-serif;
+    font-size: 1rem;
+    padding: 0.5rem;
+    border-radius: 10px;
+}
+
+.event-text-area {
+    margin-left: auto;
+    padding: 0.5rem;
+    min-height: 8rem;
+    width: 35vw;
+    min-width: 15rem;
+    border: 2px solid #211648;
+    box-shadow: none !important;
+    outline: none !important;
+    border-radius: 10px;
+    font-family: Roboto, sans-serif;
+    font-size: 1rem;
+    max-width: 45vw;
+    max-height: 15vw;
+}
+
+.submitButton {
+    border-radius: 10px;
+    width: 11rem;
+    height: 3.5rem;
+    font-size: 18px;
+    background-color: #211648;
+    color: white;
+    margin-bottom: 3rem;
+    outline: none !important;
+    border: 2px solid white;
+    margin-top: 3rem;
+
+
+}
+@media only screen and (max-width: 660px){
+    .main-event, .event-header{
+        width: 100vw ;
+    }
+}
+

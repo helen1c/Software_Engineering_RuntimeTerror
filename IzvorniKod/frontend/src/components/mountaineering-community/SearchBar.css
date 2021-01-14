@@ -1,0 +1,27 @@
+.community-user-search-bar{
+    width: 20vw;
+    min-width: 250px;
+    min-height: 4rem;
+    padding-left: 0.5rem;
+    font-family: Roboto, sans-serif;
+    font-size: 1.2rem;
+    outline: none   !important;
+    border: 2px solid #211648;
+    border-radius: 15px;
+    margin-top: 1em;
+}
+
+.community-user-container{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    width: min-content;
+    padding: 1rem;
+}
+.community-user-container:hover{
+    transform: scale(1.02);
+}
+
+.community-user-search-div{
+    margin: auto;
+}

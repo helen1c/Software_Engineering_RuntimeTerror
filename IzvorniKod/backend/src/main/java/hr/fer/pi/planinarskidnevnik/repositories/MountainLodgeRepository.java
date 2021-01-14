@@ -12,5 +12,4 @@ import java.util.List;
 
 @Repository
 public interface MountainLodgeRepository extends JpaRepository<MountainLodge, Long>, JpaSpecificationExecutor<MountainLodge> {
-
 }

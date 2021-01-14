@@ -1,0 +1,55 @@
+.message-content{
+    min-height: 8rem;
+    width: 25vw;
+    min-width: 15rem;
+    border: 2px solid #211648;
+    box-shadow: none !important;
+    outline: none !important;
+    border-radius: 10px;
+    font-family: Roboto, sans-serif;
+    font-size: 1rem;
+    max-width: 25vw;
+    max-height: 15vw;
+}
+.message-title{
+    margin: 0.3rem 0;
+    border-radius: 10px;
+    text-indent: 5px;
+    height: 3.5rem;
+    width: 25vw;
+    min-width: 15rem;
+    border: 2px solid #211648;
+    box-shadow: none !important;
+    outline: none !important;
+    font-family: Roboto, sans-serif;
+    font-size: 1rem;
+}
+.box-title{
+    font-size: larger;
+    font-family: sans-serif !important;
+}
+.MuiTypography-h6{
+    font-family: sans-serif !important;
+    font-size: 2rem!important;
+}
+.error-button{
+    font-family: Roboto, sans-serif;
+    border-radius: 7px;
+    outline: none;
+    color: #1e2501;
+    background-color: #fc7a17;
+    cursor: pointer;
+}
+.button-mountain-lodge-er{
+    background-color: #a50e4a !important;
+    color: white !important;
+    border-radius: 5px ;
+    border: none;
+    padding: 0.4rem;
+    cursor: pointer;
+}
+.button-mountain-path{
+    background-color: #287334!important;
+    color: white!important;
+    margin-left: 2px!important;
+}

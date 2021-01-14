@@ -5,6 +5,8 @@
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
     <changeSet id="20201020204416" author="lravenscak">
+        <createSequence sequenceName="user_id_seq" incrementBy="1" cycle="false" startValue="100"/>
+
         <createTable tableName="roles">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true"/>
@@ -38,5 +40,89 @@
             </column>
             <column name="image" type="BYTEA"/>
         </createTable>
+
     </changeSet>
+
+    <changeSet id="20201129180400" author="lravenscak">
+        <addColumn tableName="user">
+            <column name="role_id" type="BIGINT" defaultValue="2">
+                <constraints foreignKeyName="role_id" references="roles(id)"/>
+            </column>
+            <column name="current_user_id" type="BIGINT"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="20201207221641" author="lravenscak">
+        <createTable tableName="friendship_request">
+            <column name="sender" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="receiver" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="friendship_request"
+                                 baseColumnNames="sender"
+                                 constraintName="friendship_request_sender_id_fk"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+        <addForeignKeyConstraint baseTableName="friendship_request"
+                                 baseColumnNames="receiver"
+                                 constraintName="friendship_request_receiver_fk"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+    </changeSet>
+
+    <changeSet id="20201227284200" author="lravenscak">
+        <createTable tableName="friendships">
+            <column name="current_user_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="friend_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="friendships"
+                                 baseColumnNames="current_user_id"
+                                 constraintName="friendships_current_user_id_fk"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+        <addForeignKeyConstraint baseTableName="friendships"
+                                 baseColumnNames="friend_id"
+                                 constraintName="friendships_friend_id_fk"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+
+        <createTable tableName="friendships_notifications">
+            <column name="friendship_request_sender" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="friendship_request_receiver" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="friendships_notifications"
+                                 baseColumnNames="friendship_request_sender"
+                                 constraintName="friendship_request_notification_sender_id_fk"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+        <addForeignKeyConstraint baseTableName="friendships_notifications"
+                                 baseColumnNames="friendship_request_receiver"
+                                 constraintName="friendship_request_notification_receiver_id_fk"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+    </changeSet>
+
 </databaseChangeLog>

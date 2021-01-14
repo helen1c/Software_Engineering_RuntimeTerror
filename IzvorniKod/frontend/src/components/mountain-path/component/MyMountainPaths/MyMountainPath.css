@@ -1,0 +1,79 @@
+.my-path__cnt {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    min-height: 70px;
+    height: fit-content;
+    border-radius: 50px;
+    border: 2px solid #5bb75b;
+    align-items: center;
+    width: 70vw;
+    cursor: pointer;
+    color: #5bb75b;
+    margin: auto;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.my-path__cnt:hover{
+    background-color: #5bb75b;
+    color: white;
+}
+
+.open-lock-picture {
+    height: 1.5rem;
+    width: 1.5rem;
+}
+.my-path-title{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    height: 50px;
+    border-radius: 50px;
+    border: 2px solid #5bb75b;
+    align-items: center;
+    width: 70vw;
+    cursor: pointer;
+    color: black;
+    background-color:#5bb75b;
+    margin: auto;
+    filter: drop-shadow(0px 10px 10px rgba(0, 0, 0, 0.35));
+}
+.my-path-name ,.my-path-startpoint, .my-path-endpoint , .my-path-length , .my-path-dif{
+    max-width: 14%;
+    word-break: break-all;
+    width: 14%;
+}
+
+.delete-mountain-path {
+    border: none;
+    background-color:#b8e1b8 ;
+    padding: 0.4rem;
+    border-radius: 20px;
+}
+@media only screen and (min-width: 661px) and (max-width: 1150px) {
+ .my-path-startpoint, .my-path-endpoint ,.delete-mountain-path,.MuiFormControlLabel-root{
+        display: none !important;
+    }
+    .my-path-name{
+        width: 40%;
+        max-width: 40%;
+    }
+    .my-path-length , .my-path-difficulty , .my-path-dif{
+        width: 30%;
+    }
+
+}
+
+@media screen and (max-width:660px) {
+    .my-path-title, .my-path__cnt {
+        width: 95vw;
+    }
+    .my-path-startpoint, .my-path-endpoint , .my-path-length , .my-path-dif, .my-path-difficulty , .delete-mountain-path{
+        display: none;
+    }
+    .my-path-name{
+        width: 50%;
+        max-width: 50%;
+    }
+}

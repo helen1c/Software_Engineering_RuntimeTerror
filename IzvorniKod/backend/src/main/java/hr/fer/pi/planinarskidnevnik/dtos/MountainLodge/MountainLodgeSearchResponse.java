@@ -1,13 +1,15 @@
 package hr.fer.pi.planinarskidnevnik.dtos.MountainLodge;
 
+import hr.fer.pi.planinarskidnevnik.models.Utility;
+
 import java.util.List;
 
 public class MountainLodgeSearchResponse {
 
-    private Long id;
+    private java.lang.Long id;
     private String name;
     private byte[] image;
-    private List<String> utilities;
+    private List<Utility> utilities;
     private Long elevation;
     private String hillName;
 
@@ -15,7 +17,7 @@ public class MountainLodgeSearchResponse {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(java.lang.Long id) {
         this.id = id;
     }
 
@@ -27,11 +29,11 @@ public class MountainLodgeSearchResponse {
         this.image = image;
     }
 
-    public void setUtilities(List<String> utilities) {
+    public void setUtilities(List<Utility> utilities) {
         this.utilities = utilities;
     }
 
-    public void setElevation(Long elevation) {
+    public void setElevation(java.lang.Long elevation) {
         this.elevation = elevation;
     }
 
@@ -43,11 +45,11 @@ public class MountainLodgeSearchResponse {
         return image;
     }
 
-    public List<String> getUtilities() {
+    public List<Utility> getUtilities() {
         return utilities;
     }
 
-    public Long getElevation() {
+    public java.lang.Long getElevation() {
         return elevation;
     }
 

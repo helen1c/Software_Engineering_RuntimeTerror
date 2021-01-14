@@ -13,7 +13,7 @@ public class Utility {
 
     private String name;
 
-    public Long getId() {
+    public java.lang.Long getId() {
         return id;
     }
 
@@ -25,7 +25,7 @@ public class Utility {
         this.name = name;
     }
 
-    public void setId(Long id) {
+    public void setId(java.lang.Long id) {
         this.id = id;
     }
 }

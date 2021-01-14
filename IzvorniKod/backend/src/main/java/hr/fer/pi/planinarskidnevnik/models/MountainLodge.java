@@ -1,16 +1,19 @@
 package hr.fer.pi.planinarskidnevnik.models;
 
+import hr.fer.pi.planinarskidnevnik.models.MountainLodgeUserArchive.MountainLodgeUserArchive;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "MOUNTAIN_LODGE")
 public class MountainLodge {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "mountain_lodge_id_gen")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "mountain_lodge_id_gen")
     @SequenceGenerator(name = "mountain_lodge_id_gen", sequenceName = "mountain_lodge_id_seq", allocationSize = 1)
     @Column(name = "LODGE_ID")
-    private Long id;
+    private Long lodge_id;
 
     private String name;
 
@@ -30,11 +33,33 @@ public class MountainLodge {
 
     private Long elevation;
 
-    public Long getElevation() {
+    @OneToMany(mappedBy = "mountainLodge")
+    private List<MountainLodgeUserArchive> mountainLodgeUserArchive = new ArrayList<>();
+
+    public List<MountainLodgeUserArchive> getMountainLodgeUserArchive() {
+        return mountainLodgeUserArchive;
+    }
+
+    public void setMountainLodgeUserArchive(List<MountainLodgeUserArchive> mountainLodgeUserArchive) {
+        this.mountainLodgeUserArchive = mountainLodgeUserArchive;
+    }
+
+    public MountainLodge(){
+
+    }
+    public MountainLodge(String name, java.lang.Long elevation, Hill hillName, List<Utility> utilities, byte[] image) {
+        this.name = name;
+        this.elevation = elevation;
+        this.hill = hillName;
+        this.utilities = utilities;
+        this.image = image;
+        this.mountainLodgeUserArchive = new ArrayList<>();
+    }
+    public java.lang.Long getElevation() {
         return elevation;
     }
 
-    public void setElevation(Long elevation) {
+    public void setElevation(java.lang.Long elevation) {
         this.elevation = elevation;
     }
 
@@ -42,8 +67,8 @@ public class MountainLodge {
         return name;
     }
 
-    public Long getId() {
-        return id;
+    public java.lang.Long getId() {
+        return lodge_id;
     }
 
     public byte[] getImage() {
@@ -58,8 +83,8 @@ public class MountainLodge {
         return utilities;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(java.lang.Long id) {
+        this.lodge_id = id;
     }
 
     public void setName(String name) {
