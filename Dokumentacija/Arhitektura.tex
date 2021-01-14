@@ -93,595 +93,491 @@
 		
 		Tijekom razvoja koristimo \textbf{H2 bazu}. To je privremena baza podataka koja služi za testiranje koda. Svi zapisi u njoj se nalaze u privremenoj memoriji i nisu perzistentni. Zbog toga je odlična za testiranje. Ona je otvorenog koda, napisana u Javi i ima čvrste sigurnosne postavke. Na nju se možemo povezati s više konekcija i baza podataka je enkriptirana SHA-256 enkripcijom. Ima vrlo malu potrošnju memorije i zauzima relativno malo prostora na disku (oko 2MB). \\ 
 		
-		Također koristimo \textbf{JPA (Java Persistence API)} koje samo sadrži sučelja za stvaranje Persistence layouta. Dopušta nam da mapiramo entitete tablica i veze između tablica na objekte u Javi. Ovo sučelje definira svoj vlastiti jezik za upite (JPQA). JPQA prevoditelj interpretira kod i piše SQL upite. JPA ne možemo samostalno koristiti, već nam treba konkretna implementacija toga sučelja. Implementacija koju ćemo mi koristiti se zove Hibernate. \\ 
+		Također koristimo \textbf{JPA (Java Persistence API)} koje samo sadrži sučelja za stvaranje Persistence layouta. Dopušta nam da mapiramo entitete tablica i veze između tablica na objekte u Javi. Ovo sučelje definira svoj vlastiti jezik za upite (JPQL). JPQL prevoditelj interpretira kod i piše SQL upite. JPA ne možemo samostalno koristiti, već nam treba konkretna implementacija toga sučelja. Implementacija koju ćemo mi koristiti se zove Hibernate. \\ 
 		
 		Na bazu podataka se iz Jave spajamo preko \textbf{JdbcTemplatea}. To je snažni mehanizam za spajanje i izvođenje SQL upita. On nam smanjuje količinu koda koju moramo napisati kako bismo izvršavali upite, kao što je spajanje na bazu, kreiranje izraza i zatvaranje konekcija. \\
 		\newpage
 	Naš model baze podataka sastoji se od sljedećih \textbf{glavnih} i \underline{veznih} tablica:
 		\begin{itemize}[noitemsep]
 		\item \textbf{user}
-		\item \textbf{residence$\_$place}
-		\item \textbf{role}
-		\item \textbf{mountain$\_$lodge}
-		\item \textbf{mountain$\_$path}
-		\item \textbf{event}
-		\item \textbf{hill}
-		\item \textbf{utility}
-		\item \textbf{badge}
-		\item \textbf{contact$\_$message}
-		\item \underline{visit$\_$confirmation}
-		\item \underline{friendships}
-		\item \underline{frienship$\_$req}
-		\item \underline{user$\_$role}
-		\item \underline{user$\_$place}
-		\item \underline{user$\_$badge}
-		\item \underline{mountain$\_$lodge$\_$utility}
-		\item \underline{mountain$\_$lodge$\_$report}
-		\item \underline{duty$\_$mountaneer}
-		\item \underline{event$\_$path}
-		\item \underline{event$\_$attendance}
-		\item \underline{mountain$\_$path$\_$report}
-		\item \underline{mountain$\_$path$\_$grade}
-		\item \underline{path$\_$user$\_$wishlist}
-		\item \underline{mountain$\_$path$\_$completed}
-		\item \underline{badge\_notification}
+\item \textbf{roles}
+\item \textbf{mountain$\_$lodge}
+\item \textbf{mountain$\_$path}
+\item \textbf{event}
+\item \textbf{hill}
+\item \textbf{utility}
+\item \textbf{badge}
+\item \textbf{message}
+\item \underline{friendships}
+\item \underline{frienship$\_$request}
+\item \underline{frienship$\_$notifications}
+\item \underline{user$\_$badge}
+\item \underline{mountain$\_$lodge$\_$utility}
+
+\item \underline{event$\_$attendance}
+\item \underline{mountain$\_$path$\_$report}
+\item \underline{mountain$\_$path$\_$grade}
+\item \underline{path$\_$user$\_$wishlist}
+\item \underline{mountain$\_$path$\_$user$\_$archived}
+\item
+\underline{community$\_$event$\_$mountain$\_$path}
+\item
+\underline{mountain$\_$lodge$\_$user$\_$archived}
 
 \end{itemize}
-		 \newpage
-			\subsection{Opis tablica}
-			Primarni ključevi su označeni \textbf{podebljano}, dok su strani ključevi \underline{podvučeni}. \\
-			Prikazane su i sve vezne tablice, tako da se nad glavnim tablicama Many-To-Many veze neće navoditi.
-			
+\newpage
+\subsection{Opis tablica}
+Primarni ključevi su označeni \textbf{podebljano}, dok su strani ključevi \underline{podvučeni}. \\
+Prikazane su i sve vezne tablice, tako da se nad glavnim tablicama Many-To-Many veze neće navoditi.
+
 %Tablice
-			\textbf{user} -  ovaj entitet sadrži sve važne informacije o korisniku aplikacije.
-			Sadrži atribute: "id", "full$\_$name", "email", "password", "image", "id$\_$place", "date$\_$of$\_$birth" i "description" koji redom predstavljaju jedinstveni identifikacijski broj korisnika, ime i prezime, e-mail korisnika, lozinku korisnika, sliku vidljivu na profilu korisnika, identifikacijski broj mjesta stanovanja korisnika te datum rođenja korisnika.
-			Neki podaci o korisniku, kao što su mjesto stanovanja i datum rođenja su opcionalni, i ako ih korisnik ne ispuni njihova vrijednost je \textit{NULL}. Atribut "place\_id" je strani ključ koji referencira entitet \textbf{residence\_place} te se radi o Many-To-One vezi. 
-			
-			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
-				\hline \multicolumn{3}{|c|}{\textbf{user - (Korisnik)}}	 \\[3pt] \hline
-				\endfirsthead
-				
-				\hline \multicolumn{3}{|c|}{\textbf{user - (Korisnik)}}	 \\[3pt] \hline
-				\endhead
-				
-				\hline 
-				\endlastfoot
-				
-				\textbf{id} & BIGINT	&  	jedinstveni identifikacijski broj korisnika	\\ \hline
-				full$\_$name	& VARCHAR &  ime i prezime korisnika 	\\ \hline 
-				email & VARCHAR &  e-mail pomoću kojeg se korisnik prijavljuje u sustav \\ \hline 
-				password & VARCHAR	&  	lozinka pomoću koje se korisnik prijavljuje u sustav	\\ \hline 
-				image & BYTEA	&  	slika vidljiva na profilu korisnika	\\ \hline 
-				\underline{place\_id} & BIGINT & strani ključ mjesta stanovanja korisnika iz tablice \textbf{residence\_place}, unos je opcionalan\\ \hline
-				date\_of\_birth & DATE & datum rođenja korisnika, unos je opcionalan \\ \hline
-				
-				
-			\end{longtabu}
-			\vspace{10mm}
-			
-			\textbf{residence\_place}  Ovo je entitet koji modelira mjesto stanovanja korisnika. Sadrži atribute: "id" i "name" koji predstavljaju jedinstveni identifikator mjesta te naziv mjesta.
-			
-			
-			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
-				
-				\hline \multicolumn{3}{|c|}{\textbf{residence\_place - (Mjesto stanovanja)}}	 \\[3pt] \hline
-				\endfirsthead
-				
-				\hline \multicolumn{3}{|c|}{\textbf{residence\_place - (Mjesto stanovanja)}}	 \\[3pt] \hline
-				\endhead
-				
-				\hline 
-				\endlastfoot
-				
-				\textbf{id} & BIGINT	&  	jedinstveni indetifikacijski broj mjesta stanovanja	\\ \hline
-				name	& VARCHAR &  naziv mjesta 	\\ \hline 
-				%\cellcolor{LightBlue} primjer	& VARCHAR &   	\\ \hline 
-				
-				
-			\end{longtabu}
-				
-				\vspace{10mm}
-			\newpage
-			\textbf{role} Ovaj entitet modelira ulogu korisnika unutar aplikacije, tzv. "aplikativne role". Određuje razinu ovlasti koje korisnik ima. Sadrži atribute: "id" i "name" koji predstavljaju jedinstveni identifikator uloge te naziv uloge. Dopuštene uloge u našoj aplikaciji su: Planinar, Dežurni planinar i Administrator.
-			
-			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
-				
-				\hline \multicolumn{3}{|c|}{\textbf{role - (Uloga)}}	 \\[3pt] \hline
-				\endfirsthead
-				
-				\hline \multicolumn{3}{|c|}{\textbf{role - ime tablice}}	 \\[3pt] \hline
-				\endhead
-				
-				\hline 
-				\endlastfoot
-				
-				\textbf{id} & BIGINT	&  jedinstveni ID uloge	\\ \hline
-				name	& VARCHAR &  ime uloge 	\\ \hline 
-				
-			\end{longtabu}
-		
-		\vspace{10mm}		
-		
-		\textbf{mountain\_lodge} Ovaj entitet modelira jedan planinarski dom. Sadrži atribute: "id", "name", "image", "elevation" i "hill\_id" koji predstavljaju jedinstveni identifikator planinarskog doma, naziv planinarskog doma, sliku planinarskog doma, nadmorsku visinu te jedinstveni identifikator zemljopisnog područja (visočja) na kojemu se planinarski dom nalazi. Unos slike za neki planinarski dom je opcionalan, a ako se atribut ne popuni njegova vrijednost je \textit{NULL}. Atribut "hill\_id" predstavlja strani ključ koji referencira entitet \textbf{hill} te se radi o Many-To-One vezi. 
-		
-		\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
-			
-			\hline \multicolumn{3}{|c|}{\textbf{mountain\_lodge - (Planinarski dom)}}	 \\[3pt] \hline
-			\endfirsthead
-			
-			\hline \multicolumn{3}{|c|}{\textbf{mountain\_lodge - ime tablice}}	 \\[3pt] \hline
-			\endhead
-			
-			\hline 
-			\endlastfoot
-			
-			\textbf{id} & BIGINT	&  	jedinstveni identifikacijski broj planinarskog doma 	\\ \hline
-			name	& VARCHAR &   naziv planinarskog doma	\\ \hline 
-			image & BYTEA &  slika planinarskog doma koja se prikazuje unutar aplikacije, unos je opcionalan \\ \hline 
-			elevation & INTEGER & nadmorska visina na kojoj se planinarski dom nalazi izražena u kilometrima \\ \hline 
-			\underline{hill\_id} & BIGINT	&  strani ključ na tablicu \textbf{hill}, a predstavlja identifikator visočja na kojemu se nalazi planinarski dom	\\ \hline 
-			
-			
-		\end{longtabu}
-	\vspace{10mm}		
-	
-	
-	\textbf{utility} Ovaj entitet modelira značajke infrastrukture pojedinog doma. Sadrži atribute "id" i "name" koji predstavljaju jedinstveni identifikacijski broj značajke te naziv značajke. Primjeri takvih značajki su pitka voda, hrana, smještaj, internet.
-	
-	\newpage
-	\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
-		
-		\hline \multicolumn{3}{|c|}{\textbf{utility - (Pogodnost, značajka)}}	 \\[3pt] \hline
-		\endfirsthead
-		
-		\hline \multicolumn{3}{|c|}{\textbf{utility - ime tablice}}	 \\[3pt] \hline
-		\endhead
-		
-		\hline 
-		\endlastfoot
-		
-		\textbf{id} & BIGINT	&  jedinstveni identifikator značajke\\ \hline
-		name	& VARCHAR &  naziv značajke/pogodnosti \\ \hline 
-		
-	\end{longtabu}
-				\vspace{10mm}		
-				
-				\textbf{hill} Ovaj entitet modelira pojedino zemljopisno područje, odnosno visočje na kojemu se nalazi pojedini planinarski dom ili planinarska staza. Sadrži atribute: "id" i "name" koji predstavljaju jedinstveni identifikacijski broj visočja te naziv visočja.
-				
-				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
-					
-					\hline \multicolumn{3}{|c|}{\textbf{hill - (Visočje)}}	 \\[3pt] \hline
-					\endfirsthead
-					
-					\hline \multicolumn{3}{|c|}{\textbf{hill - ime tablice}}	 \\[3pt] \hline
-					\endhead
-					
-					\hline 
-					\endlastfoot
-					
-					\textbf{id} & BIGINT	&  jedinstveni ID visočja 	\\ \hline
-					name & VARCHAR	&  ime visočja 	\\ \hline
-					
-					
-				\end{longtabu}
-				\vspace{10mm}
-			
-			\textbf{mountain\_path} Ovaj entitet sadrži informacije o pojedinoj planinarskoj stazi. Sadrži atribute: "id", "name", "start\_point", "end\_point", "avg\_walk\_time", "length", "sea\_level\_diff", "date\_created", "is\_private", "author\_id" i "hill\_id" koji redom predstavljaju jedinstveni identifikacijski broj planinarske staze, naziv staze, polazišnu točku, završnu toku, prosječno vrijeme potrebno da se prepješači staza, duljinu staze, razliku u nadmorskoj visini između početne i završne točke, datum kreiranja pojedine staze od strane korisnika unutar naše aplikacije, vrijednost koja govori je li staza privatna ili javna, korisnika koji je stvorio stazu te identifikator visočja na kojemu se staza nalazi. Atribut "author\_id" te atribut "hill\_id" su strani ključevi obzirom na tablicu \textbf{user} odnosno \textbf{hill} te se radi o Many-To-One vezama.
-			
-			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
-				
-				\hline \multicolumn{3}{|c|}{\textbf{mountain\_path - (Planinarska staza)}}	 \\[3pt] \hline
-				\endfirsthead
-				
-				\hline \multicolumn{3}{|c|}{\textbf{mountain\_path - (Planinarska staza)}}	 \\[3pt] \hline
-				\endhead
-				
-				\hline 
-				\endlastfoot
-				
-				\textbf{id} & BIGINT	& jedinstveni identifikacijski broj planinarske staze	\\ \hline
-				name	& VARCHAR &  naziv staze	\\ \hline 
-				start\_point & VARCHAR & naziv početne točke staze  \\ \hline 
-				end\_point & VARCHAR &  naziv završne točke staze \\ \hline 
-				avg\_walk\_time & TIME &  prosječno vrijeme potrebno za prepješačiti stazu\\ \hline 
-				length & INTEGER & duljina staze u metrima\\ \hline 
-				sea\_level\_diff & INTEGER & razlika u nadmorskoj visini između početne i završne točke staze\\ \hline 
-				date\_created & DATE &  datum stvaranja staze unutar aplikacije\\ \hline 
-				is\_private & BOOLEAN	&  atribut koji govori je li korisnik stazu stvara privatno ili javno  \\ \hline 
-				\underline{author\_id} & BIGINT	&  	identifikacijski broj korisnika koji je stvorio stazu unutar aplikacije\\ \hline 
-				\underline{hill\_id} & BIGINT	&  identifikacijski broj visočja na kojemu se staza nalazi\\ \hline 
-				
-				
-			\end{longtabu}
-			\vspace{10mm}
-			
-			\textbf{event} Ovaj entitet modelira jedan događaj koji stvara korisnik unutar naše aplikacije. Jedan događaj počinje u određeno vrijeme "start\_date", te završava u određeno vrijeme: "end\_date". Svaki događaj, odnosno planinarski izlet sastoji se od jedne ili više planinarskih staza koje se obilaze tijekom tog planinarskog izleta. Osim toga, planinarski izlet ima svoj opis: "description", gdje korisnik može reći više pojedinosti o samom planinarskom izletu. Osim toga, ovaj entitet sadrži atribute: "id", "name", "date\_created" i "author\_id" koji predstavljaju jedinstveni identifikacijski broj događaja, naziv događaja, vrijeme kada je korisnik stvorio događaj unutar aplikacije te jedinstveni identifikacijski broj korisnika koji je stvorio događaj. Atribut "author\_id" je strani ključ koji se odnosi na tablicu \textbf{user} te se radi o Many-To-One vezi.
-			
-			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
-				
-				\hline \multicolumn{3}{|c|}{\textbf{event - (Planinarski događaj)}}	 \\[3pt] \hline
-				\endfirsthead
-				
-				\hline \multicolumn{3}{|c|}{\textbf{event - (Planinarski događaj)}}	 \\[3pt] \hline
-				\endhead
-				
-				\hline 
-				\endlastfoot
-				
-				\textbf{id} & BIGINT	&  	jedinstveni identifikacijski broj planinarskog izleta 	\\ \hline
-				name	& VARCHAR & naziv događaja 	\\ \hline 
-				description & VARCHAR &  pojedinosti vezane uz događaj \\ \hline 
-				start\_date & TIMESTAMP	&  vrijeme i datum početka planinarskog izleta	\\ \hline 
-				end\_date & TIMESTAMP	&  	vrijeme i datum završetka planinarskog izleta	\\ \hline 
-				date\_created & TIMESTAMP	&  vrijeme i datum stvaranja izleta unutar aplikacije\\ \hline 
-				\underline{author\_id} & BIGINT	& jedinstveni identifikacijski broj korisnika koji je stvorio događaj unutar aplikacije		\\ \hline 
-				
-				
-			\end{longtabu}
-			\vspace{10mm}
-			
-			\textbf{badge} Ovaj entitet modelira jedan bedž, odnosno priznanje koje korisnik može zaslužiti kao planinar. Korisnik priznanja zaslužuje za svoju aktivnost koja se gleda na osnovu arhive planinarskih domova i staza, te se uzimaju u obzir značajke kao što su: broj posjećenih planinarskih domova, broj odrađenih planinarskih staza i sl. Entitet sadrži atribute "id" i "name" koji predstavljaju jedinstveni identifikacijski broj priznanja te naziv priznanja.
-			
-			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
-				
-				\hline \multicolumn{3}{|c|}{\textbf{badge - (Priznanje)}}	 \\[3pt] \hline
-				\endfirsthead
-				
-				\hline \multicolumn{3}{|c|}{\textbf{badge - (Priznanje)}}	 \\[3pt] \hline
-				\endhead
-				
-				\hline 
-				\endlastfoot
-				
-				\textbf{id}	& BIGINT &   jedinstveni identifikacijski broj priznanja	\\ \hline 
-				name & VARCHAR &  naziv priznanja \\ \hline 
-				
-				
-			\end{longtabu}
-		
-				\vspace{10mm}
-				
-				\textbf{contact\_message} Ovaj entitet modelira poruke koje korisnik može slati administratoru u slučaju npr. otvaranja novog planinarskog doma. Sadrži atribute: "id", "description", "date\_send" koji redom predstavljaju jedinstveni identifikacijski broj poruke, opis odnosno sadržaj poruke te datum i vrijeme slanja poruke.
-				
-				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
-					
-					\hline \multicolumn{3}{|c|}{\textbf{contact\_message - (Poruke administratoru)}}	 \\[3pt] \hline
-					\endfirsthead
-					
-					\hline \multicolumn{3}{|c|}{\textbf{badge - (Priznanje)}}	 \\[3pt] \hline
-					\endhead
-					
-					\hline 
-					\endlastfoot
-					
-					\textbf{id}	& BIGINT &   jedinstveni identifikacijski broj poruke	\\ \hline 
-					description & VARCHAR &  sadržaj poruke \\ \hline 
-					created\_on & DATE &  datum i vrijeme slanja poruke \\ \hline 
-					\underline{user\_id} & BIGINT	& jedinstveni identifikacijski broj korisnika koji je stvorio poruku unutar aplikacije		\\ \hline 
-					
-				\end{longtabu}
-				\vspace{10mm}
-				
-				
-				
-				\textbf{visit\_confirmation} Ovo je vezna tablica koja nam modelira zahtjeve koje korisnik šalje dežurnim planinarima kada je posjetio određeni dom. Tablica predstavlja Many-To-Many vezu između entiteta \textbf{user} i entiteta \textbf{mountain\_lodge}. Osim stranih ključeva "user\_id" i "lodge\_id" sadrži i atribute "time\_requested" i "status" koji redom predstavljaju vrijeme slanja zahtjeva te status obrade zahtjeva za posjetom, koji može biti: ACCEPTED (Prihvaćen), REJECTED (Odbijen) ili PENDING (Aktivan).
-				
-				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
-					
-					\hline \multicolumn{3}{|c|}{\textbf{visit\_confirmation - (Zahtjev za potvrdom posjeta)}}	 \\[3pt] \hline
-					\endfirsthead
-				
-					\hline 
-					\endlastfoot
-					
-					\underline{user\_id} & BIGINT	&  strani ključ korisnika koji traži potvrdu posjeta iz tablice \textbf{user}\\ \hline
-					\underline{lodge\_id}	& BIGINT & strani ključ planinarskog doma kojeg posjećuje iz tablice \textbf{mountain\_lodge} 	\\ \hline 
-					time\_requested & TIMESTAMP &  datum i vrijeme slanja zahtjeva za posjetom \\ \hline 
-					status & VARCHAR	&  status zahtjeva	\\ \hline  
-		
-		\end{longtabu}
-		\vspace{10mm}
-	
-			\textbf{friendships} Ovo je vezna tablica koja sadrži Many-To-Many vezu između dva korisnika, a služi nam za modeliranje prijateljstava, odnosno pripadanja istoj planinarskoj zajednici. Sadrži atribute "user\_id1" i "user\_id2" koji predstavljaju strane ključeve na tablicu \textbf{user} i govore nam tko su korisnici koji pripadaju istoj zajednici, te atribut "friendship\_created" koji nam govori o datumu i vremenu stvaranja prijateljstva.
-			
-			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
-				
-				\hline \multicolumn{3}{|c|}{\textbf{friendships - (Prijatelji)}}	 \\[3pt] \hline
-				\endfirsthead
-				
-				\hline \multicolumn{3}{|c|}{\textbf{friendships - (Prijatelji)}}	 \\[3pt] \hline
-				\endhead
-				
-				\hline 
-				\endlastfoot
-				
-				\underline{user\_id1} & BIGINT	&  strani ključ koji se odnosi na jednog korisnika člana veze "prijatelji"	\\ \hline
-				\underline{user\_id2}	& BIGINT &   strani ključ koji se odnosi na drugog korisnika člana veze "prijatelji"\\ \hline 
-				friendship$\_$ \text{created}	& TIMESTAMP &   vrijeme i datum kada su dva određena korisnika postala prijatelji	\\ \hline 
-				%\cellcolor{LightBlue} primjer	& VARCHAR &   	\\ \hline 
-				
-				
-			\end{longtabu}
-			\vspace{10mm}
+\textbf{user} -  ovaj entitet sadrži sve važne informacije o korisniku aplikacije.
+Sadrži atribute: "id", "name", "email", "password", "image",
+"place$\_$of$\_$residence", "date$\_$of$\_$birth", "role$\_$id", "current$\_$user$\_$id" i "description" koji redom predstavljaju jedinstveni identifikacijski broj korisnika, ime i prezime, e-mail korisnika, lozinku korisnika, sliku vidljivu na profilu korisnika, mjesto stanovanja korisnika te datum rođenja korisnika, id role korisnika, id trenutnog korisnika i opis.
+Neki podaci o korisniku, kao što su mjesto stanovanja i datum rođenja su opcionalni, i ako ih korisnik ne ispuni njihova vrijednost je \textit{NULL}. Atribut "role\_id" je strani ključ koji referencira entitet \textbf{roles} te se radi o Many-To-One vezi. 
 
-			\textbf{friendship\_req} Ovaj entitet sadrži informaciju o poslanom zahtjevu za prijateljstvo između 2 korisnika. Sadrži atribute: "friendship\_send" te "friendship\_recieve" koji su oba strani ključevi iz tablice \textbf{user}, a predstavljaju identifikacijski broj pošiljatelja te primatelja zahtjeva za prijateljstvo. Radi se o refleksivnoj Many-to-Many vezi.
-			
-			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
-				
-					\hline \multicolumn{3}{|c|}{\textbf{friendship\_req - (Zahtjevi za prijateljstvom)}}	 \\[3pt] \hline
-				\endfirsthead
-				
-				\hline \multicolumn{3}{|c|}{\textbf{friendship\_req - (Zahtjevi za prijateljstvom)}}	 \\[3pt] \hline
-				\endhead
-				
-				\hline 
-				\endlastfoot
-				
-				\underline{friendship\_} \underline{send} & BIGINT	&  strani ključ korisnika koji šalje zahtjev za prijateljstvom iz tablice \textbf{user} 	\\ \hline
-				\underline{friendship\_} \underline{recieve}	& BIGINT &   strani ključ korisnika koji prima zahtjev za prijateljstvom	iz tablice \textbf{user}\\ \hline 
-				%\cellcolor{LightBlue} primjer	& VARCHAR &   	\\ \hline 
-				
-				
-			\end{longtabu}
-		\vspace{10mm}
-		
-		\textbf{user\_role} Vezna tablica koja modelira Many-to-Many vezu između entiteta \textbf{user} i entiteta \textbf{role}. Jedan korisnik može imati više uloga, dok jednu ulogu može imati više različitih korisnika. Sadrži atribute "role\_id" te "user\_id" koji redom predstavljaju identifikacijski broj uloge te identifikacijski broj korisinika.
-		
-		\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
-			
-			\hline \multicolumn{3}{|c|}{\textbf{user\_role}}	 \\[3pt] \hline
-			\endfirsthead
-			
-			\hline \multicolumn{3}{|c|}{\textbf{user\_role}}	 \\[3pt] \hline
-			\endhead
-			
-			\hline 
-			\endlastfoot
-			
-			\underline{user\_id} & BIGINT	&  	strani ključ korisnika iz entiteta \textbf{user}	\\ \hline
-			\underline{role\_id}	& BIGINT &  strani ključ uloge, odnosno aplikativne role iz entiteta \textbf{role}\\ \hline 
-			
-			
-		\end{longtabu}
-			\vspace{10mm}
-			
-			\textbf{user\_badge} Ovaj entitet sadrži informaciju o Many-To-Many odnosu između bedževa (priznanja) i korisnika. Sadrži atribute: "user\_id", "badge\_id" i "date\_recieved" koji redom predstavljaju identifikacijski broj korisnika, identifikacijski broj priznanja te vrijeme dobivanja priznanja.
-			
-			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
-				
-				\hline \multicolumn{3}{|c|}{\textbf{user\_badge}}	 \\[3pt] \hline
-				\endfirsthead
-				
-				\hline \multicolumn{3}{|c|}{\textbf{user\_badge}}	 \\[3pt] \hline
-				\endhead
-				
-				\hline 
-				\endlastfoot
-				
-				\underline{user\_id} & BIGINT	&  strani ključ korisnika kojem je pripisan pojedini bedž iz tablice \textbf{user}\\ \hline
-				\underline{badge\_id}	& BIGINT &  strani ključ bedža kojeg je dobio pojedini korisnik iz tablice \textbf{badge}	\\ \hline 
-				date\_recieved & DATE & datum dobivanja pojedinog bedža za određenog korisnika  \\ \hline 
-				
-				
-			\end{longtabu}
-			\vspace{10mm}
+\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+\hline \multicolumn{3}{|c|}{\textbf{user - (Korisnik)}}	 \\[3pt] \hline
+\endfirsthead
 
-			\textbf{event\_attendance} Modelira Many-To-Many vezu između korisnika i događaja (planinarskog izleta) na kojemu korisnik želi sudjelovati. Sadrži atribute "user\_id" te "event\_id" koji predstavljaju jedinstveni identifikator korisnika koji sudjeluje na događaju te jedinstveni identifikator događaja.
-			
-			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
-				
-				\hline \multicolumn{3}{|c|}{\textbf{event\_attendance}}	 \\[3pt] \hline
-				\endfirsthead
-				
-				\hline \multicolumn{3}{|c|}{\textbf{event\_attendance}}	 \\[3pt] \hline
-				\endhead
-				
-				\hline 
-				\endlastfoot
-				
-				\underline{user\_id} & BIGINT	&  	strani ključ korisnika koji će prisustvovati događaju iz tablice \textbf{user}	\\ \hline
-				\underline{event\_id}	& BIGINT &  strani ključ događaja kojemu određena osoba pristupa iz tablice \textbf{event}\\ \hline 
-				
-				
-			\end{longtabu}
-			\vspace{10mm}		
-			
-			\textbf{event\_path} Ovaj entitet sadrži informaciju o Many-To-Many vezi između planinarske staze i nekog planinarskog događaja. Sadrži atribute: "path\_id" te "event\_id" koji predstavljaju identifikacijski broj planinarske staze i identifikacijski broj nekog planinarskog događaja. Osim toga, sadrži atribut "event\_day" koji nam govori o rednom broju dana tijekom kojeg se na određenom planinarskom događaju odrađuje određena planinarska staza.
-			
-			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
-				
-				\hline \multicolumn{3}{|c|}{\textbf{event\_path}}	 \\[3pt] \hline
-				\endfirsthead
-				
-				\hline \multicolumn{3}{|c|}{\textbf{event\_path}}	 \\[3pt] \hline
-				\endhead
-				
-				\hline 
-				\endlastfoot
-				
-				\underline{path\_id} & BIGINT	&  	strani ključ staze koja je dio nekog događaja iz tablice \textbf{mountain\_path}	\\ \hline
-				\underline{event\_id}	& BIGINT &  strani ključ događaja u kojem se pojedina staza odrađuje, iz tablice \textbf{event}	\\ \hline 
-				event\_day	& INTEGER &  redni broj dana koliko se unutar jednog događaja obilazi određena staza	\\ \hline 
-				
-			\end{longtabu}
-			\vspace{10mm}
-		
-			\textbf{badge\_notification} Ovaj entitet sadrži informaciju o Many-To-Many odnosu između bedževa i korisnika, ali samo u smislu obavijesti korisniku. Kada korisnik potvrdi da je primio obavijest, pojedini unos se briše iz ovog entiteta. Sadrži atribute: "user\_id" te "badge\_id" koji predstavljaju identifikator korisnika koji je dobio priznanje čiji je identifikator "badge\_id".
-			
-			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
-				
-				\hline \multicolumn{3}{|c|}{\textbf{badge\_notification}}	 \\[3pt] \hline
-				\endfirsthead
-				
-				\hline \multicolumn{3}{|c|}{\textbf{badge\_notification}}	 \\[3pt] \hline
-				\endhead
-				
-				\hline 
-				\endlastfoot
-				
-				\underline{user\_id} & BIGINT	&  strani ključ korisnika kojem je pripisan pojedini bedž iz tablice \textbf{user}\\ \hline
-				\underline{badge\_id}	& BIGINT) &  strani ključ bedža kojeg je dobio pojedini korisnik iz tablice \textbf{badge}\\ \hline  
-				
-				
-			\end{longtabu}
-			\vspace{10mm}		
-		
-			\textbf{mountain\_lodge\_utility} Vezna tablica koja modelira Many-to-Many vezu između planinarskih domova i infrastrukturnih značajki koje ti domovi posjeduju. Sadrži atribute "lodge\_id" te "utility\_id" koji predstavljaju identifikator planinarskog doma te identifikator odgovarajuće značajke.
-			
-			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
-				
-				\hline \multicolumn{3}{|c|}{\textbf{mountain\_lodge\_utility}}	 \\[3pt] \hline
-				\endfirsthead
-				
-				\hline \multicolumn{3}{|c|}{\textbf{mountain\_lodge\_utility}}	 \\[3pt] \hline
-				\endhead
-				
-				\hline 
-				\endlastfoot
-				
-				\underline{lodge\_id} & BIGINT	&  strani ključ kojem je pripisan pojedini planinarski dom iz tablice  \textbf{mountain\_lodge}\\ \hline
-				\underline{utility\_id}	& BIGINT &  strani ključ kojem je pripisana pojedina značajka iz tablice \textbf{utility} \\ \hline 
-				
-				
-			\end{longtabu}
-			\vspace{10mm}
-			
-			\textbf{mountain\_path\_grade} Vezna tablica koja nam govori o ocjenama koje pojedini korisnik dodijeljuje pojedinoj planinarskoj stazi. Radi se o Many-To-Many veznoj tablici. Sadrži atribute "user\_id", "path\_id" te "grade", koji redom predstavljaju identifikacijski broj korisnika, identifikacijski broj planinarske staze te ocjenu koju je taj korisnik dodijelio toj stazi.
-			
-			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
-				
-				\hline \multicolumn{3}{|c|}{\textbf{mountain\_path\_grade}}	 \\[3pt] \hline
-				\endfirsthead
-				
-				\hline \multicolumn{3}{|c|}{\textbf{mountain\_path\_grade}}	 \\[3pt] \hline
-				\endhead
-				
-				\hline 
-				\endlastfoot
-				
-				\underline{user\_id} & BIGINT	& strani ključ korisnika koji daje ocjenu iz tablice \textbf{user}  	\\ \hline
-				\underline{path\_id}	& BIGINT &   strani ključ planinarske staze koja se ocjenjuje iz tablice \textbf{mountain\_path}	\\ \hline 
-				grade & INTEGER & ocjenu koju je korisnik dodijelio za konkretnu stazu  \\ \hline 
-				
-				
-			\end{longtabu}
-			\vspace{10mm}		
-		
-			\textbf{path\_user\_wishlist} Vezna tablica koja modelira željene planinarske staze za pojedinog korisnika. To su staze koje korisnik ima namjeru prepješačiti, ali još nije uspio. Sadrži atribute "user\_id" i "path\_id" koji predstavljaju identifikator korisnika te identifikator staze koju korisnik želi prepješačiti.
-		
-			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
-				
-				\hline \multicolumn{3}{|c|}{\textbf{path\_user\_wishlist}}	 \\[3pt] \hline
-				\endfirsthead
-				
-				\hline \multicolumn{3}{|c|}{\textbf{path\_user\_wishlist}}	 \\[3pt] \hline
-				\endhead
-				
-				\hline 
-				\endlastfoot
-				
-				\underline{user\_id} & BIGINT	& strani ključ korisnika  koji želi prepješačiti neku stazu iz tablice \textbf{user}	\\ \hline
-				\underline{path\_id} & BIGINT	& strani ključ staze koju korisnik želi prepješačiti iz tablice \textbf{mountain\_path}	\\ \hline
-				
-				
-			\end{longtabu}
-			\vspace{10mm}			
-			
-			\textbf{mountain\_path\_completed} Ovaj entitet sadrži informaciju o Many-To-Many odnosu između pojedinog korisnika i staza koje je već prepješačio, odnosno ovaj entitet modelira arhivu staza.
-			
-			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
-				
-				\hline \multicolumn{3}{|c|}{\textbf{mountain\_path\_completed}}	 \\[3pt] \hline
-				\endfirsthead
-				
-				\hline \multicolumn{3}{|c|}{\textbf{mountain\_path\_completed}}	 \\[3pt] \hline
-				\endhead
-				
-				\hline 
-				\endlastfoot
-				
-				\underline{user\_id} & BIGINT	& strani ključ korisnika  koji je prepješačio pojedinu stazu iz tablice \textbf{user}	\\ \hline
-				path\_id	& BIGINT &   strani ključ staze koju je konkretni korisnik prepješačio iz tablice \textbf{mountain\_path}	\\ \hline 
-				date\_completed & DATE & datum kojeg je određeni korisnik prepješačio određenu stazu  \\ \hline 
-				
-				
-			\end{longtabu}
-			\vspace{10mm}
-		
-			\textbf{mountain\_path\_report} Vezna tablica koja modelira prijavu netočnih ili nepreciznih informacija vezanih uz pojedinu planinarsku stazu. Korisnik kojem je identifikacijski broj "user\_id" prijavljuje netočne informacije vezane uz planinarsku stazu identifikatora "path\_id", a osim toga bilježi se i vrijeme prijave pogreške kao atribut "date\_report", opis pogreške kao atribut "description" te status pogreške kao atribut "status" koji označava je li administrator pogrešku prihvatio, odbio ili je ona i dalje aktivna.
-			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
-				
-				\hline \multicolumn{3}{|c|}{\textbf{mountain\_path\_report}}	 \\[3pt] \hline
-				\endfirsthead
-				
-				\hline \multicolumn{3}{|c|}{\textbf{mountain\_path\_report}}	 \\[3pt] \hline
-				\endhead
-				
-				\hline 
-				\endlastfoot
-				
-				\underline{user\_id} & BIGINT	& strani ključ korisnika  koji prijavljuje netočnu ili nepreciznu informaciju vezanu uz neku planinarsku stazu, a odnosi se na tablicu \textbf{user}	\\ \hline
-				\underline{path\_id}	& BIGINT &   strani ključ planinarske staze koju korisnik prijavljuje, a odnosi se na tablicu \textbf{mountain\_path}	\\ \hline 
-				description & VARCHAR & opis netočne ili neprecizne informacije o nekoj stazi  \\ \hline 
-				status & VARCHAR & status prijavljene pogreške  \\ \hline
-				date\_report & TIMESTAMP & vrijeme i datum prijave pogreške vezane uz određenu planinarsku stazu  \\ \hline
-				
-		
-				
-				
-			\end{longtabu}
-					\vspace{10mm}
-		
-		\textbf{mountain\_lodge\_report} Vezna tablica koja modelira prijavu netočnih ili nepreciznih informacija vezanih uz pojedini planinarski dom. Korisnik kojem je identifikacijski broj "user\_id" prijavljuje netočne informacije vezane uz planinarski dom identifikatora "lodge\_id", a osim toga bilježi se i vrijeme prijave pogreške kao atribut "date\_report", opis pogreške kao atribut "description" te status pogreške kao atribut "status" koji označava je li administrator pogrešku prihvatio, odbio ili je ona i dalje aktivna.
-		\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
-			
-			\hline \multicolumn{3}{|c|}{\textbf{mountain\_lodge\_report}}	 \\[3pt] \hline
-			\endfirsthead
-			
-			\hline \multicolumn{3}{|c|}{\textbf{mountain\_lodge\_report}}	 \\[3pt] \hline
-			\endhead
-			
-			\hline 
-			\endlastfoot
-			
-			\underline{user\_id} & BIGINT	& strani ključ korisnika  koji prijavljuje netočnu ili nepreciznu informaciju vezanu uz neki planinarski dom, a odnosi se na tablicu \textbf{user}	\\ \hline
-			\underline{lodge\_id}	& BIGINT &   strani ključ planinarskog doma koji korisnik prijavljuje, a odnosi se na tablicu \textbf{mountain\_lodge}	\\ \hline 
-			description & VARCHAR & opis netočne ili neprecizne informacije o nekom planinarskom domu  \\ \hline 
-			status & VARCHAR & status prijavljene pogreške  \\ \hline
-			date\_report & VARCHAR & vrijeme i datum prijave pogreške vezane uz određeni planinarski dom  \\ \hline
-			
-			
-			
-			
-		\end{longtabu}
-			\vspace{10mm}
-		
-			\textbf{duty\_mountaneer} Vezna tablica koja modelira Many-To-Many vezu između planinarskog doma identifikatora "lodge\_id" i planinara identifikatora "user\_id", koji je dežurni planinar za taj dom.
-			
-			\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
-				
-				\hline \multicolumn{3}{|c|}{\textbf{duty\_mountaneer}}	 \\[3pt] \hline
-				\endfirsthead
-				
-				\hline \multicolumn{3}{|c|}{\textbf{duty\_mountaneer}}	 \\[3pt] \hline
-				\endhead
-				
-				\hline 
-				\endlastfoot
-				
-				\underline{user\_id} & BIGINT	& strani ključ korisnika koji je dežurni planinar iz tablice \textbf{user}	\\ \hline
-				\underline{lodge\_id}	& BIGINT &   strani ključ planinarskog doma u kojem je planinar dežuran iz tablice \textbf{mountain\_lodge}	\\ \hline 
-				
-				
-			\end{longtabu}
-			\vspace{10mm}
+\hline \multicolumn{3}{|c|}{\textbf{user - (Korisnik)}}	 \\[3pt] \hline
+\endhead
+
+\hline 
+\endlastfoot
+
+\textbf{id} & BIGINT	&  	jedinstveni identifikacijski broj korisnika	\\ \hline
+name	& VARCHAR &  ime i prezime korisnika 	\\ \hline 
+email & VARCHAR &  e-mail pomoću kojeg se korisnik prijavljuje u sustav \\ \hline 
+description	& VARCHAR &  opis korisnika, unos je opcionalan 	\\ \hline 
+password & VARCHAR	&  	lozinka pomoću koje se korisnik prijavljuje u sustav	\\ \hline 
+place\_of
+\_residence & VARCHAR	&  	mjesto stanovanja korisnika, unos je opcionalan	\\ \hline 
+image & BYTEA	&  	slika vidljiva na profilu korisnika	\\ \hline 
+current\_user\_id & BIGINT	&  	id trenutnog korisnika	\\ \hline 
+\underline{role\_id} & BIGINT & strani ključ role iz tablice \textbf{roles}\\ \hline
+date\_of\_birth & DATE & datum rođenja korisnika, unos je opcionalan \\ \hline
 
 
+\end{longtabu}
+\vspace{10mm}
+
+\textbf{roles} Ovaj entitet modelira ulogu korisnika unutar aplikacije, tzv. "aplikativne role". Određuje razinu ovlasti koje korisnik ima. Sadrži atribute: "id" i "name" koji predstavljaju jedinstveni identifikator uloge te naziv uloge. Dopuštene uloge u našoj aplikaciji su: Planinar i Administrator.
+
+\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+
+\hline \multicolumn{3}{|c|}{\textbf{roles - (Uloga)}}	 \\[3pt] \hline
+\endfirsthead
+
+\hline \multicolumn{3}{|c|}{\textbf{role - ime tablice}}	 \\[3pt] \hline
+\endhead
+
+\hline 
+\endlastfoot
+
+\textbf{id} & BIGINT	&  jedinstveni ID uloge	\\ \hline
+name	& VARCHAR &  ime uloge 	\\ \hline 
+
+\end{longtabu}
+
+\vspace{10mm}		
+
+\textbf{mountain\_lodge} Ovaj entitet modelira jedan planinarski dom. Sadrži atribute: "id", "name", "image", "elevation" i "hill\_id" koji predstavljaju jedinstveni identifikator planinarskog doma, naziv planinarskog doma, sliku planinarskog doma, nadmorsku visinu te jedinstveni identifikator zemljopisnog područja (visočja) na kojemu se planinarski dom nalazi. Unos slike za neki planinarski dom je opcionalan, a ako se atribut ne popuni njegova vrijednost je \textit{NULL}. Atribut "hill\_id" predstavlja strani ključ koji referencira entitet \textbf{hill} te se radi o Many-To-One vezi. 
+
+\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+
+\hline \multicolumn{3}{|c|}{\textbf{mountain\_lodge - (Planinarski dom)}}	 \\[3pt] \hline
+\endfirsthead
+
+\hline \multicolumn{3}{|c|}{\textbf{mountain\_lodge - ime tablice}}	 \\[3pt] \hline
+\endhead
+
+\hline 
+\endlastfoot
+
+\textbf{id} & BIGINT	&  	jedinstveni identifikacijski broj planinarskog doma 	\\ \hline
+name	& VARCHAR &   naziv planinarskog doma	\\ \hline 
+image & BYTEA &  slika planinarskog doma koja se prikazuje unutar aplikacije, unos je opcionalan \\ \hline 
+elevation & INTEGER & nadmorska visina na kojoj se planinarski dom nalazi izražena u kilometrima \\ \hline 
+\underline{hill\_id} & BIGINT	&  strani ključ na tablicu \textbf{hill}, a predstavlja identifikator visočja na kojemu se nalazi planinarski dom	\\ \hline 
+
+
+\end{longtabu}
+\vspace{10mm}		
+
+
+\textbf{utility} Ovaj entitet modelira značajke infrastrukture pojedinog doma. Sadrži atribute "id" i "name" koji predstavljaju jedinstveni identifikacijski broj značajke te naziv značajke. Primjeri takvih značajki su pitka voda, hrana, smještaj, internet.
+
+\newpage
+\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+
+\hline \multicolumn{3}{|c|}{\textbf{utility - (Pogodnost, značajka)}}	 \\[3pt] \hline
+\endfirsthead
+
+\hline \multicolumn{3}{|c|}{\textbf{utility - ime tablice}}	 \\[3pt] \hline
+\endhead
+
+\hline 
+\endlastfoot
+
+\textbf{id} & BIGINT	&  jedinstveni identifikator značajke\\ \hline
+name	& VARCHAR &  naziv značajke/pogodnosti \\ \hline 
+
+\end{longtabu}
+\vspace{10mm}		
+
+\textbf{hill} Ovaj entitet modelira pojedino zemljopisno područje, odnosno visočje na kojemu se nalazi pojedini planinarski dom ili planinarska staza. Sadrži atribute: "id" i "name" koji predstavljaju jedinstveni identifikacijski broj visočja te naziv visočja.
+
+\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+
+\hline \multicolumn{3}{|c|}{\textbf{hill - (Visočje)}}	 \\[3pt] \hline
+\endfirsthead
+
+\hline \multicolumn{3}{|c|}{\textbf{hill - ime tablice}}	 \\[3pt] \hline
+\endhead
+
+\hline 
+\endlastfoot
+
+\textbf{id} & BIGINT	&  jedinstveni ID visočja 	\\ \hline
+name & VARCHAR	&  ime visočja 	\\ \hline
+
+
+\end{longtabu}
+\vspace{10mm}
+
+\textbf{mountain\_path} Ovaj entitet sadrži informacije o pojedinoj planinarskoj stazi. Sadrži atribute: "id", "name", "start\_point", "end\_point", "avg\_walk\_time", "length", "sea\_level\_diff", "date\_created", "is\_private", "author\_id" i "hill\_id" koji redom predstavljaju jedinstveni identifikacijski broj planinarske staze, naziv staze, polazišnu točku, završnu toku, prosječno vrijeme potrebno da se prepješači staza, duljinu staze, razliku u nadmorskoj visini između početne i završne točke, datum kreiranja pojedine staze od strane korisnika unutar naše aplikacije, vrijednost koja govori je li staza privatna ili javna, korisnika koji je stvorio stazu te identifikator visočja na kojemu se staza nalazi. Atribut "author\_id" te atribut "hill\_id" su strani ključevi obzirom na tablicu \textbf{user} odnosno \textbf{hill} te se radi o Many-To-One vezama.
+
+\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+
+\hline \multicolumn{3}{|c|}{\textbf{mountain\_path - (Planinarska staza)}}	 \\[3pt] \hline
+\endfirsthead
+
+\hline \multicolumn{3}{|c|}{\textbf{mountain\_path - (Planinarska staza)}}	 \\[3pt] \hline
+\endhead
+
+\hline 
+\endlastfoot
+
+\textbf{id} & BIGINT	& jedinstveni identifikacijski broj planinarske staze	\\ \hline
+name	& VARCHAR &  naziv staze	\\ \hline 
+start\_point & VARCHAR & naziv početne točke staze  \\ \hline 
+end\_point & VARCHAR &  naziv završne točke staze \\ \hline 
+avg\_walk\_time & TIME &  prosječno vrijeme potrebno za prepješačiti stazu\\ \hline 
+length & INTEGER & duljina staze u metrima\\ \hline 
+sea\_level\_diff & INTEGER & razlika u nadmorskoj visini između početne i završne točke staze\\ \hline 
+date\_created & DATE &  datum stvaranja staze unutar aplikacije\\ \hline 
+is\_private & BOOLEAN	&  atribut koji govori je li korisnik stazu stvara privatno ili javno  \\ \hline 
+\underline{author\_id} & BIGINT	&  	identifikacijski broj korisnika koji je stvorio stazu unutar aplikacije\\ \hline 
+\underline{hill\_id} & BIGINT	&  identifikacijski broj visočja na kojemu se staza nalazi\\ \hline 
+
+
+\end{longtabu}
+\vspace{10mm}
+
+\textbf{event} Ovaj entitet modelira jedan događaj koji stvara korisnik unutar naše aplikacije. Jedan događaj počinje u određeno vrijeme "start\_date", te završava u određeno vrijeme: "end\_date". Svaki događaj, odnosno planinarski izlet sastoji se od jedne ili više planinarskih staza koje se obilaze tijekom tog planinarskog izleta. Osim toga, planinarski izlet ima svoj opis: "description", gdje korisnik može reći više pojedinosti o samom planinarskom izletu. Osim toga, ovaj entitet sadrži atribute: "event\_id", "name", "date\_created" i "author\_id" koji predstavljaju jedinstveni identifikacijski broj događaja, naziv događaja, vrijeme kada je korisnik stvorio događaj unutar aplikacije te jedinstveni identifikacijski broj korisnika koji je stvorio događaj. Atribut "user\_id" je strani ključ koji se odnosi na tablicu \textbf{user} te se radi o Many-To-One vezi.
+
+\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+
+\hline \multicolumn{3}{|c|}{\textbf{event - (Planinarski događaj)}}	 \\[3pt] \hline
+\endfirsthead
+
+\hline \multicolumn{3}{|c|}{\textbf{event - (Planinarski događaj)}}	 \\[3pt] \hline
+\endhead
+
+\hline 
+\endlastfoot
+
+\textbf{event\_id} & BIGINT	&  	jedinstveni identifikacijski broj planinarskog izleta 	\\ \hline
+name	& VARCHAR & naziv događaja 	\\ \hline 
+description & VARCHAR &  pojedinosti vezane uz događaj \\ \hline 
+start\_date & TIMESTAMP	&  vrijeme i datum početka planinarskog izleta	\\ \hline 
+end\_date & TIMESTAMP	&  	vrijeme i datum završetka planinarskog izleta	\\ \hline 
+date\_created & TIMESTAMP	&  vrijeme i datum stvaranja izleta unutar aplikacije\\ \hline 
+\underline{user\_id} & BIGINT	& jedinstveni identifikacijski broj korisnika koji je stvorio događaj unutar aplikacije		\\ \hline 
+
+
+\end{longtabu}
+\vspace{10mm}
+
+\textbf{badge} Ovaj entitet modelira jedan bedž, odnosno priznanje koje korisnik može zaslužiti kao planinar. Korisnik priznanja zaslužuje za svoju aktivnost koja se gleda na osnovu arhive planinarskih domova i staza, te se uzimaju u obzir značajke kao što su: broj posjećenih planinarskih domova, broj odrađenih planinarskih staza i sl. Entitet sadrži atribute "id", "name" i "description" koji predstavljaju jedinstveni identifikacijski broj priznanja, naziv priznanja te opis priznanja.
+
+\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+
+\hline \multicolumn{3}{|c|}{\textbf{badge - (Priznanje)}}	 \\[3pt] \hline
+\endfirsthead
+
+\hline \multicolumn{3}{|c|}{\textbf{badge - (Priznanje)}}	 \\[3pt] \hline
+\endhead
+
+\hline 
+\endlastfoot
+
+\textbf{id}	& BIGINT &   jedinstveni identifikacijski broj priznanja	\\ \hline 
+name & VARCHAR &  naziv priznanja \\ \hline 
+description & VARCHAR &  opis priznanja \\ \hline 
+
+
+\end{longtabu}
+
+\vspace{10mm}
+
+\textbf{message} Ovaj entitet modelira poruke koje korisnik može slati administratoru u slučaju npr. otvaranja novog planinarskog doma. Sadrži atribute: "id", "status", "error", "message\_name", "message\_content" i "user\_id" koji redom predstavljaju jedinstveni identifikacijski broj poruke, status poruke, mjesto gdje je prijavljena greška, naslov poruke, sadržaj poruke i id korisnika koji je poslao poruku.
+
+\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+
+\hline \multicolumn{3}{|c|}{\textbf{message - (Poruke administratoru)}}	 \\[3pt] \hline
+\endfirsthead
+
+\hline \multicolumn{3}{|c|}{\textbf{badge - (Priznanje)}}	 \\[3pt] \hline
+\endhead
+
+\hline 
+\endlastfoot
+
+\textbf{id}	& BIGINT &   jedinstveni identifikacijski broj poruke	\\ \hline 
+status & VARCHAR &  status poruke \\ \hline 
+error & VARCHAR &  mjesto gdje je nastala pogrška \\ \hline 
+message\_name & VARCHAR &  naslov poruke \\ \hline 
+message\_content & VARCHAR &  sadržaj poruke \\ \hline 
+\underline{user\_id} & BIGINT	& jedinstveni identifikacijski broj korisnika koji je stvorio poruku unutar aplikacije		\\ \hline 
+
+\end{longtabu}
+\vspace{10mm}
+
+
+\textbf{friendships} Ovo je vezna tablica koja sadrži Many-To-Many vezu između dva korisnika, a služi nam za modeliranje prijateljstava, odnosno pripadanja istoj planinarskoj zajednici. Sadrži atribute "current\_user\_id" i "friend\_id" koji predstavljaju strane ključeve na tablicu \textbf{user} i govore nam tko su korisnici koji pripadaju istoj zajednici.
+
+\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+
+\hline \multicolumn{3}{|c|}{\textbf{friendships - (Prijatelji)}}	 \\[3pt] \hline
+\endfirsthead
+
+\hline \multicolumn{3}{|c|}{\textbf{friendships - (Prijatelji)}}	 \\[3pt] \hline
+\endhead
+
+\hline 
+\endlastfoot
+
+\underline{current\_user\_id} & BIGINT	&  strani ključ koji se odnosi na jednog korisnika člana veze "prijatelji"	\\ \hline
+\underline{friend\_id}	& BIGINT &   strani ključ koji se odnosi na drugog korisnika člana veze "prijatelji"\\ \hline 
+%\cellcolor{LightBlue} primjer	& VARCHAR &   	\\ \hline 
+
+
+\end{longtabu}
+\vspace{10mm}
+
+\textbf{friendship\_request} Ovaj entitet sadrži informaciju o poslanom zahtjevu za prijateljstvo između 2 korisnika. Sadrži atribute: "sender" te "reciever" koji su oba strani ključevi iz tablice \textbf{user}, a predstavljaju identifikacijski broj pošiljatelja te primatelja zahtjeva za prijateljstvo. Radi se o refleksivnoj Many-to-Many vezi.
+
+\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+
+\hline \multicolumn{3}{|c|}{\textbf{friendship\_request - (Zahtjevi za prijateljstvom)}}	 \\[3pt] \hline
+\endfirsthead
+
+\hline \multicolumn{3}{|c|}{\textbf{friendship\_req - (Zahtjevi za prijateljstvom)}}	 \\[3pt] \hline
+\endhead
+
+\hline 
+\endlastfoot
+
+\underline{sender} 
+& BIGINT	&  strani ključ korisnika koji šalje zahtjev za prijateljstvom iz tablice \textbf{user} 	\\ \hline
+\underline{recevier} 
+& BIGINT &   strani ključ korisnika koji prima zahtjev za prijateljstvom	iz tablice \textbf{user}\\ \hline 
+%\cellcolor{LightBlue} primjer	& VARCHAR &   	\\ \hline 
+
+
+\end{longtabu}
+\vspace{10mm}
+\textbf{friendships\_notifications} Ovaj entitet sadrži informaciju o Many-To-Many odnosu između dva korisnika, a služi za modeliranje obavijesti korisnicima o prihvaćenim zahtjevima za prijateljstvo. Sadrži atribute "friendships\_notifications\_sender\_id" i "friendships\_notifications\_recevier\_id" koji predstvljaju strane ključeve na tablicu user i govore koji je korisnik kojem poslao zahtjev za prijateljstvo.
+
+\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+
+\hline \multicolumn{3}{|c|}{\textbf{friendships\_notifications}}	 \\[3pt] \hline
+\endfirsthead
+
+\hline \multicolumn{3}{|c|}{\textbf{friendships\_notifications}}	 \\[3pt] \hline
+\endhead
+
+\hline 
+\endlastfoot
+
+\underline{sender\_id} & BIGINT	& strani ključ 	korisnika  koji je poslao zahtjev iz tablice \textbf{user}	\\ \hline
+\underline{recevier\_id} & BIGINT &   strani ključ korisnika koji je primio zahtjev iz tablice \textbf{user} \\ \hline
+
+
+\end{longtabu}
+\vspace{10mm}
+
+\textbf{user\_badge} Ovaj entitet sadrži informaciju o Many-To-Many odnosu između bedževa (priznanja) i korisnika. Sadrži atribute: "user\_id", "badge\_id" i "date\_recieved" koji redom predstavljaju identifikacijski broj korisnika, identifikacijski broj priznanja te vrijeme dobivanja priznanja.
+
+\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+
+\hline \multicolumn{3}{|c|}{\textbf{user\_badge}}	 \\[3pt] \hline
+\endfirsthead
+
+\hline \multicolumn{3}{|c|}{\textbf{user\_badge}}	 \\[3pt] \hline
+\endhead
+
+\hline 
+\endlastfoot
+
+\underline{user\_id} & BIGINT	&  strani ključ korisnika kojem je pripisan pojedini bedž iz tablice \textbf{user}\\ \hline
+\underline{badge\_id}	& BIGINT &  strani ključ bedža kojeg je dobio pojedini korisnik iz tablice \textbf{badge}	\\ \hline 
+date\_recieved & DATE & datum dobivanja pojedinog bedža za određenog korisnika  \\ \hline 
+
+
+\end{longtabu}
+\vspace{10mm}
+
+\textbf{event\_attendance} Modelira Many-To-Many vezu između korisnika i događaja (planinarskog izleta) na kojemu korisnik želi sudjelovati. Sadrži atribute "user\_id" te "event\_id" koji predstavljaju jedinstveni identifikator korisnika koji sudjeluje na događaju te jedinstveni identifikator događaja.
+
+\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+
+\hline \multicolumn{3}{|c|}{\textbf{event\_attendance}}	 \\[3pt] \hline
+\endfirsthead
+
+\hline \multicolumn{3}{|c|}{\textbf{event\_attendance}}	 \\[3pt] \hline
+\endhead
+
+\hline 
+\endlastfoot
+
+\underline{user\_id} & BIGINT	&  	strani ključ korisnika koji će prisustvovati događaju iz tablice \textbf{user}	\\ \hline
+\underline{event\_id}	& BIGINT &  strani ključ događaja kojemu određena osoba pristupa iz tablice \textbf{event}\\ \hline 
+
+
+\end{longtabu}
+\vspace{10mm}		
+
+\textbf{community\_event\_mountain\_path} Ovaj entitet sadrži informaciju o Many-To-Many vezi između planinarske staze i nekog planinarskog događaja. Sadrži atribute: "path\_id", "event\_id", "id" i "date\_traveled" koji predstavljaju identifikacijski broj planinarske staze, identifikacijski broj nekog planinarskog događaja, identifikacijski broj tablice. Osim toga, sadrži atribut "date\_traveled" koji nam govori o rednom broju dana tijekom kojeg se na određenom planinarskom događaju odrađuje određena planinarska staza.
+
+\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+
+\hline \multicolumn{3}{|c|}{\textbf{community\_event\_mountain\_path}}	 \\[3pt] \hline
+\endfirsthead
+
+\hline \multicolumn{3}{|c|}{\textbf{community\_event\_mountain\_path}}	 \\[3pt] \hline
+\endhead
+
+\hline 
+\endlastfoot
+
+{id} & BIGINT & jedinstveni identifikacijski broj\\ \hline
+\underline{path\_id} & BIGINT	&  	strani ključ staze koja je dio nekog događaja iz tablice \textbf{mountain\_path}	\\ \hline
+\underline{event\_id}	& BIGINT &  strani ključ događaja u kojem se pojedina staza odrađuje, iz tablice \textbf{event}	\\ \hline 
+date\_traveled	& INTEGER &  redni broj dana koliko se unutar jednog događaja obilazi određena staza	\\ \hline 
+
+\end{longtabu}
+\vspace{10mm}
+
+\textbf{mountain\_lodge\_utility} Vezna tablica koja modelira Many-to-Many vezu između planinarskih domova i infrastrukturnih značajki koje ti domovi posjeduju. Sadrži atribute "lodge\_id" te "utility\_id" koji predstavljaju identifikator planinarskog doma te identifikator odgovarajuće značajke.
+
+\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+
+\hline \multicolumn{3}{|c|}{\textbf{mountain\_lodge\_utility}}	 \\[3pt] \hline
+\endfirsthead
+
+\hline \multicolumn{3}{|c|}{\textbf{mountain\_lodge\_utility}}	 \\[3pt] \hline
+\endhead
+
+\hline 
+\endlastfoot
+
+\underline{lodge\_id} & BIGINT	&  strani ključ kojem je pripisan pojedini planinarski dom iz tablice  \textbf{mountain\_lodge}\\ \hline
+\underline{utility\_id}	& BIGINT &  strani ključ kojem je pripisana pojedina značajka iz tablice \textbf{utility} \\ \hline 
+
+
+\end{longtabu}
+\vspace{10mm}
+
+\textbf{mountain\_path\_grade} Vezna tablica koja nam govori o ocjenama koje pojedini korisnik dodijeljuje pojedinoj planinarskoj stazi. Radi se o Many-To-Many veznoj tablici. Sadrži atribute "user\_id", "path\_id" te "grade", koji redom predstavljaju identifikacijski broj korisnika, identifikacijski broj planinarske staze te ocjenu koju je taj korisnik dodijelio toj stazi.
+
+\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+
+\hline \multicolumn{3}{|c|}{\textbf{mountain\_path\_grade}}	 \\[3pt] \hline
+\endfirsthead
+
+\hline \multicolumn{3}{|c|}{\textbf{mountain\_path\_grade}}	 \\[3pt] \hline
+\endhead
+
+\hline 
+\endlastfoot
+
+\underline{user\_id} & BIGINT	& strani ključ korisnika koji daje ocjenu iz tablice \textbf{user}  	\\ \hline
+\underline{path\_id}	& BIGINT &   strani ključ planinarske staze koja se ocjenjuje iz tablice \textbf{mountain\_path}	\\ \hline 
+grade & INTEGER & ocjenu koju je korisnik dodijelio za konkretnu stazu  \\ \hline 
+
+
+\end{longtabu}
+\vspace{10mm}		
+
+\textbf{path\_user\_wishlist} Vezna tablica koja modelira željene planinarske staze za pojedinog korisnika. To su staze koje korisnik ima namjeru prepješačiti, ali još nije uspio. Sadrži atribute "user\_id" i "path\_id" koji predstavljaju identifikator korisnika te identifikator staze koju korisnik želi prepješačiti.
+
+\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+
+\hline \multicolumn{3}{|c|}{\textbf{path\_user\_wishlist}}	 \\[3pt] \hline
+\endfirsthead
+
+\hline \multicolumn{3}{|c|}{\textbf{path\_user\_wishlist}}	 \\[3pt] \hline
+\endhead
+
+\hline 
+\endlastfoot
+
+\underline{user\_id} & BIGINT	& strani ključ korisnika  koji želi prepješačiti neku stazu iz tablice \textbf{user}	\\ \hline
+\underline{path\_id} & BIGINT	& strani ključ staze koju korisnik želi prepješačiti iz tablice \textbf{mountain\_path}	\\ \hline
+
+
+\end{longtabu}
+\vspace{10mm}			
+
+\textbf{mountain\_path\_user\_archived} Ovaj entitet sadrži informaciju o Many-To-Many odnosu između pojedinog korisnika i staza koje je već prepješačio, odnosno ovaj entitet modelira arhivu staza.
+
+\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+
+\hline \multicolumn{3}{|c|}{\textbf{mountain\_path\_user\_archived}}	 \\[3pt] \hline
+\endfirsthead
+
+\hline \multicolumn{3}{|c|}{\textbf{mountain\_path\_user\_archived}}	 \\[3pt] \hline
+\endhead
+
+\hline 
+\endlastfoot
+
+\underline{user\_id} & BIGINT	& strani ključ korisnika  koji je prepješačio pojedinu stazu iz tablice \textbf{user}	\\ \hline
+path\_id	& BIGINT &   strani ključ staze koju je konkretni korisnik prepješačio iz tablice \textbf{mountain\_path}	\\ \hline 
+date\_archived & DATE & datum kojeg je određeni korisnik prepješačio određenu stazu  \\ \hline 
+
+
+\end{longtabu}
+\vspace{10mm}
+\textbf{mountain\_lodge\_user\_archived} Ovaj entitet sadrži informaciju o Many-To-Many odnosu između pojedinog korisnika i domova koje je već posjetio, odnosno ovaj entitet modelira arhivu planinarskih domova.
+
+\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+
+\hline \multicolumn{3}{|c|}{\textbf{mountain\_lodge\_user\_archived}}	 \\[3pt] \hline
+\endfirsthead
+
+\hline \multicolumn{3}{|c|}{\textbf{mountain\_lodge\_user\_archived}}	 \\[3pt] \hline
+\endhead
+
+\hline 
+\endlastfoot
+
+\underline{user\_id} & BIGINT	& strani ključ korisnika  koji je prepješačio pojedinu stazu iz tablice \textbf{user}	\\ \hline
+mountain
+\_lodge\_id	& BIGINT &   strani ključ doma kojeg je konkretni korisnik posjetio iz tablice \textbf{mountain\_lodge}	\\ \hline 
+date\_archived & DATE & datum kojeg je određeni korisnik prepješačio određenu stazu  \\ \hline 
+
+
+\end{longtabu}
+\vspace{10mm}
 
 			\subsection{Dijagram baze podataka}
 				
 				\begin{figure}[H]
-					\includegraphics[scale=0.4, height=180mm]{slike/database.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+					\includegraphics[scale=0.4, height=180mm]{dijagrami/ER_Diagram.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
 					\centering
 					\caption{Dijagram baze podataka}
 					\label{fig:dijagrambp}
@@ -705,23 +601,37 @@
 			\eject
 			
 			\subsection{Implementacijski dijagrami razreda - model sustava}
-			\subsubsection{Sloj modela i objekti prijenosa podataka (DTO)}
-			Na ovom dijagramu prikazan je sloj modela te su prikazani objekti prijenosa podataka, tzv. \textit{Data Transfer Objects}. Ovaj dijagram modela odnosi se na modele sustava koji su trenutno implementirani i koji omogućuju generičke funkcionalnosti potrebne za prvu predaju. U daljnjem radu i razvitku ovaj dijagram će se nadopunjavati sve do konačnog modela sustava. Možemo reći da je glavni razred na dijagramu razred \textit{User}, koji predstavlja registriranog korisnika aplikacije, odnosno planinara. On je povezan s razredom \textit{Role}, na način da svaki korisnik može imati više aplikativnih uloga, npr. ulogu \textit{Admin} ili \textit{Dežurni planinar}, međutim funkcionalnosti vezane uz te uloge još nisu implementirane. Vidimo i razred \textit{MountainLodge} koji modelira jedan planinarski dom. Planinarski dom može imati više značajki infrastrukture, što je na dijagramu prikazano vezom razreda \textit{MountainLodge} s razredom \textit{Utility}. Planinarski dom se isključivo nalazi na jednom visočju, koje je modelirano razredom \textit{Hill}. Osim tih razreda prikazani su DTO razredi: \textit{HillFindResponse}, \textit{UserCreateDto}, \textit{MountainLodgeSearchRequest}, \textit{MountainLodgeSearchResponse} te \textit{PageSearchResponse}. To su razredi koji služe za prijenos podataka i omogućavaju da nadglednik nikada ne radi sa stvarnim modelima. Osim njih, prikazano je sučelje \textit{DefaultMapper} kojeg implementiraju konkretni razredi za mapiranje, čija je dužnost mapirati razrede prijenosa podataka u modele i obrnuto. Za razrede modela prikazane su metode, dok za DTO objekte metode nisu prikazane zbog preglednosti.
+			\subsubsection{Sloj modela}
+			Na dijagramima razreda nismo navodili podrazumijevane metode, gettere, settere te konstruktore.
+			Na prva dva implementacijska dijagrama razreda prikazan je sloj modela. Temeljni razred je razred \textit{User}, za koji vidimo da ima najviše asocijacija s drugim razredima kao i nekoliko refleksivnih veza. Refleksivne veze redom čine članske varijable \textit{participatedEvents, friends, friendRequestNotifications, friendRequests}, a one predstavljaju događaje na kojima korisnik sudjeluje, popis prijatelja, popis obavijesti o prihvaćenim/odbijenim zahtjevima za prijateljstvo kao i popis zahtjeva za prijateljstvo. Osim toga, na prvom dijagramu \textit{User} je povezan i s razredom \textit{MountainPathGrade}, a ta veza predstavlja popis ocjena koje je korisnik dodijelio pojedinoj planinarskoj stazi, te je povezan s razredom \textit{MountainPath}, a ta veza predstavlja popis planinarskih staza koje je korisnik dodao u svoje favorite. Razred \textit{Role} predstavlja ulogu koju korisnik ima ako je registriran unutar aplikacije, a može biti \textbf{Admin} ili \textbf{Planinar}. Razred \textit{Badge} predstavlja priznanja koje korisnik može dobiti, a razredom \textit{UserBadge} povezan je s korisnikom. Razred \textit{MountainLodge} predstavlja planinarski dom. Razred \textit{MountainLodgeUserArchive} predstavlja vezu između korisnika i njegovih posjećenih planinarskih domova. Na isti način razred \textit{MountainPathUserArchive} predstavlja vezu između korisnika i njegovih prepješačenih planinarskih staza. Razredi \textit{FriendshipRequest} te \textit{Friendship} vezani su za obavijesti o zahtjevima za prijateljstvo te same veze prijateljstva između dva korisnika. Razred \textit{Utility} predstavlja infrastrukturne pogodnosti koje pruža pojedini planinarski dom, dok razred \textit{Hill} predstavlja visočje na kojemu se nalazi planinarski dom ili planinarska staza. Razred \textit{Message} predstavlja poruke/pogreške koje planinari šalju administratoru sustava. Naposljetku razred \textit{CommunityEvent} predstavlja neki planinarski događaj, a kao člansku varijablu ima \textit{participants} koja predstavlja korisnike koji su se prijavili za sudjelovanje. Planinarski događaj je preko razreda \textit{CommunityEventMountainPath} povezan s planinarskim stazama koje se obilaze unutar tog planinarskog događaja.
+			
 			\begin{figure}[H]
-				\includegraphics[scale=0.6, height=190mm, width=165mm]{dijagrami/model-DTO-sloj.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+				\includegraphics[scale=0.6, height=200mm, width=165mm]{dijagrami/model-dijagram1} %veličina slike u odnosu na originalnu datoteku i pozicija slike
 				\centering
-				\caption{Dijagram razreda - sloj modela i DTO}
+				\caption{Dijagram razreda - sloj modela prvi dijagram}
 				\label{fig:dijagrami_razreda2}
 			\end{figure}
+		\begin{figure}[H]
+			\includegraphics[scale=0.6, height=150mm, width=165mm]{dijagrami/model-dijagram2} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+			\centering
+			\caption{Dijagram razreda - sloj modela drugi dijagram}
+			\label{fig:dijagrami_razreda2}
+		\end{figure}
 			\newpage
-			\subsubsection{Daljnja idejna razrada sloja modela}
-			Na sljedećem dijagramu idejno su prikazani prethodni modeli s novim metodama i razredi koji će se razvijati u narednim iteracijama razvoja projekta. 
+			\subsubsection{Objekti za prijenos podataka i preslikavanja iz sloja modela}
+			Na prvom od sljedeća dva dijagrama prikazani su objekti za prijenos podataka između klijenta i poslužitelja. Oni omogućuju da sloj nadglednika nikada ne komunicira sa stvarnim modelima. Iz imena DTO razreda možemo vidjeti za koji je razred taj objekt zadužen. Na drugom dijagramu prikazani su razredi koji služe za preslikavanje između sloja modela i objekata za prijenos podataka. Svi ti razredi implementiraju parametrizirano sučelje \textit{DefaultMapper}.
 			\begin{figure}[H]
-				\includegraphics[scale=0.6, height=170mm, width=165mm]{dijagrami/future-model.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+				\includegraphics[scale=0.6, height=150mm, width=165mm]{dijagrami/dto-dijagram.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
 				\centering
-				\caption{Dijagram razreda - idejna razrada daljnjih modela}
+				\caption{Dijagram razreda - razredi za prijenos podataka}
 				\label{fig:dijagrami_razreda3}
 			\end{figure}
+		\begin{figure}[H]
+			\includegraphics[scale=0.6, height=150mm, width=165mm]{dijagrami/model-mapper.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+			\centering
+			\caption{Dijagram razreda - razredi za preslikavanje između sloja modela i DTO}
+			\label{fig:dijagrami_razreda3}
+		\end{figure}
 			\newpage
 			\subsubsection{Sloj nadglednik - servis - repozitorij}
 			Ovaj sloj predstavlja sve operacije koje naš sustav obavlja. Razrađen je po oblikovnom obrascu "MVC". Zapravo se ovaj sloj sastoji od tri podsloja, a to su: 
@@ -732,19 +642,48 @@
 					Sloj servisa - tu se obavlja sva naša poslovna logika, pozivaju se metode repozitorija dohvaćaju se podaci
 				\item Sloj nadglednika - prima zahtjeve od korisnika i poziva metoda servisnog sloja	
 			\end{itemize}
+			Dijagrami ovog sloja podijeljeni su na nekoliko manjih dijagrama.
 			Razredi koji su trenutno implementirani u ovom sloju prikazani su na dijagramu slijedno, od najnižeg podsloja odnosno pristupa bazi podataka pa sve do podsloja nadglednika koji prima i delegira zahtjeve korisnika.
-			Dijagram se sastoji od nekoliko nadglednika: \textit{MountainLodgeController}, \textit{HillController} te \textit{UserController}, a svi su označeni anotacijom \textit{@RestController}. 
+			Dijagrami se sastoje od nekoliko nadglednika: \textit{UserController}, \textit{MountainLodgeController}, \textit{MountainPathController}, \textit{HillController}, \textit{UtilityController}, \textit{MountainLodgeUserArchiveController}, \textit{MountainLodgePathArchiveController}, \textit{MessageController} te \textit{CommunityEventController}.
 			
-			Podsloj nadglednika povezan je sa servisnim slojem preko konkretnog primjerka razreda servisnog sloja kojeg čine razredi \textit{MountainLodgeQueryServiceImpl}, \textit{HillQueryServiceImpl} te \textit{UserQueryServiceImpl}, a oni predstavljaju implementacije odgovarajućih servisnih sučelja koji su također označeni na dijagramu.
+			Podsloj nadglednika povezan je sa servisnim slojem preko konkretnog primjerka razreda servisnog sloja kojeg čine razredi: \textit{UserService}, \textit{MountainLodgeQueryServiceImpl}, \textit{MountainPathQueryServiceImpl}, 
+			\textit{HillQueryServiceImpl}, \textit{UtilityQueryServiceImpl}, \textit{UserDetailsServiceImpl}, \textit{UserBadgeServiceImpl}, \textit{MountainPathUserArchiveServiceImpl}, \textit{MountainLodgeUserArchiveServiceImpl}, \textit{MessageQueryServiceImpl} te \textit{CommunityEventService},
+			 a oni predstavljaju implementacije odgovarajućih servisnih sučelja koji su također označeni na dijagramima.
 			
-			 Naposljetku, servisni sloj povezan je sa slojem repozitorija preko sučelja konkretnog repozitorija relevantnog za taj servis. U našem slučaju to su sučelja: \textit{MountainLodgeRepository}, \textit{HillRepository} te \textit{UserRepository}. Svako sučelje repozitorija nasljeđuje sučelje \textit{JpaRepository} koje sadrži konkretnu implementaciju upita nad bazom podataka.
+			 Naposljetku, servisni sloj povezan je sa slojem repozitorija preko sučelja konkretnog repozitorija relevantnog za taj servis. U našem slučaju to su sučelja: \textit{BadgeRepository}, \textit{BadgeUserRepository}, \textit{CommunityEventMountainPathRepository}, \textit{CommunityEventRepository}, \textit{FriendshipRequestRepository}, \textit{FriendshipRepository}, \textit{HillRepository}, \textit{MessageRepository}, \textit{MountainLodgeRepository}, \textit{MountainLodgeUserArchiveRepository}, \textit{MountainPathGradeRepository}, \textit{MountainPathRepository}, \textit{MountainPathUserArchiveRepository}, \textit{RoleRepository}, \textit{UserRepository} te
+			 \textit{UtilityRepository}. 
+			 Svako sučelje repozitorija nasljeđuje sučelje \textit{JpaRepository} koje sadrži konkretnu implementaciju upita nad bazom podataka.
 			 
-			  Sučelje \textit{JpaSpecificationExecutor} omogućuje nam korištenje specifikacije \textit{MountainLodgeSearchSpecification} prilikom pretraživanja planinarskih domova iz baze podataka.
+			  Sučelje \textit{JpaSpecificationExecutor} omogućuje nam korištenje specifikacija \textit{MountainLodgeSearchSpecification} i \textit{MountainPathSearchSpecification} prilikom pretraživanja planinarskih domova i planinarskih staza iz baze podataka.
 			\begin{figure}[H]
-				\includegraphics[scale=0.6, height=175mm, width=165mm]{dijagrami/rest.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+				\includegraphics[scale=0.6, height=175mm, width=165mm]{dijagrami/csr-user-dijagram} %veličina slike u odnosu na originalnu datoteku i pozicija slike
 				\centering
-				\caption{Dijagram razreda - sloj nadglednik - servis - repozitorij}
-				\label{fig:dijagrami_razreda4}
+				\caption{Dijagram razreda korisnik - sloj nadglednik - servis - repozitorij}
+				\label{fig:dijagrami_razreda_korisnik}
+			\end{figure}
+		\begin{figure}[H]
+			\includegraphics[scale=0.6, height=175mm, width=165mm]{dijagrami/csr-path-dijagram} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+			\centering
+			\caption{Dijagram razreda planinarske staze - sloj nadglednik - servis - repozitorij}
+			\label{fig:dijagrami_razreda_staze}
+		\end{figure}
+	\begin{figure}[H]
+		\includegraphics[scale=0.6, height=175mm, width=165mm]{dijagrami/csr-lodge-dijagram} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+		\centering
+		\caption{Dijagram razreda planinarski dom - sloj nadglednik - servis - repozitorij}
+		\label{fig:dijagrami_razreda_dom}
+	\end{figure}	
+		\begin{figure}[H]
+			\includegraphics[scale=0.6, height=175mm, width=165mm]{dijagrami/csr-event-dijagram} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+			\centering
+			\caption{Dijagram razreda planinarski događaji - sloj nadglednik - servis - repozitorij }
+			\label{fig:dijagrami_razreda_dogadaj}
+		\end{figure}
+			\begin{figure}[H]
+				\includegraphics[scale=0.6, height=175mm, width=165mm]{dijagrami/csr-other-dijagram} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+				\centering
+				\caption{Dijagram razreda, ostalo - sloj nadglednik - servis - repozitorij}
+				\label{fig:dijagrami_razreda_ostalo}
 			\end{figure}
 			\newpage
 			\subsubsection{Razredi vezani uz sigurnost i pomoćni razredi}
@@ -752,24 +691,29 @@
 			 
 			 Provjera se vrši tako da se zove metoda \textit{loadUserByUsername} razreda \textit{UserDetailsServiceImpl}, a ona provjerava postoji li korisnik koji sadrži e-mail koji je poslan unutar zahtjeva. 
 			 
-			 Nakon utvrđivanja da ta osoba postoji \textit{Spring security modul} provjerava lozinku i druge podatke vezane uz prijavu. Nakon uspješne prijave pomoću metode \textit{successfulAuthentication} se generira jedinstveni token (identifikator) i šalje korisniku. Svojstva tokena poput trajanja se određuju u razredu \textit{SecurityConstants}. 
+			 Nakon utvrđivanja da ta osoba postoji, \textit{Spring security modul} provjerava lozinku i druge podatke vezane uz prijavu. Nakon uspješne prijave pomoću metode \textit{successfulAuthentication} se generira jedinstveni token (identifikator) i šalje korisniku. Svojstva tokena poput trajanja se određuju u razredu \textit{SecurityConstants}. 
 			
 			Prijavljeni korisnik za vrijeme rada unutar Web aplikacije svaki zahtjev obavlja pomoću jedinstvenog tokena koji mu je dodijeljen, a koji se provjerava unutar razreda \textit{JWTAuthorizationFilter}. 
 			
 			Metoda \textit{getPasswordEncoder} razreda \textit{Configuration} služi da bi definirali enkoder za zaštitu lozinki. 
 			
-			Razred \textit{UniqueEmailValidator} prilikom registracije provjerava postoji li u bazi podataka korisnik kojem je e-mail isti e-mailu zahtjeva. Budući da ne možemo imati dva korisnika s istom adresom elektroničke pošte, u tom slučaju događa se iznimka \textit{UserWithEmailExistsException}.  
+			Razred \textit{UniqueEmailValidator} prilikom registracije provjerava postoji li u bazi podataka korisnik kojemu je e-mail isti e-mailu zahtjeva. Budući da ne možemo imati dva korisnika s istom adresom elektroničke pošte, u tom slučaju događa se iznimka \textit{UserWithEmailExistsException}.
 			
-			Razredi \textit{NoImageException} i \textit{ResourceNotFoundException} modeliraju iznimke koje se mogu dogoditi prilikom rada sustava.
-			Razred \textit{MountainLodgeSearchSpecification} koji je konkretna implementacija parametriziranog sučelja \textit{BaseSpecification} omogućava nam pretraživanje planinarskih domova prema određenim kriterijima.
-			
+			Na drugom dijagramu prikazane su iznimke koje je moguće izazvati na poslužiteljskoj strani, kao i razred koji obrađuje iznimke.  
 		
 			\begin{figure}[H]
 				\includegraphics[scale=0.6, height=175mm, width=165mm]{dijagrami/helpers-class.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
 				\centering
-				\caption{Dijagram razreda - sigurnost i pomoćne metode}
+				\caption{Dijagram razreda - sigurnost}
 				\label{fig:dijagrami_razreda5}
 			\end{figure}
+		
+		\begin{figure}[H]
+			\includegraphics[scale=0.6, height=175mm, width=165mm]{dijagrami/iznimke-dijagram.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+			\centering
+			\caption{Dijagram razreda - iznimke i upravljanje iznimkama}
+			\label{fig:dijagrami_razreda5}
+		\end{figure}
 			
 			\eject
 			
@@ -778,25 +722,86 @@
 			
 			\eject
 		
-		%\section{Dijagram stanja}
+		\section{Dijagram stanja}
 			
-			
-		%	\textbf{\textit{dio 2. revizije}}\\
-		%	
-		%	\textit{Potrebno je priložiti dijagram stanja i opisati ga. Dovoljan je jedan dijagram stanja koji prikazuje \textbf{značajan dio funkcionalnosti} sustava. Na primjer, stanja korisničkog sučelja i tijek korištenja neke ključne funkcionalnosti jesu značajan dio sustava, a registracija i prijava nisu. }
-			
-			
-		%	\eject 
 		
-		%\section{Dijagram aktivnosti}
-		%	
-		%	\textbf{\textit{dio 2. revizije}}\\
+			Dijagrami stanja prikazuju stanja objekata i njihov prelazak iz jednog stanja u drugo. Takav pogled nam dozvoljava veću preglednost sustava. Zbog čitljivosti smo mi naše dijagrame stanja podijelili u više odvojenih dijagrama. 
 			
-		%	 \textit{Potrebno je priložiti dijagram aktivnosti s pripadajućim opisom. Dijagram aktivnosti treba prikazivati značajan dio sustava.}
+			Na slici 4.9 prikazan je proces autentikacije. Korisnik dolazi u aplikaciju u neprijavljenom stanju. Iz toga stanja može vršiti određene akcije, poput pregledavanja domova i staza. Da mu se omogući pregled profila, kreiranje staza i ako je admin, kreiranje domova, mora se ulogirati/registrirati. Taj proces je prikazan na dijagramu. Klikom na "Prijavi se" korisnik prelazi u stanje ulogiranja. Ako unese pogrešne informacije, stanje se resetira. Ako klikne na "Nemate račun", otići će na stranicu registracije. Ako unese pogrešne podatke, stanje mu se resetira. Na registraciju može otići i direktno iz headera. Kada se uspješno registrira, vraća ga na formu za prijavu. Kada se ulogira, onda ima globalno stanje "Prijavljen" što mu omogućava pristup većem broju sadržaja same stranice.
 			
-		%	\eject
-		%\section{Dijagram komponenti}
+			\begin{figure}[H]
+				\includegraphics[width=160mm,height=100mm]{dijagrami/sd-autentikacija/autentikacija.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+				\centering
+				\caption{Dijagram stanja - autentikacija}
+				\label{fig:dijagrami_stanja1}
+			\end{figure}
+			\newpage
+			Na slici 4.10 prikazana su stanja vezana za domove. Početno stanje provjerava je li korisnik admin, i ako je, prikazuje mu gumb za kreiranje domova. Ako korisnik nije admin, ne prikazuje mu se taj gumb i ne može kreirati domove, samo pregledavati. Prijavljenom korisniku se još prikazuju gumbi za arhiviranje staze i prijavljivanje pogreške na stazi
+			
+			\begin{figure}[H]
+				\includegraphics[width=160mm,height=150mm]{dijagrami/sd-autentikacija/domovi.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+				\centering
+				\caption{Dijagram stanja - domovi}
+				\label{fig:dijagrami_stanja2}
+			\end{figure}
 		
-		%	\textbf{\textit{dio 2. revizije}}\\
+		    Na slici 4.11 prikazana su stanja vezana za planinarske staze. Početno stanje provjerava je li korisnik prijavljen, i ako je, prikazuje mu gumb za kreiranje staza. Ako korisnik nije prijavljen, ne prikazuje mu se taj gumb i ne može kreirati staze, već samo pregledavati. Dodatno se prijavljenom korisniku prikazuju gumbi za dodavanje u favorite, ocjenjivanje staze, arhiviranje staze i prijavljivanje pogreške na stazi
+		    
+		    \begin{figure}[H]
+		    	\includegraphics[width=160mm, height=160mm]{dijagrami/sd-autentikacija/staze.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+		    	\centering
+		    	\caption{Dijagram stanja - staze}
+		    	\label{fig:dijagrami_stanja3}
+		    \end{figure}
+			
+			\newpage
+			Na slici 4.12 prikazana su stanja vezana za korisnički profil. Ako je prijavljen, korisnik može otići na svoj profil gdje su mu omogućene radnje poput pregleda profila, uređivanje vlastitog profila, pretraživanja planinarske zajednice, brisanje profila i potvrda brisanja profila.
+			
+			\begin{figure}[H]
+				\includegraphics[width=160mm, height=165mm]{dijagrami/sd-autentikacija/profil.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+				\centering
+				\caption{Dijagram stanja - profil}
+				\label{fig:dijagrami_stanja4}
+			\end{figure}
+			
+			\eject 
+			
+
 		
-		%	 \textit{Potrebno je priložiti dijagram komponenti s pripadajućim opisom. Dijagram komponenti treba prikazivati strukturu cijele aplikacije.}
+		\section{Dijagram aktivnosti}
+			
+			 Dijagram aktivnosti se koristi za modeliranje poslovnih procesa, upravljačkog i podatkovnog toka. Pogodni su za opisivanje sinkronizacije i konkurentnosti. Ne primjenjuju se za modeliranje događajima poticanog ponašanja. Na dijagramu 4.13 prikazan je dijagram aktivnosti pretrage i arhiviranja staze. U našoj aplikaciji, jedna od funkcionalnosti koju dozvoljavamo korisniku je pretraga planinarskih staza po nekim parametrima, prikaz detalja o toj stazi i mogućnost arhiviranja te staze kako bi korisnik mogao čuvati informaciju o stazama koje je prešao. Ako je arhivirao određeni broj staza, dobiva bedž na svome profilu koji to označava.
+			 
+			 \begin{figure}[H]
+			 	\includegraphics[scale=0.6, height=150mm, width=165mm]{dijagrami/activity/path search diagram.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+			 	\centering
+			 	\caption{Dijagram aktivnosti - pretraga i arhiviranje staze}
+			 	\label{fig:dijagrami_aktivnosti1}
+			 \end{figure}
+		 
+		 	Još jedna od funkcionalnosti je dodavanje prijatelja. Korisnik može Poslati zahtjev za prijateljstvo drugom korisniku. Taj drugi korisnik nakon toga može prihvatiti ili odbiti zahtjev za prijateljstvo
+		 	\begin{figure}[H]
+		 	\includegraphics[scale=0.6, height=120mm, width=165mm]{dijagrami/activity/friend request diagram.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+		 	\centering
+		 	\caption{Dijagram aktivnosti - dodavanje prijatelja}
+		 	\label{fig:dijagrami_aktivnosti2}
+			 \end{figure}
+		 
+		 	\begin{figure}[H]
+		 	\includegraphics[scale=0.6, height=120mm, width=165mm]{dijagrami/activity/friend accept or decline diagram.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+		 	\centering
+		 	\caption{Dijagram aktivnosti - prihvaćanje ili odbijanje prijateljstva}
+		 	\label{fig:dijagrami_aktivnosti2}
+		 	\end{figure}
+			
+			\section{Dijagram komponenti}
+		Dijagrami komponenti prikazuju komponente sustava i njihove međusobne odnose. Komponenta je fizička i stvarna implementacija logičkih elemenata sustava, npr. razreda i sučelja. Često se kaže da su u UML-u sve fizičke "stvari" modelirane kao komponente. Sustavu pristupamo preko dva različita sučelja. Preko jednog dohvaćamo HTML, CSS i TSX datoteke, pomoću kojih poslužujemo datoteke koje pripadaju frontend-u aplikacije, a preko drugog sučelja dohvaćamo JSON podatke kojima pristupamo preko REST API komponente, a pomoću nje poslužujemo datoteke koje pripadaju backend-u aplikacije. Frontend sadrži komponentu Router koja pomoću zatraženog url-a na sučelje poslužuje odgovarajuću datoteku. Također sadrži i niz TypeScript datoteka koje su podijeljene u logičke cjeline, a naziv im je dodijeljen po tipu aktora koji pristupaju tim datotekama. React biblioteka je temeljna za sve TypeScript datoteke jer se preko nje dohvaćaju gotove komponente koje su ključne za prikaz podataka, primjerice gumbi i forme. Za dohvat podataka iz baze podataka pomoću SQL upita zadužen je \textit{Spring JPA} koji u pozadini koristi \textit{JDBC}. Kada se podaci dohvate iz baze, šalju se MVC arhitekturi u obliku DTO. Aplikacija "Planinarski dnevnik" preko gore navedenih sučelja komunicira sa Reactovim komponentama i ovisno o korisničkim željama prikazuje i dohvaća zatražene datoteke.
+		
+		\begin{figure}[H]
+			\includegraphics[scale=0.4, height=170mm, width=165mm]{dijagrami/dijagram-komponenti.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+			\centering
+			\caption{Dijagram komponenti}
+			\label{fig:dijagrami-komponenti.png}
+		\end{figure}
+		
+		\eject
