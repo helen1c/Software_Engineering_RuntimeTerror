@@ -793,12 +793,19 @@ date\_archived & DATE & datum kojeg je određeni korisnik prepješačio određen
 		 	\caption{Dijagram aktivnosti - prihvaćanje ili odbijanje prijateljstva}
 		 	\label{fig:dijagrami_aktivnosti2}
 		 	\end{figure}
-			
+			\eject
 			\section{Dijagram komponenti}
-		Dijagrami komponenti prikazuju komponente sustava i njihove međusobne odnose. Komponenta je fizička i stvarna implementacija logičkih elemenata sustava, npr. razreda i sučelja. Često se kaže da su u UML-u sve fizičke "stvari" modelirane kao komponente. Sustavu pristupamo preko dva različita sučelja. Preko jednog dohvaćamo HTML, CSS i TSX datoteke, pomoću kojih poslužujemo datoteke koje pripadaju frontend-u aplikacije, a preko drugog sučelja dohvaćamo JSON podatke kojima pristupamo preko REST API komponente, a pomoću nje poslužujemo datoteke koje pripadaju backend-u aplikacije. Frontend sadrži komponentu Router koja pomoću zatraženog url-a na sučelje poslužuje odgovarajuću datoteku. Također sadrži i niz TypeScript datoteka koje su podijeljene u logičke cjeline, a naziv im je dodijeljen po tipu aktora koji pristupaju tim datotekama. React biblioteka je temeljna za sve TypeScript datoteke jer se preko nje dohvaćaju gotove komponente koje su ključne za prikaz podataka, primjerice gumbi i forme. Za dohvat podataka iz baze podataka pomoću SQL upita zadužen je \textit{Spring JPA} koji u pozadini koristi \textit{JDBC}. Kada se podaci dohvate iz baze, šalju se MVC arhitekturi u obliku DTO. Aplikacija "Planinarski dnevnik" preko gore navedenih sučelja komunicira sa Reactovim komponentama i ovisno o korisničkim željama prikazuje i dohvaća zatražene datoteke.
+		Dijagrami komponenti prikazuju komponente sustava i njihove međusobne odnose. Komponenta je fizička i stvarna implementacija logičkih elemenata sustava, npr. razreda i sučelja. Često se kaže da su u UML-u sve fizičke "stvari" modelirane kao komponente.\\
+		Sustavu pristupamo preko dva različita sučelja. Preko jednog dohvaćamo HTML, CSS i TypeScript datoteke, pomoću kojih poslužujemo datoteke koje pripadaju klijentskom dijelu aplikacije, a preko drugog sučelja provodimo HTTP zahtjeve i odgovore i na taj način dohvaćamo podatake s poslužiteljskog dijela aplikacije u obliku JSON-a. Podatke poslužiteljskog dijela aplikacije dohvaćamo preko \textit{DispatcherServlet} komponente (gdje koristimo REST API podržan interno unutar Spring-a).
+		Zahtjeve koje dobije \textit{DispatcherServlet} prosljeđuje odgovarajućem \textit{Controlleru}, koji nadalje pozivaju komponentu \textit{Services} koja pruža implementaciju određene funkcionalnosti.
+		Komponenta \textit{Services} komunicira s Komponentom \textit{Repositories} koja dohvaća podatke iz baze podataka preko \textit{Spring JPA}.
+		Za dohvat podataka iz baze podataka pomoću SQL upita zadužen je \textit{Spring JPA} koji u pozadini koristi \textit{JDBC}. Kada se podaci dohvate iz baze,
+		 šalju se sloju servisa, a nakon toga i sloju nadglednika koji ih preslikava u objekte prijenosa podataka i vraća kao odgovor. \\	
+		 Klijentski dio aplikacije sadrži komponentu Router koja pomoću zatraženog URL-a na sučelje poslužuje odgovarajuću datoteku. Također sadrži i niz TypeScript datoteka koje su podijeljene u logičke cjeline, a naziv im je dodijeljen po nekoj većoj cjelini unutar aplikacije koju obavljaju. Sve takve komponente nisu navedene unutar dijagrama, a neke najvažnije su \textit{MountainPath}, \textit{MountainLodge}, \textit{Profile} te \textit{Mountaneering-Community}. Knjižnica "React" je temeljna za sve TypeScript datoteke. O njoj ovise sve druge komponente klijentske strane, ali te ovisnosti na dijagramu nisu prikazane. 
+		 Samu komponentu aplikacije možemo podijeliti na dva dijela, poslužiteljski i klijentski dio aplikacije, budući da oni ni na koji način nisu povezani. Posrednik između ta dva dijela aplikacije je Web preglednik.
 		
 		\begin{figure}[H]
-			\includegraphics[scale=0.4, height=170mm, width=165mm]{dijagrami/dijagram-komponenti.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+			\includegraphics[scale=0.4, height=185mm, width=175mm]{dijagrami/dijagram-komponenti.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
 			\centering
 			\caption{Dijagram komponenti}
 			\label{fig:dijagrami-komponenti.png}
